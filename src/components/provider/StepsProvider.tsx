@@ -20,6 +20,7 @@ import Adherant from "../__steps/step/Adherant";
 import Npa from "../__steps/step/Npa";
 import Situation from "../__steps/step/Situation";
 import Assurance from "../__steps/step/Assurance";
+import Franchise from "../__steps/step/Franchise";
 
 interface StepContext {
   currentStep: Step;
@@ -92,6 +93,7 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
     if (activeStep.id === "npa") return <Npa />;
     if (activeStep.id === "situation") return <Situation />;
     if (activeStep.id === "assurance-actuelle") return <Assurance />;
+    if (activeStep.id === "franchise") return <Franchise />;
     return <DefaultStep />;
   };
 

@@ -154,6 +154,21 @@ export const STEPS: Step[] = [
       return [5, STEPS.length];
     },
   },
+  {
+    id: "package",
+    next: (lead) => {
+      return "package";
+    },
+    disabled: (lead) => {
+      return false;
+    },
+    previous: (lead) => {
+      return "franchise";
+    },
+    stepInfo: (lead) => {
+      return [6, STEPS.length];
+    },
+  },
 ];
 
 export const getNextStep = (step: Step, lead: LeadData) => {

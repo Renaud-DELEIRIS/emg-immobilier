@@ -10,7 +10,18 @@ export interface LeadData {
     dob?: string;
     type?: "main" | "partner" | "child";
     civility?: "man" | "female";
-    franchise?: "300" | "500" | "1000" | "1500" | "2000" | "2500";
+    franchise?:
+      | "300"
+      | "500"
+      | "1000"
+      | "1500"
+      | "2000"
+      | "2500"
+      | "0"
+      | "100"
+      | "200"
+      | "400"
+      | "600";
     couvertureAccident?: "oui" | "non";
   }[];
   npa?: {
