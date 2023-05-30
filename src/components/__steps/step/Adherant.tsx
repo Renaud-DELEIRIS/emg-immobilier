@@ -6,7 +6,13 @@ import { useSteps } from "~/components/provider/StepsProvider";
 import TextInput from "~/components/inputs/TextInput";
 import dayjs from "dayjs";
 import Button from "~/components/button/Button";
-import { IconEdit, IconX } from "@tabler/icons-react";
+import {
+  IconEdit,
+  IconGenderFemale,
+  IconGenderMale,
+  IconPlus,
+  IconX,
+} from "@tabler/icons-react";
 
 const textByIndex = [
   {
@@ -133,80 +139,84 @@ const Adherant = () => {
                 : isValidDob(adherent?.dob || "")
             }
           />
-          <p className="mb-2 mt-4">
-            {textByIndex[isEditing > 2 ? 2 : isEditing]?.civilite || ""}
-          </p>
-          <TileInput
-            value={adherent?.civility}
-            onChange={(value) => {
-              setAdherent({
-                ...adherent,
-                civility: value as "man",
-              });
-            }}
-            options={[
-              {
-                label: "Homme",
-                value: "man",
-              },
-              {
-                label: "Femme",
-                value: "female",
-              },
-            ]}
-            className="gap-4"
-          ></TileInput>
-          <div className="flex flex-col">
-            {!isValidDob(adherent?.dob || "") &&
-              adherent?.civility !== undefined &&
-              adherent?.dob !== undefined &&
-              adherent?.dob !== "" && (
-                <Button
-                  onClick={() => {
-                    if (lead.adherent[isEditing] === undefined) {
-                      changeLead({
-                        adherent: [
-                          ...lead.adherent,
-                          {
+          {!isValidDob(adherent?.dob || "") &&
+            adherent?.dob !== undefined &&
+            adherent?.dob !== "" && (
+              <>
+                <p className="mb-2 mt-4">
+                  {textByIndex[isEditing > 2 ? 2 : isEditing]?.civilite || ""}
+                </p>
+                <TileInput
+                  value={adherent?.civility}
+                  onChange={(value) => {
+                    setAdherent({
+                      ...adherent,
+                      civility: value as "man",
+                    });
+                  }}
+                  options={[
+                    {
+                      label: "Homme",
+                      value: "man",
+                      rightIcon: <IconGenderMale />,
+                    },
+                    {
+                      label: "Femme",
+                      value: "female",
+                      rightIcon: <IconGenderFemale />,
+                    },
+                  ]}
+                  className="gap-4"
+                ></TileInput>
+                {adherent?.civility !== undefined && (
+                  <div className="flex w-full justify-center">
+                    <Button
+                      onClick={() => {
+                        if (lead.adherent[isEditing] === undefined) {
+                          changeLead({
+                            adherent: [
+                              ...lead.adherent,
+                              {
+                                ...adherent,
+                                type: getType(isEditing),
+                              },
+                            ],
+                          });
+                        } else {
+                          const newAdherents = [...lead.adherent];
+                          newAdherents[isEditing] = {
                             ...adherent,
                             type: getType(isEditing),
-                          },
-                        ],
-                      });
-                    } else {
-                      const newAdherents = [...lead.adherent];
-                      newAdherents[isEditing] = {
-                        ...adherent,
-                        type: getType(isEditing),
-                      };
-                      changeLead({
-                        adherent: newAdherents,
-                      });
-                    }
-                    setIsEditing(undefined);
-                    setAdherent(undefined);
-                  }}
-                  className="mt-4 w-fit"
-                >
-                  Valider
-                </Button>
-              )}
-            {((isEditing > 2 &&
-              lead.for === "you, your partner and your kids") ||
-              (isEditing > 1 && lead.for === "you and your kids")) && (
-              <Button
-                onClick={() => {
-                  setIsEditing(undefined);
-                  setAdherent(undefined);
-                }}
-                className="mt-4 w-fit"
-                size={"small"}
-                intent={"secondary"}
-              >
-                Annuler
-              </Button>
+                          };
+                          changeLead({
+                            adherent: newAdherents,
+                          });
+                        }
+                        setIsEditing(undefined);
+                        setAdherent(undefined);
+                      }}
+                      className="mt-4 w-52"
+                    >
+                      Valider
+                    </Button>
+                  </div>
+                )}
+              </>
             )}
-          </div>
+          {((isEditing > 2 && lead.for === "you, your partner and your kids") ||
+            (isEditing > 1 && lead.for === "you and your kids")) && (
+            <Button
+              onClick={() => {
+                setIsEditing(undefined);
+                setAdherent(undefined);
+              }}
+              className="mt-4 w-fit"
+              size={"small"}
+              intent={"secondary"}
+            >
+              Annuler
+            </Button>
+          )}
         </div>
       )}
       {lead.adherent.length > 0 && isEditing === undefined && (
@@ -263,13 +273,13 @@ const Adherant = () => {
             {(lead.for === "you and your kids" ||
               lead.for === "you, your partner and your kids") && (
               <Button
-                intent={"secondary"}
                 onClick={() => {
                   setIsEditing(lead.adherent.length);
                   setAdherent({});
                 }}
                 size="small"
                 className="w-fit"
+                iconRight={<IconPlus />}
               >
                 Ajouter un enfant
               </Button>
@@ -278,7 +288,7 @@ const Adherant = () => {
               onClick={() => {
                 increaseStep();
               }}
-              className="w-fit"
+              className="mx-auto w-fit"
             >
               Continuer
             </Button>

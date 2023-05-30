@@ -8,6 +8,7 @@ interface Props {
     value: string;
     label: string;
     icon?: React.ReactElement;
+    rightIcon?: React.ReactElement;
   }[];
   className?: string;
 }
@@ -20,15 +21,15 @@ const TileInput = ({ value, onChange, options, className = "" }: Props) => {
         hasIcon ? (
           <button
             key={option.value}
-            className={`flex h-44 w-full flex-col items-center justify-center gap-4 rounded-md ${
+            className={`flex h-40 w-full flex-col items-center justify-center gap-4 rounded-md ${
               value === option.value
                 ? "border-primary text-primary"
-                : "border-neutral-300 text-neutral-900 hover:border-primary hover:text-primary"
-            } border-2 text-lg hover:border-primary`}
+                : "border-neutral-300 text-neutral-700 hover:border-primary hover:text-primary"
+            } border-2 hover:border-primary`}
             onClick={() => onChange(option.value)}
           >
             {option.icon}
-            <span className="text-lg">{option.label}</span>
+            <span className="text-base ">{option.label}</span>
             <div className="relative grid h-6 w-6 place-items-center rounded-full border border-neutral-300">
               {value === option.value && (
                 <IconCircleCheckFilled className="absolute h-7 w-7" />
@@ -41,7 +42,7 @@ const TileInput = ({ value, onChange, options, className = "" }: Props) => {
             className={`flex w-full items-center gap-4 rounded-md p-3 ${
               value === option.value
                 ? "border-primary text-primary"
-                : "border-neutral-300 text-neutral-900"
+                : "border-neutral-300 text-neutral-700"
             } border hover:border-primary`}
             onClick={() => onChange(option.value)}
           >
@@ -51,6 +52,9 @@ const TileInput = ({ value, onChange, options, className = "" }: Props) => {
               )}
             </div>
             <span className="text-base">{option.label}</span>
+            {option.rightIcon && (
+              <div className="ml-auto">{option.rightIcon}</div>
+            )}
           </button>
         )
       )}

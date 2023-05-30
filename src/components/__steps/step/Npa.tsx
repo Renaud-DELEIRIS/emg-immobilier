@@ -57,14 +57,15 @@ const Npa = () => {
         </button>
       </p>
       {aldreadyFilled && lead.npa?.key !== 0 && (
-        <Button
-          className="mt-4"
-          onClick={() => {
-            increaseStep();
-          }}
-        >
-          Continuer
-        </Button>
+        <div className="mt-4 flex w-full justify-center">
+          <Button
+            onClick={() => {
+              increaseStep();
+            }}
+          >
+            Continuer
+          </Button>
+        </div>
       )}
     </StepContainer>
   );

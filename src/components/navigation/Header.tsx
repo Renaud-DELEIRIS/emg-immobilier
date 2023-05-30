@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <>
       <div className="sticky top-0 z-50 w-full">
-        <header className="row box-shadow inset-0 w-full items-center justify-between border-b border-[rgb(250,247,247)] bg-white px-2 py-2 md:px-12">
+        <header className="row box-shadow inset-0 h-16 w-full items-center justify-between border-b border-[rgb(250,247,247)] bg-white px-2 py-2 md:px-12">
           <Button
             onClick={() => decreaseStep()}
             intent="secondary"
