@@ -1,5 +1,4 @@
 import type DefaultProps from "~/types/DefaultProps";
-import { formatAmount } from "~/utils/formatAmount";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface Slider extends DefaultProps {
@@ -160,27 +159,6 @@ const Slider = ({
           />
         </span>
       </span>
-      <div className="flex justify-between text-gray-400">
-        <span className="text-sm">
-          {formatAmount(min, {
-            currency: "CHF",
-            digit: 0,
-            local: "de-CH",
-          })
-            .replace(" ", "")
-            .replace("CHF", "")}
-        </span>
-        <span className="text-sm">
-          {" "}
-          {formatAmount(max, {
-            currency: "CHF",
-            digit: 0,
-            local: "de-CH",
-          })
-            .replace(" ", "")
-            .replace("CHF", "")}
-        </span>
-      </div>
     </div>
   );
 };

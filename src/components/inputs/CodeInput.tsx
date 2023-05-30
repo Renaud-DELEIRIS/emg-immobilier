@@ -14,7 +14,7 @@ const CodeInput = ({
   onChange,
   accept = "all",
   length = 4,
-  onFilled = () => {},
+  onFilled = () => null,
 }: Props) => {
   const [code, setCode] = useState<string[]>(new Array(length).fill(""));
   const wrapper = useRef<HTMLDivElement>(null);
@@ -61,8 +61,8 @@ const CodeInput = ({
           type="text"
           value={c}
           onKeyDown={(e) => handleChange(i, e.key)}
-          onChange={(e) => {}}
-          className="h-12 w-12 rounded-md border text-center text-2xl text-neutral-800 focus:outline-blue"
+          onChange={(e) => null}
+          className="focus:outline-blue h-12 w-12 rounded-md border text-center text-2xl text-neutral-800"
         />
       ))}
     </div>

@@ -1,7 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { Fragment, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import Button from "../button/Button";
 import CodeInput from "../inputs/CodeInput";
 import { useLead } from "../provider/LeadProvider";
@@ -18,7 +17,6 @@ const VerifyModal = ({ onClose, open }: Props) => {
   const [successResend, setSuccessResend] = useState<boolean>(false);
   const { lead } = useLead();
   const { decreaseStep } = useSteps();
-  const { t } = useTranslation("steps");
 
   const handleResend = () => {
     setSuccessResend(true);
@@ -44,7 +42,7 @@ const VerifyModal = ({ onClose, open }: Props) => {
 
   return (
     <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-40" onClose={() => {}}>
+      <Dialog as="div" className="relative z-40" onClose={() => null}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -71,23 +69,11 @@ const VerifyModal = ({ onClose, open }: Props) => {
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-blue"
-                >
-                  {t("result.modal.title")}
-                </Dialog.Title>
+                  className="text-blue text-lg font-medium leading-6"
+                ></Dialog.Title>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    {t("result.modal.content")}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {lead.phone &&
-                      t("result.modal.phone", {
-                        phone: lead.phone.replace(
-                          /(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/,
-                          "$1 $2 $3 $4 $5"
-                        ),
-                      })}
-                  </p>
+                  <p className="text-sm text-gray-500"></p>
+                  <p className="text-sm text-gray-500"></p>
                 </div>
 
                 <div className="mt-4">
@@ -104,14 +90,14 @@ const VerifyModal = ({ onClose, open }: Props) => {
                   {!successResend ? (
                     <button
                       type="button"
-                      className="text-sm text-blue hover:underline"
+                      className="text-blue text-sm hover:underline"
                       onClick={handleResend}
                     >
-                      {t("result.modal.resend")}
+                      resend code
                     </button>
                   ) : (
                     <span className="text-sm text-green-500">
-                      {t("result.modal.resendSuccess")}
+                      resend success
                     </span>
                   )}
                 </div>
@@ -123,7 +109,7 @@ const VerifyModal = ({ onClose, open }: Props) => {
                     loading={loading}
                     disabled={code.length < 4}
                   >
-                    {t("result.modal.submit")}
+                    Submit
                   </Button>
                   <Button
                     intent="secondary"
@@ -131,7 +117,7 @@ const VerifyModal = ({ onClose, open }: Props) => {
                     iconLeft={<IconArrowLeft />}
                     onClick={() => decreaseStep()}
                   >
-                    {t("result.modal.back")}
+                    Back
                   </Button>
                 </div>
               </Dialog.Panel>
