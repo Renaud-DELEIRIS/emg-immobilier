@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { Prestation } from "~/data/Pack";
 
 export interface LeadData {
   for?:
@@ -23,6 +24,13 @@ export interface LeadData {
       | "400"
       | "600";
     couvertureAccident?: "oui" | "non";
+    pack?: {
+      principal: string | undefined;
+      options: {
+        label: string;
+        level: number;
+      }[];
+    };
   }[];
   npa?: {
     key: number;
@@ -32,9 +40,13 @@ export interface LeadData {
     key: number;
     value: string;
   };
+  prenom?: string;
+  nom?: string;
 
   situation?: "frontalier" | "future resident";
 }
+
+export type Adherent = LeadData["adherent"][0];
 
 interface LeadContext {
   lead: LeadData;

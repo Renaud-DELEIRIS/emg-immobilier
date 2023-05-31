@@ -1,4 +1,4 @@
-import { isDisabled } from "~/constants/step.constant";
+import { isStepDisabled } from "~/constants/step.constant";
 import {
   IconArrowLeft,
   IconArrowRight,
@@ -25,7 +25,7 @@ const Footer = () => {
       <Button
         size="medium"
         iconRight={<IconArrowRight />}
-        disabled={isDisabled(activeStep, lead)}
+        disabled={isStepDisabled(activeStep, lead)}
         onClick={() => increaseStep()}
       >
         Suivant

@@ -8,19 +8,27 @@ const StepContainer = ({
   description,
   infoTitle,
   info,
+  maxWidth = "max-w-3xl",
+  className = "",
 }: {
   title: string;
   description?: string;
   info?: string;
   infoTitle?: string;
+  maxWidth?: string;
 } & DefaultProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="flex w-full flex-col items-center"
+      className={
+        "mx-auto flex w-full flex-col items-center justify-center " +
+        maxWidth +
+        " " +
+        className
+      }
     >
-      <div className="relative text-center">
+      <div className={"relative text-center "}>
         <Image
           src={"/portrait.png"}
           alt="Assistance"

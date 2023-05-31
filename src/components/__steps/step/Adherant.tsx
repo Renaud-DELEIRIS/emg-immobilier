@@ -109,9 +109,16 @@ const Adherant = () => {
 
   return (
     <StepContainer
+      maxWidth="max-w-xl"
       title={
         isEditing !== undefined
-          ? textByIndex[isEditing > 2 ? 2 : isEditing]?.title || ""
+          ? textByIndex[
+              lead.for === "you and your kids" && isEditing > 0
+                ? 2
+                : isEditing > 2
+                ? 2
+                : isEditing
+            ]?.title || ""
           : "Voulez vous modifier un profil ?"
       }
       info={
@@ -123,7 +130,13 @@ const Adherant = () => {
       {isEditing !== undefined && (
         <div>
           <p className="mb-2">
-            {textByIndex[isEditing > 2 ? 2 : isEditing]?.dob || ""}
+            {textByIndex[
+              lead.for === "you and your kids" && isEditing > 0
+                ? 2
+                : isEditing > 2
+                ? 2
+                : isEditing
+            ]?.dob || ""}
           </p>
           <TextInput
             value={adherent?.dob || ""}
@@ -144,7 +157,13 @@ const Adherant = () => {
             adherent?.dob !== "" && (
               <>
                 <p className="mb-2 mt-4">
-                  {textByIndex[isEditing > 2 ? 2 : isEditing]?.civilite || ""}
+                  {textByIndex[
+                    lead.for === "you and your kids" && isEditing > 0
+                      ? 2
+                      : isEditing > 2
+                      ? 2
+                      : isEditing
+                  ]?.civilite || ""}
                 </p>
                 <TileInput
                   value={adherent?.civility}

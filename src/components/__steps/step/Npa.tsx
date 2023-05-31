@@ -21,6 +21,7 @@ const Npa = () => {
 
   return (
     <StepContainer
+      maxWidth="max-w-xl"
       title="Pour qui souhaitez-vous comparer ?"
       description="En quelques minutes, comparons ensemble plus de 42 compagnies."
     >

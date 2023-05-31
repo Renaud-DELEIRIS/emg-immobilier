@@ -61,9 +61,7 @@ const Select = ({
   const id = useId();
 
   return (
-    <div
-      className={"isolate " + (widthFull ? " w-full " : " ") + wrapperClassName}
-    >
+    <div className={"" + (widthFull ? " w-full " : " ") + wrapperClassName}>
       {label && (
         <label
           htmlFor={id}

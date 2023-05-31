@@ -15,9 +15,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex min-h-screen flex-col">
         <Header />
-        <div className="mx-auto w-full max-w-3xl px-[5%] pt-8 md:pt-12">
-          {getStepComponent()}
-        </div>
+        <div className="mx-auto w-full pt-8 md:pt-12">{getStepComponent()}</div>
       </main>
     </>
   );

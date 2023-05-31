@@ -52,7 +52,7 @@ const Franchise = () => {
     for (const adherent of lead.adherent) {
       if (
         adherent.franchise === undefined ||
-        adherent.couvertureAccident === undefined
+        (adherent.couvertureAccident === undefined && adherent.type !== "child")
       ) {
         return lead.adherent.indexOf(adherent);
       }
@@ -74,7 +74,13 @@ const Franchise = () => {
     <StepContainer
       title={
         isEditing !== undefined
-          ? textByIndex[isEditing > 2 ? 2 : isEditing]?.title || ""
+          ? textByIndex[
+              lead.for === "you and your kids" && isEditing > 0
+                ? 2
+                : isEditing > 2
+                ? 2
+                : isEditing
+            ]?.title || ""
           : "Voulez vous modifier un profil ?"
       }
       info={
@@ -86,7 +92,13 @@ const Franchise = () => {
       {isEditing !== undefined && (
         <div>
           <p className="mb-2">
-            {textByIndex[isEditing > 2 ? 2 : isEditing]?.franchise || ""}
+            {textByIndex[
+              lead.for === "you and your kids" && isEditing > 0
+                ? 2
+                : isEditing > 2
+                ? 2
+                : isEditing
+            ]?.franchise || ""}
           </p>
           <Select
             options={
@@ -185,7 +197,13 @@ const Franchise = () => {
             lead.adherent[isEditing]?.type !== "child" && (
               <>
                 <p className="mb-2 mt-4">
-                  {textByIndex[isEditing > 2 ? 2 : isEditing]?.accident || ""}
+                  {textByIndex[
+                    lead.for === "you and your kids" && isEditing > 0
+                      ? 2
+                      : isEditing > 2
+                      ? 2
+                      : isEditing
+                  ]?.accident || ""}
                 </p>
                 <TileInput
                   value={lead.adherent[isEditing]?.couvertureAccident}
@@ -255,7 +273,7 @@ const Franchise = () => {
                           adherent.franchise || ""
                         }${
                           adherent.couvertureAccident === "oui"
-                            ? "ainsi que d'une couverture accident"
+                            ? " ainsi que d'une couverture accident"
                             : ""
                         }.`
                       : adherent.type === "partner"

@@ -16,7 +16,11 @@ export type StepId =
   | "situation"
   | "assurance-actuelle"
   | "franchise"
-  | "package";
+  | "package"
+  | "name"
+  | "loader"
+  | "verification"
+  | "result";
 
 export const STEPS: Step[] = [
   {
@@ -157,7 +161,7 @@ export const STEPS: Step[] = [
   {
     id: "package",
     next: (lead) => {
-      return "package";
+      return "name";
     },
     disabled: (lead) => {
       return false;
@@ -169,13 +173,78 @@ export const STEPS: Step[] = [
       return [6, STEPS.length];
     },
   },
+  {
+    id: "name",
+    next: (lead) => {
+      return "loader";
+    },
+    disabled: (lead) => {
+      return (
+        lead.prenom === undefined ||
+        lead.nom === undefined ||
+        lead.prenom === "" ||
+        lead.nom === ""
+      );
+    },
+    previous: (lead) => {
+      return "package";
+    },
+    stepInfo: (lead) => {
+      return [7, STEPS.length];
+    },
+  },
+  {
+    id: "loader",
+    next: (lead) => {
+      return "verification";
+    },
+    disabled: (lead) => {
+      return false;
+    },
+    previous: (lead) => {
+      return "name";
+    },
+    stepInfo: (lead) => {
+      return [8, STEPS.length];
+    },
+  },
+  {
+    id: "verification",
+    next: (lead) => {
+      return "result";
+    },
+    disabled: (lead) => {
+      return false;
+    },
+    previous: (lead) => {
+      return "name";
+    },
+    stepInfo: (lead) => {
+      return [9, STEPS.length];
+    },
+  },
+  {
+    id: "result",
+    next: (lead) => {
+      return "result";
+    },
+    disabled: (lead) => {
+      return false;
+    },
+    previous: (lead) => {
+      return "verification";
+    },
+    stepInfo: (lead) => {
+      return [10, STEPS.length];
+    },
+  },
 ];
 
 export const getNextStep = (step: Step, lead: LeadData) => {
   return getStepById(step.next(lead));
 };
 
-export const isDisabled = (step: Step, lead: LeadData) => {
+export const isStepDisabled = (step: Step, lead: LeadData) => {
   return step.disabled(lead);
 };
 

@@ -4,6 +4,7 @@ import {
   getNextStep,
   getStepById,
   getPreviousStep,
+  isStepDisabled,
 } from "~/constants/step.constant";
 import {
   createContext,
@@ -21,6 +22,8 @@ import Npa from "../__steps/step/Npa";
 import Situation from "../__steps/step/Situation";
 import Assurance from "../__steps/step/Assurance";
 import Franchise from "../__steps/step/Franchise";
+import ChoosePack from "../__steps/step/ChoosePack";
+import Name from "../__steps/step/Name";
 
 interface StepContext {
   currentStep: Step;
@@ -32,8 +35,7 @@ interface StepContext {
 
   getStepComponent: () => ReactNode;
 
-  setLoading: (loading: boolean) => void;
-  loading: boolean;
+  isDisabled: () => boolean;
 }
 
 export const StepContext = createContext<StepContext>({
@@ -46,14 +48,12 @@ export const StepContext = createContext<StepContext>({
 
   getStepComponent: () => null,
 
-  setLoading: () => null,
-  loading: false,
+  isDisabled: () => false,
 });
 
 const StepsProvider = ({ children }: { children: ReactNode }) => {
   const [currentStep, setCurrentStep] = useState<Step>(STEPS[0] as Step);
   const [activeStep, setActiveStep] = useState<Step>(STEPS[0] as Step);
-  const [loading, setLoading] = useState<boolean>(false);
   const { lead } = useLead();
 
   const setSteps = useCallback(
@@ -82,6 +82,11 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
     [activeStep, setSteps]
   );
 
+  const isDisabled = useCallback(() => {
+    if (isStepDisabled(activeStep, lead)) return true;
+    return false;
+  }, [lead]);
+
   const decreaseStep = () => {
     const previousStep = getPreviousStep(activeStep, lead);
     if (previousStep) setSteps(previousStep);
@@ -94,6 +99,8 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
     if (activeStep.id === "situation") return <Situation />;
     if (activeStep.id === "assurance-actuelle") return <Assurance />;
     if (activeStep.id === "franchise") return <Franchise />;
+    if (activeStep.id === "package") return <ChoosePack />;
+    if (activeStep.id === "name") return <Name />;
     return <DefaultStep />;
   };
 
@@ -106,8 +113,7 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
         increaseStep,
         decreaseStep,
         getStepComponent,
-        setLoading,
-        loading,
+        isDisabled,
       }}
     >
       {children}
