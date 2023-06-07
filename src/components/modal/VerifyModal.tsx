@@ -1,17 +1,19 @@
 import { type StepId } from "~/constants/step.constant";
 import PhoneInput from "react-phone-input-2";
 import { IconArrowLeft, IconMail } from "@tabler/icons-react";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { useLead } from "../provider/LeadProvider";
 import { useSteps } from "../provider/StepsProvider";
 import TextInput from "../inputs/TextInput";
 import dayjs from "dayjs";
+import { motion } from "framer-motion";
 
 const Info = ({ open }: { open: boolean }) => {
   const { lead, changeLead } = useLead();
   const { increaseStep, decreaseStep } = useSteps();
+  const [step, setStep] = useState<"info" | "phone">("info");
 
   const isValidEmail = (email: string) => {
     const res = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
@@ -20,7 +22,7 @@ const Info = ({ open }: { open: boolean }) => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    increaseStep();
+    setStep("phone");
   };
 
   // Scroll top on mount
@@ -58,109 +60,125 @@ const Info = ({ open }: { open: boolean }) => {
             >
               <Dialog.Panel className="w-full max-w-3xl transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                 <div className="flex w-full">
-                  <form
-                    onSubmit={onSubmit}
-                    className="flex flex-1 grid-cols-6 flex-col gap-4 p-6"
-                  >
-                    <div className="flex items-center gap-2">
-                      <Image
-                        src="/portrait.png"
-                        alt="Portrait"
-                        width={40}
-                        height={40}
-                        className="rounded-full"
-                      />
-                      <span className="text-base font-semibold">Emma</span>
-                    </div>
-                    <p className="col-span-6 text-sm text-gray-500">
-                      Nous avons identifié pour <b>vous</b> les{" "}
-                      <span className="font-semibold text-primary underline">
-                        12
-                      </span>{" "}
-                      meilleures offres <b>conforts</b> adaptées à votre{" "}
-                      <b>profil</b>. Ces tarifs seront bloqués pour vous
-                      jusqu’au{" "}
-                      <span className="font-semibold text-primary underline">
-                        {dayjs().add(1, "day").format("DD/MM/YYYY")}
-                      </span>
-                    </p>
-                    <div className="col-span-6">
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Votre adresse email
-                      </label>
-                      <div className="relative mt-1 rounded-md shadow-sm">
-                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                          <IconMail
-                            className="h-5 w-5 text-gray-400"
-                            aria-hidden="true"
+                  {step === "info" && (
+                    <form
+                      onSubmit={onSubmit}
+                      className="flex flex-1 grid-cols-6 flex-col gap-4 p-6"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Image
+                          src="/portrait.png"
+                          alt="Portrait"
+                          width={40}
+                          height={40}
+                          className="rounded-full"
+                        />
+                        <span className="text-base font-semibold">Emma</span>
+                      </div>
+                      <p className="col-span-6 text-sm text-gray-500">
+                        Nous avons identifié pour <b>vous</b> les{" "}
+                        <span className="font-semibold text-primary underline">
+                          12
+                        </span>{" "}
+                        meilleures offres <b>conforts</b> adaptées à votre{" "}
+                        <b>profil</b>. Ces tarifs seront bloqués pour vous
+                        jusqu’au{" "}
+                        <span className="font-semibold text-primary underline">
+                          {dayjs().add(1, "day").format("DD/MM/YYYY")}
+                        </span>
+                      </p>
+                      <div className="col-span-6">
+                        <label
+                          htmlFor="email"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Votre adresse email
+                        </label>
+                        <div className="relative mt-1 rounded-md shadow-sm">
+                          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <IconMail
+                              className="h-5 w-5 text-gray-400"
+                              aria-hidden="true"
+                            />
+                          </div>
+                          <TextInput
+                            type="email"
+                            name="email"
+                            className="block w-full rounded-md border-gray-300 pl-10 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                            placeholder="you@example.com"
+                            value={lead.email || ""}
+                            icon={<IconMail size={18} />}
+                            onChange={(e) =>
+                              changeLead({
+                                email: e,
+                              })
+                            }
                           />
                         </div>
-                        <TextInput
-                          type="email"
-                          name="email"
-                          className="block w-full rounded-md border-gray-300 pl-10 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-                          placeholder="you@example.com"
-                          value={lead.email || ""}
-                          icon={<IconMail size={18} />}
-                          onChange={(e) =>
+                      </div>
+                      <div className="col-span-6">
+                        <label
+                          htmlFor="phone"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Votre numéro de téléphone
+                        </label>
+                        <PhoneInput
+                          onChange={(e: string) =>
                             changeLead({
-                              email: e,
+                              phone: e,
                             })
                           }
+                          inputProps={{
+                            type: "tel",
+                            name: "phone",
+                            id: "phone",
+                            autoComplete: "phone",
+                          }}
+                          inputClass="block !w-full border-gray-300 focus:!border-primary-500 focus:!ring-primary-500 !sm:text-sm !h-[38px] !rounded-md"
+                          preferredCountries={["ch", "fr"]}
+                          regions={"europe"}
+                          country={"ch"}
+                          containerClass="relative mt-1  h-[38px] !border-transparent"
+                          value={lead.phone || ""}
                         />
                       </div>
-                    </div>
-                    <div className="col-span-6">
-                      <label
-                        htmlFor="phone"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Votre numéro de téléphone
-                      </label>
-                      <PhoneInput
-                        onChange={(e: string) =>
-                          changeLead({
-                            phone: e,
-                          })
-                        }
-                        inputProps={{
-                          type: "tel",
-                          name: "phone",
-                          id: "phone",
-                          autoComplete: "phone",
-                        }}
-                        inputClass="block !w-full border-gray-300 focus:!border-primary-500 focus:!ring-primary-500 !sm:text-sm !h-[38px] !rounded-md"
-                        preferredCountries={["ch", "fr"]}
-                        regions={"europe"}
-                        country={"ch"}
-                        containerClass="relative mt-1  h-[38px] !border-transparent"
-                        value={lead.phone || ""}
-                      />
-                    </div>
-                    <span className="col-span-6 text-xs text-gray-400">
-                      Ces <strong>informations protégées</strong> seront
-                      utilisées uniquement dans le cadre de votre dossier.
-                    </span>
+                      <span className="col-span-6 text-xs text-gray-400">
+                        Ces <strong>informations protégées</strong> seront
+                        utilisées uniquement dans le cadre de votre dossier.
+                      </span>
 
-                    <div className="col-span-6 flex justify-around">
-                      <button
-                        className="rounded-md border border-primary-400 bg-primary-400 p-2 text-white hover:bg-primary-500 focus:outline-primary focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
-                        type="submit"
-                        disabled={
-                          !(
-                            lead.phone &&
-                            lead.email &&
-                            isValidEmail(lead.email)
-                          )
-                        }
-                      >
-                        <span>ACCÉDER AUX TARIFS NÉGOCIÉS</span>
-                      </button>
-                    </div>
-                  </form>
+                      <div className="col-span-6 flex justify-around">
+                        <button
+                          className="rounded-md border border-primary-400 bg-primary-400 p-2 text-white hover:bg-primary-500 focus:outline-primary focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
+                          type="submit"
+                          disabled={
+                            !(
+                              lead.phone &&
+                              lead.email &&
+                              isValidEmail(lead.email)
+                            )
+                          }
+                        >
+                          <span>ACCÉDER AUX TARIFS NÉGOCIÉS</span>
+                        </button>
+                      </div>
+                    </form>
+                  )}
+                  {step === "phone" && (
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex flex-1 flex-col p-6"
+                    >
+                      <p className="text-sm text-gray-500">
+                        Afin de vérifier votre identité, nous vous avons envoyé
+                        un code de vérification par SMS au numéro :{" "}
+                        <span className="text-primary">{lead.phone}</span>
+                      </p>
+                    </motion.div>
+                  )}
                   <div className="hidden w-64 flex-col items-center justify-center bg-neutral-300 md:flex">
                     <Image
                       src="/comparea-file.png"
