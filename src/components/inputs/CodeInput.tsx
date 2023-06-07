@@ -62,7 +62,7 @@ const CodeInput = ({
           value={c}
           onKeyDown={(e) => handleChange(i, e.key)}
           onChange={(e) => null}
-          className="focus:outline-blue h-12 w-12 rounded-md border text-center text-2xl text-neutral-800"
+          className="h-12 w-12 rounded-md border text-center text-2xl text-neutral-800 focus:outline-primary"
         />
       ))}
     </div>

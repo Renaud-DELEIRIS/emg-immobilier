@@ -9,11 +9,14 @@ import { useSteps } from "../provider/StepsProvider";
 import TextInput from "../inputs/TextInput";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
+import CodeInput from "../inputs/CodeInput";
+import Button from "../button/Button";
 
 const Info = ({ open }: { open: boolean }) => {
   const { lead, changeLead } = useLead();
   const { increaseStep, decreaseStep } = useSteps();
   const [step, setStep] = useState<"info" | "phone">("info");
+  const [code, setCode] = useState("");
 
   const isValidEmail = (email: string) => {
     const res = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
@@ -177,6 +180,38 @@ const Info = ({ open }: { open: boolean }) => {
                         un code de vérification par SMS au numéro :{" "}
                         <span className="text-primary">{lead.phone}</span>
                       </p>
+                      <div className="mt-8">
+                        <p className="mb-2 text-sm text-gray-500">
+                          Veuillez saisir le code à 4 chiffres :
+                        </p>
+                        <CodeInput
+                          onChange={(e) => setCode(e)}
+                          value={code}
+                          accept={"number"}
+                        />
+                      </div>
+                      <div className="mt-8 flex w-full flex-row items-center justify-between">
+                        <Button
+                          disabled={code.length !== 4}
+                          intent={"primary"}
+                          onClick={() => {
+                            increaseStep();
+                          }}
+                        >
+                          <span>Valider</span>
+                        </Button>
+                        <Button
+                          intent={"secondary"}
+                          size={"small"}
+                          iconLeft={<IconArrowLeft />}
+                          onClick={() => {
+                            setStep("info");
+                            setCode("");
+                          }}
+                        >
+                          <span>Retour</span>
+                        </Button>
+                      </div>
                     </motion.div>
                   )}
                   <div className="hidden w-64 flex-col items-center justify-center bg-neutral-300 md:flex">

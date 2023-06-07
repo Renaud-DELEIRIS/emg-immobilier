@@ -151,7 +151,12 @@ const Franchise = () => {
                         },
                       ]
                 }
-                value={lead.adherent[isEditing]?.franchise || ""}
+                value={
+                  lead.adherent[isEditing]?.franchise ||
+                  (isChild(lead.adherent[isEditing]?.dob || "")
+                    ? "600"
+                    : "2500")
+                }
                 onChange={(value: string) => {
                   console.log(value);
                   changeLead({
@@ -177,7 +182,27 @@ const Franchise = () => {
                 >
                   <Button
                     onClick={() => {
-                      setStep("couverture");
+                      if (!lead.adherent[isEditing]?.franchise)
+                        changeLead({
+                          adherent: [
+                            ...lead.adherent.slice(0, isEditing),
+                            {
+                              ...lead.adherent[isEditing],
+                              franchise: isChild(
+                                lead.adherent[isEditing]?.dob || ""
+                              )
+                                ? "600"
+                                : "2500",
+                            },
+                            ...lead.adherent.slice(isEditing + 1),
+                          ],
+                        });
+
+                      if (isChild(lead.adherent[isEditing]?.dob || "")) {
+                        setStep("couverture");
+                      } else {
+                        setIsEditing(undefined);
+                      }
                     }}
                     className="mt-4 w-52"
                   >

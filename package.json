@@ -23,6 +23,7 @@
     "react-switch": "^7.0.0",
     "react-use": "^17.4.0",
     "sass": "^1.62.1",
+    "vivus": "^0.4.6",
     "zod": "^3.21.4",
     "zustand": "^4.3.8"
   },
@@ -32,6 +33,7 @@
     "@types/prettier": "^2.7.2",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/vivus": "^0.4.4",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
     "autoprefixer": "^10.4.14",

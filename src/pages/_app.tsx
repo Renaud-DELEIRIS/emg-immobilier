@@ -4,6 +4,7 @@ import { StepsProvider } from "~/components/provider/StepsProvider";
 import "react-phone-input-2/lib/style.css";
 
 import "~/styles/globals.css";
+import "~/styles/loader.scss";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (

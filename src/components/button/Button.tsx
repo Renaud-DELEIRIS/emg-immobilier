@@ -15,13 +15,13 @@ interface ButtonProps extends DefaultProps {
 }
 
 const ButtonClass = cva(
-  "border active:scale-105 scale-100 duration-150 disabled:opacity-50 disabled:pointer-events-none text-center font-semibold",
+  "border-2 active:scale-105 scale-100 duration-150 disabled:opacity-50 disabled:pointer-events-none text-center font-semibold",
   {
     variants: {
       intent: {
         primary: [
           "bg-primary ",
-          "hover:bg-primary-600 border-transparent",
+          "hover:bg-primary-600 border-[#E0E2E4]",
           "text-white",
         ],
         secondary: ["text-neutral-500 border-transparent"],
@@ -36,7 +36,7 @@ const ButtonClass = cva(
       },
       size: {
         small: ["text-sm", "", "px-2"],
-        medium: ["text-base", "py-1", "px-4", "h-12"],
+        medium: ["text-base", "py-4", "px-4"],
         large: ["text-lg", "py-2", "px-6", "h-16"],
       },
       widthFull: {
