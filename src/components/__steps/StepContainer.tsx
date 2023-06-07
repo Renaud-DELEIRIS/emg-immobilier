@@ -38,7 +38,7 @@ const StepContainer = ({
         ></Image>
         <div className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-green-400 outline outline-2 outline-white" />
       </div>
-      <h1 className="mb-2 mt-4 text-center text-[32px] font-bold leading-10 tracking-tight text-primary">
+      <h1 className="mb-2 mt-4 text-center text-[26px] font-bold leading-10 tracking-tight text-[#2F3946]">
         {title}
       </h1>
 

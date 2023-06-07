@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <>
       <div className="sticky top-0 z-50 w-full">
-        <header className="row box-shadow inset-0 h-16 w-full items-center justify-between border-b border-[rgb(250,247,247)] bg-white px-2 py-2 md:px-12">
+        <header className="row inset-0 h-16 w-full items-center justify-between border-b border-[rgb(250,247,247)] bg-white px-2 py-2 md:px-12">
           <Button
             onClick={() => decreaseStep()}
             intent="secondary"
@@ -29,16 +29,13 @@ const Header = () => {
           <div className="hidden w-1/2 md:block">
             <ProgressBar now={actualStep / maxStep} />
           </div>
-          <Button
+          <a
             href="tel:0225661647"
-            intent="primary"
-            iconLeft={<IconPhone size={24} />}
-            size="small"
-            className="ml-auto py-1"
-            rounded={"xl"}
+            className="ml-auto flex items-center gap-1 rounded-[10px] border-2 border-[#E0E2E4] px-4 py-[.7rem] text-[16px]"
           >
+            <IconPhone size={22} />
             Nous appeler
-          </Button>
+          </a>
         </header>
         <div className="absolute bottom-0 z-[100] block w-screen md:hidden">
           <ProgressBar now={actualStep / maxStep} />

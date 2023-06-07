@@ -13,6 +13,8 @@ import {
   IconPlus,
   IconX,
 } from "@tabler/icons-react";
+``;
+import { motion } from "framer-motion";
 
 const textByIndex = [
   {
@@ -38,6 +40,7 @@ const Adherant = () => {
   const [isEditing, setIsEditing] = useState<number | undefined>(undefined);
   const [adherent, setAdherent] = useState<LeadData["adherent"]["0"]>();
   const [hasEdited, setHasEdited] = useState(false);
+  const [step, setStep] = useState<"dob" | "civilite">("dob");
 
   const getType = (index: number) => {
     if (index === 0) {
@@ -77,6 +80,15 @@ const Adherant = () => {
     return undefined;
   };
 
+  const textIndex =
+    isEditing !== undefined
+      ? lead.for === "you and your kids" && isEditing > 0
+        ? 2
+        : isEditing > 2
+        ? 2
+        : isEditing
+      : 0;
+
   useEffect(() => {
     const next = nextToEdit();
     if (next !== undefined) {
@@ -85,40 +97,14 @@ const Adherant = () => {
     }
   }, [lead]);
 
-  const sort = () => {
-    const sortedAdherents = lead.adherent.sort((a, b) => {
-      if (a.type === "main") {
-        return -1;
-      }
-      if (b.type === "main") {
-        return 1;
-      }
-      if (a.type === "partner") {
-        return -1;
-      }
-      if (b.type === "partner") {
-        return 1;
-      }
-      if (a.type === "child" && b.type === "child") {
-        return dayjs(a.dob).diff(dayjs(b.dob));
-      }
-      return 0;
-    });
-    changeLead({ ...lead, adherent: sortedAdherents });
-  };
-
   return (
     <StepContainer
       maxWidth="max-w-xl"
       title={
         isEditing !== undefined
-          ? textByIndex[
-              lead.for === "you and your kids" && isEditing > 0
-                ? 2
-                : isEditing > 2
-                ? 2
-                : isEditing
-            ]?.title || ""
+          ? step === "dob"
+            ? textByIndex[textIndex]?.dob || ""
+            : textByIndex[textIndex]?.civilite || ""
           : "Voulez vous modifier un profil ?"
       }
       info={
@@ -129,90 +115,33 @@ const Adherant = () => {
     >
       {isEditing !== undefined && (
         <div>
-          <p className="mb-2">
-            {textByIndex[
-              lead.for === "you and your kids" && isEditing > 0
-                ? 2
-                : isEditing > 2
-                ? 2
-                : isEditing
-            ]?.dob || ""}
-          </p>
-          <TextInput
-            value={adherent?.dob || ""}
-            onChange={(value) => {
-              setAdherent({ ...adherent, dob: value });
-            }}
-            placeholder="JJ/MM/AAAA"
-            className="w-full"
-            type="date"
-            error={
-              adherent?.dob === "" || adherent?.dob === undefined
-                ? ""
-                : isValidDob(adherent?.dob || "")
-            }
-          />
-          {!isValidDob(adherent?.dob || "") &&
-            adherent?.dob !== undefined &&
-            adherent?.dob !== "" && (
-              <>
-                <p className="mb-2 mt-4">
-                  {textByIndex[
-                    lead.for === "you and your kids" && isEditing > 0
-                      ? 2
-                      : isEditing > 2
-                      ? 2
-                      : isEditing
-                  ]?.civilite || ""}
-                </p>
-                <TileInput
-                  value={adherent?.civility}
-                  onChange={(value) => {
-                    setAdherent({
-                      ...adherent,
-                      civility: value as "man",
-                    });
-                  }}
-                  options={[
-                    {
-                      label: "Homme",
-                      value: "man",
-                      rightIcon: <IconGenderMale />,
-                    },
-                    {
-                      label: "Femme",
-                      value: "female",
-                      rightIcon: <IconGenderFemale />,
-                    },
-                  ]}
-                  className="gap-4"
-                ></TileInput>
-                {adherent?.civility !== undefined && (
+          {step === "dob" && (
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+            >
+              <p className="mb-2">{textByIndex[textIndex]?.dob || ""}</p>
+              <TextInput
+                value={adherent?.dob || ""}
+                onChange={(value) => {
+                  setAdherent({ ...adherent, dob: value });
+                }}
+                placeholder="JJ/MM/AAAA"
+                className="w-full"
+                type="date"
+                error={
+                  adherent?.dob === "" || adherent?.dob === undefined
+                    ? ""
+                    : isValidDob(adherent?.dob || "")
+                }
+              />
+              {!isValidDob(adherent?.dob || "") &&
+                adherent?.dob !== undefined &&
+                adherent?.dob !== "" && (
                   <div className="flex w-full justify-center">
                     <Button
                       onClick={() => {
-                        if (lead.adherent[isEditing] === undefined) {
-                          changeLead({
-                            adherent: [
-                              ...lead.adherent,
-                              {
-                                ...adherent,
-                                type: getType(isEditing),
-                              },
-                            ],
-                          });
-                        } else {
-                          const newAdherents = [...lead.adherent];
-                          newAdherents[isEditing] = {
-                            ...adherent,
-                            type: getType(isEditing),
-                          };
-                          changeLead({
-                            adherent: newAdherents,
-                          });
-                        }
-                        setIsEditing(undefined);
-                        setAdherent(undefined);
+                        setStep("civilite");
                       }}
                       className="mt-4 w-52"
                     >
@@ -220,14 +149,87 @@ const Adherant = () => {
                     </Button>
                   </div>
                 )}
-              </>
-            )}
+            </motion.div>
+          )}
+          {step === "civilite" && (
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+            >
+              <p className="mb-2">
+                {textByIndex[
+                  lead.for === "you and your kids" && isEditing > 0
+                    ? 2
+                    : isEditing > 2
+                    ? 2
+                    : isEditing
+                ]?.civilite || ""}
+              </p>
+              <TileInput
+                value={adherent?.civility}
+                onChange={(value) => {
+                  setAdherent({
+                    ...adherent,
+                    civility: value as "man",
+                  });
+                }}
+                options={[
+                  {
+                    label: "Homme",
+                    value: "man",
+                    rightIcon: <IconGenderMale />,
+                  },
+                  {
+                    label: "Femme",
+                    value: "female",
+                    rightIcon: <IconGenderFemale />,
+                  },
+                ]}
+                className="gap-4"
+              ></TileInput>
+              {adherent?.civility !== undefined && (
+                <div className="flex w-full justify-center">
+                  <Button
+                    onClick={() => {
+                      if (lead.adherent[isEditing] === undefined) {
+                        changeLead({
+                          adherent: [
+                            ...lead.adherent,
+                            {
+                              ...adherent,
+                              type: getType(isEditing),
+                            },
+                          ],
+                        });
+                      } else {
+                        const newAdherents = [...lead.adherent];
+                        newAdherents[isEditing] = {
+                          ...adherent,
+                          type: getType(isEditing),
+                        };
+                        changeLead({
+                          adherent: newAdherents,
+                        });
+                      }
+                      setIsEditing(undefined);
+                      setAdherent(undefined);
+                      setStep("dob");
+                    }}
+                    className="mt-4 w-52"
+                  >
+                    Valider
+                  </Button>
+                </div>
+              )}
+            </motion.div>
+          )}
           {((isEditing > 2 && lead.for === "you, your partner and your kids") ||
             (isEditing > 1 && lead.for === "you and your kids")) && (
             <Button
               onClick={() => {
                 setIsEditing(undefined);
                 setAdherent(undefined);
+                setStep("dob");
               }}
               className="mt-4 w-fit"
               size={"small"}
@@ -252,20 +254,41 @@ const Adherant = () => {
                   className="group flex w-full justify-between rounded-lg border border-neutral-100 bg-white p-4 shadow"
                 >
                   <p className="text-base text-neutral-800">
-                    {adherent.type === "main"
-                      ? `Vous êtes né${
-                          adherent.civility === "female" ? "e" : ""
-                        } en `
-                      : adherent.type === "partner"
-                      ? `Votre conjoint${
-                          adherent.civility === "female" ? "e" : ""
-                        } est né${
-                          adherent.civility === "female" ? "e" : ""
-                        } en `
-                      : `Votre enfant est né${
-                          adherent.civility === "female" ? "e" : ""
-                        } en `}
-                    {dayjs(adherent.dob).format("YYYY")}
+                    {adherent.type === "main" ? (
+                      adherent.civility === "female" ? (
+                        <span>
+                          Vous êtes <strong>une femme</strong>, née en{" "}
+                          <strong>{dayjs(adherent.dob).format("YYYY")}</strong>
+                        </span>
+                      ) : (
+                        <span>
+                          Vous êtes <strong>un homme</strong>, né en{" "}
+                          <strong>{dayjs(adherent.dob).format("YYYY")}</strong>
+                        </span>
+                      )
+                    ) : adherent.type === "partner" ? (
+                      adherent.civility === "female" ? (
+                        <span>
+                          Votre conjointe est née en{" "}
+                          <strong>{dayjs(adherent.dob).format("YYYY")}</strong>
+                        </span>
+                      ) : (
+                        <span>
+                          Votre conjoint est né en{" "}
+                          <strong>{dayjs(adherent.dob).format("YYYY")}</strong>
+                        </span>
+                      )
+                    ) : adherent.civility === "female" ? (
+                      <span>
+                        Votre enfant est née en{" "}
+                        <strong>{dayjs(adherent.dob).format("YYYY")}</strong>
+                      </span>
+                    ) : (
+                      <span>
+                        Votre enfant est né en{" "}
+                        <strong>{dayjs(adherent.dob).format("YYYY")}</strong>
+                      </span>
+                    )}
                   </p>
                   <IconEdit className="group-hover:text-primary-500" />
                 </button>

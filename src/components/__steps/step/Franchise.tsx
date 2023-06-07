@@ -1,19 +1,13 @@
 import { useEffect, useState } from "react";
 import StepContainer from "../StepContainer";
 import TileInput from "~/components/inputs/Tile";
-import { type LeadData, useLead } from "~/components/provider/LeadProvider";
+import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
-import TextInput from "~/components/inputs/TextInput";
 import dayjs from "dayjs";
 import Button from "~/components/button/Button";
-import {
-  IconCheck,
-  IconEdit,
-  IconInfoCircle,
-  IconPlus,
-  IconX,
-} from "@tabler/icons-react";
+import { IconCheck, IconEdit, IconX } from "@tabler/icons-react";
 import Select from "~/components/inputs/Select";
+import { motion } from "framer-motion";
 
 const textByIndex = [
   {
@@ -37,16 +31,16 @@ const Franchise = () => {
   const { lead, changeLead } = useLead();
   const { increaseStep } = useSteps();
   const [isEditing, setIsEditing] = useState<number | undefined>(undefined);
+  const [step, setStep] = useState<"franchise" | "couverture">("franchise");
 
-  const getType = (index: number) => {
-    if (index === 0) {
-      return "main";
-    } else if (index === 1 && lead.for !== "you and your kids") {
-      return "partner";
-    } else {
-      return "child";
-    }
-  };
+  const textIndex =
+    isEditing !== undefined
+      ? lead.for === "you and your kids" && isEditing > 0
+        ? 2
+        : isEditing > 2
+        ? 2
+        : isEditing
+      : 0;
 
   const nextToEdit = () => {
     for (const adherent of lead.adherent) {
@@ -74,187 +68,191 @@ const Franchise = () => {
     <StepContainer
       title={
         isEditing !== undefined
-          ? textByIndex[
-              lead.for === "you and your kids" && isEditing > 0
-                ? 2
-                : isEditing > 2
-                ? 2
-                : isEditing
-            ]?.title || ""
+          ? textByIndex[textIndex]?.title || ""
           : "Voulez vous modifier un profil ?"
       }
       info={
-        isEditing !== undefined && lead.adherent.length > 0
-          ? "Vous pourrez modifier les profils après avoir terminé la saisie."
+        isEditing !== undefined
+          ? step === "franchise"
+            ? isChild(lead.adherent[isEditing]?.dob || "")
+              ? "La franchise 0 est recommandée pour les enfants de moins de 15 ans."
+              : "Si vos dépenses médicales sont inférieures à 1‘700 CHF par année, je vous conseille une franchise à 2‘500 CHF."
+            : step === "couverture"
+            ? "Si vous travaillez plus de 8h/semaine pour le même employeur, le risque accident est couvert par votre employeur."
+            : ""
           : ""
       }
     >
       {isEditing !== undefined && (
         <div>
-          <p className="mb-2">
-            {textByIndex[
-              lead.for === "you and your kids" && isEditing > 0
-                ? 2
-                : isEditing > 2
-                ? 2
-                : isEditing
-            ]?.franchise || ""}
-          </p>
-          <Select
-            options={
-              isChild(lead.adherent[isEditing]?.dob || "")
-                ? [
-                    {
-                      label: "0€",
-                      value: "0",
-                    },
-                    {
-                      label: "100€",
-                      value: "100",
-                    },
-                    {
-                      label: "200€",
-                      value: "200",
-                    },
-                    {
-                      label: "300€",
-                      value: "300",
-                    },
-                    {
-                      label: "400€",
-                      value: "400",
-                    },
-                    {
-                      label: "500€",
-                      value: "500",
-                    },
-                    {
-                      label: "600€",
-                      value: "600",
-                    },
-                  ]
-                : [
-                    {
-                      label: "300€",
-                      value: "300",
-                    },
-                    {
-                      label: "500€",
-                      value: "500",
-                    },
-                    {
-                      label: "1000€",
-                      value: "1000",
-                    },
-                    {
-                      label: "1500€",
-                      value: "1500",
-                    },
-                    {
-                      label: "2000€",
-                      value: "2000",
-                    },
-                    {
-                      label: "2500€",
-                      value: "2500",
-                    },
-                  ]
-            }
-            value={lead.adherent[isEditing]?.franchise || ""}
-            onChange={(value: string) => {
-              console.log(value);
-              changeLead({
-                adherent: [
-                  ...lead.adherent.slice(0, isEditing),
-                  {
-                    ...lead.adherent[isEditing],
-                    franchise: value as "0",
-                  },
-                  ...lead.adherent.slice(isEditing + 1),
-                ],
-              });
-            }}
-            placeholder="Votre franchise"
-            label="Franchise"
-            icon={<IconEdit />}
-          />
-          <p className="mt-4 flex items-center gap-2 text-sm text-neutral-400">
-            <IconInfoCircle size={18} />
-            {isChild(lead.adherent[isEditing]?.dob || "") ? (
-              <span>
-                La franchise 0 est recommandée pour les enfants de moins de 15
-                ans.
-              </span>
-            ) : (
-              <span>
-                Si vos dépenses médicales sont inférieures à{" "}
-                <strong>1‘700 CHF par année</strong>, je vous conseille une{" "}
-                <strong>franchise à 2‘500 CHF.</strong>
-              </span>
-            )}
-          </p>
-          {lead.adherent[isEditing]?.franchise &&
-            lead.adherent[isEditing]?.type !== "child" && (
-              <>
-                <p className="mb-2 mt-4">
-                  {textByIndex[
-                    lead.for === "you and your kids" && isEditing > 0
-                      ? 2
-                      : isEditing > 2
-                      ? 2
-                      : isEditing
-                  ]?.accident || ""}
-                </p>
-                <TileInput
-                  value={lead.adherent[isEditing]?.couvertureAccident}
-                  onChange={(value) => {
-                    changeLead({
-                      adherent: [
-                        ...lead.adherent.slice(0, isEditing),
+          {step === "franchise" && (
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+            >
+              <p className="mb-2">{textByIndex[textIndex]?.franchise || ""}</p>
+              <Select
+                options={
+                  isChild(lead.adherent[isEditing]?.dob || "")
+                    ? [
                         {
-                          ...lead.adherent[isEditing],
-                          couvertureAccident: value as "oui",
+                          label: "0€",
+                          value: "0",
                         },
-                        ...lead.adherent.slice(isEditing + 1),
-                      ],
-                    });
-                  }}
-                  options={[
-                    {
-                      label: "Oui",
-                      value: "oui",
-                      rightIcon: <IconCheck />,
-                    },
-                    {
-                      label: "Non",
-                      value: "non",
-                      rightIcon: <IconX />,
-                    },
-                  ]}
-                  className="gap-4"
-                ></TileInput>
-                <p className="mt-4 flex items-center gap-2 text-sm text-neutral-400">
-                  <IconInfoCircle size={18} />
-                  Si vous travaillez plus de 8h/semaine pour le même employeur,
-                  le risque accident est couvert par votre employeur.
-                </p>
-              </>
-            )}
-          {(lead.adherent[isEditing]?.type === "child" ||
-            lead.adherent[isEditing]?.couvertureAccident !== undefined) && (
-            <div className="flex w-full justify-center">
-              <Button
-                onClick={() => {
-                  setIsEditing(undefined);
+                        {
+                          label: "100€",
+                          value: "100",
+                        },
+                        {
+                          label: "200€",
+                          value: "200",
+                        },
+                        {
+                          label: "300€",
+                          value: "300",
+                        },
+                        {
+                          label: "400€",
+                          value: "400",
+                        },
+                        {
+                          label: "500€",
+                          value: "500",
+                        },
+                        {
+                          label: "600€",
+                          value: "600",
+                        },
+                      ]
+                    : [
+                        {
+                          label: "300€",
+                          value: "300",
+                        },
+                        {
+                          label: "500€",
+                          value: "500",
+                        },
+                        {
+                          label: "1000€",
+                          value: "1000",
+                        },
+                        {
+                          label: "1500€",
+                          value: "1500",
+                        },
+                        {
+                          label: "2000€",
+                          value: "2000",
+                        },
+                        {
+                          label: "2500€",
+                          value: "2500",
+                        },
+                      ]
+                }
+                value={lead.adherent[isEditing]?.franchise || ""}
+                onChange={(value: string) => {
+                  console.log(value);
+                  changeLead({
+                    adherent: [
+                      ...lead.adherent.slice(0, isEditing),
+                      {
+                        ...lead.adherent[isEditing],
+                        franchise: value as "0",
+                      },
+                      ...lead.adherent.slice(isEditing + 1),
+                    ],
+                  });
                 }}
-                className="mt-4 w-52"
-              >
-                Valider
-              </Button>
-            </div>
+                placeholder="Votre franchise"
+                label="Franchise"
+                icon={<IconEdit />}
+              />
+              {lead.adherent[isEditing]?.franchise && (
+                <motion.div
+                  className="flex w-full justify-center"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                >
+                  <Button
+                    onClick={() => {
+                      setStep("couverture");
+                    }}
+                    className="mt-4 w-52"
+                  >
+                    Valider
+                  </Button>
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+
+          {step === "couverture" && (
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+            >
+              <p className="mb-2 mt-4">
+                {textByIndex[
+                  lead.for === "you and your kids" && isEditing > 0
+                    ? 2
+                    : isEditing > 2
+                    ? 2
+                    : isEditing
+                ]?.accident || ""}
+              </p>
+              <TileInput
+                value={lead.adherent[isEditing]?.couvertureAccident}
+                onChange={(value) => {
+                  changeLead({
+                    adherent: [
+                      ...lead.adherent.slice(0, isEditing),
+                      {
+                        ...lead.adherent[isEditing],
+                        couvertureAccident: value as "oui",
+                      },
+                      ...lead.adherent.slice(isEditing + 1),
+                    ],
+                  });
+                }}
+                options={[
+                  {
+                    label: "Oui",
+                    value: "oui",
+                    rightIcon: <IconCheck />,
+                  },
+                  {
+                    label: "Non",
+                    value: "non",
+                    rightIcon: <IconX />,
+                  },
+                ]}
+                className="gap-4"
+              ></TileInput>
+              {(lead.adherent[isEditing]?.type === "child" ||
+                lead.adherent[isEditing]?.couvertureAccident !== undefined) && (
+                <motion.div
+                  className="flex w-full justify-center"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                >
+                  <Button
+                    onClick={() => {
+                      setIsEditing(undefined);
+                      setStep("franchise");
+                    }}
+                    className="mt-4 w-52"
+                  >
+                    Valider
+                  </Button>
+                </motion.div>
+              )}
+            </motion.div>
           )}
         </div>
       )}
+
       {lead.adherent.length > 0 && isEditing === undefined && (
         <>
           <h3 className="text-xl">Vos profils</h3>

@@ -20,8 +20,7 @@ const Assurance = () => {
   return (
     <StepContainer
       maxWidth="max-w-xl"
-      title="Pour qui souhaitez-vous comparer ?"
-      description="En quelques minutes, comparons ensemble plus de 42 compagnies."
+      title="Quelle est votre assurance actuelle ?"
     >
       <AutoComplete
         value={
@@ -38,10 +37,10 @@ const Assurance = () => {
           });
         }}
         options={insurers}
-        label="Votre assurance actuelle"
+        placeholder="p. ex. Helsana"
       ></AutoComplete>
       <p className="mt-2 text-sm text-gray-500">
-        Pas encore d‘assurance ?{" "}
+        <strong>Pas encore d‘assurance ? </strong>
         <button
           className="text-primary hover:underline"
           onClick={() => {

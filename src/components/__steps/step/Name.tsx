@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
 import StepContainer from "../StepContainer";
 import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
-import AutoComplete from "~/components/inputs/Autocomplete";
-import localtion from "~/data/ch-locations.json";
 import Button from "~/components/button/Button";
 import TextInput from "~/components/inputs/TextInput";
 

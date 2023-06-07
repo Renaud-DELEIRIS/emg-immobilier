@@ -1,44 +1,34 @@
+import { type StepId } from "~/constants/step.constant";
+import PhoneInput from "react-phone-input-2";
+import { IconArrowLeft, IconMail } from "@tabler/icons-react";
+import { Fragment, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { IconArrowLeft } from "@tabler/icons-react";
-import { Fragment, useEffect, useState } from "react";
-import Button from "../button/Button";
-import CodeInput from "../inputs/CodeInput";
+import Image from "next/image";
 import { useLead } from "../provider/LeadProvider";
 import { useSteps } from "../provider/StepsProvider";
+import TextInput from "../inputs/TextInput";
+import dayjs from "dayjs";
 
-interface Props {
-  open: boolean;
-  onClose: () => void;
-}
+const Info = ({ open }: { open: boolean }) => {
+  const { lead, changeLead } = useLead();
+  const { increaseStep, decreaseStep } = useSteps();
 
-const VerifyModal = ({ onClose, open }: Props) => {
-  const [code, setCode] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [successResend, setSuccessResend] = useState<boolean>(false);
-  const { lead } = useLead();
-  const { decreaseStep } = useSteps();
-
-  const handleResend = () => {
-    setSuccessResend(true);
-    setTimeout(() => {
-      setSuccessResend(false);
-    }, 1000);
+  const isValidEmail = (email: string) => {
+    const res = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
+    return res;
   };
 
-  const handleVerify = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      onClose();
-    }, 2000);
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    increaseStep();
   };
 
+  // Scroll top on mount
   useEffect(() => {
-    // On open make html scrollable
     setTimeout(() => {
-      document.documentElement.style.overflow = "auto";
-    }, 300);
-  }, [open]);
+      window.scrollTo(0, 0);
+    }, 100);
+  }, []);
 
   return (
     <Transition appear show={open} as={Fragment}>
@@ -56,7 +46,7 @@ const VerifyModal = ({ onClose, open }: Props) => {
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="flex min-h-full items-start justify-center p-4 pt-20 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -66,59 +56,129 @@ const VerifyModal = ({ onClose, open }: Props) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <Dialog.Title
-                  as="h3"
-                  className="text-blue text-lg font-medium leading-6"
-                ></Dialog.Title>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500"></p>
-                  <p className="text-sm text-gray-500"></p>
-                </div>
-
-                <div className="mt-4">
-                  <CodeInput
-                    value={code}
-                    onChange={setCode}
-                    onFilled={handleVerify}
-                    length={4}
-                    accept="number"
-                  />
-                </div>
-                {/* Button resend code */}
-                <div className="mt-1">
-                  {!successResend ? (
-                    <button
-                      type="button"
-                      className="text-blue text-sm hover:underline"
-                      onClick={handleResend}
-                    >
-                      resend code
-                    </button>
-                  ) : (
-                    <span className="text-sm text-green-500">
-                      resend success
+              <Dialog.Panel className="w-full max-w-3xl transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+                <div className="flex w-full">
+                  <form
+                    onSubmit={onSubmit}
+                    className="flex flex-1 grid-cols-6 flex-col gap-4 p-6"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src="/portrait.png"
+                        alt="Portrait"
+                        width={40}
+                        height={40}
+                        className="rounded-full"
+                      />
+                      <span className="text-base font-semibold">Emma</span>
+                    </div>
+                    <p className="col-span-6 text-sm text-gray-500">
+                      Nous avons identifié pour <b>vous</b> les{" "}
+                      <span className="font-semibold text-primary underline">
+                        12
+                      </span>{" "}
+                      meilleures offres <b>conforts</b> adaptées à votre{" "}
+                      <b>profil</b>. Ces tarifs seront bloqués pour vous
+                      jusqu’au{" "}
+                      <span className="font-semibold text-primary underline">
+                        {dayjs().add(1, "day").format("DD/MM/YYYY")}
+                      </span>
+                    </p>
+                    <div className="col-span-6">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Votre adresse email
+                      </label>
+                      <div className="relative mt-1 rounded-md shadow-sm">
+                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                          <IconMail
+                            className="h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                          />
+                        </div>
+                        <TextInput
+                          type="email"
+                          name="email"
+                          className="block w-full rounded-md border-gray-300 pl-10 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                          placeholder="you@example.com"
+                          value={lead.email || ""}
+                          icon={<IconMail size={18} />}
+                          onChange={(e) =>
+                            changeLead({
+                              email: e,
+                            })
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className="col-span-6">
+                      <label
+                        htmlFor="phone"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Votre numéro de téléphone
+                      </label>
+                      <PhoneInput
+                        onChange={(e: string) =>
+                          changeLead({
+                            phone: e,
+                          })
+                        }
+                        inputProps={{
+                          type: "tel",
+                          name: "phone",
+                          id: "phone",
+                          autoComplete: "phone",
+                        }}
+                        inputClass="block !w-full border-gray-300 focus:!border-primary-500 focus:!ring-primary-500 !sm:text-sm !h-[38px] !rounded-md"
+                        preferredCountries={["ch", "fr"]}
+                        regions={"europe"}
+                        country={"ch"}
+                        containerClass="relative mt-1  h-[38px] !border-transparent"
+                        value={lead.phone || ""}
+                      />
+                    </div>
+                    <span className="col-span-6 text-xs text-gray-400">
+                      Ces <strong>informations protégées</strong> seront
+                      utilisées uniquement dans le cadre de votre dossier.
                     </span>
-                  )}
-                </div>
-                <div className="mt-6 flex items-center justify-between gap-4">
-                  <Button
-                    className="w-28"
-                    onClick={handleVerify}
-                    size="medium"
-                    loading={loading}
-                    disabled={code.length < 4}
-                  >
-                    Submit
-                  </Button>
-                  <Button
-                    intent="secondary"
-                    size="small"
-                    iconLeft={<IconArrowLeft />}
-                    onClick={() => decreaseStep()}
-                  >
-                    Back
-                  </Button>
+
+                    <div className="col-span-6 flex justify-around">
+                      <button
+                        className="rounded-md border border-primary-400 bg-primary-400 p-2 text-white hover:bg-primary-500 focus:outline-primary focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
+                        type="submit"
+                        disabled={
+                          !(
+                            lead.phone &&
+                            lead.email &&
+                            isValidEmail(lead.email)
+                          )
+                        }
+                      >
+                        <span>ACCÉDER AUX TARIFS NÉGOCIÉS</span>
+                      </button>
+                    </div>
+                  </form>
+                  <div className="hidden w-64 flex-col items-center justify-center bg-neutral-300 md:flex">
+                    <Image
+                      src="/comparea-file.png"
+                      alt="Comparea"
+                      width={200}
+                      height={200}
+                    />
+                    <Image
+                      src="/photos_agents.png"
+                      alt="agents"
+                      width={200}
+                      height={200}
+                    />
+                    <span className="mt-4 text-center text-base font-semibold text-primary-500">
+                      Une équipe d‘expert pour vous conseiller{" "}
+                      <u>gratuitement</u>
+                    </span>
+                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -129,4 +189,4 @@ const VerifyModal = ({ onClose, open }: Props) => {
   );
 };
 
-export default VerifyModal;
+export default Info;

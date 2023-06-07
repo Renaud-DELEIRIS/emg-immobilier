@@ -22,8 +22,7 @@ const Npa = () => {
   return (
     <StepContainer
       maxWidth="max-w-xl"
-      title="Pour qui souhaitez-vous comparer ?"
-      description="En quelques minutes, comparons ensemble plus de 42 compagnies."
+      title="Quel est votre lieu de résidence ?"
     >
       <AutoComplete
         value={
@@ -40,10 +39,10 @@ const Npa = () => {
           });
         }}
         options={localtion}
-        label="Votre NPA"
+        placeholder="Ville ou NPA"
       ></AutoComplete>
       <p className="mt-2 text-sm text-gray-500">
-        Pas sur le territoire Suisse ?{" "}
+        <strong>Pas sur le territoire Suisse ? </strong>
         <button
           className="text-primary hover:underline"
           onClick={() => {

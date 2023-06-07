@@ -32,6 +32,8 @@ export interface LeadData {
       }[];
     };
   }[];
+  email?: string;
+  phone?: string;
   npa?: {
     key: number;
     value: string;
