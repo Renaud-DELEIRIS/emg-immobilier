@@ -46,13 +46,13 @@ const StepContainer = ({
 
       <div className="w-full">{children}</div>
       {info && (
-        <div className="mt-8 flex w-full flex-row items-center rounded-lg border border-primary-400 bg-primary-50 p-3">
+        <div className="mt-8 flex w-full flex-row items-center rounded-lg bg-[#00c49b14] p-3">
           <Image
             src={"/portrait.png"}
             alt="Assistance"
             width={32}
             height={32}
-            className="h-8 w-8 rounded-full"
+            className="h-8 w-8 rounded-full border border-[#00C49B]"
           ></Image>
           <div className="ml-2">
             {infoTitle && (

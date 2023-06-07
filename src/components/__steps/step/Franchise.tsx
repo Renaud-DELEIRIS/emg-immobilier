@@ -61,6 +61,7 @@ const Franchise = () => {
     const next = nextToEdit();
     if (next !== undefined) {
       setIsEditing(nextToEdit());
+      setStep("franchise");
     }
   }, [lead]);
 
@@ -199,14 +200,14 @@ const Franchise = () => {
                         });
 
                       if (isChild(lead.adherent[isEditing]?.dob || "")) {
-                        setStep("couverture");
-                      } else {
                         setIsEditing(undefined);
+                      } else {
+                        setStep("couverture");
                       }
                     }}
                     className="mt-4 w-52"
                   >
-                    Valider
+                    Suivant
                   </Button>
                 </motion.div>
               )}

@@ -14,7 +14,7 @@ import Button from "../button/Button";
 
 const Info = ({ open }: { open: boolean }) => {
   const { lead, changeLead } = useLead();
-  const { increaseStep, decreaseStep } = useSteps();
+  const { increaseStep } = useSteps();
   const [step, setStep] = useState<"info" | "phone">("info");
   const [code, setCode] = useState("");
 

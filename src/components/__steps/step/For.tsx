@@ -4,6 +4,10 @@ import TileInput from "~/components/inputs/Tile";
 import { IconGenderFemale, IconGenderMale } from "@tabler/icons-react";
 import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
+import { EmgAdulte } from "~/icons/EmgAdulte";
+import { EmgCouple } from "~/icons/EmgCouple";
+import { EmgAdulteEnfant } from "~/icons/EmgAdulteEnfant";
+import { EmgCoupleEnfant } from "~/icons/EmgCoupleEnfant";
 
 const For = () => {
   const { lead, changeLead } = useLead();
@@ -23,22 +27,22 @@ const For = () => {
           {
             value: "you",
             label: "Vous",
-            icon: <IconGenderMale size={36} />,
+            icon: <EmgAdulte />,
           },
           {
             value: "you and your partner",
             label: "Vous et votre conjoint",
-            icon: <IconGenderFemale size={36} />,
+            icon: <EmgCouple />,
           },
           {
             value: "you and your kids",
             label: "Vous et vos enfants",
-            icon: <IconGenderMale size={36} />,
+            icon: <EmgAdulteEnfant />,
           },
           {
             value: "you, your partner and your kids",
             label: "Vous, votre conjoint(e) et vos enfants",
-            icon: <IconGenderFemale size={36} />,
+            icon: <EmgCoupleEnfant />,
           },
         ]}
         className="grid grid-cols-1 gap-4 md:grid-cols-2"

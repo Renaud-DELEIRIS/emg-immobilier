@@ -31,7 +31,7 @@ const Header = () => {
           </div>
           <a
             href="tel:0225661647"
-            className="ml-auto flex items-center gap-1 rounded-[10px] border-2 border-[#E0E2E4] px-4 py-[.7rem] text-[16px] text-primary"
+            className="ml-auto flex items-center gap-1 rounded-[10px] border-2 border-[#E0E2E4] bg-primary px-4 py-[.7rem] text-[16px] text-neutral-200 hover:bg-primary-600"
           >
             <IconPhone size={22} />
             Nous appeler
