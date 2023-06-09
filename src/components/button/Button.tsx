@@ -28,7 +28,7 @@ const ButtonClass = cva(
         secondary: ["text-neutral-500 border-transparent"],
         outline: [
           "bg-transparent",
-          "hover:bg-primary border-[#E0E2E4]",
+          "hover:bg-primary border-[#E0E2E4] bg-white",
           "text-primary hover:text-white",
         ],
 
@@ -42,7 +42,7 @@ const ButtonClass = cva(
         xl: ["rounded-xl"],
       },
       size: {
-        small: ["text-sm", "", "px-2"],
+        small: ["text-sm", "", "px-3 py-2"],
         medium: ["text-base", "py-4", "px-4"],
         large: ["text-lg", "py-2", "px-6", "h-16"],
       },

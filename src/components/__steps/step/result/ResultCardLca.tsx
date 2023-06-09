@@ -8,10 +8,11 @@ import {
   IconCircleCheckFilled,
   IconCircleX,
   IconHelp,
-  IconHelpOctagon,
-  IconMessageCircleQuestion,
 } from "@tabler/icons-react";
 import Checkbox from "~/components/checkbox/Checkbox";
+import { useLead } from "~/components/provider/LeadProvider";
+import { recallResident } from "~/utils/api/recallResident";
+import { toast } from "react-toastify";
 
 interface Props {
   recommended?: boolean;
@@ -31,6 +32,7 @@ const ResultCardLca = ({
   compare,
 }: Props) => {
   const [show, setShow] = useState(false);
+  const { lead } = useLead();
 
   const month = info.prix.toFixed(2);
   const year = (info.prix * 12).toFixed(2);
@@ -92,6 +94,16 @@ const ResultCardLca = ({
       "Lors d'une hospitalisation de plus de 24h, un montant définie est versé à la personne pour p.ex. aider à payer la franchise de la LAMal.",
   };
 
+  const beCalled = () => {
+    void recallResident(lead.phone || "")
+      .then(() => {
+        toast.success("Nous vous rappellerons dans les plus brefs délais");
+      })
+      .catch(() => {
+        toast.error("Une erreur est survenue, veuillez réessayer plus tard");
+      });
+  };
+
   return (
     <div className="flex flex-col rounded-lg border bg-white">
       {recommended && (
@@ -136,7 +148,9 @@ const ResultCardLca = ({
           </button>
         </div>
         <div className="mt-4 flex flex-col gap-4 md:mt-0">
-          <Button widthFull>Être rappelé</Button>
+          <Button widthFull onClick={beCalled}>
+            Être rappelé
+          </Button>
           <Button widthFull intent={"outline"}>
             Souscrire en ligne
           </Button>
@@ -158,7 +172,7 @@ const ResultCardLca = ({
         } transition-[grid-template-rows,padding]`}
       >
         <div className={`overflow-hidden ${show ? "" : ""}`}>
-          <div className="grid grid-cols-2 gap-5 p-4">
+          <div className="grid grid-cols-[repeat(2,1fr)] gap-5 p-4">
             <span className="px-1 text-xl font-bold text-[#2F3946]">
               Prestations
             </span>
@@ -169,19 +183,19 @@ const ResultCardLca = ({
           <div className="px-4">
             {Object.entries(groupPrestations).map(([group, prestations]) => (
               <>
-                <span className="px-1 text-lg font-bold text-[#2F3946]">
+                <span className="py-3 text-lg font-bold text-[#2F3946]">
                   {group}
                 </span>
                 {info.prestations
                   .filter((p) => prestations.includes(p.label))
                   .map((p, i) => (
                     <div
-                      className={`grid grid-cols-2 gap-5 ${
+                      className={`grid grid-cols-[repeat(2,1fr)] gap-5 ${
                         i === 0 ? "pt-2" : ""
-                      } ${i % 2 === 0 ? "bg-primary-50" : ""}`}
+                      } ${i % 2 === 0 ? "bg-[#f7fcff]" : ""}`}
                       key={i}
                     >
-                      <div className="px-2 text-[#2f3946]">
+                      <div className="py-2 text-[#2f3946]">
                         <div className="relative flex items-center gap-4">
                           {p.status ? (
                             <IconCircleCheck

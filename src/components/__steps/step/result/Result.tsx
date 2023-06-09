@@ -36,9 +36,9 @@ const Result = () => {
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="mx-[5%] flex max-w-6xl flex-col  justify-center gap-4"
+      className="flex flex-col items-center justify-center gap-4 px-[5%]"
     >
-      <div className="flex flex-row items-center justify-between">
+      <div className="flex w-full max-w-6xl flex-row items-center justify-between">
         <h2 className="hidden text-[20px] font-bold text-[#2F3946] md:block">
           12 offres trouvées pour vous! Plus qu‘un clic pour être assuré
           {lead.adherent[0]?.civility === "female" ? "e" : ""}
@@ -47,7 +47,7 @@ const Result = () => {
           Mon comparatif
         </h2>
       </div>
-      <div className="flex flex-row items-center gap-6">
+      <div className="flex w-full max-w-6xl flex-row items-center gap-6">
         {lead.adherent.length > 1 && (
           <Select
             label="Personne à assurer"
@@ -96,7 +96,7 @@ const Result = () => {
           </button>
         </div>
       </div>
-      <div className="mt-8 flex flex-col gap-4">
+      <div className="mt-8 flex w-full max-w-6xl flex-col items-center justify-center gap-4">
         {loading ? (
           <div className="mt-12 grid w-full place-items-center">
             <IconLoader className="h-12 w-12 animate-spin text-primary" />

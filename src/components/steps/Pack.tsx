@@ -38,9 +38,13 @@ const Pack = ({
 }: {
   adherent: Adherent;
   setPack: (pack: {
-    principal: string | undefined | null;
+    principal: "Essentiel" | "Confort" | "Premium" | undefined | null;
     options: {
-      label: string;
+      label:
+        | "Médecine alternative"
+        | "Traitements dentaires"
+        | "Hospitalisation"
+        | "Capital hospitalier";
       level: number;
     }[];
   }) => void;

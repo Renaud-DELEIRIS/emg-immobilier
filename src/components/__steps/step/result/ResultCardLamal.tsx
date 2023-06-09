@@ -4,6 +4,9 @@ import Button from "~/components/button/Button";
 import { type Lamal } from "~/types/comparatif";
 import insurance_hash from "~/data/ch-insurances-hash.json";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
+import { useLead } from "~/components/provider/LeadProvider";
+import { recallFrontalier } from "~/utils/api/recallFrontalier";
+import { toast } from "react-toastify";
 
 interface Props {
   recommended?: boolean;
@@ -13,6 +16,7 @@ interface Props {
 
 const ResultCardLamal = ({ recommended = false, info, monthPrice }: Props) => {
   const [show, setShow] = useState(false);
+  const { lead } = useLead();
 
   const comparaison = parseFloat(info.comparaison);
 
@@ -21,8 +25,18 @@ const ResultCardLamal = ({ recommended = false, info, monthPrice }: Props) => {
     return insurance_hash[index] === info.caisse;
   }) as string;
 
+  const beCalled = () => {
+    void recallFrontalier(lead.phone || "")
+      .then(() => {
+        toast.success("Nous vous rappelons dans quelques minutes.");
+      })
+      .catch(() => {
+        toast.error("Une erreur est survenue, veuillez réessayer.");
+      });
+  };
+
   return (
-    <div className="flex flex-col rounded-lg border bg-white">
+    <div className="flex w-full flex-col rounded-lg border bg-white">
       {recommended && (
         <div className="flex items-center gap-2 rounded-t-lg bg-primary-100 px-2 py-2 text-sm font-semibold text-primary-600">
           <IconCircleCheckFilled size={24} />
@@ -59,7 +73,9 @@ const ResultCardLamal = ({ recommended = false, info, monthPrice }: Props) => {
           )}
         </div>
         <div className="mt-4 flex flex-col gap-4 md:mt-0">
-          <Button widthFull>Être rappelé</Button>
+          <Button widthFull onClick={beCalled}>
+            Être rappelé
+          </Button>
           <Button widthFull intent={"outline"}>
             Souscrire en ligne
           </Button>

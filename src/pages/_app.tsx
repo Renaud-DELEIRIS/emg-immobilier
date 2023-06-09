@@ -6,6 +6,7 @@ import { GTMProvider } from "@elgorditosalsero/react-gtm-hook";
 
 import "~/styles/globals.css";
 import "~/styles/loader.scss";
+import { ToastContainer } from "react-toastify";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
@@ -13,6 +14,19 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       <LeadProvider>
         <StepsProvider>
           <Component {...pageProps} />
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+          <ToastContainer />
         </StepsProvider>
       </LeadProvider>
     </GTMProvider>

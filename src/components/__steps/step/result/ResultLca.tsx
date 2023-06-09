@@ -2,10 +2,15 @@ import { useResult } from "./ResultProvider";
 import { motion } from "framer-motion";
 import ResultCardLca from "./ResultCardLca";
 import { useState } from "react";
+import Button from "~/components/button/Button";
+import FlatModal from "~/components/modal/FlatModal";
+import ModalComparatifTable from "./ModalComparatifTable";
 
 const ResultLca = ({ monthlyPrice }: { monthlyPrice: boolean }) => {
   const { lcaItems } = useResult();
   const [compare, setCompare] = useState<string[]>([]);
+
+  const [open, setOpen] = useState<boolean>(false);
 
   return (
     <motion.div
@@ -35,6 +40,18 @@ const ResultLca = ({ monthlyPrice }: { monthlyPrice: boolean }) => {
             }}
           />
         ))}
+      {compare.length > 1 && (
+        <div className="fixed bottom-12 left-0 right-0 flex justify-center">
+          <Button onClick={() => setOpen(true)} intent="outline" rounded={"xl"}>
+            Comparer les {compare.length} offres
+          </Button>
+        </div>
+      )}
+      <ModalComparatifTable
+        offres={lcaItems.filter((item) => compare.includes(item.id.toString()))}
+        open={open}
+        onClose={() => setOpen(false)}
+      />
     </motion.div>
   );
 };
