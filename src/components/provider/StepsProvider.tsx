@@ -26,6 +26,8 @@ import ChoosePack from "../__steps/step/ChoosePack";
 import Name from "../__steps/step/Name";
 import Loader from "../__steps/step/Loader";
 import Verification from "../__steps/step/Verification";
+import { ResultProvider } from "../__steps/step/result/ResultProvider";
+import Result from "../__steps/step/result/Result";
 
 interface StepContext {
   currentStep: Step;
@@ -104,7 +106,14 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
     if (activeStep.id === "package") return <ChoosePack />;
     if (activeStep.id === "name") return <Name />;
     if (activeStep.id === "loader") return <Loader />;
-    if (activeStep.id === "verification") return <Verification />;
+    if (activeStep.id === "verification" || activeStep.id === "result") {
+      return (
+        <ResultProvider>
+          {activeStep.id === "verification" && <Verification />}
+          <Result />
+        </ResultProvider>
+      );
+    }
     return <DefaultStep />;
   };
 

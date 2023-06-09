@@ -25,9 +25,13 @@ export interface LeadData {
       | "600";
     couvertureAccident?: "oui" | "non";
     pack?: {
-      principal: string | undefined;
+      principal: "Essentiel" | "Confort" | "Premium" | undefined | null;
       options: {
-        label: string;
+        label:
+          | "Médecine alternative"
+          | "Traitements dentaires"
+          | "Hospitalisation"
+          | "Capital hospitalier";
         level: number;
       }[];
     };
@@ -44,6 +48,7 @@ export interface LeadData {
   };
   prenom?: string;
   nom?: string;
+  verified?: boolean;
 
   situation?: "frontalier" | "future resident";
 }

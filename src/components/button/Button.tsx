@@ -12,6 +12,7 @@ interface ButtonProps extends DefaultProps {
   iconRight?: ReactNode;
   iconLeft?: ReactNode;
   href?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 const ButtonClass = cva(
@@ -25,6 +26,12 @@ const ButtonClass = cva(
           "text-white",
         ],
         secondary: ["text-neutral-500 border-transparent"],
+        outline: [
+          "bg-transparent",
+          "hover:bg-primary border-[#E0E2E4]",
+          "text-primary hover:text-white",
+        ],
+
         none: [""],
       },
       rounded: {
@@ -61,6 +68,7 @@ const Button = ({
   href,
   iconRight,
   iconLeft,
+  type = "button",
   ...props
 }: VariantProps<typeof ButtonClass> & ButtonProps) => {
   const Inside = () => (
@@ -100,6 +108,7 @@ const Button = ({
       className={ButtonClass({ ...props }) + " " + className}
       onClick={onClick}
       disabled={disabled || loading}
+      type={type}
     >
       <Inside />
     </button>

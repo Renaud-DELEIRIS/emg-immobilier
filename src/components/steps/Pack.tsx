@@ -38,7 +38,7 @@ const Pack = ({
 }: {
   adherent: Adherent;
   setPack: (pack: {
-    principal: string | undefined;
+    principal: string | undefined | null;
     options: {
       label: string;
       level: number;
@@ -47,22 +47,26 @@ const Pack = ({
 }) => {
   const { width } = useWindowSize();
   const [selected, setSelected] = useState<
-    "Essentiel" | "Confort" | "Premium" | undefined
-  >(
-    adherent.pack?.principal as "Essentiel" | "Confort" | "Premium" | undefined
-  );
+    "Essentiel" | "Confort" | "Premium" | undefined | null
+  >(adherent.pack?.principal);
   const [optionExpanded, setOptionExpanded] = useState<boolean>(false);
   const [options, setOptions] = useState<
     {
-      label: string;
+      label:
+        | "Médecine alternative"
+        | "Traitements dentaires"
+        | "Hospitalisation"
+        | "Capital hospitalier";
       level: number;
     }[]
   >(adherent.pack?.options || []);
 
   useEffect(() => {
     // If adherent age is under or equal at 3 make premium selected
-    if (dayjs().diff(adherent.dob, "year") <= 3 && !selected)
+    if (dayjs().diff(adherent.dob, "year") <= 3 && selected === undefined)
       setSelected("Premium");
+    else if (dayjs().diff(adherent.dob, "year") > 3 && selected === undefined)
+      setSelected("Confort");
   }, [adherent]);
 
   useEffect(() => {
@@ -88,14 +92,14 @@ const Pack = ({
             <PackShow
               prestation={prestationsConfort}
               pack="Confort"
-              recommended={true}
+              recommended={dayjs().diff(adherent.dob, "year") > 3}
               selected={selected === "Confort"}
               onClick={() => setSelected("Confort")}
             />
             <PackShow
               prestation={prestationsPremium}
               pack="Premium"
-              recommended={false}
+              recommended={dayjs().diff(adherent.dob, "year") <= 3}
               selected={selected === "Premium"}
               onClick={() => setSelected("Premium")}
             />
@@ -141,10 +145,14 @@ const Pack = ({
         </button>
         <div
           className={`${
-            optionExpanded ? "max-h-0" : "max-h-[600px]"
-          } overflow-hidden transition-[max-height] duration-700`}
+            optionExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+          } grid overflow-hidden transition-[grid-template-rows] duration-700 ease-out`}
         >
-          <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div
+            className={`${
+              optionExpanded ? "mt-8" : ""
+            } grid grid-cols-1 gap-8 overflow-hidden md:grid-cols-2`}
+          >
             <PackShowOption
               prestation={optionMedecineAlternative}
               pack="Médecine alternative"
@@ -345,7 +353,7 @@ const Pack = ({
         className="mt-8 flex w-fit items-center gap-2 rounded-lg border border-red-500 bg-white p-2 text-lg font-bold text-red-500 hover:bg-red-100"
         onClick={() => {
           setOptions([]);
-          setSelected(undefined);
+          setSelected(null);
         }}
       >
         Je ne veux que la base

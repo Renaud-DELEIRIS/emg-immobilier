@@ -232,7 +232,7 @@ export const STEPS: Step[] = [
       return false;
     },
     previous: (lead) => {
-      return "verification";
+      return "name";
     },
     stepInfo: (lead) => {
       return [10, STEPS.length];

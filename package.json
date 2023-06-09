@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@elgorditosalsero/react-gtm-hook": "^2.7.2",
     "@headlessui/react": "^1.7.15",
     "@t3-oss/env-nextjs": "^0.2.1",
     "@tabler/icons-react": "^2.20.0",

@@ -11,12 +11,15 @@ import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import CodeInput from "../inputs/CodeInput";
 import Button from "../button/Button";
+import { sendCodeSms } from "~/utils/api/sendSms";
 
 const Info = ({ open }: { open: boolean }) => {
   const { lead, changeLead } = useLead();
   const { increaseStep } = useSteps();
   const [step, setStep] = useState<"info" | "phone">("info");
   const [code, setCode] = useState("");
+  const [responseCode, setResponseCode] = useState<string>();
+  const [loading, setLoading] = useState(false);
 
   const isValidEmail = (email: string) => {
     const res = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
@@ -28,12 +31,32 @@ const Info = ({ open }: { open: boolean }) => {
     setStep("phone");
   };
 
-  // Scroll top on mount
   useEffect(() => {
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 100);
+    if (lead.verified) increaseStep();
   }, []);
+
+  const verifyCode = () => {
+    if (!responseCode) return;
+    if (code !== responseCode + "") {
+      console.log("Code is not valid");
+      return;
+    }
+    changeLead({ ...lead, verified: true });
+    increaseStep();
+  };
+
+  useEffect(() => {
+    if (step !== "phone" || !lead.phone) return;
+    setLoading(true);
+    void sendCodeSms(lead.phone)
+      .then((res) => {
+        console.log(res);
+        setResponseCode(res.code);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [step]);
 
   return (
     <Transition appear show={open} as={Fragment}>
@@ -152,8 +175,9 @@ const Info = ({ open }: { open: boolean }) => {
                       </span>
 
                       <div className="col-span-6 flex justify-around">
-                        <button
-                          className="rounded-md border border-primary-400 bg-primary-400 p-2 text-white hover:bg-primary-500 focus:outline-primary focus:ring-2 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
+                        <Button
+                          loading={loading}
+                          size="large"
                           type="submit"
                           disabled={
                             !(
@@ -164,7 +188,7 @@ const Info = ({ open }: { open: boolean }) => {
                           }
                         >
                           <span>ACCÉDER AUX TARIFS NÉGOCIÉS</span>
-                        </button>
+                        </Button>
                       </div>
                     </form>
                   )}
@@ -195,7 +219,7 @@ const Info = ({ open }: { open: boolean }) => {
                           disabled={code.length !== 4}
                           intent={"primary"}
                           onClick={() => {
-                            increaseStep();
+                            verifyCode();
                           }}
                         >
                           <span>Valider</span>

@@ -12,7 +12,7 @@ const Select = ({
   required = false,
   label = "",
   className = "",
-  widthFull = true,
+  widthFull = false,
   name = "",
   description = "",
   disabled = false,
@@ -112,7 +112,7 @@ const Select = ({
                   <Listbox.Option
                     key={optionIdx}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 text-gray-900 ${
+                      `relative cursor-default select-none py-2 pl-2 pr-4 text-gray-900 ${
                         active ? "bg-neutral-100" : ""
                       }`
                     }
