@@ -19,6 +19,7 @@ import {
 } from "~/data/PackOption";
 import type { Adherent } from "../provider/LeadProvider";
 import PackBig from "./PackBig";
+import PackCompar from "./PackCompare";
 import PackShow from "./PackShow";
 import PackShowOption from "./PackShowOption";
 
@@ -85,55 +86,38 @@ const Pack = ({
     <div className="flex flex-col px-8 md:px-0">
       <span className="mb-4 text-lg font-bold">{homeText(adherent)} </span>
       <div className="flex flex-col items-center gap-8 md:flex-row md:gap-0 [&>*]:flex-1">
-        {width > 768 ? (
-          <>
-            <PackBig
-              prestation={prestationsEssentials}
-              pack="Essentiel"
-              recommended={false}
-              selected={selected === "Essentiel"}
-              onClick={() => setSelected("Essentiel")}
-            />
-            <PackBig
-              prestation={prestationsConfort}
-              pack="Confort"
-              recommended={dayjs().diff(adherent.dob, "year") > 3}
-              selected={selected === "Confort"}
-              onClick={() => setSelected("Confort")}
-            />
-            <PackBig
-              prestation={prestationsPremium}
-              pack="Premium"
-              recommended={dayjs().diff(adherent.dob, "year") <= 3}
-              selected={selected === "Premium"}
-              onClick={() => setSelected("Premium")}
-            />
-          </>
-        ) : (
-          <>
-            <PackShow
-              prestation={prestationsEssentialsShort}
-              pack="Essentiel"
-              recommended={false}
-              selected={selected === "Essentiel"}
-              onClick={() => setSelected("Essentiel")}
-            />
-            <PackShow
-              prestation={prestationsConfortShort}
-              pack="Confort"
-              recommended={true}
-              selected={selected === "Confort"}
-              onClick={() => setSelected("Confort")}
-            />
-            <PackShow
-              prestation={prestationsPremiumShort}
-              pack="Premium"
-              recommended={false}
-              selected={selected === "Premium"}
-              onClick={() => setSelected("Premium")}
-            />
-          </>
-        )}
+        {/* {width > 768 ? ( */}
+        <>
+          <PackCompar
+            setSelected={(pack) => setSelected(pack)}
+            selected={selected}
+          />
+        </>
+        {/* // ) : (
+        //   <>
+        //     <PackShow
+        //       prestation={prestationsEssentialsShort}
+        //       pack="Essentiel"
+        //       recommended={false}
+        //       selected={selected === "Essentiel"}
+        //       onClick={() => setSelected("Essentiel")}
+        //     />
+        //     <PackShow
+        //       prestation={prestationsConfortShort}
+        //       pack="Confort"
+        //       recommended={true}
+        //       selected={selected === "Confort"}
+        //       onClick={() => setSelected("Confort")}
+        //     />
+        //     <PackShow
+        //       prestation={prestationsPremiumShort}
+        //       pack="Premium"
+        //       recommended={false}
+        //       selected={selected === "Premium"}
+        //       onClick={() => setSelected("Premium")}
+        //     />
+        //   </>
+        // )} */}
       </div>
       <div className="mt-8 rounded-lg border p-4 shadow-2xl">
         <button
