@@ -168,10 +168,32 @@ const Adherant = () => {
               <TileInput
                 value={adherent?.civility}
                 onChange={(value) => {
-                  setAdherent({
-                    ...adherent,
-                    civility: value as "man",
-                  });
+                  if (lead.adherent[isEditing] === undefined) {
+                    changeLead({
+                      adherent: [
+                        ...lead.adherent,
+                        {
+                          ...adherent,
+                          civility:
+                            value as LeadData["adherent"]["0"]["civility"],
+                          type: getType(isEditing),
+                        },
+                      ],
+                    });
+                  } else {
+                    const newAdherents = [...lead.adherent];
+                    newAdherents[isEditing] = {
+                      ...adherent,
+                      civility: value as LeadData["adherent"]["0"]["civility"],
+                      type: getType(isEditing),
+                    };
+                    changeLead({
+                      adherent: newAdherents,
+                    });
+                  }
+                  setIsEditing(undefined);
+                  setAdherent(undefined);
+                  setStep("dob");
                 }}
                 options={[
                   {
@@ -187,40 +209,6 @@ const Adherant = () => {
                 ]}
                 className="gap-4"
               ></TileInput>
-              {adherent?.civility !== undefined && (
-                <div className="flex w-full justify-center">
-                  <Button
-                    onClick={() => {
-                      if (lead.adherent[isEditing] === undefined) {
-                        changeLead({
-                          adherent: [
-                            ...lead.adherent,
-                            {
-                              ...adherent,
-                              type: getType(isEditing),
-                            },
-                          ],
-                        });
-                      } else {
-                        const newAdherents = [...lead.adherent];
-                        newAdherents[isEditing] = {
-                          ...adherent,
-                          type: getType(isEditing),
-                        };
-                        changeLead({
-                          adherent: newAdherents,
-                        });
-                      }
-                      setIsEditing(undefined);
-                      setAdherent(undefined);
-                      setStep("dob");
-                    }}
-                    className="mt-4 w-52"
-                  >
-                    Valider
-                  </Button>
-                </div>
-              )}
             </motion.div>
           )}
           {((isEditing > 2 && lead.for === "you, your partner and your kids") ||

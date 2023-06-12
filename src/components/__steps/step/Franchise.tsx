@@ -61,7 +61,7 @@ const Franchise = () => {
     const next = nextToEdit();
     if (next !== undefined) {
       setIsEditing(nextToEdit());
-      setStep("franchise");
+      if (isEditing !== next) setStep("franchise");
     }
   }, [lead]);
 
@@ -159,7 +159,6 @@ const Franchise = () => {
                     : "2500")
                 }
                 onChange={(value: string) => {
-                  console.log(value);
                   changeLead({
                     adherent: [
                       ...lead.adherent.slice(0, isEditing),
@@ -175,42 +174,42 @@ const Franchise = () => {
                 label="Franchise"
                 icon={<IconEdit />}
               />
-              {lead.adherent[isEditing]?.franchise && (
-                <motion.div
-                  className="flex w-full justify-center"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                >
-                  <Button
-                    onClick={() => {
-                      if (!lead.adherent[isEditing]?.franchise)
-                        changeLead({
-                          adherent: [
-                            ...lead.adherent.slice(0, isEditing),
-                            {
-                              ...lead.adherent[isEditing],
-                              franchise: isChild(
-                                lead.adherent[isEditing]?.dob || ""
-                              )
-                                ? "600"
-                                : "2500",
-                            },
-                            ...lead.adherent.slice(isEditing + 1),
-                          ],
-                        });
 
-                      if (isChild(lead.adherent[isEditing]?.dob || "")) {
-                        setIsEditing(undefined);
-                      } else {
-                        setStep("couverture");
-                      }
-                    }}
-                    className="mt-4 w-52"
-                  >
-                    Suivant
-                  </Button>
-                </motion.div>
-              )}
+              <motion.div
+                className="flex w-full justify-center"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <Button
+                  onClick={() => {
+                    if (!lead.adherent[isEditing]?.franchise)
+                      changeLead({
+                        adherent: [
+                          ...lead.adherent.slice(0, isEditing),
+                          {
+                            ...lead.adherent[isEditing],
+                            franchise: isChild(
+                              lead.adherent[isEditing]?.dob || ""
+                            )
+                              ? "600"
+                              : "2500",
+                          },
+                          ...lead.adherent.slice(isEditing + 1),
+                        ],
+                      });
+
+                    if (isChild(lead.adherent[isEditing]?.dob || "")) {
+                      setIsEditing(undefined);
+                    } else {
+                      setStep("couverture");
+                    }
+                  }}
+                  className="mt-4 w-52"
+                >
+                  Suivant
+                </Button>
+              </motion.div>
             </motion.div>
           )}
 
@@ -229,7 +228,7 @@ const Franchise = () => {
                 ]?.accident || ""}
               </p>
               <TileInput
-                value={lead.adherent[isEditing]?.couvertureAccident}
+                value={lead.adherent[isEditing]?.couvertureAccident ?? "non"}
                 onChange={(value) => {
                   changeLead({
                     adherent: [
@@ -256,24 +255,35 @@ const Franchise = () => {
                 ]}
                 className="gap-4"
               ></TileInput>
-              {(lead.adherent[isEditing]?.type === "child" ||
-                lead.adherent[isEditing]?.couvertureAccident !== undefined) && (
-                <motion.div
-                  className="flex w-full justify-center"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
+
+              <motion.div
+                className="flex w-full justify-center"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <Button
+                  onClick={() => {
+                    if (!lead.adherent[isEditing]?.couvertureAccident) {
+                      changeLead({
+                        adherent: [
+                          ...lead.adherent.slice(0, isEditing),
+                          {
+                            ...lead.adherent[isEditing],
+                            couvertureAccident: "non",
+                          },
+                          ...lead.adherent.slice(isEditing + 1),
+                        ],
+                      });
+                    }
+                    setIsEditing(undefined);
+                    setStep("franchise");
+                  }}
+                  className="mt-4 w-52"
                 >
-                  <Button
-                    onClick={() => {
-                      setIsEditing(undefined);
-                      setStep("franchise");
-                    }}
-                    className="mt-4 w-52"
-                  >
-                    Valider
-                  </Button>
-                </motion.div>
-              )}
+                  Valider
+                </Button>
+              </motion.div>
             </motion.div>
           )}
         </div>
@@ -292,29 +302,54 @@ const Franchise = () => {
                   className="group flex w-full justify-between gap-4 rounded-lg border border-neutral-100 bg-white p-4 text-left shadow"
                 >
                   <p className="text-base text-neutral-800">
-                    {adherent.type === "main"
-                      ? `Vous avez besoins d'une franchise de ${
-                          adherent.franchise || ""
-                        }${
-                          adherent.couvertureAccident === "oui"
-                            ? " ainsi que d'une couverture accident"
-                            : ""
-                        }.`
-                      : adherent.type === "partner"
-                      ? `Votre conjoint${
-                          adherent.civility === "female" ? "e" : ""
-                        } a besoin d'une franchise de ${
-                          adherent.franchise || ""
-                        }${
-                          adherent.couvertureAccident === "oui"
-                            ? " ainsi que d'une couverture accident"
-                            : ""
-                        }.`
-                      : `Votre enfant né en ${dayjs(adherent.dob).format(
-                          "YYYY"
-                        )} a besoin d'une franchise de ${
-                          adherent.franchise || ""
-                        }$.`}
+                    {adherent.type === "main" && (
+                      <span>
+                        Vous souhaitez une franchise de{" "}
+                        <b>{adherent.franchise} CHF</b>
+                        {adherent.couvertureAccident === "oui" && (
+                          <span>
+                            {" "}
+                            ainsi que d‘une <b>couverture accident</b>
+                          </span>
+                        )}
+                        .
+                      </span>
+                    )}
+
+                    {adherent.type === "partner" &&
+                      (adherent.civility === "female" ? (
+                        <span>
+                          Votre conjointe a besoin d‘une franchise de{" "}
+                          <b>{adherent.franchise} CHF</b>
+                          {adherent.couvertureAccident === "oui" && (
+                            <span>
+                              {" "}
+                              ainsi que d‘une <b>couverture accident</b>
+                            </span>
+                          )}
+                          .
+                        </span>
+                      ) : (
+                        <span>
+                          Votre conjoint a besoin d‘une franchise de{" "}
+                          <b>{adherent.franchise} CHF</b>
+                          {adherent.couvertureAccident === "oui" && (
+                            <span>
+                              {" "}
+                              ainsi que d‘une <b>couverture accident</b>
+                            </span>
+                          )}
+                          .
+                        </span>
+                      ))}
+
+                    {adherent.type === "child" && (
+                      <span>
+                        Votre enfant né en {dayjs(adherent.dob).format("YYYY")}{" "}
+                        a besoin d‘une franchise de{" "}
+                        <b>{adherent.franchise} CHF</b>
+                      </span>
+                    )}
                   </p>
                   <IconEdit className="group-hover:text-primary-500" />
                 </button>

@@ -9,13 +9,6 @@ import Button from "~/components/button/Button";
 const Assurance = () => {
   const { lead, changeLead } = useLead();
   const { increaseStep } = useSteps();
-  const [aldreadyFilled, setAlreadyFilled] = useState(false);
-
-  useEffect(() => {
-    if (lead.npa && lead.npa.key !== 0) {
-      setAlreadyFilled(true);
-    }
-  }, [lead]);
 
   return (
     <StepContainer
@@ -56,17 +49,6 @@ const Assurance = () => {
           Cliquez ici
         </button>
       </p>
-      {aldreadyFilled && lead.npa?.key !== 0 && (
-        <div className="mt-4 flex w-full justify-center">
-          <Button
-            onClick={() => {
-              increaseStep();
-            }}
-          >
-            Continuer
-          </Button>
-        </div>
-      )}
     </StepContainer>
   );
 };
