@@ -18,6 +18,7 @@ import {
   optionTraitementsDentaires,
 } from "~/data/PackOption";
 import type { Adherent } from "../provider/LeadProvider";
+import PackBig from "./PackBig";
 import PackShow from "./PackShow";
 import PackShowOption from "./PackShowOption";
 
@@ -83,24 +84,24 @@ const Pack = ({
   return (
     <div className="flex flex-col px-8 md:px-0">
       <span className="mb-4 text-lg font-bold">{homeText(adherent)} </span>
-      <div className="flex flex-col items-center gap-8 md:flex-row [&>*]:flex-1">
+      <div className="flex flex-col items-center gap-8 md:flex-row md:gap-0 [&>*]:flex-1">
         {width > 768 ? (
           <>
-            <PackShow
+            <PackBig
               prestation={prestationsEssentials}
               pack="Essentiel"
               recommended={false}
               selected={selected === "Essentiel"}
               onClick={() => setSelected("Essentiel")}
             />
-            <PackShow
+            <PackBig
               prestation={prestationsConfort}
               pack="Confort"
               recommended={dayjs().diff(adherent.dob, "year") > 3}
               selected={selected === "Confort"}
               onClick={() => setSelected("Confort")}
             />
-            <PackShow
+            <PackBig
               prestation={prestationsPremium}
               pack="Premium"
               recommended={dayjs().diff(adherent.dob, "year") <= 3}
@@ -111,11 +112,11 @@ const Pack = ({
         ) : (
           <>
             <PackShow
-              prestation={prestationsPremiumShort}
-              pack="Premium"
+              prestation={prestationsEssentialsShort}
+              pack="Essentiel"
               recommended={false}
-              selected={selected === "Premium"}
-              onClick={() => setSelected("Premium")}
+              selected={selected === "Essentiel"}
+              onClick={() => setSelected("Essentiel")}
             />
             <PackShow
               prestation={prestationsConfortShort}
@@ -125,11 +126,11 @@ const Pack = ({
               onClick={() => setSelected("Confort")}
             />
             <PackShow
-              prestation={prestationsEssentialsShort}
-              pack="Essentiel"
+              prestation={prestationsPremiumShort}
+              pack="Premium"
               recommended={false}
-              selected={selected === "Essentiel"}
-              onClick={() => setSelected("Essentiel")}
+              selected={selected === "Premium"}
+              onClick={() => setSelected("Premium")}
             />
           </>
         )}
