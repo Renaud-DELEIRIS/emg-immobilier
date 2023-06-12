@@ -7,6 +7,7 @@ import { IconCircleCheckFilled } from "@tabler/icons-react";
 import { useLead } from "~/components/provider/LeadProvider";
 import { recallFrontalier } from "~/utils/api/recallFrontalier";
 import { toast } from "react-toastify";
+import ModalSouscrireLamal from "./ModalSouscrireLamal";
 
 interface Props {
   recommended?: boolean;
@@ -16,6 +17,7 @@ interface Props {
 
 const ResultCardLamal = ({ recommended = false, info, monthPrice }: Props) => {
   const [show, setShow] = useState(false);
+  const [open, setOpen] = useState(false);
   const { lead } = useLead();
 
   const comparaison = parseFloat(info.comparaison);
@@ -33,6 +35,11 @@ const ResultCardLamal = ({ recommended = false, info, monthPrice }: Props) => {
       .catch(() => {
         toast.error("Une erreur est survenue, veuillez réessayer.");
       });
+  };
+
+  const onSubscribe = () => {
+    setShow(false);
+    setOpen(true);
   };
 
   return (
@@ -76,7 +83,7 @@ const ResultCardLamal = ({ recommended = false, info, monthPrice }: Props) => {
           <Button widthFull onClick={beCalled}>
             Être rappelé
           </Button>
-          <Button widthFull intent={"outline"}>
+          <Button widthFull intent={"outline"} onClick={onSubscribe}>
             Souscrire en ligne
           </Button>
         </div>
@@ -102,6 +109,11 @@ const ResultCardLamal = ({ recommended = false, info, monthPrice }: Props) => {
           </span>
         </div>
       </div>
+      <ModalSouscrireLamal
+        open={open}
+        onClose={() => setOpen(false)}
+        lamal={info}
+      />
     </div>
   );
 };

@@ -27,7 +27,22 @@ const Header = () => {
             Retour
           </Button>
           <div className="hidden w-1/2 md:block">
-            <ProgressBar now={actualStep / maxStep} />
+            {actualStep === 10 ? (
+              <div className="flex w-full items-center justify-center gap-2">
+                <span className="text-sm text-neutral-700">
+                  Le N°1 des comparateurs en ligne
+                </span>
+                <Image
+                  src="/star-y.png"
+                  alt="Logo"
+                  width={80}
+                  height={30}
+                  className=" object-contain"
+                />
+              </div>
+            ) : (
+              <ProgressBar now={actualStep / maxStep} />
+            )}
           </div>
           <a
             href="tel:0225661647"

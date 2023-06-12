@@ -37,7 +37,7 @@ const FlatModal = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="min-w-screen relative min-h-screen transform bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="relative min-h-screen min-w-[100vw] transform bg-white p-1 text-left align-middle shadow-xl transition-all md:p-6">
                 <div className="mb-8 mt-4">
                   <button onClick={onClose}>
                     <IconX size={24} />

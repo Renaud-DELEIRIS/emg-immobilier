@@ -13,6 +13,7 @@ import Checkbox from "~/components/checkbox/Checkbox";
 import { useLead } from "~/components/provider/LeadProvider";
 import { recallResident } from "~/utils/api/recallResident";
 import { toast } from "react-toastify";
+import ModalSouscrireLca from "./ModalSouscrireLca";
 
 interface Props {
   recommended?: boolean;
@@ -32,6 +33,7 @@ const ResultCardLca = ({
   compare,
 }: Props) => {
   const [show, setShow] = useState(false);
+  const [open, setOpen] = useState(false);
   const { lead } = useLead();
 
   const month = info.prix.toFixed(2);
@@ -104,6 +106,11 @@ const ResultCardLca = ({
       });
   };
 
+  const onSubscribe = () => {
+    setShow(false);
+    setOpen(true);
+  };
+
   return (
     <div className="flex flex-col rounded-lg border bg-white">
       {recommended && (
@@ -151,7 +158,7 @@ const ResultCardLca = ({
           <Button widthFull onClick={beCalled}>
             Être rappelé
           </Button>
-          <Button widthFull intent={"outline"}>
+          <Button widthFull intent={"outline"} onClick={onSubscribe}>
             Souscrire en ligne
           </Button>
         </div>
@@ -237,6 +244,11 @@ const ResultCardLca = ({
           </div>
         </div>
       </div>
+      <ModalSouscrireLca
+        open={open}
+        onClose={() => setOpen(false)}
+        lca={info}
+      />
     </div>
   );
 };

@@ -7,13 +7,14 @@ import {
   IconQuestionMark,
 } from "@tabler/icons-react";
 import Image from "next/image";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import Button from "~/components/button/Button";
 import FlatModal from "~/components/modal/FlatModal";
 import { useLead } from "~/components/provider/LeadProvider";
 import { type Lca } from "~/types/comparatif";
 import { recallResident } from "~/utils/api/recallResident";
+import ModalSouscrireLca from "./ModalSouscrireLca";
 
 interface Props {
   open: boolean;
@@ -22,6 +23,10 @@ interface Props {
 }
 
 const ModalComparatifTable = ({ open, onClose, offres }: Props) => {
+  const [souscrireOpenIndex, setSouscrireOpenIndex] = useState<number | null>(
+    null
+  );
+
   const groupPrestations: Record<string, string[]> = {
     Ambulatoire: [
       "Médicaments",
@@ -92,7 +97,7 @@ const ModalComparatifTable = ({ open, onClose, offres }: Props) => {
         <thead>
           <tr>
             <th className="w-[15%] px-2 py-4 text-xl font-extrabold" />
-            {offres.map((lca) => (
+            {offres.map((lca, i) => (
               <th
                 className="px-2 py-4 text-xl font-extrabold"
                 key={lca.id}
@@ -121,7 +126,7 @@ const ModalComparatifTable = ({ open, onClose, offres }: Props) => {
                       Être rappelé
                     </Button>
                     <Button
-                      onClick={() => null}
+                      onClick={() => setSouscrireOpenIndex(i)}
                       size="small"
                       widthFull
                       intent={"outline"}
@@ -198,6 +203,13 @@ const ModalComparatifTable = ({ open, onClose, offres }: Props) => {
           ))}
         </tbody>
       </table>
+      {souscrireOpenIndex !== null && (
+        <ModalSouscrireLca
+          open={souscrireOpenIndex !== null}
+          onClose={() => setSouscrireOpenIndex(null)}
+          lca={offres[souscrireOpenIndex] as Lca}
+        />
+      )}
     </FlatModal>
   );
 };
