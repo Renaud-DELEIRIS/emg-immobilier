@@ -65,7 +65,18 @@ const Pack = ({
         | "Capital hospitalier";
       level: number;
     }[]
-  >(adherent.pack?.options || []);
+  >(
+    adherent.pack?.options || [
+      {
+        label: "Capital hospitalier",
+        level: 1,
+      },
+      {
+        label: "Hospitalisation",
+        level: 1,
+      },
+    ]
+  );
 
   useEffect(() => {
     // If adherent age is under or equal at 3 make premium selected
@@ -86,38 +97,10 @@ const Pack = ({
     <div className="flex flex-col px-8 md:px-0">
       <span className="mb-4 text-lg font-bold">{homeText(adherent)} </span>
       <div className="flex flex-col items-center gap-8 md:flex-row md:gap-0 [&>*]:flex-1">
-        {/* {width > 768 ? ( */}
-        <>
-          <PackCompar
-            setSelected={(pack) => setSelected(pack)}
-            selected={selected}
-          />
-        </>
-        {/* // ) : (
-        //   <>
-        //     <PackShow
-        //       prestation={prestationsEssentialsShort}
-        //       pack="Essentiel"
-        //       recommended={false}
-        //       selected={selected === "Essentiel"}
-        //       onClick={() => setSelected("Essentiel")}
-        //     />
-        //     <PackShow
-        //       prestation={prestationsConfortShort}
-        //       pack="Confort"
-        //       recommended={true}
-        //       selected={selected === "Confort"}
-        //       onClick={() => setSelected("Confort")}
-        //     />
-        //     <PackShow
-        //       prestation={prestationsPremiumShort}
-        //       pack="Premium"
-        //       recommended={false}
-        //       selected={selected === "Premium"}
-        //       onClick={() => setSelected("Premium")}
-        //     />
-        //   </>
-        // )} */}
+        <PackCompar
+          setSelected={(pack) => setSelected(pack)}
+          selected={selected}
+        />
       </div>
       <div className="mt-8 rounded-lg border p-4 shadow-2xl">
         <button

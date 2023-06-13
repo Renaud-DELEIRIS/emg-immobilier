@@ -178,12 +178,13 @@ const ModalComparatifTable = ({ open, onClose, offres }: Props) => {
                                   />
                                 )}
                               </span>
-                              {offre.details.map((detail) => {
+                              {offre.details.map((detail, i) => {
                                 if (detail.value)
                                   return (
                                     <span
                                       className="w-full font-bold"
                                       data-tooltip={`Franchise: ${detail.franchise}`}
+                                      key={i}
                                     >
                                       {detail.value}
                                       <span className="font-normal">

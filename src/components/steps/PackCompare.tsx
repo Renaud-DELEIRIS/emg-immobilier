@@ -96,7 +96,13 @@ export default function PackCompar({
         <div className="mx-auto max-w-2xl space-y-16 lg:hidden">
           {tiers.map((tier, tierIdx) => (
             <section key={tier.name}>
-              <div className="mb-8 px-4">
+              <div
+                className={`mb-8 px-4 py-2 ${
+                  selected === tier.name
+                    ? "border border-primary-200 bg-primary-50"
+                    : ""
+                }`}
+              >
                 {tier.recommended && (
                   <div className="mb-4 w-fit rounded-lg border border-primary-600 bg-primary-50 px-2 text-xs text-primary-600">
                     Recommandé
@@ -220,13 +226,8 @@ export default function PackCompar({
                     key={tier.name}
                     className="relative h-full px-6 py-8 align-top"
                   >
-                    {tier.recommended && (
-                      <div className="absolute -top-3 w-fit rounded-lg border border-primary-600 bg-primary-50 px-2 text-primary-600">
-                        Recommandé
-                      </div>
-                    )}
                     <div className="relative table h-full">
-                      <p className="mb-16 mt-4 text-sm text-gray-500">
+                      <p className="mb-16 text-sm text-gray-500">
                         {tier.description}
                       </p>
                       <button
@@ -268,7 +269,7 @@ export default function PackCompar({
                       {tiers.map((tier) => (
                         <td
                           key={tier.name}
-                          className={`
+                          className={`relative 
                             ${
                               selected === tier.name
                                 ? i === 0
@@ -276,10 +277,19 @@ export default function PackCompar({
                                   : i === section.features.length - 1
                                   ? "border-t border-primary-100 "
                                   : "border-y border-primary-100"
+                                : tier.recommended
+                                ? "bg-green-50/70"
                                 : ""
                             }
                         `}
                         >
+                          {tier.recommended && i === 0 && (
+                            <div className="absolute -top-9 flex w-full justify-center">
+                              <div className=" w-fit rounded-lg border border-primary-600 bg-primary-50 px-2 text-primary-600">
+                                Recommandé
+                              </div>
+                            </div>
+                          )}
                           <div
                             className={`px-6 py-5 ${
                               selected === tier.name
