@@ -192,18 +192,12 @@ export default function PackCompar({
                   "border-t border-gray-200 px-4"
                 )}
               >
-                <button
+                <SelectButton
                   onClick={() => setSelected(tier.name)}
-                  className="flex w-full items-center justify-center gap-2 rounded-md border border-primary-800 bg-primary-800 py-2 text-center text-sm font-semibold text-white hover:bg-primary-900"
+                  selected={selected === tier.name}
                 >
                   Select {tier.name}
-                  {selected === tier.name && (
-                    <IconCheck
-                      className="h-5 w-5 text-green-500"
-                      aria-hidden="true"
-                    />
-                  )}
-                </button>
+                </SelectButton>
               </div>
             </section>
           ))}
@@ -233,19 +227,12 @@ export default function PackCompar({
                       {/* <p className="mb-16 text-sm text-gray-500">
                         {tier.description}
                       </p> */}
-                      <button
-                        type="button"
+                      <SelectButton
                         onClick={() => setSelected(tier.name)}
-                        className="absolute bottom-0 flex w-full flex-grow items-center justify-center gap-2 rounded-md border border-primary-800 bg-primary-800 py-2 text-center text-sm font-semibold text-white hover:bg-primary-900"
+                        selected={selected === tier.name}
                       >
                         Select {tier.name}
-                        {selected === tier.name && (
-                          <IconCheck
-                            className="h-5 w-5 text-green-500"
-                            aria-hidden="true"
-                          />
-                        )}
-                      </button>
+                      </SelectButton>
                     </div>
                   </td>
                 ))}
@@ -368,3 +355,28 @@ export default function PackCompar({
     </div>
   );
 }
+
+const SelectButton = ({
+  onClick,
+  selected,
+  children,
+}: {
+  onClick: () => void;
+  selected: boolean;
+  children: React.ReactNode;
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      className="mt-6 flex w-full items-center justify-between gap-2 rounded-md border border-primary-800 bg-primary-800 px-2 py-2 text-center text-sm font-semibold text-white hover:bg-primary-900"
+    >
+      <div className="h-4 w-4" />
+      {children}
+      <div className="grid h-4 w-4 place-items-center rounded-full border">
+        {selected && (
+          <div className="h-full w-full rounded-full bg-green-500" />
+        )}
+      </div>
+    </button>
+  );
+};
