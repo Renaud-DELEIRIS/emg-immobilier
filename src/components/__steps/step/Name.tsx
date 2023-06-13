@@ -37,7 +37,7 @@ const Name = () => {
           onClick={() => {
             increaseStep();
           }}
-          disabled={isDisabled()}
+          disabled={isDisabled() || !lead.nom || !lead.prenom}
         >
           Continuer
         </Button>

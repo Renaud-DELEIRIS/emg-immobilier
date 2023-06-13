@@ -10,6 +10,7 @@ export const EmgAdulteEnfant: React.FC<Props> = (props) => (
     xmlns="http://www.w3.org/2000/svg"
     height="36px"
     width="36px"
+    fill="currentColor"
     viewBox="0 0 500 500"
     {...props}
   >
