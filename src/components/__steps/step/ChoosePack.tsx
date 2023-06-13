@@ -13,9 +13,10 @@ const ChoosePack = () => {
   return (
     <StepContainer
       maxWidth="max-w-5xl"
-      title="Choose package"
+      title="Quels sont vos besoins ?"
       description="Parfait, en matière de prestations complémentaires. Choissisez ce qui convient le mieux."
       className="pb-12"
+      noPhoto
     >
       {lead.adherent.at(adherent) && (
         <Pack

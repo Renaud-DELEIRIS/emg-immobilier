@@ -10,12 +10,14 @@ const StepContainer = ({
   info,
   maxWidth = "max-w-3xl",
   className = "",
+  noPhoto = false,
 }: {
   title: string;
   description?: string;
   info?: string;
   infoTitle?: string;
   maxWidth?: string;
+  noPhoto?: boolean;
 } & DefaultProps) => {
   return (
     <motion.div
@@ -28,16 +30,18 @@ const StepContainer = ({
         className
       }
     >
-      <div className={"relative text-center "}>
-        <Image
-          src={"/portrait.png"}
-          alt="Assistance"
-          width={64}
-          height={64}
-          className="h-16 w-16 rounded-full"
-        ></Image>
-        <div className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-green-400 outline outline-2 outline-white" />
-      </div>
+      {!noPhoto && (
+        <div className={"relative text-center "}>
+          <Image
+            src={"/portrait.png"}
+            alt="Assistance"
+            width={64}
+            height={64}
+            className="h-16 w-16 rounded-full"
+          ></Image>
+          <div className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-green-400 outline outline-2 outline-white" />
+        </div>
+      )}
       <h1 className="mb-2 mt-4 text-center text-[26px] font-bold leading-10 tracking-tight text-[#2F3946]">
         {title}
       </h1>

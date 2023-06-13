@@ -90,8 +90,8 @@ export default function PackCompar({
   selected: "Essentiel" | "Confort" | "Premium" | undefined | null;
 }) {
   return (
-    <div className="">
-      <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div className="rounded-2xl bg-white shadow-2xl">
+      <div className="mx-auto max-w-7xl px-4 pb-4 pt-4 sm:px-6 lg:px-8 lg:pt-0 ">
         {/* xs to lg */}
         <div className="mx-auto max-w-2xl space-y-16 lg:hidden">
           {tiers.map((tier, tierIdx) => (
@@ -145,23 +145,23 @@ export default function PackCompar({
                           className="px-4 py-5 text-left text-sm font-normal text-gray-500"
                           scope="row"
                         >
-                          {feature.name}
+                          <span className="leading-4">{feature.name}</span>
                         </th>
                         <td className="py-5 pr-4">
                           {typeof feature.tiers[tier.name] === "string" ? (
-                            <span className="block text-right text-sm text-gray-700">
+                            <span className="block text-right text-sm leading-4 text-gray-700">
                               {feature.tiers[tier.name]}
                             </span>
                           ) : (
                             <>
                               {feature.tiers[tier.name] === true ? (
                                 <IconCheck
-                                  className="ml-auto h-5 w-5 text-green-500"
+                                  className="ml-auto h-5 w-5 leading-4 text-green-500"
                                   aria-hidden="true"
                                 />
                               ) : (
                                 <IconX
-                                  className="ml-auto h-5 w-5 text-gray-400"
+                                  className="ml-auto h-5 w-5 leading-4 text-gray-400"
                                   aria-hidden="true"
                                 />
                               )}
@@ -207,7 +207,7 @@ export default function PackCompar({
         <div className="hidden lg:block">
           <table className="h-px w-full table-fixed">
             <caption className="sr-only">Pricing plan comparison</caption>
-            <tbody className="divide-y divide-gray-200 border-t border-gray-200">
+            <tbody className="divide-y divide-gray-200 border-gray-200">
               <tr>
                 <th
                   className="px-6 py-8 text-left align-top text-sm font-medium text-gray-900"
@@ -216,14 +216,17 @@ export default function PackCompar({
                   Packs
                 </th>
                 {tiers.map((tier) => (
-                  <td key={tier.name} className="h-full px-6 py-8 align-top">
+                  <td
+                    key={tier.name}
+                    className="relative h-full px-6 py-8 align-top"
+                  >
+                    {tier.recommended && (
+                      <div className="absolute -top-3 w-fit rounded-lg border border-primary-600 bg-primary-50 px-2 text-primary-600">
+                        Recommandé
+                      </div>
+                    )}
                     <div className="relative table h-full">
-                      {tier.recommended && (
-                        <div className="absolute top-0 w-fit rounded-lg border border-primary-600 bg-primary-50 px-2 text-primary-600">
-                          Recommandé
-                        </div>
-                      )}
-                      <p className="mb-16 mt-12 text-sm text-gray-500">
+                      <p className="mb-16 mt-4 text-sm text-gray-500">
                         {tier.description}
                       </p>
                       <button
@@ -260,24 +263,24 @@ export default function PackCompar({
                         className="px-6 py-5 text-left text-sm font-normal text-gray-500"
                         scope="row"
                       >
-                        {feature.name}
+                        <span className="leading-4">{feature.name}</span>
                       </th>
                       {tiers.map((tier) => (
                         <td key={tier.name} className="px-6 py-5">
                           {typeof feature.tiers[tier.name] === "string" ? (
-                            <span className="block text-sm text-gray-700">
+                            <span className="block text-sm leading-4 text-gray-700">
                               {feature.tiers[tier.name]}
                             </span>
                           ) : (
                             <>
                               {feature.tiers[tier.name] === true ? (
                                 <IconCheck
-                                  className="h-5 w-5 text-green-500"
+                                  className="h-5 w-5 leading-4 text-green-500"
                                   aria-hidden="true"
                                 />
                               ) : (
                                 <IconX
-                                  className="h-5 w-5 text-gray-400"
+                                  className="h-5 w-5 leading-4 text-gray-400"
                                   aria-hidden="true"
                                 />
                               )}
