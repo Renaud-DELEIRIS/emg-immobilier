@@ -112,18 +112,12 @@ export default function PackCompar({
                   {tier.name}
                 </h2>
                 <p className="mt-4 text-sm text-gray-500">{tier.description}</p>
-                <button
+                <SelectButton
                   onClick={() => setSelected(tier.name)}
-                  className="mt-6 flex w-full items-center justify-center gap-2 rounded-md border border-primary-800 bg-primary-800 py-2 text-center text-sm font-semibold text-white hover:bg-primary-900"
+                  selected={selected === tier.name}
                 >
                   Select {tier.name}
-                  {selected === tier.name && (
-                    <IconCheck
-                      className="h-5 w-5 text-green-500"
-                      aria-hidden="true"
-                    />
-                  )}
-                </button>
+                </SelectButton>
               </div>
 
               {sections.map((section) => (
@@ -221,7 +215,7 @@ export default function PackCompar({
                     className="relative h-full px-6 py-8 align-top"
                   >
                     <div className="relative table h-full w-full">
-                      <h1 className="mb-10 pb-4 text-center text-lg font-medium leading-6 text-gray-900">
+                      <h1 className="pb-4 text-center text-lg font-medium leading-6 text-gray-900">
                         {tier.name}
                       </h1>
                       {/* <p className="mb-16 text-sm text-gray-500">
@@ -332,19 +326,12 @@ export default function PackCompar({
                 </th>
                 {tiers.map((tier) => (
                   <td key={tier.name} className="px-6 pt-5">
-                    <button
-                      type="button"
+                    <SelectButton
                       onClick={() => setSelected(tier.name)}
-                      className="flex w-full items-center justify-center gap-2 rounded-md border border-primary-800 bg-primary-800 py-2 text-center text-sm font-semibold text-white hover:bg-primary-900"
+                      selected={selected === tier.name}
                     >
                       Select {tier.name}
-                      {selected === tier.name && (
-                        <IconCheck
-                          className="h-5 w-5 text-green-500"
-                          aria-hidden="true"
-                        />
-                      )}
-                    </button>
+                    </SelectButton>
                   </td>
                 ))}
               </tr>
@@ -355,6 +342,28 @@ export default function PackCompar({
     </div>
   );
 }
+
+// const SelectButton = ({
+//   onClick,
+//   selected,
+//   children,
+// }: {
+//   onClick: () => void;
+//   selected: boolean;
+//   children: React.ReactNode;
+// }) => {
+//   return (
+//     <button
+//       onClick={onClick}
+//       className="flex w-full items-center justify-around gap-2 rounded-md border border-primary-400 px-2 py-2 text-center text-sm font-semibold text-primary transition-colors hover:bg-primary-100"
+//     >
+//       {children}
+//       <div className="grid h-5 w-5 place-items-center rounded-full border border-primary bg-transparent">
+//         {selected && <IconCheck className="text-primary" size={16} />}
+//       </div>
+//     </button>
+//   );
+// };
 
 const SelectButton = ({
   onClick,
@@ -368,14 +377,11 @@ const SelectButton = ({
   return (
     <button
       onClick={onClick}
-      className="mt-6 flex w-full items-center justify-between gap-2 rounded-md border border-primary-800 bg-primary-800 px-2 py-2 text-center text-sm font-semibold text-white hover:bg-primary-900"
+      className="flex w-full items-center justify-around gap-2 rounded-md border border-[#E0E2E4]  bg-[#00A482] px-2 py-2 text-center text-sm font-semibold text-white transition-colors hover:bg-primary-700"
     >
-      <div className="h-4 w-4" />
       {children}
-      <div className="grid h-4 w-4 place-items-center rounded-full border">
-        {selected && (
-          <div className="h-full w-full rounded-full bg-green-500" />
-        )}
+      <div className="grid h-5 w-5 place-items-center rounded-full border border-white bg-transparent">
+        {selected && <IconCheck className="text-white" size={16} />}
       </div>
     </button>
   );
