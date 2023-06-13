@@ -377,11 +377,11 @@ const SelectButton = ({
   return (
     <button
       onClick={onClick}
-      className="flex w-full items-center justify-around gap-2 rounded-md border border-[#E0E2E4]  bg-[#00A482] px-2 py-2 text-center text-sm font-semibold text-white transition-colors hover:bg-primary-700"
+      className="mt-6 flex w-full items-center justify-center gap-6 rounded-md border  border-[#E0E2E4] bg-[#00A482] px-2 py-2 text-center text-sm font-semibold text-white transition-colors hover:bg-primary-700 lg:mt-0"
     >
       {children}
-      <div className="grid h-5 w-5 place-items-center rounded-full border border-white bg-transparent">
-        {selected && <IconCheck className="text-white" size={16} />}
+      <div className="grid h-6 w-6 place-items-center rounded-full border-2 border-white bg-transparent">
+        {selected && <IconCheck className="text-white" size={18} stroke={3} />}
       </div>
     </button>
   );
