@@ -257,7 +257,7 @@ export default function PackCompar({
                       {section.name}
                     </th>
                   </tr>
-                  {section.features.map((feature) => (
+                  {section.features.map((feature, i) => (
                     <tr key={feature.name}>
                       <th
                         className="px-6 py-5 text-left text-sm font-normal text-gray-500"
@@ -266,33 +266,58 @@ export default function PackCompar({
                         <span className="leading-4">{feature.name}</span>
                       </th>
                       {tiers.map((tier) => (
-                        <td key={tier.name} className="px-6 py-5">
-                          {typeof feature.tiers[tier.name] === "string" ? (
-                            <span className="block text-sm leading-4 text-gray-700">
-                              {feature.tiers[tier.name]}
-                            </span>
-                          ) : (
-                            <>
-                              {feature.tiers[tier.name] === true ? (
-                                <IconCheck
-                                  className="h-5 w-5 leading-4 text-green-500"
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                <IconX
-                                  className="h-5 w-5 leading-4 text-gray-400"
-                                  aria-hidden="true"
-                                />
-                              )}
-
-                              <span className="sr-only">
-                                {feature.tiers[tier.name] === true
-                                  ? "Included"
-                                  : "Not included"}{" "}
-                                in {tier.name}
+                        <td
+                          key={tier.name}
+                          className={`
+                            ${
+                              selected === tier.name
+                                ? i === 0
+                                  ? "border-b border-primary-100 "
+                                  : i === section.features.length - 1
+                                  ? "border-t border-primary-100 "
+                                  : "border-y border-primary-100"
+                                : ""
+                            }
+                        `}
+                        >
+                          <div
+                            className={`px-6 py-5 ${
+                              selected === tier.name
+                                ? "border-x border-dashed border-primary bg-primary-50 " +
+                                  (i === 0 ? "rounded-t-xl border-t " : "") +
+                                  (i === section.features.length - 1
+                                    ? "rounded-b-xl border-b "
+                                    : "")
+                                : ""
+                            }`}
+                          >
+                            {typeof feature.tiers[tier.name] === "string" ? (
+                              <span className="block text-sm leading-4 text-gray-700">
+                                {feature.tiers[tier.name]}
                               </span>
-                            </>
-                          )}
+                            ) : (
+                              <>
+                                {feature.tiers[tier.name] === true ? (
+                                  <IconCheck
+                                    className="h-5 w-5 leading-4 text-green-500"
+                                    aria-hidden="true"
+                                  />
+                                ) : (
+                                  <IconX
+                                    className="h-5 w-5 leading-4 text-gray-400"
+                                    aria-hidden="true"
+                                  />
+                                )}
+
+                                <span className="sr-only">
+                                  {feature.tiers[tier.name] === true
+                                    ? "Included"
+                                    : "Not included"}{" "}
+                                  in {tier.name}
+                                </span>
+                              </>
+                            )}
+                          </div>
                         </td>
                       ))}
                     </tr>
