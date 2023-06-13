@@ -278,7 +278,7 @@ export default function PackCompar({
                                   ? "border-t border-primary-100 "
                                   : "border-y border-primary-100"
                                 : tier.recommended
-                                ? "bg-green-50/70"
+                                ? "bg-green-100/50"
                                 : ""
                             }
                         `}
