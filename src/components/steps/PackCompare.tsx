@@ -227,6 +227,9 @@ export default function PackCompar({
                     className="relative h-full px-6 py-8 align-top"
                   >
                     <div className="relative table h-full">
+                      <h1 className="pb-4 text-left text-lg font-medium leading-6 text-gray-900">
+                        {tier.name}
+                      </h1>
                       <p className="mb-16 text-sm text-gray-500">
                         {tier.description}
                       </p>
