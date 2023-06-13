@@ -162,12 +162,12 @@ export default function PackCompar({
                             <>
                               {feature.tiers[tier.name] === true ? (
                                 <IconCheck
-                                  className="ml-auto h-5 w-5 leading-4 text-green-500"
+                                  className="ml-auto h-5 w-5 leading-4 text-[#008000]"
                                   aria-hidden="true"
                                 />
                               ) : (
                                 <IconX
-                                  className="ml-auto h-5 w-5 leading-4 text-gray-400"
+                                  className="ml-auto h-5 w-5 leading-4 text-red-500"
                                   aria-hidden="true"
                                 />
                               )}
@@ -226,13 +226,13 @@ export default function PackCompar({
                     key={tier.name}
                     className="relative h-full px-6 py-8 align-top"
                   >
-                    <div className="relative table h-full">
-                      <h1 className="pb-4 text-left text-lg font-medium leading-6 text-gray-900">
+                    <div className="relative table h-full w-full">
+                      <h1 className="mb-10 pb-4 text-center text-lg font-medium leading-6 text-gray-900">
                         {tier.name}
                       </h1>
-                      <p className="mb-16 text-sm text-gray-500">
+                      {/* <p className="mb-16 text-sm text-gray-500">
                         {tier.description}
-                      </p>
+                      </p> */}
                       <button
                         type="button"
                         onClick={() => setSelected(tier.name)}
@@ -312,12 +312,12 @@ export default function PackCompar({
                               <>
                                 {feature.tiers[tier.name] === true ? (
                                   <IconCheck
-                                    className="h-5 w-5 leading-4 text-green-500"
+                                    className="h-5 w-5 leading-4 text-[#008000]"
                                     aria-hidden="true"
                                   />
                                 ) : (
                                   <IconX
-                                    className="h-5 w-5 leading-4 text-gray-400"
+                                    className="h-5 w-5 leading-4 text-red-500"
                                     aria-hidden="true"
                                   />
                                 )}
