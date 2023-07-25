@@ -21,16 +21,16 @@ const TileInput = ({ value, onChange, options, className = "" }: Props) => {
         hasIcon ? (
           <button
             key={option.value}
-            className={`flex h-40 w-full flex-col items-center justify-center gap-4 rounded-md ${
+            className={`flex h-full w-full flex-col items-center justify-center gap-4 rounded-lg border-2 bg-white px-2 py-8 ${
               value === option.value
                 ? "border-primary text-primary"
-                : "border-neutral-300 text-neutral-700 hover:border-primary hover:text-primary"
-            } border-2 hover:border-primary`}
+                : "text-neutral-700 hover:border-primary hover:text-primary"
+            } hover:border-primary`}
             onClick={() => onChange(option.value)}
           >
             {option.icon}
             <span className="text-base ">{option.label}</span>
-            <div className="relative grid h-6 w-6 place-items-center rounded-full border border-neutral-300">
+            <div className="relative grid h-6 w-6 place-items-center rounded-full border-2">
               {value === option.value && (
                 <IconCircleCheckFilled className="absolute h-7 w-7" />
               )}

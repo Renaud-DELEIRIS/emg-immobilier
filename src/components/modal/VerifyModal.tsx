@@ -32,7 +32,7 @@ const Info = ({ open }: { open: boolean }) => {
   };
 
   useEffect(() => {
-    if (lead.verified) increaseStep();
+    if (lead.verified) increaseStep("verification");
   }, []);
 
   const verifyCode = () => {
@@ -42,7 +42,7 @@ const Info = ({ open }: { open: boolean }) => {
       return;
     }
     changeLead({ ...lead, verified: true });
-    increaseStep();
+    increaseStep("verification");
   };
 
   useEffect(() => {

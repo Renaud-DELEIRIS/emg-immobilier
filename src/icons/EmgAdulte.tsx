@@ -9,8 +9,8 @@ export const EmgAdulte: React.FC<Props> = (props) => (
     data-name="Emg Adulte"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 500 500"
-    height="36px"
-    width="36px"
+    height="64px"
+    width="64px"
     fill="currentColor"
     {...props}
   >

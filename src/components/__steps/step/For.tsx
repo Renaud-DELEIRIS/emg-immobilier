@@ -11,17 +11,24 @@ import { EmgCoupleEnfant } from "~/icons/EmgCoupleEnfant";
 
 const For = () => {
   const { lead, changeLead } = useLead();
-  const { increaseStep } = useSteps();
+  const { increaseStep, activeStep } = useSteps();
   return (
     <StepContainer
       title="Pour qui souhaitez-vous comparer ?"
-      description="En quelques minutes, comparons ensemble plus de 42 compagnies."
+      description={
+        <span>
+          Bonjour ! Je suis Emma.
+          <br />
+          En quelques minutes, comparons ensemble plus de 42 compagnies.
+        </span>
+      }
+      active={activeStep.id === "for-who"}
     >
       <TileInput
         value={lead.for}
         onChange={(value) => {
           changeLead({ for: value as "you", adherent: [] });
-          increaseStep();
+          increaseStep("for-who");
         }}
         options={[
           {
@@ -45,7 +52,7 @@ const For = () => {
             icon: <EmgCoupleEnfant />,
           },
         ]}
-        className="grid grid-cols-1 gap-4 md:grid-cols-2"
+        className="grid grid-cols-2 gap-4"
       ></TileInput>
     </StepContainer>
   );

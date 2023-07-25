@@ -1,6 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import { useSteps } from "~/components/provider/StepsProvider";
 
@@ -15,7 +16,10 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex min-h-screen flex-col">
         <Header />
-        <div className="mx-auto w-full pt-8 md:pt-12">{getStepComponent()}</div>
+        <div className="mx-auto w-full flex-1 pb-36 pt-12 md:pt-0">
+          {getStepComponent()}
+        </div>
+        <Footer />
       </main>
     </>
   );

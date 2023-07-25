@@ -8,8 +8,8 @@ export const EmgCoupleEnfant: React.FC<Props> = (props) => (
   <svg
     data-name="Emg Couple Enfant"
     xmlns="http://www.w3.org/2000/svg"
-    height="36px"
-    width="36px"
+    height="64px"
+    width="64px"
     viewBox="0 0 500 500"
     fill="currentColor"
     {...props}

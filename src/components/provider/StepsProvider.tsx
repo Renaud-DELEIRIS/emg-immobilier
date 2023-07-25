@@ -5,6 +5,7 @@ import {
   getStepById,
   getPreviousStep,
   isStepDisabled,
+  type StepId,
 } from "~/constants/step.constant";
 import {
   createContext,
@@ -34,7 +35,9 @@ interface StepContext {
   activeStep: Step;
   steps: Step[];
 
-  increaseStep: (newLead?: LeadData) => void;
+  setActiveStep: (step: StepId) => void;
+
+  increaseStep: (step: StepId, newLead?: LeadData) => void;
   decreaseStep: () => void;
 
   getStepComponent: () => ReactNode;
@@ -46,6 +49,8 @@ export const StepContext = createContext<StepContext>({
   currentStep: STEPS[0] as Step,
   activeStep: STEPS[0] as Step,
   steps: STEPS,
+
+  setActiveStep: () => null,
 
   increaseStep: () => null,
   decreaseStep: () => null,
@@ -80,8 +85,9 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const increaseStep = useCallback(
-    (newLead?: LeadData) => {
-      setSteps(getNextStep(activeStep, newLead ?? lead));
+    (step: StepId, newLead?: LeadData) => {
+      console.log("increaseStep", step);
+      setSteps(getNextStep(getStepById(step), newLead ?? lead));
     },
     [activeStep, setSteps]
   );
@@ -97,24 +103,51 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const getStepComponent = () => {
-    if (activeStep.id === "for-who") return <For />;
-    if (activeStep.id === "adherent") return <Adherant />;
-    if (activeStep.id === "npa") return <Npa />;
-    if (activeStep.id === "situation") return <Situation />;
-    if (activeStep.id === "assurance-actuelle") return <Assurance />;
-    if (activeStep.id === "franchise") return <Franchise />;
-    if (activeStep.id === "package") return <ChoosePack />;
-    if (activeStep.id === "name") return <Name />;
-    if (activeStep.id === "loader") return <Loader />;
-    if (activeStep.id === "verification" || activeStep.id === "result") {
-      return (
-        <ResultProvider>
-          {activeStep.id === "verification" && <Verification />}
-          <Result />
-        </ResultProvider>
-      );
+    const childs: ReactNode[] = [];
+    switch (activeStep.id) {
+      case "situation":
+      case "assurance-actuelle":
+        if (activeStep.id === "situation")
+          childs.push(<Situation key={"situation"} />);
+        else childs.push(<Assurance key={"assurance-actuelle"} />);
+      case "npa":
+        childs.push(<Npa key={"npa"} />);
+      case "adherent":
+        childs.push(<Adherant key={"adherant"} />);
+      case "for-who":
+        childs.push(<For key={"for-who"} />);
+        childs.push(
+          <div
+            className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
+            key={"title"}
+          >
+            Adhérent
+          </div>
+        );
     }
-    return <DefaultStep />;
+
+    // if (activeStep.id === "for-who") return <For />;
+    // if (activeStep.id === "adherent") return <Adherant />;
+    // if (activeStep.id === "npa") return <Npa />;
+    // if (activeStep.id === "situation") return <Situation />;
+    // if (activeStep.id === "assurance-actuelle") return <Assurance />;
+    // if (activeStep.id === "franchise") return <Franchise />;
+    // if (activeStep.id === "package") return <ChoosePack />;
+    // if (activeStep.id === "name") return <Name />;
+    // if (activeStep.id === "loader") return <Loader />;
+    // if (activeStep.id === "verification" || activeStep.id === "result") {
+    //   return (
+    //     <ResultProvider>
+    //       {activeStep.id === "verification" && <Verification />}
+    //       <Result />
+    //     </ResultProvider>
+    //   );
+    // }
+    return (
+      <div className="mx-auto flex max-w-4xl flex-col gap-8 px-4 md:gap-12">
+        {childs.reverse()}
+      </div>
+    );
   };
 
   return (
@@ -127,6 +160,7 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
         decreaseStep,
         getStepComponent,
         isDisabled,
+        setActiveStep: (step) => setActiveStep(getStepById(step)),
       }}
     >
       {children}

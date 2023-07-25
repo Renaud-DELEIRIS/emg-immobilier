@@ -357,7 +357,7 @@ const Franchise = () => {
             ))}
             <Button
               onClick={() => {
-                increaseStep();
+                increaseStep("franchise");
               }}
               className="mx-auto w-fit"
             >

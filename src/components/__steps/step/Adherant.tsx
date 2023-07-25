@@ -36,7 +36,7 @@ const textByIndex = [
 
 const Adherant = () => {
   const { lead, changeLead } = useLead();
-  const { increaseStep } = useSteps();
+  const { increaseStep, activeStep } = useSteps();
   const [isEditing, setIsEditing] = useState<number | undefined>(undefined);
   const [adherent, setAdherent] = useState<LeadData["adherent"]["0"]>();
   const [hasEdited, setHasEdited] = useState(false);
@@ -90,147 +90,21 @@ const Adherant = () => {
       : 0;
 
   useEffect(() => {
+    if (activeStep.id !== "adherent") return;
     const next = nextToEdit();
     if (next !== undefined) {
       setHasEdited(true);
       setIsEditing(nextToEdit());
+    } else {
+      increaseStep("adherent");
     }
-  }, [lead]);
+  }, [lead, activeStep]);
 
   return (
-    <StepContainer
-      maxWidth="max-w-xl"
-      title={
-        isEditing !== undefined
-          ? step === "dob"
-            ? textByIndex[textIndex]?.dob || ""
-            : textByIndex[textIndex]?.civilite || ""
-          : "Voulez vous modifier un profil ?"
-      }
-      info={
-        isEditing !== undefined && lead.adherent.length > 0 && hasEdited
-          ? "Vous pourrez modifier les profils après avoir terminé la saisie."
-          : ""
-      }
-    >
-      {isEditing !== undefined && (
-        <div>
-          {step === "dob" && (
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-            >
-              <p className="mb-2">{textByIndex[textIndex]?.dob || ""}</p>
-              <TextInput
-                value={adherent?.dob || ""}
-                onChange={(value) => {
-                  setAdherent({ ...adherent, dob: value });
-                }}
-                placeholder="JJ/MM/AAAA"
-                className="w-full"
-                type="date"
-                error={
-                  adherent?.dob === "" || adherent?.dob === undefined
-                    ? ""
-                    : isValidDob(adherent?.dob || "")
-                }
-              />
-              {!isValidDob(adherent?.dob || "") &&
-                adherent?.dob !== undefined &&
-                adherent?.dob !== "" && (
-                  <div className="flex w-full justify-center">
-                    <Button
-                      onClick={() => {
-                        setStep("civilite");
-                      }}
-                      className="mt-4 w-52"
-                    >
-                      Valider
-                    </Button>
-                  </div>
-                )}
-            </motion.div>
-          )}
-          {step === "civilite" && (
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-            >
-              <p className="mb-2">
-                {textByIndex[
-                  lead.for === "you and your kids" && isEditing > 0
-                    ? 2
-                    : isEditing > 2
-                    ? 2
-                    : isEditing
-                ]?.civilite || ""}
-              </p>
-              <TileInput
-                value={adherent?.civility}
-                onChange={(value) => {
-                  if (lead.adherent[isEditing] === undefined) {
-                    changeLead({
-                      adherent: [
-                        ...lead.adherent,
-                        {
-                          ...adherent,
-                          civility:
-                            value as LeadData["adherent"]["0"]["civility"],
-                          type: getType(isEditing),
-                        },
-                      ],
-                    });
-                  } else {
-                    const newAdherents = [...lead.adherent];
-                    newAdherents[isEditing] = {
-                      ...adherent,
-                      civility: value as LeadData["adherent"]["0"]["civility"],
-                      type: getType(isEditing),
-                    };
-                    changeLead({
-                      adherent: newAdherents,
-                    });
-                  }
-                  setIsEditing(undefined);
-                  setAdherent(undefined);
-                  setStep("dob");
-                }}
-                options={[
-                  {
-                    label: "Homme",
-                    value: "man",
-                    rightIcon: <IconGenderMale />,
-                  },
-                  {
-                    label: "Femme",
-                    value: "female",
-                    rightIcon: <IconGenderFemale />,
-                  },
-                ]}
-                className="gap-4"
-              ></TileInput>
-            </motion.div>
-          )}
-          {((isEditing > 2 && lead.for === "you, your partner and your kids") ||
-            (isEditing > 1 && lead.for === "you and your kids")) && (
-            <Button
-              onClick={() => {
-                setIsEditing(undefined);
-                setAdherent(undefined);
-                setStep("dob");
-              }}
-              className="mt-4 w-fit"
-              size={"small"}
-              intent={"secondary"}
-            >
-              Annuler
-            </Button>
-          )}
-        </div>
-      )}
-      {lead.adherent.length > 0 && isEditing === undefined && (
-        <>
-          <h3 className="text-xl">Vos profils</h3>
+    <div>
+      {lead.adherent.length > 0 && (
+        <div className="mb-8">
+          <h3 className="text-xl text-dark">Les adhérants</h3>
           <div className="mt-4 flex flex-col gap-4">
             {lead.adherent.map((adherent, index) => (
               <div className="flex items-center gap-4" key={index}>
@@ -301,31 +175,167 @@ const Adherant = () => {
               </div>
             ))}
             {(lead.for === "you and your kids" ||
-              lead.for === "you, your partner and your kids") && (
-              <Button
-                onClick={() => {
-                  setIsEditing(lead.adherent.length);
-                  setAdherent({});
+              lead.for === "you, your partner and your kids") &&
+              isEditing === undefined && (
+                <Button
+                  onClick={() => {
+                    setIsEditing(lead.adherent.length);
+                    setAdherent({});
+                  }}
+                  size="small"
+                  className="w-fit"
+                  iconRight={<IconPlus />}
+                >
+                  Ajouter un enfant
+                </Button>
+              )}
+          </div>
+        </div>
+      )}
+      {isEditing !== undefined && (
+        <div>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <StepContainer
+              title={
+                isEditing !== undefined
+                  ? textByIndex[textIndex]?.dob || ""
+                  : "Voulez vous modifier un profil ?"
+              }
+              description={
+                <span>
+                  Parfait !
+                  <br />
+                  {isEditing !== undefined
+                    ? textByIndex[textIndex]?.title || ""
+                    : "Voulez vous modifier un profil ?"}
+                </span>
+              }
+              active={activeStep.id === "adherent"}
+            >
+              <form
+                className="flex flex-row items-start gap-4"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setStep("civilite");
                 }}
-                size="small"
-                className="w-fit"
-                iconRight={<IconPlus />}
               >
-                Ajouter un enfant
-              </Button>
-            )}
+                <TextInput
+                  value={adherent?.dob || ""}
+                  onChange={(value) => {
+                    setAdherent({ ...adherent, dob: value });
+                  }}
+                  placeholder="JJ/MM/AAAA"
+                  type="date"
+                  wrapperClassName="w-80 mt-1.5"
+                  widthFull={false}
+                  error={
+                    adherent?.dob === "" || adherent?.dob === undefined
+                      ? ""
+                      : isValidDob(adherent?.dob || "")
+                  }
+                />
+
+                <Button
+                  type="submit"
+                  className="w-52"
+                  disabled={
+                    !(
+                      !isValidDob(adherent?.dob || "") &&
+                      step === "dob" &&
+                      adherent?.dob !== undefined &&
+                      adherent?.dob !== ""
+                    )
+                  }
+                >
+                  Valider
+                </Button>
+              </form>
+            </StepContainer>
+          </motion.div>
+          {step === "civilite" && (
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+            >
+              <StepContainer
+                title={
+                  isEditing !== undefined
+                    ? textByIndex[textIndex]?.civilite || ""
+                    : "Voulez vous modifier un profil ?"
+                }
+                description={<span>Continuons !</span>}
+                active={activeStep.id === "adherent"}
+                className="mt-8"
+              >
+                <TileInput
+                  value={adherent?.civility}
+                  onChange={(value) => {
+                    if (lead.adherent[isEditing] === undefined) {
+                      changeLead({
+                        adherent: [
+                          ...lead.adherent,
+                          {
+                            ...adherent,
+                            civility:
+                              value as LeadData["adherent"]["0"]["civility"],
+                            type: getType(isEditing),
+                          },
+                        ],
+                      });
+                    } else {
+                      const newAdherents = [...lead.adherent];
+                      newAdherents[isEditing] = {
+                        ...adherent,
+                        civility:
+                          value as LeadData["adherent"]["0"]["civility"],
+                        type: getType(isEditing),
+                      };
+                      changeLead({
+                        adherent: newAdherents,
+                      });
+                    }
+                    setIsEditing(undefined);
+                    setAdherent(undefined);
+                    setStep("dob");
+                  }}
+                  options={[
+                    {
+                      label: "Homme",
+                      value: "man",
+                      rightIcon: <IconGenderMale />,
+                    },
+                    {
+                      label: "Femme",
+                      value: "female",
+                      rightIcon: <IconGenderFemale />,
+                    },
+                  ]}
+                  className="gap-4"
+                ></TileInput>
+              </StepContainer>
+            </motion.div>
+          )}
+          {((isEditing > 2 && lead.for === "you, your partner and your kids") ||
+            (isEditing > 1 && lead.for === "you and your kids")) && (
             <Button
               onClick={() => {
-                increaseStep();
+                setIsEditing(undefined);
+                setAdherent(undefined);
+                setStep("dob");
               }}
-              className="mx-auto w-fit"
+              className="mt-4 w-fit"
+              size={"small"}
+              intent={"secondary"}
             >
-              Continuer
+              Annuler
             </Button>
-          </div>
-        </>
+          )}
+        </div>
       )}
-    </StepContainer>
+    </div>
   );
 };
 

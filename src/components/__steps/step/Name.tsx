@@ -10,7 +10,6 @@ const Name = () => {
 
   return (
     <StepContainer
-      maxWidth="max-w-xl"
       title="Pour qui souhaitez-vous comparer ?"
       description="En quelques minutes, comparons ensemble plus de 42 compagnies."
     >
@@ -35,7 +34,7 @@ const Name = () => {
       <div className="mt-4 flex w-full justify-center">
         <Button
           onClick={() => {
-            increaseStep();
+            increaseStep("name");
           }}
           disabled={isDisabled() || !lead.nom || !lead.prenom}
         >

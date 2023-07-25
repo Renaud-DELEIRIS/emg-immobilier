@@ -1,20 +1,15 @@
-import { useEffect, useState } from "react";
 import StepContainer from "../StepContainer";
 import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
 import AutoComplete from "~/components/inputs/Autocomplete";
 import insurers from "~/data/insurers.json";
-import Button from "~/components/button/Button";
 
 const Assurance = () => {
   const { lead, changeLead } = useLead();
   const { increaseStep } = useSteps();
 
   return (
-    <StepContainer
-      maxWidth="max-w-xl"
-      title="Quelle est votre assurance actuelle ?"
-    >
+    <StepContainer title="Quelle est votre assurance actuelle ?">
       <AutoComplete
         value={
           lead.actualInsurance || {
@@ -24,7 +19,7 @@ const Assurance = () => {
         }
         onChange={(value) => {
           changeLead({ actualInsurance: value });
-          increaseStep({
+          increaseStep("assurance-actuelle", {
             ...lead,
             actualInsurance: value,
           });
@@ -40,7 +35,7 @@ const Assurance = () => {
             changeLead({
               actualInsurance: { key: -1, value: "Pas d'assurance" },
             });
-            increaseStep({
+            increaseStep("assurance-actuelle", {
               ...lead,
               actualInsurance: { key: -1, value: "Pas d'assurance" },
             });

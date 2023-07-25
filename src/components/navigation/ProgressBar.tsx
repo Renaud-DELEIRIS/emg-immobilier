@@ -8,7 +8,7 @@ export interface ProgressBar extends DefaultProps {
 const ProgressBar: React.FC<ProgressBar> = ({ now, className = "", style }) => {
   return (
     <div
-      className={`h-[4px] w-full bg-neutral-100 md:rounded-lg ${className}`
+      className={`h-1 w-full bg-[#c0c3c7] md:h-2 md:rounded-lg ${className}`
         .replace(/\s+/g, " ")
         .trim()}
       style={style}

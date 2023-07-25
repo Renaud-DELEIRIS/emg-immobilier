@@ -17,7 +17,7 @@ const Situation = () => {
         value={lead.situation}
         onChange={(value) => {
           changeLead({ situation: value as "frontalier" });
-          increaseStep();
+          increaseStep("situation");
         }}
         options={[
           {

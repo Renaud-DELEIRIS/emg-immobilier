@@ -12,11 +12,11 @@ const ChoosePack = () => {
   const { increaseStep } = useSteps();
   return (
     <StepContainer
-      maxWidth="max-w-5xl"
       title="Quels sont vos besoins ?"
-      description="Parfait, en matière de prestations complémentaires. Choissisez ce qui convient le mieux."
+      description={
+        "Parfait, en matière de prestations complémentaires. Choissisez ce qui convient le mieux."
+      }
       className="pb-12"
-      noPhoto
     >
       {lead.adherent.at(adherent) && (
         <Pack
@@ -57,7 +57,7 @@ const ChoosePack = () => {
         <Button
           onClick={() => {
             if (lead.adherent.length === adherent + 1) {
-              increaseStep();
+              increaseStep("package");
               return;
             }
             setAdherent(adherent + 1);

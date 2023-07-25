@@ -4,6 +4,10 @@ export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      // Update default border color
+      borderColor: {
+        DEFAULT: "#eaebec",
+      },
       colors: {
         primary: {
           "50": "#eafff8",
@@ -19,6 +23,7 @@ export default {
           "950": "#00302a",
           DEFAULT: "#00c49b",
         },
+        dark: "#2F3946",
       },
     },
   },

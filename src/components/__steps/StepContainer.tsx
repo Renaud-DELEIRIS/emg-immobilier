@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type DefaultProps from "~/types/DefaultProps";
 import { motion } from "framer-motion";
+import { type ReactElement } from "react";
 
 const StepContainer = ({
   title,
@@ -8,56 +9,44 @@ const StepContainer = ({
   description,
   infoTitle,
   info,
-  maxWidth = "max-w-3xl",
   className = "",
-  noPhoto = false,
+  active,
 }: {
   title: string;
-  description?: string;
+  description?: ReactElement | string;
   info?: string;
   infoTitle?: string;
-  maxWidth?: string;
-  noPhoto?: boolean;
+  active?: boolean;
 } & DefaultProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      className={
-        "mx-auto flex w-full flex-col items-center justify-center " +
-        maxWidth +
-        " " +
-        className
-      }
+      className={"mx-auto flex w-full flex-col " + className}
     >
-      {!noPhoto && (
-        <div className={"relative text-center "}>
-          <Image
-            src={"/portrait.png"}
-            alt="Assistance"
-            width={64}
-            height={64}
-            className="h-16 w-16 rounded-full"
-          ></Image>
-          <div className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-green-400 outline outline-2 outline-white" />
-        </div>
+      {active && (
+        <>
+          <div className="relative mb-2 flex items-center">
+            <Image
+              src={"/portrait.png"}
+              alt="Assistance"
+              width={50}
+              height={50}
+              className="h-10 w-10 rounded-full border md:absolute md:-left-16 md:h-12 md:w-12"
+            ></Image>
+            <div className="absolute left-7 top-0.5 h-4 w-4 rounded-full border-2 border-white bg-primary md:-left-7 md:top-5"></div>
+            <p className="ml-2 font-extrabold text-dark md:ml-0">Emma</p>
+          </div>
+          <p className="mb-2 text-dark">{description}</p>
+        </>
       )}
-      <h1 className="mb-2 mt-4 text-center text-[26px] font-bold leading-10 tracking-tight text-[#2F3946]">
+      <h1 className="mb-4 text-base font-extrabold leading-[1.6] text-dark md:leading-[1.4]">
         {title}
       </h1>
-
-      <p className="mb-8 text-center text-neutral-500">{description}</p>
 
       <div className="w-full">{children}</div>
       {info && (
         <div className="mt-8 flex w-full flex-row items-center rounded-lg bg-[#00c49b14] p-3">
-          <Image
-            src={"/portrait.png"}
-            alt="Assistance"
-            width={32}
-            height={32}
-            className="h-8 w-8 rounded-full border border-[#00C49B]"
-          ></Image>
           <div className="ml-2">
             {infoTitle && (
               <h2 className="text-sm font-semibold text-primary-800">

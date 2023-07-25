@@ -13,23 +13,33 @@ const Footer = () => {
   const { increaseStep, decreaseStep, activeStep, steps } = useSteps();
   const { lead } = useLead();
   return (
-    <footer className="footer-height row relative bottom-0 left-0 z-30 w-full items-center justify-around border-t  bg-white px-4">
-      <Button
-        intent="secondary"
-        size="small"
-        iconLeft={<IconArrowLeft />}
-        onClick={() => decreaseStep()}
-      >
-        Retour
-      </Button>
-      <Button
-        size="medium"
-        iconRight={<IconArrowRight />}
-        disabled={isStepDisabled(activeStep, lead)}
-        onClick={() => increaseStep()}
-      >
-        Suivant
-      </Button>
+    <footer className="flex flex-col justify-evenly gap-8 bg-[#f9fafb] px-4 py-12 md:flex-row">
+      <div className="flex w-full flex-col md:w-1/4 ">
+        <p className="mb-2 text-lg font-bold text-primary md:mb-4">
+          Vos données sont sécurisées
+        </p>
+        <p className="text-[#828890]">
+          Nous garantissons la sécurité de vos données.
+        </p>
+      </div>
+      <div className="flex w-full flex-col md:w-1/4 ">
+        <p className="mb-2 text-lg font-bold text-primary md:mb-4">
+          Indépendants et impartials
+        </p>
+        <p className="text-[#828890]">
+          Comparea.ch est un groupe indépendant, n’appartenant à aucune société
+          d’assurance.
+        </p>
+      </div>
+      <div className="flex w-full flex-col md:w-1/4 ">
+        <p className="mb-2 text-lg font-bold text-primary md:mb-4">
+          Pas de surcoûts
+        </p>
+        <p className="text-[#828890]">
+          Les prix affichés sont négociés auprès des assureurs partenaires,
+          aucun surcoût n’est appliqué.
+        </p>
+      </div>
     </footer>
   );
 };

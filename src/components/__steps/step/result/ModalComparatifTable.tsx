@@ -1,11 +1,4 @@
-import {
-  IconCheck,
-  IconCircleCheck,
-  IconCircleX,
-  IconCross,
-  IconHelp,
-  IconQuestionMark,
-} from "@tabler/icons-react";
+import { IconCircleCheck, IconCircleX, IconHelp } from "@tabler/icons-react";
 import Image from "next/image";
 import { Fragment, useState } from "react";
 import { toast } from "react-toastify";
