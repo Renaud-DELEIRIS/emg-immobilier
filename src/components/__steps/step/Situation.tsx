@@ -7,11 +7,17 @@ import { useSteps } from "~/components/provider/StepsProvider";
 
 const Situation = () => {
   const { lead, changeLead } = useLead();
-  const { increaseStep } = useSteps();
+  const { increaseStep, activeStep } = useSteps();
   return (
     <StepContainer
-      title="Vous ne résidez pas en Suisse ?"
-      description="Quelle est votre situation ?"
+      title="Quelle est votre situation ?"
+      description={
+        <span>
+          Vous ne résidez pas en Suisse ?<br />
+          J‘ai besoin d‘un peu plus d‘informations.
+        </span>
+      }
+      active={activeStep.id === "situation"}
     >
       <TileInput
         value={lead.situation}

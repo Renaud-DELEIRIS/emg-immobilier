@@ -6,10 +6,19 @@ import insurers from "~/data/insurers.json";
 
 const Assurance = () => {
   const { lead, changeLead } = useLead();
-  const { increaseStep } = useSteps();
+  const { increaseStep, activeStep } = useSteps();
 
   return (
-    <StepContainer title="Quelle est votre assurance actuelle ?">
+    <StepContainer
+      title="Quelle est votre assurance actuelle ?"
+      description={
+        <span>
+          Très bien !<br />
+          Possedez-vous une assurance santé ? Si oui,
+        </span>
+      }
+      active={activeStep.id === "assurance-actuelle"}
+    >
       <AutoComplete
         value={
           lead.actualInsurance || {
