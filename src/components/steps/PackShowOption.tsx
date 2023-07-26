@@ -12,7 +12,7 @@ const PackShowOption = ({
   recommended,
   customLevel,
   defaultLevel,
-  onChangeLevel,
+  onChangeLevel = () => null,
 }: {
   pack: string;
   prestation: Prestation[][];
@@ -21,15 +21,15 @@ const PackShowOption = ({
   recommended: boolean;
   customLevel?: string[];
   defaultLevel: number;
-  onChangeLevel: (level: number) => void;
+  onChangeLevel?: (level: number) => void;
 }) => {
   const [options, setOptions] = useState<number>(defaultLevel || 1);
   const maxLevel = prestation.length;
 
   return (
     <div
-      className={`relative flex w-full flex-col items-center rounded-lg border-2 shadow-xl ${
-        selected ? "border-primary-400" : "border-neutral-100"
+      className={`container-shadow relative flex w-full flex-col items-center rounded-lg ${
+        selected ? "border-2 border-primary-400" : "border-0"
       }`}
     >
       {recommended && (
@@ -74,7 +74,7 @@ const PackShowOption = ({
       )}
 
       <ul
-        className={`mt-6 w-full justify-start space-y-1.5 px-4 text-left ${
+        className={`mt-6 w-full justify-start space-y-1.5 px-4 pb-4 text-left ${
           selected ? "opacity-100" : "opacity-40"
         }`}
       >

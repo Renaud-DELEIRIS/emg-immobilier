@@ -213,7 +213,7 @@ const Adherant = () => {
                     : "Voulez vous modifier un profil ?"}
                 </span>
               }
-              active={activeStep.id === "adherent"}
+              stepId="adherent"
             >
               <form
                 className="flex flex-row items-start gap-4"
@@ -267,8 +267,9 @@ const Adherant = () => {
                     : "Voulez vous modifier un profil ?"
                 }
                 description={<span>Continuons !</span>}
-                active={activeStep.id === "adherent"}
+                stepId="adherent"
                 className="mt-8"
+                id="adherent-civilite"
               >
                 <TileInput
                   value={adherent?.civility}

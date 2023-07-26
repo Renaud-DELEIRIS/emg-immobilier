@@ -17,7 +17,7 @@ const Situation = () => {
           J‘ai besoin d‘un peu plus d‘informations.
         </span>
       }
-      active={activeStep.id === "situation"}
+      stepId="situation"
     >
       <TileInput
         value={lead.situation}

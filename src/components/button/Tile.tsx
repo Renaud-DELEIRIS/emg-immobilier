@@ -6,6 +6,7 @@ interface Tile {
   children: React.ReactNode;
   icon?: React.ReactNode;
   widthFull?: boolean;
+  autoFocus?: boolean;
 }
 
 const Tile = ({
@@ -14,10 +15,12 @@ const Tile = ({
   children,
   icon,
   widthFull = false,
+  autoFocus = false,
 }: Tile) => {
   return (
     <button
       onClick={onClick}
+      autoFocus={autoFocus}
       className={`${
         !selected
           ? "border-[#D7D7D7] bg-white text-neutral-600 hover:bg-neutral-50"

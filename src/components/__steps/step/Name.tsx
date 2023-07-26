@@ -10,8 +10,17 @@ const Name = () => {
 
   return (
     <StepContainer
-      title="Pour qui souhaitez-vous comparer ?"
-      description="En quelques minutes, comparons ensemble plus de 42 compagnies."
+      title="Comment vous appelez-vous ?
+
+      "
+      description={
+        <span>
+          Nous sommes sur la fin !
+          <br />
+          J‘ai besoin d‘informations supplémentaires pour établir votre offre.
+        </span>
+      }
+      stepId="name"
     >
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <TextInput
@@ -19,19 +28,17 @@ const Name = () => {
           onChange={(value) => {
             changeLead({ nom: value });
           }}
-          label="Votre nom"
-          placeholder="Snow"
+          placeholder="Nom"
         ></TextInput>
         <TextInput
           value={lead.prenom || ""}
           onChange={(value) => {
             changeLead({ prenom: value });
           }}
-          label="Votre prénom"
-          placeholder="John"
+          placeholder="Prénom"
         ></TextInput>
       </div>
-      <div className="mt-4 flex w-full justify-center">
+      <div className="mt-4 flex w-full">
         <Button
           onClick={() => {
             increaseStep("name");

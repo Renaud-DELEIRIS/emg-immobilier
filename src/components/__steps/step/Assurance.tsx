@@ -17,7 +17,7 @@ const Assurance = () => {
           Possedez-vous une assurance santé ? Si oui,
         </span>
       }
-      active={activeStep.id === "assurance-actuelle"}
+      stepId="assurance-actuelle"
     >
       <AutoComplete
         value={

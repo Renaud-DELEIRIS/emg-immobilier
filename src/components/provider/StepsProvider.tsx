@@ -35,7 +35,10 @@ interface StepContext {
   activeStep: Step;
   steps: Step[];
 
+  increaseSignal?: boolean;
+
   setActiveStep: (step: StepId) => void;
+  setCurrentStep: (step: StepId) => void;
 
   increaseStep: (step: StepId, newLead?: LeadData) => void;
   decreaseStep: () => void;
@@ -58,17 +61,26 @@ export const StepContext = createContext<StepContext>({
   getStepComponent: () => null,
 
   isDisabled: () => false,
+  setCurrentStep: () => null,
 });
 
 const StepsProvider = ({ children }: { children: ReactNode }) => {
   const [currentStep, setCurrentStep] = useState<Step>(STEPS[0] as Step);
   const [activeStep, setActiveStep] = useState<Step>(STEPS[0] as Step);
   const { lead } = useLead();
+  const [increaseSignal, toggle] = useState(false);
 
   const setSteps = useCallback(
     (askedStep: Step) => {
       setActiveStep(askedStep);
       sessionStorage.setItem("step", askedStep.id);
+
+      if (askedStep.stepInfo(lead)[0] > currentStep.stepInfo(lead)[0]) {
+        sessionStorage.setItem("currentStep", askedStep.id);
+        setCurrentStep(askedStep);
+      }
+
+      toggle((prev) => !prev);
     },
     [currentStep, lead]
   );
@@ -86,8 +98,19 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
 
   const increaseStep = useCallback(
     (step: StepId, newLead?: LeadData) => {
-      console.log("increaseStep", step);
-      setSteps(getNextStep(getStepById(step), newLead ?? lead));
+      const nextStep = getNextStep(getStepById(step), newLead ?? lead);
+      setSteps(nextStep);
+
+      // // Scroll smo  oth to this step #id with 100 px offset
+      // setTimeout(() => {
+      //   const element = document.getElementById(step);
+      //   if (element) {
+      //     window.scrollTo({
+      //       top: element.offsetTop - 100,
+      //       behavior: "smooth",
+      //     });
+      //   }
+      // }, 100);
     },
     [activeStep, setSteps]
   );
@@ -105,6 +128,30 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
   const getStepComponent = () => {
     const childs: ReactNode[] = [];
     switch (activeStep.id) {
+      case "name":
+        childs.push(<Name key={"name"} />);
+        childs.push(
+          <div
+            className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
+            key={"title"}
+          >
+            Finalisation
+          </div>
+        );
+        break;
+      case "package":
+        childs.push(<ChoosePack key={"package"} />);
+      case "franchise":
+        childs.push(<Franchise key={"franchise"} />);
+        childs.push(
+          <div
+            className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
+            key={"title"}
+          >
+            Besoins
+          </div>
+        );
+        break;
       case "situation":
       case "assurance-actuelle":
         if (activeStep.id === "situation")
@@ -161,6 +208,8 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
         getStepComponent,
         isDisabled,
         setActiveStep: (step) => setActiveStep(getStepById(step)),
+        increaseSignal,
+        setCurrentStep: (step) => setCurrentStep(getStepById(step)),
       }}
     >
       {children}

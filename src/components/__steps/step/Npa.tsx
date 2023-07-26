@@ -12,7 +12,7 @@ const Npa = () => {
     <StepContainer
       title="Quel est votre code postal de résident (NPA) ?"
       description={<>Maintenant j‘ai besoin de savoir où vous résidez.</>}
-      active={activeStep.id === "npa"}
+      stepId="npa"
     >
       <AutoComplete
         value={

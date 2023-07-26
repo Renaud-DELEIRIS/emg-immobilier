@@ -1,7 +1,10 @@
 import Image from "next/image";
 import type DefaultProps from "~/types/DefaultProps";
 import { motion } from "framer-motion";
-import { type ReactElement } from "react";
+import { useEffect, type ReactElement } from "react";
+import { type StepId } from "~/constants/step.constant";
+import { useSteps } from "../provider/StepsProvider";
+import { useToggle } from "react-use";
 
 const StepContainer = ({
   title,
@@ -10,19 +13,24 @@ const StepContainer = ({
   infoTitle,
   info,
   className = "",
-  active,
+  stepId,
+  id,
 }: {
   title: string;
   description?: ReactElement | string;
   info?: string;
   infoTitle?: string;
-  active?: boolean;
+  stepId: StepId;
 } & DefaultProps) => {
+  const { activeStep, increaseSignal } = useSteps();
+  const active = activeStep.id === stepId;
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       className={"mx-auto flex w-full flex-col " + className}
+      id={id ?? stepId}
     >
       {active && (
         <>

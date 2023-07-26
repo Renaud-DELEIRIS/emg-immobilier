@@ -39,7 +39,7 @@ const TileInput = ({ value, onChange, options, className = "" }: Props) => {
         ) : (
           <button
             key={option.value}
-            className={`flex w-full items-center gap-4 rounded-md p-3 ${
+            className={`flex w-full items-center gap-4 rounded-md bg-white p-3 ${
               value === option.value
                 ? "border-primary text-primary"
                 : "border-neutral-300 text-neutral-700"

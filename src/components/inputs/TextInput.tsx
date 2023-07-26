@@ -18,6 +18,7 @@ const TextInput = ({
   disabled = false,
   wrapperClassName = "",
   rightPart,
+  autofocus = false,
 }: {
   value: string;
   onChange?: (value: string) => void;
@@ -36,6 +37,7 @@ const TextInput = ({
   description?: string;
   wrapperClassName?: string;
   rightPart?: React.ReactNode;
+  autofocus?: boolean;
 }) => {
   const computedClass = cva(
     "text-nase rounded-lg block w-full focus:outline-none " + className,
@@ -85,6 +87,7 @@ const TextInput = ({
         <div className={`flex items-center ${widthFull ? "w-full" : ""}`}>
           <input
             type={type}
+            autoFocus={autofocus}
             className={computedClass({
               error: error !== "",
               icon: icon !== undefined,

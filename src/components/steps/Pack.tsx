@@ -1,15 +1,10 @@
-import { IconCheck, IconCircleCaretDown, IconX } from "@tabler/icons-react";
+import { IconCheck, IconCircleCaretDown } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { useWindowSize } from "react-use";
 import {
   prestationsConfort,
-  prestationsConfortShort,
   prestationsEssentials,
-  prestationsEssentialsShort,
   prestationsPremium,
-  prestationsPremiumShort,
-  type Prestation,
 } from "~/data/Pack";
 import {
   optionCapitalHospitalier,
@@ -18,21 +13,7 @@ import {
   optionTraitementsDentaires,
 } from "~/data/PackOption";
 import type { Adherent } from "../provider/LeadProvider";
-import PackBig from "./PackBig";
-import PackCompar from "./PackCompare";
-import PackShow from "./PackShow";
 import PackShowOption from "./PackShowOption";
-
-const homeText = (adherent: Adherent) => {
-  if (adherent.type === "main") return "Pour vous";
-  else if (adherent.type === "partner")
-    return `Pour votre conjoint${adherent.civility === "female" ? "e" : ""}`;
-  else if (adherent.type === "child")
-    return `Pour votre enfant né${
-      adherent.civility === "female" ? "e" : ""
-    } le ${dayjs(adherent.dob).format("YYYY")}`;
-  else return "Pour vous";
-};
 
 const Pack = ({
   adherent,
@@ -51,7 +32,6 @@ const Pack = ({
     }[];
   }) => void;
 }) => {
-  const { width } = useWindowSize();
   const [selected, setSelected] = useState<
     "Essentiel" | "Confort" | "Premium" | undefined | null
   >(adherent.pack?.principal);
@@ -65,18 +45,7 @@ const Pack = ({
         | "Capital hospitalier";
       level: number;
     }[]
-  >(
-    adherent.pack?.options || [
-      {
-        label: "Capital hospitalier",
-        level: 1,
-      },
-      {
-        label: "Hospitalisation",
-        level: 1,
-      },
-    ]
-  );
+  >(adherent.pack?.options || []);
 
   useEffect(() => {
     // If adherent age is under or equal at 3 make premium selected
@@ -84,7 +53,7 @@ const Pack = ({
       setSelected("Premium");
     else if (dayjs().diff(adherent.dob, "year") > 3 && selected === undefined)
       setSelected("Confort");
-  }, [adherent]);
+  }, []);
 
   useEffect(() => {
     setPack({
@@ -94,15 +63,34 @@ const Pack = ({
   }, [options, selected]);
 
   return (
-    <div className="flex flex-col px-8 md:px-0">
-      <span className="mb-4 text-lg font-bold">{homeText(adherent)} </span>
-      <div className="flex flex-col items-center gap-8 md:flex-row md:gap-0 [&>*]:flex-1">
-        <PackCompar
-          setSelected={(pack) => setSelected(pack)}
-          selected={selected}
+    <div className="flex flex-col">
+      <div className="flex flex-col items-center gap-8 md:flex-row md:gap-8">
+        <PackShowOption
+          prestation={[prestationsEssentials]}
+          defaultLevel={1}
+          pack="Essentiel"
+          recommended={false}
+          selected={selected === "Essentiel"}
+          onClick={() => setSelected("Essentiel")}
+        />
+        <PackShowOption
+          prestation={[prestationsConfort]}
+          pack="Confort"
+          defaultLevel={1}
+          recommended={dayjs().diff(adherent.dob, "year") > 3}
+          selected={selected === "Confort"}
+          onClick={() => setSelected("Confort")}
+        />
+        <PackShowOption
+          defaultLevel={1}
+          prestation={[prestationsPremium]}
+          pack="Premium"
+          recommended={dayjs().diff(adherent.dob, "year") <= 3}
+          selected={selected === "Premium"}
+          onClick={() => setSelected("Premium")}
         />
       </div>
-      <div className="mt-8 rounded-lg border p-4 shadow-2xl">
+      <div className="container-shadow mt-8 rounded-lg border p-4">
         <button
           className="flex w-full items-center justify-between text-left"
           onClick={() => setOptionExpanded(!optionExpanded)}

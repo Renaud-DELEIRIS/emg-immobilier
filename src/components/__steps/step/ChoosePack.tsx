@@ -1,4 +1,5 @@
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
+import dayjs from "dayjs";
 import { useState } from "react";
 import Button from "~/components/button/Button";
 import { type Adherent, useLead } from "~/components/provider/LeadProvider";
@@ -10,50 +11,59 @@ const ChoosePack = () => {
   const { lead, changeLead } = useLead();
   const [adherent, setAdherent] = useState<number>(0);
   const { increaseStep } = useSteps();
+
+  const selectedAdherent = lead.adherent.at(adherent) as Adherent;
+
   return (
-    <StepContainer
-      title="Quels sont vos besoins ?"
-      description={
-        "Parfait, en matière de prestations complémentaires. Choissisez ce qui convient le mieux."
-      }
-      className="pb-12"
-    >
-      {lead.adherent.at(adherent) && (
-        <Pack
-          adherent={lead.adherent.at(adherent) as Adherent}
-          setPack={(pack) => {
-            changeLead({
-              adherent: [
-                ...lead.adherent.slice(0, adherent),
-                {
-                  ...lead.adherent.at(adherent),
-                  pack,
-                },
-                ...lead.adherent.slice(adherent + 1),
-              ],
-            });
-          }}
-        />
-      )}
-      <div className="mt-4 flex w-full justify-between">
-        <div>
-          {adherent !== 0 && (
-            <Button
-              intent={"secondary"}
-              iconLeft={<IconArrowLeft />}
-              onClick={() => {
-                setAdherent(adherent - 1);
-                // Scroll smooth to top
-                window.scrollTo({
-                  top: 0,
-                  behavior: "smooth",
-                });
-              }}
+    <>
+      <div className="flex flex-col gap-8">
+        {lead.adherent.map((data, index) => {
+          if (index > adherent) return null;
+          return (
+            <StepContainer
+              description={
+                <span>
+                  Parfait, en matière de prestations complémentaires.
+                  <br />
+                  Choissisez ce qui convient le mieux.
+                </span>
+              }
+              title={
+                data.type === "main"
+                  ? "Pour vous"
+                  : data.type === "partner"
+                  ? data.civility === "female"
+                    ? "Pour votre conjointe"
+                    : "Pour votre conjoint"
+                  : "Pour votre enfant née en " +
+                    dayjs(data.dob).year().toString()
+              }
+              className="pb-12"
+              stepId={"package"}
+              id={index.toString()}
+              key={index}
             >
-              Retour
-            </Button>
-          )}
-        </div>
+              <Pack
+                adherent={data}
+                setPack={(pack) => {
+                  changeLead({
+                    adherent: [
+                      ...lead.adherent.slice(0, index),
+                      {
+                        ...data,
+                        pack,
+                      },
+                      ...lead.adherent.slice(index + 1),
+                    ],
+                  });
+                }}
+              />
+            </StepContainer>
+          );
+        })}
+      </div>
+      <div className="mt-4 flex w-full justify-between">
+        <div></div>
         <Button
           onClick={() => {
             if (lead.adherent.length === adherent + 1) {
@@ -72,7 +82,7 @@ const ChoosePack = () => {
           Suivant
         </Button>
       </div>
-    </StepContainer>
+    </>
   );
 };
 

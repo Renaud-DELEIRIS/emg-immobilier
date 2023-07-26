@@ -11,6 +11,7 @@ interface Autocomplete {
   label?: string;
   className?: string;
   placeholder?: string;
+  autoFocus?: boolean;
 }
 
 export default function AutoComplete({
@@ -20,6 +21,7 @@ export default function AutoComplete({
   className = "",
   label,
   placeholder,
+  autoFocus = false,
 }: Autocomplete) {
   const [query, setQuery] = useState("");
 
@@ -56,6 +58,7 @@ export default function AutoComplete({
               onChange={(event) => setQuery(event.target.value)}
               id={id}
               placeholder={placeholder}
+              autoFocus={autoFocus}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
               <IconChevronUp
