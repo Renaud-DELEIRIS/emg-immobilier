@@ -53,9 +53,11 @@ const Header = () => {
             </a>
           </div>
         </header>
-        <div className="absolute bottom-0 z-[100] block w-full md:hidden">
-          <ProgressBar now={actualStep / maxStep} />
-        </div>
+        {activeStep.id !== "result" && (
+          <div className="absolute bottom-0 z-[100] block w-full md:hidden">
+            <ProgressBar now={actualStep / maxStep} />
+          </div>
+        )}
       </div>
     </>
   );

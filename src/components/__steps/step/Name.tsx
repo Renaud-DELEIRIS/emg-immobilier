@@ -35,6 +35,7 @@ const Name = () => {
               changeLead({ nom: value });
             }}
             placeholder="Nom"
+            autocomplete="family-name"
           ></TextInput>
           <TextInput
             value={lead.prenom || ""}
@@ -42,6 +43,7 @@ const Name = () => {
               changeLead({ prenom: value });
             }}
             placeholder="Prénom"
+            autocomplete="given-name"
           ></TextInput>
         </div>
         <div className="mt-4 flex w-full">

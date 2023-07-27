@@ -36,6 +36,7 @@ const Info = ({ open }: { open: boolean }) => {
   }, []);
 
   const verifyCode = () => {
+    console.log(code, responseCode);
     if (process.env.NODE_ENV === "development") {
       if (code === "6121") {
         changeLead({ ...lead, verified: true });
@@ -44,7 +45,7 @@ const Info = ({ open }: { open: boolean }) => {
       }
     }
     if (!responseCode) return;
-    if (code !== responseCode) {
+    if (code.trim() !== responseCode) {
       console.log("Code is not valid");
       return;
     }
