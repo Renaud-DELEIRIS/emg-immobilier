@@ -126,3 +126,27 @@ body {
 .compare-shadow {
   box-shadow: 0 0 50px 5px rgba(71, 91, 126, 0.1);
 }
+
+.becalled-btn {
+  animation: becalled 10s infinite;
+  transition: all 0.3s ease-in-out;
+}
+.becalled-btn.open {
+  animation-play-state: paused;
+  transform: translate(-30px, -30px);
+}
+
+@keyframes becalled {
+  0% {
+    translate: 0px 0px;
+    scale: 1;
+  }
+  7.5% {
+    translate: -30px -30px;
+    scale: 1.12;
+  }
+  15% {
+    translate: 0px 0px;
+    scale: 1;
+  }
+}

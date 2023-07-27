@@ -1,13 +1,19 @@
+import { IconChevronDown, IconPhone, IconPhoneCall } from "@tabler/icons-react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
+import PhoneInput from "react-phone-input-2";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
+import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
 
 const Home: NextPage = () => {
   const { getStepComponent, activeStep } = useSteps();
+  const { changeLead, lead } = useLead();
+  const [beCalled, setBeCalled] = useState(false);
   return (
     <>
       <Head>
@@ -23,10 +29,76 @@ const Home: NextPage = () => {
         {activeStep.id !== "loader" &&
           activeStep.id !== "result" &&
           activeStep.id !== "verification" && (
-            <div className="fixed right-6 hidden h-screen items-center md:flex">
+            <div className="fixed -z-10 hidden h-screen items-center md:right-5 md:flex xl:right-[5%]">
               <Sidebar />
             </div>
           )}
+        <div
+          className={
+            "becalled-btn fixed bottom-4 right-4 z-50 gap-1 rounded-2xl bg-primary p-2 font-bold text-white " +
+            (beCalled ? "open p-4" : "w-10 md:w-auto")
+          }
+        >
+          <button
+            onClick={() => setBeCalled(!beCalled)}
+            className="flex items-center gap-1"
+          >
+            {!beCalled ? (
+              <IconPhone size={20} className="mx-auto md:mx-0" />
+            ) : (
+              <div className="w-5" />
+            )}
+            <span className={beCalled ? "" : "hidden md:inline"}>
+              Être rappelé gratuitement
+            </span>
+            <IconChevronDown
+              size={20}
+              className={
+                beCalled
+                  ? "rotate-180 "
+                  : "" + "hidden transition-all md:inline"
+              }
+            />
+          </button>
+          <div
+            className={`grid ${
+              beCalled ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+            } transition-[grid-template-rows,padding]`}
+          >
+            <div
+              className={`overflow-hidden ${
+                beCalled ? "mt-4 flex flex-col items-center gap-2" : ""
+              }`}
+            >
+              <PhoneInput
+                onChange={(e: string) =>
+                  changeLead({
+                    phone: e,
+                  })
+                }
+                inputProps={{
+                  type: "tel",
+                  name: "phone",
+                  id: "phone",
+                  autoComplete: "phone",
+                }}
+                inputClass="block !w-full border-gray-300 focus:!border-primary-500 focus:!ring-primary-500 !sm:text-sm !h-[38px] !rounded-md"
+                preferredCountries={["ch", "fr"]}
+                regions={"europe"}
+                country={"ch"}
+                containerClass="relative mt-1  h-[38px] !border-transparent"
+                value={lead.phone || ""}
+              />
+              <button
+                onClick={() => changeLead({ phone: lead.phone })}
+                className="flex items-center gap-1 text-base text-white"
+              >
+                <IconPhoneCall size={20} />
+                Rappelez-moi
+              </button>
+            </div>
+          </div>
+        </div>
         <Footer />
       </main>
     </>
