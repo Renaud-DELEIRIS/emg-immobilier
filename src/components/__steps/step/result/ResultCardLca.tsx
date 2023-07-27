@@ -4,6 +4,7 @@ import Button from "~/components/button/Button";
 import { type Lca } from "~/types/comparatif";
 import insurance_hash from "~/data/ch-insurances-hash.json";
 import {
+  IconChevronDown,
   IconCircleCheck,
   IconCircleCheckFilled,
   IconCircleX,
@@ -22,6 +23,7 @@ interface Props {
   canCompare: boolean;
   onCompare: (id: string) => void;
   compare: boolean;
+  className?: string;
 }
 
 const ResultCardLca = ({
@@ -31,6 +33,7 @@ const ResultCardLca = ({
   canCompare,
   onCompare,
   compare,
+  className = "",
 }: Props) => {
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
@@ -112,135 +115,144 @@ const ResultCardLca = ({
   };
 
   return (
-    <div className="flex flex-col rounded-lg border bg-white">
+    <div className={" compare-shadow flex flex-col  " + className}>
       {recommended && (
-        <div className="flex items-center gap-2 rounded-t-lg bg-primary-100 px-2 py-2 pb-1 text-sm font-semibold text-primary-600">
+        <div className="flex items-center gap-2 rounded-t-lg border border-primary bg-primary-700/20 px-2 py-2 pb-1 text-sm font-semibold text-primary-600">
           <IconCircleCheckFilled size={24} />
           <span>Meilleur rapport qualité prix</span>
         </div>
       )}
-      <div className="flex w-full flex-col items-center justify-center p-4 md:flex-row md:justify-between">
-        <div className="flex flex-col items-center gap-2">
-          <Image
-            src={`/images/${hash}.png`}
-            alt={"Icon de l'assurance " + info.nom}
-            width={96}
-            height={96}
-            className="h-24 w-24 rounded-xl border border-neutral-100 object-contain"
-          ></Image>
-          <div className="flex items-center gap-1">
-            <span className="text-base font-semibold text-neutral-500">
-              {info.note} / 6
-            </span>
-            <IconCircleCheckFilled size={20} className="text-primary-600" />
-          </div>
-        </div>
-        <div className="flex flex-col items-center gap-px">
-          <div className="flex items-end">
-            <h2 className="text-[28px] font-bold text-primary">
-              CHF {monthPrice ? month : year}
-            </h2>
-            <span className="text-[18px] text-primary-700">
-              /{monthPrice ? "mois" : "an"}
-            </span>
-          </div>
-          <span className="text-lg font-semibold text-neutral-500">
-            {info.produit}
-          </span>
-          <button
-            onClick={() => setShow(!show)}
-            className="mt-2 rounded-lg border p-1 text-sm font-semibold text-primary-600 hover:text-primary-800"
-          >
-            {show ? "Masquer" : "Afficher"} les détails
-          </button>
-        </div>
-        <div className="mt-4 flex flex-col gap-4 md:mt-0">
-          <Button widthFull onClick={beCalled}>
-            Être rappelé
-          </Button>
-          <Button widthFull intent={"outline"} onClick={onSubscribe}>
-            Souscrire en ligne
-          </Button>
-        </div>
-      </div>
-      <div className="mb-3 px-4">
-        <Checkbox
-          id={info.id.toString()}
-          checked={compare}
-          disabled={!canCompare}
-          onChange={() => onCompare(info.id.toString())}
-        >
-          Comparer
-        </Checkbox>
-      </div>
       <div
-        className={`grid ${
-          show ? "grid-rows-[1fr] border-t p-4" : "grid-rows-[0fr]"
-        } transition-[grid-template-rows,padding]`}
+        className={
+          " rounded-b-lg border bg-white " + (recommended ? "" : "rounded-t-lg")
+        }
       >
-        <div className={`overflow-hidden ${show ? "" : ""}`}>
-          <div className="grid grid-cols-[repeat(2,1fr)] gap-5 p-4">
-            <span className="px-1 text-xl font-bold text-[#2F3946]">
-              Prestations
-            </span>
-            <span className="px-1 text-xl font-bold text-[#2F3946]">
-              Détails
-            </span>
+        <div className="flex w-full flex-col items-center justify-center p-4 md:flex-row md:justify-between">
+          <div className="flex flex-col items-center gap-2">
+            <Image
+              src={`/images/${hash}.png`}
+              alt={"Icon de l'assurance " + info.nom}
+              width={96}
+              height={96}
+              className="h-24 w-24 rounded-xl border border-neutral-100 object-contain"
+            ></Image>
+            <div className="flex items-center gap-1">
+              <span className="text-base font-semibold text-neutral-500">
+                {info.note} / 6
+              </span>
+              <IconCircleCheckFilled size={20} className="text-primary-600" />
+            </div>
           </div>
-          <div className="px-4">
-            {Object.entries(groupPrestations).map(([group, prestations]) => (
-              <>
-                <span className="py-3 text-lg font-bold text-[#2F3946]">
-                  {group}
-                </span>
-                {info.prestations
-                  .filter((p) => prestations.includes(p.label))
-                  .map((p, i) => (
-                    <div
-                      className={`grid grid-cols-[repeat(2,1fr)] gap-5 ${
-                        i === 0 ? "pt-2" : ""
-                      } ${i % 2 === 0 ? "bg-[#f7fcff]" : ""}`}
-                      key={i}
-                    >
-                      <div className="py-2 text-[#2f3946]">
-                        <div className="relative flex items-center gap-4">
-                          {p.status ? (
-                            <IconCircleCheck
-                              size={24}
-                              className="text-primary-600"
-                            />
-                          ) : (
-                            <IconCircleX size={24} className="text-red-600" />
-                          )}
-                          <span className="px-1 text-base">{p.label}</span>
+          <div className="flex flex-col items-center gap-px">
+            <div className="flex items-end text-[#2A3775]">
+              <h2 className="text-[40px] font-bold ">
+                CHF {monthPrice ? month : year}
+              </h2>
+              <span className="text-[24px] ">
+                /{monthPrice ? "mois" : "an"}
+              </span>
+            </div>
+            <span className="text-lg font-semibold text-neutral-500">
+              {info.produit}
+            </span>
+            <button
+              onClick={() => setShow(!show)}
+              className="mt-2 flex items-center gap-2 rounded-lg border-2 p-2 text-sm font-semibold text-neutral-400"
+            >
+              {show ? "Masquer" : "Afficher"} les détails
+              <IconChevronDown
+                className={`transform ${show ? "rotate-180" : ""}`}
+              />
+            </button>
+          </div>
+          <div className="mt-4 flex flex-col gap-4 md:mt-0">
+            <Button widthFull onClick={beCalled}>
+              Être rappelé
+            </Button>
+            <Button widthFull intent={"outline"} onClick={onSubscribe}>
+              Souscrire en ligne
+            </Button>
+          </div>
+        </div>
+        <div className="mb-3 px-4">
+          <Checkbox
+            id={info.id.toString()}
+            checked={compare}
+            disabled={!canCompare}
+            onChange={() => onCompare(info.id.toString())}
+          >
+            Comparer
+          </Checkbox>
+        </div>
+        <div
+          className={`grid ${
+            show ? "grid-rows-[1fr] border-t p-4" : "grid-rows-[0fr]"
+          } transition-[grid-template-rows,padding]`}
+        >
+          <div className={`overflow-hidden ${show ? "" : ""}`}>
+            <div className="grid grid-cols-[repeat(2,1fr)] gap-5 p-4">
+              <span className="px-1 text-xl font-bold text-[#2F3946]">
+                Prestations
+              </span>
+              <span className="px-1 text-xl font-bold text-[#2F3946]">
+                Détails
+              </span>
+            </div>
+            <div className="px-4">
+              {Object.entries(groupPrestations).map(([group, prestations]) => (
+                <>
+                  <span className="py-3 text-lg font-bold text-[#2F3946]">
+                    {group}
+                  </span>
+                  {info.prestations
+                    .filter((p) => prestations.includes(p.label))
+                    .map((p, i) => (
+                      <div
+                        className={`grid grid-cols-[repeat(2,1fr)] gap-5 ${
+                          i === 0 ? "pt-2" : ""
+                        } ${i % 2 === 0 ? "bg-[#f7fcff]" : ""}`}
+                        key={i}
+                      >
+                        <div className="py-2 text-[#2f3946]">
+                          <div className="relative flex items-center gap-4">
+                            {p.status ? (
+                              <IconCircleCheck
+                                size={24}
+                                className="text-primary-600"
+                              />
+                            ) : (
+                              <IconCircleX size={24} className="text-red-600" />
+                            )}
+                            <span className="px-1 text-base">{p.label}</span>
+                          </div>
                         </div>
-                      </div>
-                      <div className="px-2 text-[#2f3946]">
-                        <div className="relative flex items-center gap-4">
-                          <span data-tooltip={tooltipsPrestations[p.label]}>
-                            <IconHelp size={24} className="text-blue-600" />
-                          </span>
-                          {p.details.map((d, i) => {
-                            if (!d.status) return null;
-                            return (
-                              <span
-                                className="w-full font-extrabold"
-                                data-tooltip={`Franchise: ${d.franchise}`}
-                                key={i}
-                              >
-                                {d.value}{" "}
-                                <span className="text-sm font-normal text-neutral-500">
-                                  ({d.produit})
+                        <div className="px-2 text-[#2f3946]">
+                          <div className="relative flex items-center gap-4">
+                            <span data-tooltip={tooltipsPrestations[p.label]}>
+                              <IconHelp size={24} className="text-blue-600" />
+                            </span>
+                            {p.details.map((d, i) => {
+                              if (!d.status) return null;
+                              return (
+                                <span
+                                  className="w-full font-extrabold"
+                                  data-tooltip={`Franchise: ${d.franchise}`}
+                                  key={i}
+                                >
+                                  {d.value}{" "}
+                                  <span className="text-sm font-normal text-neutral-500">
+                                    ({d.produit})
+                                  </span>
                                 </span>
-                              </span>
-                            );
-                          })}
+                              );
+                            })}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-              </>
-            ))}
+                    ))}
+                </>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -15,7 +15,6 @@ import {
   useEffect,
   useCallback,
 } from "react";
-import DefaultStep from "../__steps/step/DefaultStep";
 import { type LeadData, useLead } from "./LeadProvider";
 import For from "../__steps/step/For";
 import Adherant from "../__steps/step/Adherant";
@@ -26,9 +25,9 @@ import Franchise from "../__steps/step/Franchise";
 import ChoosePack from "../__steps/step/ChoosePack";
 import Name from "../__steps/step/Name";
 import Loader from "../__steps/step/Loader";
+import Result from "../__steps/step/result/Result";
 import Verification from "../__steps/step/Verification";
 import { ResultProvider } from "../__steps/step/result/ResultProvider";
-import Result from "../__steps/step/result/Result";
 
 interface StepContext {
   currentStep: Step;
@@ -128,6 +127,21 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
   const getStepComponent = () => {
     const childs: ReactNode[] = [];
     switch (activeStep.id) {
+      case "loader":
+        childs.push(<Loader key={"loader"} />);
+        break;
+      case "verification":
+      case "result":
+        return (
+          <>
+            {activeStep.id === "verification" && <Verification />}
+            <div className="mx-auto max-w-7xl md:py-8" key={"result"}>
+              <ResultProvider>
+                <Result />
+              </ResultProvider>
+            </div>
+          </>
+        );
       case "name":
         childs.push(<Name key={"name"} />);
         childs.push(

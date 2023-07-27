@@ -22,23 +22,29 @@ const ResultLca = ({ monthlyPrice }: { monthlyPrice: boolean }) => {
       {lcaItems
         .sort((a) => (a.bestChoice ? -1 : 1))
         .map((item, index) => (
-          <ResultCardLca
-            info={item}
-            key={index}
-            monthPrice={monthlyPrice}
-            recommended={item.bestChoice}
-            canCompare={
-              compare.length < 3 || compare.includes(item.id.toString())
+          <div
+            className={
+              index === 0 ? "mb-4 border-b-2 border-neutral-400 pb-8 " : ""
             }
-            compare={compare.includes(item.id.toString())}
-            onCompare={(id) => {
-              if (compare.includes(id)) {
-                setCompare(compare.filter((c) => c !== id));
-              } else {
-                setCompare([...compare, id]);
+            key={index}
+          >
+            <ResultCardLca
+              info={item}
+              monthPrice={monthlyPrice}
+              recommended={item.bestChoice}
+              canCompare={
+                compare.length < 3 || compare.includes(item.id.toString())
               }
-            }}
-          />
+              compare={compare.includes(item.id.toString())}
+              onCompare={(id) => {
+                if (compare.includes(id)) {
+                  setCompare(compare.filter((c) => c !== id));
+                } else {
+                  setCompare([...compare, id]);
+                }
+              }}
+            />
+          </div>
         ))}
       {compare.length > 1 && (
         <div className="fixed bottom-12 left-0 right-0 flex justify-center">

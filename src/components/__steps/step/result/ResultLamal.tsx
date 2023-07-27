@@ -12,12 +12,18 @@ const ResultLamal = ({ monthlyPrice }: { monthlyPrice: boolean }) => {
       transition={{ duration: 0.4 }}
     >
       {lamalItems.map((item, index) => (
-        <ResultCardLamal
-          info={item}
+        <div
+          className={
+            index === 0 ? "mb-4 border-b-2 border-neutral-400 pb-8 " : ""
+          }
           key={index}
-          monthPrice={monthlyPrice}
-          recommended={index === 0}
-        />
+        >
+          <ResultCardLamal
+            info={item}
+            monthPrice={monthlyPrice}
+            recommended={index === 0}
+          />
+        </div>
       ))}
     </motion.div>
   );

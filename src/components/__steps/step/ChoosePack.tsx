@@ -12,8 +12,6 @@ const ChoosePack = () => {
   const [adherent, setAdherent] = useState<number>(0);
   const { increaseStep } = useSteps();
 
-  const selectedAdherent = lead.adherent.at(adherent) as Adherent;
-
   return (
     <>
       <div className="flex flex-col gap-8">

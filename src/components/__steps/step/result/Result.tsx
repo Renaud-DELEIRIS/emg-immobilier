@@ -1,4 +1,4 @@
-import { IconLoader } from "@tabler/icons-react";
+import { IconEdit, IconLoader } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -8,6 +8,7 @@ import { type LeadData, useLead } from "~/components/provider/LeadProvider";
 import ResultLamal from "./ResultLamal";
 import ResultLca from "./ResultLca";
 import { useResult } from "./ResultProvider";
+import { useSteps } from "~/components/provider/StepsProvider";
 
 const textByIndex = (profile: LeadData["adherent"][0]) => {
   if (profile.type === "main") return "Vous";
@@ -30,6 +31,7 @@ const Result = () => {
     setProfileIndex: setProfile,
     loading,
   } = useResult();
+  const { setActiveStep } = useSteps();
   const [monthlyPrice, setMonthlyPrice] = useState<boolean>(true);
   const [show, setShow] = useState<"lca" | "lamal">("lca");
   return (
@@ -46,6 +48,14 @@ const Result = () => {
         <h2 className="block text-[20px] font-bold text-[#2F3946] md:hidden">
           Mon comparatif
         </h2>
+        <button
+          className="flex items-center gap-2 rounded-lg border border-primary bg-white p-1 font-bold text-primary hover:bg-primary-50"
+          onClick={() => setActiveStep("for-who")}
+        >
+          <span className="hidden md:block">Modifier mon profil</span>
+          <span className="md:hidden">Modifier</span>
+          <IconEdit />
+        </button>
       </div>
       <div className="flex w-full max-w-6xl flex-row items-center gap-6">
         {lead.adherent.length > 1 && (
@@ -96,7 +106,7 @@ const Result = () => {
           </button>
         </div>
       </div>
-      <div className="mt-8 flex w-full max-w-6xl flex-col items-center justify-center gap-4">
+      <div className="flex w-full max-w-6xl flex-col items-center justify-center gap-4">
         {loading ? (
           <div className="mt-12 grid w-full place-items-center">
             <IconLoader className="h-12 w-12 animate-spin text-primary" />

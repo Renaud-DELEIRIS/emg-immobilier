@@ -45,7 +45,18 @@ const Pack = ({
         | "Capital hospitalier";
       level: number;
     }[]
-  >(adherent.pack?.options || []);
+  >(
+    adherent.pack?.options || [
+      {
+        label: "Capital hospitalier",
+        level: 2,
+      },
+      {
+        label: "Hospitalisation",
+        level: 1,
+      },
+    ]
+  );
 
   useEffect(() => {
     // If adherent age is under or equal at 3 make premium selected

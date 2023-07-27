@@ -7,7 +7,7 @@ import Sidebar from "~/components/navigation/Sidebar";
 import { useSteps } from "~/components/provider/StepsProvider";
 
 const Home: NextPage = () => {
-  const { getStepComponent } = useSteps();
+  const { getStepComponent, activeStep } = useSteps();
   return (
     <>
       <Head>
@@ -20,9 +20,13 @@ const Home: NextPage = () => {
         <div className="mx-auto w-full flex-1 pb-36 pt-12 md:pt-0">
           {getStepComponent()}
         </div>
-        <div className="fixed right-6 hidden h-screen items-center md:flex">
-          <Sidebar />
-        </div>
+        {activeStep.id !== "loader" &&
+          activeStep.id !== "result" &&
+          activeStep.id !== "verification" && (
+            <div className="fixed right-6 hidden h-screen items-center md:flex">
+              <Sidebar />
+            </div>
+          )}
         <Footer />
       </main>
     </>

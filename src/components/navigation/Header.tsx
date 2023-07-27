@@ -26,7 +26,7 @@ const Header = () => {
             ></Image>
           </div>
           <div className="hidden w-1/3 md:block">
-            {actualStep === 10 ? (
+            {activeStep.id === "result" ? (
               <div className="flex w-full items-center justify-center gap-2">
                 <span className="text-sm text-neutral-700">
                   Le N°1 des comparateurs en ligne
@@ -53,7 +53,7 @@ const Header = () => {
             </a>
           </div>
         </header>
-        <div className="absolute bottom-0 z-[100] block w-screen md:hidden">
+        <div className="absolute bottom-0 z-[100] block w-full md:hidden">
           <ProgressBar now={actualStep / maxStep} />
         </div>
       </div>
