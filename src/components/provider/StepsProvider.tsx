@@ -101,15 +101,16 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
       setSteps(nextStep);
 
       // // Scroll smo  oth to this step #id with 100 px offset
-      // setTimeout(() => {
-      //   const element = document.getElementById(step);
-      //   if (element) {
-      //     window.scrollTo({
-      //       top: element.offsetTop - 100,
-      //       behavior: "smooth",
-      //     });
-      //   }
-      // }, 100);
+      setTimeout(() => {
+        const element = document.getElementById(nextStep.id);
+        console.log(element);
+        if (element) {
+          window.scrollTo({
+            top: element.offsetTop - 100,
+            behavior: "smooth",
+          });
+        }
+      }, 50);
     },
     [activeStep, setSteps]
   );

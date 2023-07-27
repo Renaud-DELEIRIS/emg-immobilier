@@ -220,6 +220,18 @@ const Adherant = () => {
                 onSubmit={(e) => {
                   e.preventDefault();
                   setStep("civilite");
+                  setTimeout(() => {
+                    const element =
+                      document.getElementById("adherent-civilite");
+                    console.log(element);
+                    if (element) {
+                      element.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                        inline: "nearest",
+                      });
+                    }
+                  }, 100);
                 }}
               >
                 <TextInput

@@ -15,6 +15,7 @@ const ChoosePack = () => {
   return (
     <>
       <div className="flex flex-col gap-8">
+        <div id="package" />
         {lead.adherent.map((data, index) => {
           if (index > adherent) return null;
           return (
@@ -70,10 +71,11 @@ const ChoosePack = () => {
             }
             setAdherent(adherent + 1);
             // Scroll smooth to top
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth",
-            });
+
+            setTimeout(() => {
+              const elem = document.getElementById((adherent + 1).toString());
+              if (elem) elem.scrollIntoView({ behavior: "smooth" });
+            }, 100);
           }}
           iconRight={<IconArrowRight />}
         >

@@ -40,7 +40,10 @@ const Info = ({ open }: { open: boolean }) => {
     if (process.env.NODE_ENV === "development") {
       if (code === "6121") {
         changeLead({ ...lead, verified: true });
-        increaseStep("verification");
+        increaseStep("verification", {
+          ...lead,
+          verified: true,
+        });
         return;
       }
     }

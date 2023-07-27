@@ -19,6 +19,7 @@ const Franchise = () => {
   const { increaseStep, activeStep } = useSteps();
   const [isEditing, setIsEditing] = useState<number | undefined>(undefined);
   const [step, setStep] = useState<"franchise" | "couverture">("franchise");
+  const [showContinue, setShowContinue] = useState<boolean>(false);
 
   const nextToEdit = () => {
     for (const adherent of lead.adherent) {
@@ -53,13 +54,14 @@ const Franchise = () => {
           ],
         });
         setIsEditing(next);
-        setStep("franchise");
+        setShowContinue(true);
         return;
       }
       setIsEditing(nextToEdit());
       if (isEditing !== next) setStep("franchise");
     } else {
-      increaseStep("franchise");
+      setShowContinue(true);
+
       setIsEditing(undefined);
     }
   }, [lead, activeStep]);
@@ -481,6 +483,24 @@ const Franchise = () => {
               </div>
             ))}
         </div>
+      )}
+
+      {showContinue && activeStep.id === "franchise" && (
+        <motion.div
+          className=""
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <Button
+            onClick={() => {
+              increaseStep("franchise");
+            }}
+            className="mt-4 w-52"
+          >
+            Continuer
+          </Button>
+        </motion.div>
       )}
     </div>
   );
