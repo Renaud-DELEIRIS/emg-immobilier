@@ -67,7 +67,9 @@ const Home: NextPage = () => {
           >
             <div
               className={`overflow-hidden ${
-                beCalled ? "mt-4 flex flex-col items-center gap-2" : ""
+                beCalled
+                  ? "mt-4 flex flex-col items-center gap-2 text-dark"
+                  : ""
               }`}
             >
               <PhoneInput
