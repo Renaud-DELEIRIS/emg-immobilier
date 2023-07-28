@@ -14,7 +14,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="header-shadow sticky top-0 z-50 w-full">
+      <div className="header-shadow fixed top-0 z-50 w-full">
         <header className="row inset-0 h-16 w-full items-center justify-between border-b border-[rgb(250,247,247)] bg-white px-2 py-2 pt-2 md:px-12">
           <div className="flex w-full justify-center md:block md:w-1/3">
             <Image
