@@ -111,7 +111,7 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
           element.scrollIntoView({
             behavior: "smooth",
             block: "start",
-            inline: "nearest",
+            inline: "start",
           });
         }
       }, 100);
