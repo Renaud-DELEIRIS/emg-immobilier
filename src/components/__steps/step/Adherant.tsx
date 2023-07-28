@@ -223,7 +223,6 @@ const Adherant = () => {
                   setTimeout(() => {
                     const element =
                       document.getElementById("adherent-civilite");
-                    console.log(element);
                     if (element) {
                       element.scrollIntoView({
                         behavior: "smooth",

@@ -29,7 +29,7 @@ const Home: NextPage = () => {
         {activeStep.id !== "loader" &&
           activeStep.id !== "result" &&
           activeStep.id !== "verification" && (
-            <div className="fixed -z-10 hidden h-screen items-center md:right-5 md:flex xl:right-[5%]">
+            <div className="fixed z-10 hidden h-screen items-center md:right-5 md:flex xl:right-[5%]">
               <Sidebar />
             </div>
           )}

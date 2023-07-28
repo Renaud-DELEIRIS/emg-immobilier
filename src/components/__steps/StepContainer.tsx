@@ -1,10 +1,9 @@
 import Image from "next/image";
 import type DefaultProps from "~/types/DefaultProps";
 import { motion } from "framer-motion";
-import { useEffect, type ReactElement } from "react";
+import { type ReactElement } from "react";
 import { type StepId } from "~/constants/step.constant";
 import { useSteps } from "../provider/StepsProvider";
-import { useToggle } from "react-use";
 
 const StepContainer = ({
   title,

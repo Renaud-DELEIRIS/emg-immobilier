@@ -102,15 +102,19 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
 
       // // Scroll smo  oth to this step #id with 100 px offset
       setTimeout(() => {
+        // Dom reflow
+        document.body.style.height = "auto";
         const element = document.getElementById(nextStep.id);
         console.log(element);
         if (element) {
-          window.scrollTo({
-            top: element.offsetTop - 100,
+          console.log(element.offsetTop);
+          element.scrollIntoView({
             behavior: "smooth",
+            block: "start",
+            inline: "nearest",
           });
         }
-      }, 50);
+      }, 100);
     },
     [activeStep, setSteps]
   );
