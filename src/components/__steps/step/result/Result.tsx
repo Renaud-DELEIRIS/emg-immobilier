@@ -50,7 +50,11 @@ const Result = () => {
         </h2>
         <button
           className="flex items-center gap-2 rounded-lg border border-primary bg-white p-1 font-bold text-primary hover:bg-primary-50"
-          onClick={() => setActiveStep("for-who")}
+          onClick={() =>
+            setActiveStep(
+              lead.npa?.key === -1 ? "situation" : "assurance-actuelle"
+            )
+          }
         >
           <span className="hidden md:block">Modifier mon profil</span>
           <span className="md:hidden">Modifier</span>
