@@ -13,6 +13,17 @@ import CodeInput from "../inputs/CodeInput";
 import Button from "../button/Button";
 import { sendCodeSms } from "~/utils/api/sendSms";
 
+import { parsePhoneNumber } from "libphonenumber-js";
+
+export const formatTelephone = (p: string) => {
+  try {
+    const parsedPhoneNumber = parsePhoneNumber("+" + p);
+    return parsedPhoneNumber.formatInternational();
+  } catch (error) {
+    return p;
+  }
+};
+
 const Info = ({ open }: { open: boolean }) => {
   const { lead, changeLead } = useLead();
   const { increaseStep } = useSteps();
@@ -95,12 +106,12 @@ const Info = ({ open }: { open: boolean }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-3xl transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
-                <div className="flex w-full">
+              <Dialog.Panel className="h-[470px] w-full max-w-3xl transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+                <div className="flex h-full w-full">
                   {step === "info" && (
                     <form
                       onSubmit={onSubmit}
-                      className="flex flex-1 grid-cols-6 flex-col gap-4 p-6"
+                      className="flex h-full flex-1 grid-cols-6 flex-col gap-4 p-6"
                     >
                       <div className="flex items-center gap-2">
                         <Image
@@ -208,24 +219,24 @@ const Info = ({ open }: { open: boolean }) => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="flex flex-1 flex-col p-6"
+                      className="flex h-full flex-1 flex-col p-6"
                     >
                       <p className="text-sm text-gray-500">
                         Afin de vérifier votre identité, nous vous avons envoyé
                         un code de vérification par SMS au numéro :{" "}
-                        <span className="text-primary">{lead.phone}</span>
+                        <span className="text-primary">
+                          {formatTelephone(lead.phone || "")}
+                        </span>
                       </p>
-                      <div className="mt-8">
-                        <p className="mb-2 text-sm text-gray-500">
-                          Veuillez saisir le code à 4 chiffres :
-                        </p>
-                        <CodeInput
-                          onChange={(e) => setCode(e)}
-                          value={code}
-                          accept={"number"}
-                        />
-                      </div>
-                      <div className="mt-8 flex w-full flex-row items-center justify-between">
+                      <p className="mb-4 mt-8 text-sm text-gray-500">
+                        Veuillez saisir le code à 4 chiffres :
+                      </p>
+                      <CodeInput
+                        onChange={(e) => setCode(e)}
+                        allowedCharacters="numeric"
+                        containerClassName="mt-36"
+                      />
+                      <div className="mt-12 flex w-full flex-row items-center justify-between">
                         <Button
                           disabled={code.length !== 4}
                           intent={"primary"}
