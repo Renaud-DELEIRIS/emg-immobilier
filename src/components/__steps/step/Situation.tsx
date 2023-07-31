@@ -22,8 +22,11 @@ const Situation = () => {
       <TileInput
         value={lead.situation}
         onChange={(value) => {
-          changeLead({ situation: value as "frontalier" });
-          increaseStep("situation");
+          changeLead({ situation: value as "frontalier" | "future resident" });
+          increaseStep("situation", {
+            ...lead,
+            situation: value as "frontalier" | "future resident",
+          });
         }}
         options={[
           {

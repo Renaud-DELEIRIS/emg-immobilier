@@ -28,6 +28,7 @@ import Loader from "../__steps/step/Loader";
 import Result from "../__steps/step/result/Result";
 import Verification from "../__steps/step/Verification";
 import { ResultProvider } from "../__steps/step/result/ResultProvider";
+import Hours from "../__steps/step/Hours";
 
 interface StepContext {
   currentStep: Step;
@@ -96,20 +97,21 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const increaseStep = (step: StepId, newLead?: LeadData) => {
+    console.log(newLead);
     const nextStep = getNextStep(getStepById(step), newLead ?? lead);
     setSteps(nextStep);
 
     // // Scroll smo  oth to this step #id with 100 px offset
-    const element = document.getElementById(nextStep.id);
-    if (element) {
-      console.log(element);
-      const offsetTop = element.offsetTop;
-      console.log(offsetTop);
-      window.scrollTo({
-        top: offsetTop - 100,
-        behavior: "smooth",
-      });
-    }
+    setTimeout(() => {
+      const element = document.getElementById(nextStep.id);
+      if (element) {
+        const offsetTop = element.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: offsetTop - 100,
+          behavior: "smooth",
+        });
+      }
+    }, 100);
   };
 
   const isDisabled = useCallback(() => {
@@ -125,6 +127,17 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
   const getStepComponent = () => {
     const childs: ReactNode[] = [];
     switch (activeStep.id) {
+      case "work-hours":
+        childs.push(<Hours key={"hours"} />);
+        childs.push(
+          <div
+            className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
+            key={"title"}
+          >
+            Frontalier
+          </div>
+        );
+        break;
       case "loader":
         childs.push(<Loader key={"loader"} />);
         break;

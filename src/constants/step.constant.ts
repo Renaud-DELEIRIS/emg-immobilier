@@ -16,6 +16,7 @@ export type StepId =
   | "situation"
   | "assurance-actuelle"
   | "franchise"
+  | "work-hours"
   | "package"
   | "name"
   | "loader"
@@ -35,7 +36,7 @@ export const STEPS: Step[] = [
       return false;
     },
     stepInfo: (lead) => {
-      return [1, STEPS.length];
+      return [1, 8];
     },
   },
   {
@@ -62,7 +63,7 @@ export const STEPS: Step[] = [
       return false;
     },
     stepInfo: (lead) => {
-      return [2, STEPS.length];
+      return [2, 8];
     },
   },
   {
@@ -77,13 +78,13 @@ export const STEPS: Step[] = [
       return lead.npa === undefined;
     },
     stepInfo: (lead) => {
-      return [3, STEPS.length];
+      return [3, 8];
     },
   },
   {
     id: "situation",
     next: (lead) => {
-      return "franchise";
+      return lead.situation === "future resident" ? "franchise" : "work-hours";
     },
     previous: (lead) => {
       return "npa";
@@ -92,7 +93,22 @@ export const STEPS: Step[] = [
       return lead.situation === undefined;
     },
     stepInfo: (lead) => {
-      return [4, STEPS.length];
+      return [4, 8];
+    },
+  },
+  {
+    id: "work-hours",
+    next: (lead) => {
+      return "loader";
+    },
+    previous: (lead) => {
+      return "situation";
+    },
+    disabled: (lead) => {
+      return lead.workHours === undefined;
+    },
+    stepInfo: (lead) => {
+      return [5, 7];
     },
   },
   {
@@ -107,7 +123,7 @@ export const STEPS: Step[] = [
       return lead.actualInsurance === undefined;
     },
     stepInfo: (lead) => {
-      return [4, STEPS.length];
+      return [4, 8];
     },
   },
   {
@@ -155,7 +171,7 @@ export const STEPS: Step[] = [
       return false;
     },
     stepInfo: (lead) => {
-      return [5, STEPS.length];
+      return [5, 8];
     },
   },
   {
@@ -170,7 +186,7 @@ export const STEPS: Step[] = [
       return "franchise";
     },
     stepInfo: (lead) => {
-      return [6, STEPS.length];
+      return [6, 8];
     },
   },
   {
@@ -190,7 +206,7 @@ export const STEPS: Step[] = [
       return "package";
     },
     stepInfo: (lead) => {
-      return [7, STEPS.length];
+      return [7, 8];
     },
   },
   {
@@ -205,7 +221,7 @@ export const STEPS: Step[] = [
       return "name";
     },
     stepInfo: (lead) => {
-      return [8, STEPS.length];
+      return [8, 8];
     },
   },
   {
@@ -220,7 +236,7 @@ export const STEPS: Step[] = [
       return "name";
     },
     stepInfo: (lead) => {
-      return [9, STEPS.length];
+      return [9, 9];
     },
   },
   {
@@ -235,7 +251,7 @@ export const STEPS: Step[] = [
       return "name";
     },
     stepInfo: (lead) => {
-      return [10, STEPS.length];
+      return [10, 10];
     },
   },
 ];

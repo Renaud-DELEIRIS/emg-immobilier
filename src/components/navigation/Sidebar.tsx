@@ -20,6 +20,8 @@ const Sidebar = ({ inModal = false }) => {
       ? "besoins"
       : "finalisation";
 
+  const isFrontalier = lead.situation === "frontalier";
+
   return (
     <>
       <aside className={`flex flex-col ${inModal ? "" : "border-l p-7"}`}>
@@ -52,55 +54,86 @@ const Sidebar = ({ inModal = false }) => {
               </span>
             </button>
           </li>
-          <li>
-            <button
-              onClick={() => {
-                let toStep: StepId = "package";
-                const activeStepInfo = currentStep.stepInfo(lead)[0];
-                while (getStepById(toStep).stepInfo(lead)[0] > activeStepInfo) {
-                  toStep = getStepById(toStep).previous(lead) as StepId;
-                }
-                setActiveStep(toStep);
-              }}
-              disabled={passed === "adherant"}
-              className={"flex items-center  gap-4 disabled:opacity-50"}
-            >
-              <div
-                className={`my-3 box-content h-2.5 w-2.5 rounded-full ${
-                  passed === "adherant" ? "bg-dark" : "bg-primary"
-                }`}
-              />
-              <span
-                className={`${
-                  active === "besoins" ? "ml-2 font-bold text-primary" : ""
-                }`}
+          {isFrontalier ? (
+            <li>
+              <button
+                onClick={() => {
+                  setActiveStep("work-hours");
+                }}
+                disabled={passed === "adherant"}
+                className={"flex items-center  gap-4 disabled:opacity-50"}
               >
-                Besoins
-              </span>
-            </button>
-          </li>
-          <li>
-            <button
-              className="flex  items-center gap-4 disabled:opacity-50"
-              disabled={passed === "adherant" || passed === "besoins"}
-              onClick={() => setActiveStep("name")}
-            >
-              <div
-                className={`my-3 box-content h-2.5 w-2.5 rounded-full ${
-                  passed === "adherant" || passed === "besoins"
-                    ? "bg-dark"
-                    : "bg-primary"
-                }`}
-              />
-              <span
-                className={`${
-                  active === "finalisation" ? "ml-2 font-bold text-primary" : ""
-                }`}
-              >
-                Finalisation
-              </span>
-            </button>
-          </li>
+                <div
+                  className={`my-3 box-content h-2.5 w-2.5 rounded-full ${
+                    passed === "adherant" ? "bg-dark" : "bg-primary"
+                  }`}
+                />
+                <span
+                  className={`${
+                    active === "besoins" ? "ml-2 font-bold text-primary" : ""
+                  }`}
+                >
+                  Frontalier
+                </span>
+              </button>
+            </li>
+          ) : (
+            <>
+              <li>
+                <button
+                  onClick={() => {
+                    let toStep: StepId = "package";
+                    const activeStepInfo = currentStep.stepInfo(lead)[0];
+                    while (
+                      getStepById(toStep).stepInfo(lead)[0] > activeStepInfo
+                    ) {
+                      toStep = getStepById(toStep).previous(lead) as StepId;
+                    }
+                    setActiveStep(toStep);
+                  }}
+                  disabled={passed === "adherant"}
+                  className={"flex items-center  gap-4 disabled:opacity-50"}
+                >
+                  <div
+                    className={`my-3 box-content h-2.5 w-2.5 rounded-full ${
+                      passed === "adherant" ? "bg-dark" : "bg-primary"
+                    }`}
+                  />
+                  <span
+                    className={`${
+                      active === "besoins" ? "ml-2 font-bold text-primary" : ""
+                    }`}
+                  >
+                    Besoins
+                  </span>
+                </button>
+              </li>
+              <li>
+                <button
+                  className="flex  items-center gap-4 disabled:opacity-50"
+                  disabled={passed === "adherant" || passed === "besoins"}
+                  onClick={() => setActiveStep("name")}
+                >
+                  <div
+                    className={`my-3 box-content h-2.5 w-2.5 rounded-full ${
+                      passed === "adherant" || passed === "besoins"
+                        ? "bg-dark"
+                        : "bg-primary"
+                    }`}
+                  />
+                  <span
+                    className={`${
+                      active === "finalisation"
+                        ? "ml-2 font-bold text-primary"
+                        : ""
+                    }`}
+                  >
+                    Finalisation
+                  </span>
+                </button>
+              </li>
+            </>
+          )}
         </ul>
       </aside>
     </>

@@ -222,7 +222,8 @@ const Adherant = () => {
                     const element =
                       document.getElementById("adherent-civilite");
                     if (element) {
-                      const offsetTop = element.getBoundingClientRect().top;
+                      const offsetTop =
+                        element.getBoundingClientRect().top + window.scrollY;
                       window.scrollTo({
                         top: offsetTop - 100,
                         behavior: "smooth",

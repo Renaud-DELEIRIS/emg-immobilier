@@ -75,7 +75,8 @@ const ChoosePack = () => {
             setTimeout(() => {
               const elem = document.getElementById((adherent + 1).toString());
               if (elem) {
-                const offsetTop = elem.getBoundingClientRect().top;
+                const offsetTop =
+                  elem.getBoundingClientRect().top + window.scrollY;
                 window.scrollTo({
                   top: offsetTop - 100,
                   behavior: "smooth",

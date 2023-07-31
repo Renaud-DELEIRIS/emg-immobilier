@@ -50,6 +50,8 @@ export interface LeadData {
   nom?: string;
   verified?: boolean;
 
+  workHours?: "more than 8" | "less than 8";
+
   situation?: "frontalier" | "future resident";
 }
 
