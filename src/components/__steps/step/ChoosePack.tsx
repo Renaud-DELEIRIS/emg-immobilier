@@ -74,7 +74,13 @@ const ChoosePack = () => {
 
             setTimeout(() => {
               const elem = document.getElementById((adherent + 1).toString());
-              if (elem) elem.scrollIntoView({ behavior: "smooth" });
+              if (elem) {
+                const offsetTop = elem.getBoundingClientRect().top;
+                window.scrollTo({
+                  top: offsetTop - 100,
+                  behavior: "smooth",
+                });
+              }
             }, 100);
           }}
           iconRight={<IconArrowRight />}

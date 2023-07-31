@@ -39,7 +39,6 @@ const Adherant = () => {
   const { increaseStep, activeStep } = useSteps();
   const [isEditing, setIsEditing] = useState<number | undefined>(undefined);
   const [adherent, setAdherent] = useState<LeadData["adherent"]["0"]>();
-  const [hasEdited, setHasEdited] = useState(false);
   const [step, setStep] = useState<"dob" | "civilite">("dob");
 
   const getType = (index: number) => {
@@ -93,7 +92,6 @@ const Adherant = () => {
     if (activeStep.id !== "adherent") return;
     const next = nextToEdit();
     if (next !== undefined) {
-      setHasEdited(true);
       setIsEditing(nextToEdit());
     } else {
       increaseStep("adherent");
@@ -224,10 +222,10 @@ const Adherant = () => {
                     const element =
                       document.getElementById("adherent-civilite");
                     if (element) {
-                      element.scrollIntoView({
+                      const offsetTop = element.getBoundingClientRect().top;
+                      window.scrollTo({
+                        top: offsetTop - 100,
                         behavior: "smooth",
-                        block: "start",
-                        inline: "nearest",
                       });
                     }
                   }, 100);

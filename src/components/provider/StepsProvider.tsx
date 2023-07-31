@@ -95,26 +95,22 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const increaseStep = useCallback(
-    (step: StepId, newLead?: LeadData) => {
-      const nextStep = getNextStep(getStepById(step), newLead ?? lead);
-      setSteps(nextStep);
+  const increaseStep = (step: StepId, newLead?: LeadData) => {
+    const nextStep = getNextStep(getStepById(step), newLead ?? lead);
+    setSteps(nextStep);
 
-      // // Scroll smo  oth to this step #id with 100 px offset
-      setTimeout(() => {
-        const element = document.getElementById(nextStep.id);
-        if (element) {
-          console.log(element.offsetTop);
-          const offsetTop = element.getBoundingClientRect().top;
-          window.scrollTo({
-            top: offsetTop - 100,
-            behavior: "smooth",
-          });
-        }
-      }, 100);
-    },
-    [activeStep, setSteps]
-  );
+    // // Scroll smo  oth to this step #id with 100 px offset
+    const element = document.getElementById(nextStep.id);
+    if (element) {
+      console.log(element);
+      const offsetTop = element.offsetTop;
+      console.log(offsetTop);
+      window.scrollTo({
+        top: offsetTop - 100,
+        behavior: "smooth",
+      });
+    }
+  };
 
   const isDisabled = useCallback(() => {
     if (isStepDisabled(activeStep, lead)) return true;
