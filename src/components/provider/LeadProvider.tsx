@@ -35,6 +35,9 @@ export interface LeadData {
         level: number;
       }[];
     };
+
+    travailSuisse?: boolean;
+    couverture?: boolean;
   }[];
   email?: string;
   phone?: string;
@@ -49,8 +52,6 @@ export interface LeadData {
   prenom?: string;
   nom?: string;
   verified?: boolean;
-
-  workHours?: "more than 8" | "less than 8";
 
   situation?: "frontalier" | "future resident";
 }

@@ -29,6 +29,7 @@ import Result from "../__steps/step/result/Result";
 import Verification from "../__steps/step/Verification";
 import { ResultProvider } from "../__steps/step/result/ResultProvider";
 import Hours from "../__steps/step/Hours";
+import ResultFrontalier from "../__steps/step/frontalier/ResultFrontalier";
 
 interface StepContext {
   currentStep: Step;
@@ -138,15 +139,24 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
           </div>
         );
         break;
+      case "result-frontalier":
+        childs.push(
+          <div key={"result-frontalier"} className="md:pt-12">
+            {!lead.verified && <Verification />}
+
+            <ResultFrontalier />
+          </div>
+        );
+        break;
+
       case "loader":
         childs.push(<Loader key={"loader"} />);
         break;
-      case "verification":
       case "result":
         return (
           <>
-            {activeStep.id === "verification" && <Verification />}
             <div className="mx-auto max-w-7xl md:py-8" key={"result"}>
+              {!lead.verified && <Verification />}
               <ResultProvider>
                 <Result />
               </ResultProvider>

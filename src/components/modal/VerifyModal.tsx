@@ -42,19 +42,11 @@ const Info = ({ open }: { open: boolean }) => {
     setStep("phone");
   };
 
-  useEffect(() => {
-    if (lead.verified) increaseStep("verification");
-  }, []);
-
   const verifyCode = () => {
     console.log(code, responseCode);
     if (process.env.NODE_ENV === "development") {
       if (code === "6121") {
         changeLead({ ...lead, verified: true });
-        increaseStep("verification", {
-          ...lead,
-          verified: true,
-        });
         return;
       }
     }
@@ -64,7 +56,6 @@ const Info = ({ open }: { open: boolean }) => {
       return;
     }
     changeLead({ ...lead, verified: true });
-    increaseStep("verification");
   };
 
   useEffect(() => {
@@ -106,7 +97,7 @@ const Info = ({ open }: { open: boolean }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="h-[470px] w-full max-w-3xl transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="h-[485px] w-full max-w-3xl transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                 <div className="flex h-full w-full">
                   {step === "info" && (
                     <form

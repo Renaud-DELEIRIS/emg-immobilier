@@ -20,7 +20,7 @@ export type StepId =
   | "package"
   | "name"
   | "loader"
-  | "verification"
+  | "result-frontalier"
   | "result";
 
 export const STEPS: Step[] = [
@@ -105,7 +105,7 @@ export const STEPS: Step[] = [
       return "situation";
     },
     disabled: (lead) => {
-      return lead.workHours === undefined;
+      return false;
     },
     stepInfo: (lead) => {
       return [5, 7];
@@ -212,7 +212,7 @@ export const STEPS: Step[] = [
   {
     id: "loader",
     next: (lead) => {
-      return "verification";
+      return lead.situation == "frontalier" ? "result-frontalier" : "result";
     },
     disabled: (lead) => {
       return false;
@@ -225,7 +225,7 @@ export const STEPS: Step[] = [
     },
   },
   {
-    id: "verification",
+    id: "result",
     next: (lead) => {
       return "result";
     },
@@ -236,19 +236,19 @@ export const STEPS: Step[] = [
       return "name";
     },
     stepInfo: (lead) => {
-      return [9, 9];
+      return [10, 10];
     },
   },
   {
-    id: "result",
+    id: "result-frontalier",
     next: (lead) => {
-      return "result";
+      return "result-frontalier";
     },
     disabled: (lead) => {
       return false;
     },
     previous: (lead) => {
-      return "name";
+      return "work-hours";
     },
     stepInfo: (lead) => {
       return [10, 10];

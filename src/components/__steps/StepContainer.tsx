@@ -14,15 +14,17 @@ const StepContainer = ({
   className = "",
   stepId,
   id,
+  forceActive = false,
 }: {
   title: string;
   description?: ReactElement | string;
   info?: string;
   infoTitle?: string;
   stepId: StepId;
+  forceActive?: boolean;
 } & DefaultProps) => {
   const { activeStep, increaseSignal } = useSteps();
-  const active = activeStep.id === stepId;
+  const active = forceActive ? forceActive : activeStep.id === stepId;
 
   return (
     <motion.div
