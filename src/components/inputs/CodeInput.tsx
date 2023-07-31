@@ -1,72 +1,44 @@
-import { useEffect, useRef, useState } from "react";
-import TextInput from "./TextInput";
+import React from "react";
 
-interface Props {
-  value: string;
-  onChange: (value: string) => void;
-  accept?: "all" | "number";
+import AuthCode from "react-auth-code-input";
+
+export interface ICodeInput {
+  onChange: (v: string) => void;
+  allowedCharacters?: "numeric" | "alphanumeric" | "alpha" | undefined;
   length?: number;
-  onFilled?: () => void;
+  ariaLabel?: string;
+  containerClassName?: string;
+  inputClassName?: string;
+  disabled?: boolean;
+  placeholder?: string;
+  label?: string;
 }
 
-const CodeInput = ({
-  value,
+const CodeInput2: React.FC<ICodeInput> = ({
   onChange,
-  accept = "all",
+  allowedCharacters = "numeric",
   length = 4,
-  onFilled = () => null,
-}: Props) => {
-  const [code, setCode] = useState<string[]>(new Array(length).fill(""));
-  const wrapper = useRef<HTMLDivElement>(null);
-  const [hasBeenFilled, setHasBeenFilled] = useState(false);
-
-  const handleChange = (index: number, key: string) => {
-    // If key key is backspace or delete then delete the current input and focus the previous one if it exists
-    if (key === "Backspace" || key === "Delete") {
-      const newCode = [...code];
-      newCode[index] = "";
-      setCode(newCode);
-      onChange(newCode.join(""));
-      if (wrapper.current?.children[index - 1])
-        (wrapper.current?.children[index - 1] as HTMLInputElement).focus();
-      return;
-    }
-
-    // If key is not a number and accept is number then return
-    if (accept === "number" && isNaN(parseInt(key))) return;
-
-    // If key is not a letter or a number and accept is all then return
-    if (accept === "all" && !/^[a-zA-Z0-9]$/.test(key)) return;
-
-    // Add the key to the current input and focus the next one if it exists
-    const newCode = [...code];
-    newCode[index] = key;
-    onChange(newCode.join(""));
-    setCode(newCode);
-    if (wrapper.current?.children[index + 1])
-      (wrapper.current?.children[index + 1] as HTMLInputElement).focus();
-
-    // If all inputs are filled then call onFilled
-    if (!hasBeenFilled && newCode.every((c) => c !== "")) {
-      setHasBeenFilled(true);
-      onFilled();
-    }
-  };
-
+  ariaLabel = "",
+  containerClassName = "",
+  disabled = false,
+  placeholder = "",
+  label = "",
+}) => {
   return (
-    <div className="flex gap-2" ref={wrapper}>
-      {code.map((c, i) => (
-        <input
-          key={i}
-          type="text"
-          value={c}
-          onKeyDown={(e) => handleChange(i, e.key)}
-          onChange={(e) => null}
-          className="h-12 w-12 rounded-md border text-center text-2xl text-neutral-800 focus:outline-primary"
-        />
-      ))}
-    </div>
+    <>
+      {label && <label className="input-text-label">{label}</label>}
+      <AuthCode
+        onChange={onChange}
+        allowedCharacters={allowedCharacters}
+        length={length}
+        ariaLabel={ariaLabel}
+        containerClassName={containerClassName + " flex justify-around"}
+        inputClassName="w-9 border-0 border-b-[3px] border-grey/60 px-0 pb-2 pt-0 text-center text-2xl text-neutral-800 focus:border-0 focus:border-b-[3px] focus:border-primary focus:outline-none focus:outline-0 focus:ring-0 focus:ring-primary/20 focus:ring-offset-0"
+        disabled={disabled}
+        placeholder={placeholder}
+      />
+    </>
   );
 };
 
-export default CodeInput;
+export default CodeInput2;
