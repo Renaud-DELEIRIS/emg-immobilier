@@ -136,6 +136,13 @@ body {
   transform: translate(-30px, -30px);
 }
 
+/* Remove arrow on input number */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 @keyframes becalled {
   0% {
     translate: 0px 0px;

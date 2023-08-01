@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { createContext, useContext, useEffect, useState } from "react";
 import { Prestation } from "~/data/Pack";
 
@@ -38,6 +39,10 @@ export interface LeadData {
 
     travailSuisse?: boolean;
     couverture?: boolean;
+
+    nom?: string;
+    prenom?: string;
+    nationality?: string;
   }[];
   email?: string;
   phone?: string;
@@ -54,6 +59,12 @@ export interface LeadData {
   verified?: boolean;
 
   situation?: "frontalier" | "future resident";
+
+  startInsurance: string;
+  paymentFrequency: "month" | "semester" | "year";
+  address?: string;
+
+  selectedAdherent: number[];
 }
 
 export type Adherent = LeadData["adherent"][0];
@@ -65,14 +76,20 @@ interface LeadContext {
 
 const LeadContext = createContext<LeadContext>({
   lead: {
+    startInsurance: ".." + dayjs().year(),
+    paymentFrequency: "month",
     adherent: [],
+    selectedAdherent: [],
   },
   changeLead: () => null,
 });
 
 const LeadProvider = ({ children }: { children: React.ReactNode }) => {
   const [lead, setLead] = useState<LeadData>({
+    startInsurance: ".." + dayjs().year(),
+    paymentFrequency: "month",
     adherent: [],
+    selectedAdherent: [],
   });
   const [hasBeenSet, setHasBeenSet] = useState(false);
 

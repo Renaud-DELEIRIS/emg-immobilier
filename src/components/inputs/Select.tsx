@@ -17,6 +17,7 @@ const Select = ({
   description = "",
   disabled = false,
   wrapperClassName = "",
+  boldLabel = false,
 }: {
   value: string;
   onChange?: (value: string) => void;
@@ -36,6 +37,7 @@ const Select = ({
   name?: string;
   description?: string;
   wrapperClassName?: string;
+  boldLabel?: boolean;
 }) => {
   const computedClass = cva(
     "text-base rounded-lg block w-full focus:outline-none text-left bg-white " +
@@ -65,7 +67,11 @@ const Select = ({
       {label && (
         <label
           htmlFor={id}
-          className="mb-1 block text-sm font-normal text-neutral-800"
+          className={`mb-1 block ${
+            boldLabel
+              ? "text-base font-bold text-dark"
+              : "text-sm font-normal text-neutral-800"
+          }`}
         >
           {label} {required && <span className="text-red-500">*</span>}
         </label>

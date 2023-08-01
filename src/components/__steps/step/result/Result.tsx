@@ -19,7 +19,7 @@ const textByIndex = (profile: LeadData["adherent"][0]) => {
       "Votre enfant né" +
       (profile.civility === "female" ? "e" : "") +
       " en " +
-      dayjs(profile.dob).format("YYYY")
+      dayjs(profile.dob, "DD.MM.YYYY").format("YYYY")
     );
   return "";
 };

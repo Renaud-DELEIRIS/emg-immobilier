@@ -19,6 +19,7 @@ const TextInput = ({
   wrapperClassName = "",
   rightPart,
   autofocus = false,
+  boldLabel = false,
 }: {
   value: string;
   onChange?: (value: string) => void;
@@ -38,6 +39,7 @@ const TextInput = ({
   wrapperClassName?: string;
   rightPart?: React.ReactNode;
   autofocus?: boolean;
+  boldLabel?: boolean;
 }) => {
   const computedClass = cva(
     "text-nase rounded-lg block w-full focus:outline-none " + className,
@@ -69,7 +71,11 @@ const TextInput = ({
       {label && (
         <label
           htmlFor={id}
-          className="mb-1 block text-sm font-normal text-neutral-800"
+          className={`mb-1 block ${
+            boldLabel
+              ? "text-base font-bold text-dark"
+              : "text-sm font-normal text-neutral-800"
+          }`}
         >
           {label} {required && <span className="text-red-500">*</span>}
         </label>

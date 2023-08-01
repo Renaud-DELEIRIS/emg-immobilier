@@ -26,13 +26,11 @@ const Home: NextPage = () => {
         <div className="mx-auto w-full flex-1 pb-36 pt-12 md:pt-0">
           {getStepComponent()}
         </div>
-        {activeStep.id !== "loader" &&
-          activeStep.id !== "result" &&
-          activeStep.id !== "verification" && (
-            <div className="fixed z-10 hidden h-screen items-center md:right-5 md:flex xl:right-[5%]">
-              <Sidebar />
-            </div>
-          )}
+        {activeStep.id !== "loader" && activeStep.id !== "result" && (
+          <div className="fixed top-1/3 z-10 hidden  items-center md:right-5 md:block xl:right-[5%]">
+            <Sidebar />
+          </div>
+        )}
         <div
           className={
             "becalled-btn fixed bottom-4 right-4 z-50 gap-1 rounded-2xl bg-primary p-2 font-bold text-white " +

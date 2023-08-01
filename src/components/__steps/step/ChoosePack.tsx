@@ -35,7 +35,7 @@ const ChoosePack = () => {
                     ? "Pour votre conjointe"
                     : "Pour votre conjoint"
                   : "Pour votre enfant née en " +
-                    dayjs(data.dob).year().toString()
+                    dayjs(data.dob, "DD.MM.YYYY").year().toString()
               }
               className="pb-12"
               stepId={"package"}

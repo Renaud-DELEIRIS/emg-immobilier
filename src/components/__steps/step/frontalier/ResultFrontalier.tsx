@@ -42,7 +42,8 @@ const ResultFrontalier = () => {
       <div className="mt-8 flex flex-col gap-8">
         {lead.adherent.map((data, index) => {
           // if not 18+
-          if (dayjs().diff(dayjs(data.dob), "year") < 18) return null;
+          if (dayjs().diff(dayjs(data.dob, "DD.MM.YYYY"), "year") < 18)
+            return null;
           if (data.travailSuisse === false) return null;
           return (
             <div key={index}>
@@ -54,7 +55,7 @@ const ResultFrontalier = () => {
                     ? "Pour votre conjointe"
                     : "Pour votre conjoint"
                   : "Pour votre enfant née en " +
-                    dayjs(data.dob).year().toString()}
+                    dayjs(data.dob, "DD.MM.YYYY").year().toString()}
                 :
               </h1>
               <ResultCardFrontalier

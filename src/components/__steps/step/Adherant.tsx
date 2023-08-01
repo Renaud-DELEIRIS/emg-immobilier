@@ -15,6 +15,7 @@ import {
 } from "@tabler/icons-react";
 ``;
 import { motion } from "framer-motion";
+import InputDate from "~/components/inputs/DatePicker";
 
 const textByIndex = [
   {
@@ -52,16 +53,16 @@ const Adherant = () => {
   };
 
   const isValidDob = (dob: string) => {
-    // Is valid date
-    if (!dayjs(dob).isValid()) {
+    // Is valid date*
+    if (!dayjs(dob, "DD.MM.YYYY").isValid()) {
       return "La date de naissance n'est pas valide.";
     }
     // check if more than 100 years old
-    if (dayjs().diff(dayjs(dob), "year") > 100) {
+    if (dayjs().diff(dayjs(dob, "DD.MM.YYYY"), "year") > 100) {
       return "Vous devez avoir moins de 100 ans.";
     }
     // Check if is more than 9 months in the future
-    if (dayjs().diff(dayjs(dob), "month") < -9) {
+    if (dayjs().diff(dayjs(dob, "DD.MM.YYYY"), "month") < -9) {
       return "Vous devez avoir plus de 9 mois.";
     }
   };
@@ -118,35 +119,47 @@ const Adherant = () => {
                       adherent.civility === "female" ? (
                         <span>
                           Vous êtes <strong>une femme</strong>, née en{" "}
-                          <strong>{dayjs(adherent.dob).format("YYYY")}</strong>
+                          <strong>
+                            {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
+                          </strong>
                         </span>
                       ) : (
                         <span>
                           Vous êtes <strong>un homme</strong>, né en{" "}
-                          <strong>{dayjs(adherent.dob).format("YYYY")}</strong>
+                          <strong>
+                            {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
+                          </strong>
                         </span>
                       )
                     ) : adherent.type === "partner" ? (
                       adherent.civility === "female" ? (
                         <span>
                           Votre conjointe est née en{" "}
-                          <strong>{dayjs(adherent.dob).format("YYYY")}</strong>
+                          <strong>
+                            {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
+                          </strong>
                         </span>
                       ) : (
                         <span>
                           Votre conjoint est né en{" "}
-                          <strong>{dayjs(adherent.dob).format("YYYY")}</strong>
+                          <strong>
+                            {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
+                          </strong>
                         </span>
                       )
                     ) : adherent.civility === "female" ? (
                       <span>
                         Votre enfant est née en{" "}
-                        <strong>{dayjs(adherent.dob).format("YYYY")}</strong>
+                        <strong>
+                          {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
+                        </strong>
                       </span>
                     ) : (
                       <span>
                         Votre enfant est né en{" "}
-                        <strong>{dayjs(adherent.dob).format("YYYY")}</strong>
+                        <strong>
+                          {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
+                        </strong>
                       </span>
                     )}
                   </p>
@@ -232,7 +245,15 @@ const Adherant = () => {
                   }, 100);
                 }}
               >
-                <TextInput
+                <InputDate
+                  value={adherent?.dob || ""}
+                  onChange={(value) => {
+                    console.log(value);
+                    setAdherent({ ...adherent, dob: value });
+                  }}
+                  className="mt-1.5 w-80"
+                />
+                {/* <TextInput
                   value={adherent?.dob || ""}
                   onChange={(value) => {
                     setAdherent({ ...adherent, dob: value });
@@ -246,7 +267,7 @@ const Adherant = () => {
                       ? ""
                       : isValidDob(adherent?.dob || "")
                   }
-                />
+                /> */}
 
                 <Button
                   type="submit"

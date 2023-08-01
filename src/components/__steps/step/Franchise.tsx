@@ -33,7 +33,7 @@ const Franchise = () => {
   };
 
   const isChild = (dob: string) => {
-    return dayjs().diff(dayjs(dob), "year") < 19;
+    return dayjs().diff(dayjs(dob, "DD.MM.YYYY"), "year") < 19;
   };
 
   useEffect(() => {
@@ -137,8 +137,9 @@ const Franchise = () => {
                       {adherent.type === "child" && (
                         <span>
                           Votre enfant né en{" "}
-                          {dayjs(adherent.dob).format("YYYY")} a besoin d‘une
-                          franchise de <b>{adherent.franchise} CHF</b>
+                          {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")} a
+                          besoin d‘une franchise de{" "}
+                          <b>{adherent.franchise} CHF</b>
                         </span>
                       )}
                     </p>
@@ -388,7 +389,8 @@ const Franchise = () => {
                 key={index}
               >
                 <p className="mb-4 text-base font-bold">
-                  Votre enfant né(e) en {dayjs(adherent.dob).format("YYYY")}
+                  Votre enfant né(e) en{" "}
+                  {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
                 </p>
                 <Select
                   options={

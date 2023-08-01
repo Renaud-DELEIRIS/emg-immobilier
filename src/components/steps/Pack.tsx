@@ -60,9 +60,15 @@ const Pack = ({
 
   useEffect(() => {
     // If adherent age is under or equal at 3 make premium selected
-    if (dayjs().diff(adherent.dob, "year") <= 3 && selected === undefined)
+    if (
+      dayjs().diff(dayjs(adherent.dob, "DD.MM.YYYY"), "year") <= 3 &&
+      selected === undefined
+    )
       setSelected("Premium");
-    else if (dayjs().diff(adherent.dob, "year") > 3 && selected === undefined)
+    else if (
+      dayjs().diff(dayjs(adherent.dob, "DD.MM.YYYY"), "year") > 3 &&
+      selected === undefined
+    )
       setSelected("Confort");
   }, []);
 
@@ -88,7 +94,9 @@ const Pack = ({
           prestation={[prestationsConfort]}
           pack="Confort"
           defaultLevel={1}
-          recommended={dayjs().diff(adherent.dob, "year") > 3}
+          recommended={
+            dayjs().diff(dayjs(adherent.dob, "DD.MM.YYYY"), "year") > 3
+          }
           selected={selected === "Confort"}
           onClick={() => setSelected("Confort")}
         />
@@ -96,7 +104,9 @@ const Pack = ({
           defaultLevel={1}
           prestation={[prestationsPremium]}
           pack="Premium"
-          recommended={dayjs().diff(adherent.dob, "year") <= 3}
+          recommended={
+            dayjs().diff(dayjs(adherent.dob, "DD.MM.YYYY"), "year") <= 3
+          }
           selected={selected === "Premium"}
           onClick={() => setSelected("Premium")}
         />

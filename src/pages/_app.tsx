@@ -7,6 +7,9 @@ import { GTMProvider } from "@elgorditosalsero/react-gtm-hook";
 import "~/styles/globals.css";
 import "~/styles/loader.scss";
 import { ToastContainer } from "react-toastify";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import dayjs from "dayjs";
+dayjs.extend(customParseFormat);
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (

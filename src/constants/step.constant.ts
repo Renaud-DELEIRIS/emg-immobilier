@@ -21,6 +21,9 @@ export type StepId =
   | "name"
   | "loader"
   | "result-frontalier"
+  | "souscrire"
+  | "donnee-personnelle"
+  | "documents"
   | "result";
 
 export const STEPS: Step[] = [
@@ -108,7 +111,7 @@ export const STEPS: Step[] = [
       return false;
     },
     stepInfo: (lead) => {
-      return [5, 7];
+      return [5, 10];
     },
   },
   {
@@ -221,6 +224,9 @@ export const STEPS: Step[] = [
       return "name";
     },
     stepInfo: (lead) => {
+      if (lead.situation === "frontalier") {
+        return [6, 10];
+      }
       return [8, 8];
     },
   },
@@ -236,19 +242,64 @@ export const STEPS: Step[] = [
       return "name";
     },
     stepInfo: (lead) => {
-      return [10, 10];
+      return [9, 9];
     },
   },
   {
     id: "result-frontalier",
     next: (lead) => {
-      return "result-frontalier";
+      return "souscrire";
     },
     disabled: (lead) => {
       return false;
     },
     previous: (lead) => {
       return "work-hours";
+    },
+    stepInfo: (lead) => {
+      return [7, 10];
+    },
+  },
+  {
+    id: "souscrire",
+    next: (lead) => {
+      return "donnee-personnelle";
+    },
+    disabled: (lead) => {
+      return false;
+    },
+    previous: (lead) => {
+      return "result-frontalier";
+    },
+    stepInfo: (lead) => {
+      return [8, 10];
+    },
+  },
+  {
+    id: "donnee-personnelle",
+    next: (lead) => {
+      return "documents";
+    },
+    disabled: (lead) => {
+      return false;
+    },
+    previous: (lead) => {
+      return "souscrire";
+    },
+    stepInfo: (lead) => {
+      return [9, 10];
+    },
+  },
+  {
+    id: "documents",
+    next: (lead) => {
+      return "loader";
+    },
+    disabled: (lead) => {
+      return false;
+    },
+    previous: (lead) => {
+      return "donnee-personnelle";
     },
     stepInfo: (lead) => {
       return [10, 10];

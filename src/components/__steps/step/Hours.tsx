@@ -19,21 +19,21 @@ const Hours = () => {
       .filter((p) => p.type !== "main")
       // Has more than 18
       .filter((p) =>
-        dayjs(p.dob, "YYYY-MM-DD").isBefore(dayjs().subtract(18, "year"))
+        dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year"))
       ).length > 0;
 
   const otherWorkersRenseignedWorkPlace =
     lead.adherent
       .filter((p) => p.type !== "main")
       .filter((p) =>
-        dayjs(p.dob, "YYYY-MM-DD").isBefore(dayjs().subtract(18, "year"))
+        dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year"))
       )
       .filter((p) => p.travailSuisse === undefined).length === 0;
 
   const showContinue =
     lead.adherent
       .filter((p) =>
-        dayjs(p.dob, "YYYY-MM-DD").isBefore(dayjs().subtract(18, "year"))
+        dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year"))
       )
       .filter((p) => p.couverture === undefined).length === 0;
 
@@ -57,7 +57,7 @@ const Hours = () => {
             {lead.adherent.map((p, index) => {
               if (p.type === "main") return null;
               if (
-                !dayjs(p.dob, "YYYY-MM-DD").isBefore(
+                !dayjs(p.dob, "DD.MM.YYYY").isBefore(
                   dayjs().subtract(18, "year")
                 )
               )
@@ -71,7 +71,7 @@ const Hours = () => {
                         : "Votre conjoint travaille-t-il sur le territoire Suisse ?"
                       : `Votre enfant né en ${dayjs(
                           p.dob,
-                          "YYYY-MM-DD"
+                          "DD.MM.YYYY"
                         ).year()} travaille-t-il sur le territoire Suisse ?
                   `}
                   </h1>
@@ -132,7 +132,7 @@ const Hours = () => {
           <div className="flex flex-col gap-6">
             {lead.adherent.map((p, index) => {
               if (
-                !dayjs(p.dob, "YYYY-MM-DD").isBefore(
+                !dayjs(p.dob, "DD.MM.YYYY").isBefore(
                   dayjs().subtract(18, "year")
                 )
               )
@@ -147,7 +147,7 @@ const Hours = () => {
                       : p.type === "child"
                       ? `Votre enfant né en ${dayjs(
                           p.dob,
-                          "YYYY-MM-DD"
+                          "DD.MM.YYYY"
                         ).year()} travaille-t-il plus de 8h par semaine pour le même employeur sur le territoire Suisse ?`
                       : p.type === "main"
                       ? "Travaillez-vous plus de 8h par semaine pour le même employeur ?"
@@ -199,7 +199,6 @@ const Hours = () => {
               className=""
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
             >
               <Button
                 onClick={() => {

@@ -15,6 +15,7 @@ import { Adherent, useLead } from "~/components/provider/LeadProvider";
 import { recallResident } from "~/utils/api/recallResident";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
+import { useSteps } from "~/components/provider/StepsProvider";
 
 interface Props {
   adhrerent: Adherent;
@@ -28,10 +29,10 @@ const ResultCardFrontalier = ({
   className = "",
 }: Props) => {
   const [show, setShow] = useState(false);
-  const [open, setOpen] = useState(false);
+  const { increaseStep } = useSteps();
   const { lead } = useLead();
 
-  const age = dayjs().diff(dayjs(adhrerent.dob, "YYYY-MM-DD"), "year");
+  const age = dayjs().diff(dayjs(adhrerent.dob, "DD.MM.YYYY"), "year");
   const couverture = adhrerent.couverture;
   const price =
     age < 19
@@ -129,7 +130,7 @@ const ResultCardFrontalier = ({
 
   const onSubscribe = () => {
     setShow(false);
-    setOpen(true);
+    increaseStep("result-frontalier");
   };
 
   return (

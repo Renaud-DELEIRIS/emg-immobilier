@@ -30,6 +30,8 @@ import Verification from "../__steps/step/Verification";
 import { ResultProvider } from "../__steps/step/result/ResultProvider";
 import Hours from "../__steps/step/Hours";
 import ResultFrontalier from "../__steps/step/frontalier/ResultFrontalier";
+import Souscrire from "../__steps/step/frontalier/Souscire";
+import PersonalData from "../__steps/step/frontalier/PersonalData";
 
 interface StepContext {
   currentStep: Step;
@@ -128,6 +130,28 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
   const getStepComponent = () => {
     const childs: ReactNode[] = [];
     switch (activeStep.id) {
+      case "donnee-personnelle":
+        childs.push(<PersonalData key={"personnelle"} />);
+        childs.push(
+          <div
+            className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
+            key={"title"}
+          >
+            Donnée personnelle
+          </div>
+        );
+        break;
+      case "souscrire":
+        childs.push(<Souscrire key={"souscrire"} />);
+        childs.push(
+          <div
+            className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
+            key={"title"}
+          >
+            Souscire
+          </div>
+        );
+        break;
       case "work-hours":
         childs.push(<Hours key={"hours"} />);
         childs.push(

@@ -56,7 +56,9 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
     const p = new URLSearchParams({
-      age: (dayjs().year() - +dayjs(profil.dob || "").year()).toString(),
+      age: (
+        dayjs().year() - +dayjs(profil.dob || "", "DD.MM.YYYY").year()
+      ).toString(),
       sexe: profil.civility === "female" ? "Femme" : "Homme",
       pack: !profil.pack?.principal
         ? ""
