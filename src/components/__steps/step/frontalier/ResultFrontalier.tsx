@@ -36,7 +36,7 @@ const ResultFrontalier = () => {
           handleDiameter={24}
         />
         <p className="block text-base text-dark">
-          Afficher le prix à l'année (1% de rabais)
+          Afficher le prix à l&apos;année (1% de rabais)
         </p>
       </div>
       <div className="mt-8 flex flex-col gap-8">

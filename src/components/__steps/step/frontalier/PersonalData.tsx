@@ -28,7 +28,7 @@ const PersonalData = () => {
       {lead.adherent.map((p, index) => {
         if (!lead.selectedAdherent.includes(index)) return null;
         return (
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6" key={index}>
             <h3 className="text-lg font-bold">
               {p.type === "main"
                 ? "Vous"

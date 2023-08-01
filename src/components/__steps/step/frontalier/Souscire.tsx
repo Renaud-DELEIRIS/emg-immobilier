@@ -43,7 +43,7 @@ const Souscrire = () => {
   return (
     <div className="flex max-w-xl flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <label className="font-bold">Début de l'assurance :</label>
+        <label className="font-bold">Début de l&apos;assurance :</label>
         <InputDate
           value={lead.startInsurance}
           onChange={(date) => changeLead({ startInsurance: date })}
@@ -56,7 +56,11 @@ const Souscrire = () => {
       </div>
       <Select
         value={lead.paymentFrequency}
-        onChange={(value) => changeLead({ paymentFrequency: value as any })}
+        onChange={(value) =>
+          changeLead({
+            paymentFrequency: value as "month" | "year" | "semester",
+          })
+        }
         label="Fréquence de paiement"
         options={[
           { value: "month", label: "Mensuelle" },

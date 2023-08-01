@@ -63,7 +63,9 @@ const Hours = () => {
               )
                 return null;
               return (
-                <div key={index + "" + p.dob + p.type}>
+                <div
+                  key={index.toString() + "" + (p.dob || "") + (p.type || "")}
+                >
                   <h1 className="mb-4 text-base font-extrabold leading-[1.6] text-dark md:leading-[1.4]">
                     {p.type === "partner"
                       ? p.civility === "female"
@@ -138,7 +140,10 @@ const Hours = () => {
               )
                 return null;
               return (
-                <div className="" key={index + "" + p.dob + p.type}>
+                <div
+                  className=""
+                  key={index.toString() + "" + (p.dob || "") + (p.type || "")}
+                >
                   <h1 className="mb-4 text-base font-extrabold leading-[1.6] text-dark md:leading-[1.4]">
                     {p.type === "partner"
                       ? p.civility === "female"

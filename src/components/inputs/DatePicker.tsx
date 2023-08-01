@@ -67,7 +67,7 @@ function InputDate({
     const [day, month, year] = [dayRef, monthRef, yearRef].map(
       (ref) => ref.current?.value
     );
-    onChange(`${day}.${month}.${year}`);
+    onChange(`${day || ""}.${month || ""}.${year || ""}`);
   };
 
   return (
