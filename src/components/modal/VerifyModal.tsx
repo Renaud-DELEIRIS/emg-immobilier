@@ -215,7 +215,7 @@ const Info = ({ open }: { open: boolean }) => {
                       <CodeInput
                         onChange={(e) => setCode(e)}
                         allowedCharacters="numeric"
-                        containerClassName="mt-36"
+                        containerClassName="mt-36 md:mx-8"
                       />
                       <div className="mt-12 flex w-full flex-row items-center justify-between">
                         <Button
