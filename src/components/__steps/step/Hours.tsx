@@ -37,6 +37,12 @@ const Hours = () => {
       )
       .filter((p) => p.couverture === undefined).length === 0;
 
+  lead.adherent
+    .filter((p) =>
+      dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year"))
+    )
+    .filter((p) => p.travailSuisse === undefined).length === 1;
+
   return (
     <>
       {hasOtherWorkers && (
@@ -179,6 +185,18 @@ const Hours = () => {
                           return a;
                         }),
                       });
+                      if (
+                        lead.adherent
+                          .filter((p) =>
+                            dayjs(p.dob, "DD.MM.YYYY").isBefore(
+                              dayjs().subtract(18, "year")
+                            )
+                          )
+                          .filter((p) => p.travailSuisse === undefined)
+                          .length === 1
+                      ) {
+                        increaseStep("work-hours");
+                      }
                     }}
                     options={[
                       {

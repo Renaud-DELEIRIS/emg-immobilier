@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { type LeadData } from "~/components/provider/LeadProvider";
 
 export interface Step {
@@ -21,6 +22,7 @@ export type StepId =
   | "name"
   | "loader"
   | "result-frontalier"
+  | "profils"
   | "souscrire"
   | "donnee-personnelle"
   | "documents"
@@ -111,7 +113,7 @@ export const STEPS: Step[] = [
       return false;
     },
     stepInfo: (lead) => {
-      return [5, 10];
+      return [5, 11];
     },
   },
   {
@@ -225,7 +227,7 @@ export const STEPS: Step[] = [
     },
     stepInfo: (lead) => {
       if (lead.situation === "frontalier") {
-        return [6, 10];
+        return [6, 11];
       }
       return [8, 8];
     },
@@ -248,7 +250,7 @@ export const STEPS: Step[] = [
   {
     id: "result-frontalier",
     next: (lead) => {
-      return "souscrire";
+      return "profils";
     },
     disabled: (lead) => {
       return false;
@@ -257,7 +259,22 @@ export const STEPS: Step[] = [
       return "work-hours";
     },
     stepInfo: (lead) => {
-      return [7, 10];
+      return [7, 11];
+    },
+  },
+  {
+    id: "profils",
+    next: (lead) => {
+      return "souscrire";
+    },
+    disabled: (lead) => {
+      return false;
+    },
+    previous: (lead) => {
+      return "result-frontalier";
+    },
+    stepInfo: (lead) => {
+      return [8, 11];
     },
   },
   {
@@ -269,10 +286,16 @@ export const STEPS: Step[] = [
       return false;
     },
     previous: (lead) => {
-      return "result-frontalier";
+      return lead.adherent
+        .filter((p) =>
+          dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year"))
+        )
+        .filter((p) => p.travailSuisse !== undefined).length === 1
+        ? "result-frontalier"
+        : "profils";
     },
     stepInfo: (lead) => {
-      return [8, 10];
+      return [9, 11];
     },
   },
   {
@@ -287,7 +310,7 @@ export const STEPS: Step[] = [
       return "souscrire";
     },
     stepInfo: (lead) => {
-      return [9, 10];
+      return [10, 11];
     },
   },
   {
@@ -302,7 +325,7 @@ export const STEPS: Step[] = [
       return "donnee-personnelle";
     },
     stepInfo: (lead) => {
-      return [10, 10];
+      return [11, 11];
     },
   },
 ];

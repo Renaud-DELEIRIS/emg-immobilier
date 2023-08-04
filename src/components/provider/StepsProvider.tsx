@@ -33,6 +33,8 @@ import ResultFrontalier from "../__steps/step/frontalier/ResultFrontalier";
 import Souscrire from "../__steps/step/frontalier/Souscire";
 import PersonalData from "../__steps/step/frontalier/PersonalData";
 import Documents from "../__steps/step/frontalier/Documents";
+import Profils from "../__steps/step/frontalier/Profils";
+import { IconArrowLeft } from "@tabler/icons-react";
 
 interface StepContext {
   currentStep: Step;
@@ -101,7 +103,6 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const increaseStep = (step: StepId, newLead?: LeadData) => {
-    console.log(newLead);
     const nextStep = getNextStep(getStepById(step), newLead ?? lead);
     setSteps(nextStep);
 
@@ -134,33 +135,76 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
       case "documents":
         childs.push(<Documents key={"documents"} />);
         childs.push(
-          <div
-            className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
-            key={"title"}
-          >
-            Documents
+          <div className=" mt-8" key={"title"}>
+            <button
+              className="mb-4 flex items-center gap-1 text-primary hover:underline"
+              onClick={() => {
+                decreaseStep();
+              }}
+            >
+              <IconArrowLeft size={20} />
+              <span>Retour</span>
+            </button>
+            <div className="relative mb-6 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block">
+              Documents
+            </div>
           </div>
         );
         break;
       case "donnee-personnelle":
         childs.push(<PersonalData key={"personnelle"} />);
         childs.push(
-          <div
-            className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
-            key={"title"}
-          >
-            Donnée personnelle
+          <div className=" mt-8" key={"title"}>
+            <button
+              className="mb-4 flex items-center gap-1 text-primary hover:underline"
+              onClick={() => {
+                decreaseStep();
+              }}
+            >
+              <IconArrowLeft size={20} />
+              <span>Retour</span>
+            </button>
+            <div className="relative mb-6 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block">
+              Donnée personnelle
+            </div>
+          </div>
+        );
+        break;
+      case "profils":
+        childs.push(<Profils key={"profil"} />);
+        childs.push(
+          <div className=" mt-8" key={"title"}>
+            <button
+              className="mb-4 flex items-center gap-1 text-primary hover:underline"
+              onClick={() => {
+                decreaseStep();
+              }}
+            >
+              <IconArrowLeft size={20} />
+              <span>Retour</span>
+            </button>
+            <div className="relative mb-6 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block">
+              Pour qui souhaitez vous souscrire ?
+            </div>
           </div>
         );
         break;
       case "souscrire":
         childs.push(<Souscrire key={"souscrire"} />);
         childs.push(
-          <div
-            className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
-            key={"title"}
-          >
-            Souscire
+          <div className=" mt-8" key={"title"}>
+            <button
+              className="mb-4 flex items-center gap-1 text-primary hover:underline"
+              onClick={() => {
+                decreaseStep();
+              }}
+            >
+              <IconArrowLeft size={20} />
+              <span>Retour</span>
+            </button>
+            <div className="relative mb-6 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block">
+              Souscrire
+            </div>
           </div>
         );
         break;

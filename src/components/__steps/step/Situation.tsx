@@ -4,6 +4,7 @@ import TileInput from "~/components/inputs/Tile";
 import { IconGenderFemale, IconGenderMale } from "@tabler/icons-react";
 import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
+import Image from "next/image";
 
 const Situation = () => {
   const { lead, changeLead } = useLead();
@@ -22,7 +23,17 @@ const Situation = () => {
       <TileInput
         value={lead.situation}
         onChange={(value) => {
-          changeLead({ situation: value as "frontalier" | "future resident" });
+          changeLead({
+            situation: value as "frontalier" | "future resident",
+            adherent: lead.adherent.map((a) => {
+              if (a.type === "main")
+                return {
+                  ...a,
+                  travailSuisse: value === "frontalier" ? true : undefined,
+                };
+              return a;
+            }),
+          });
           increaseStep("situation", {
             ...lead,
             situation: value as "frontalier" | "future resident",
@@ -32,12 +43,26 @@ const Situation = () => {
           {
             value: "frontalier",
             label: "Travailleur frontalier",
-            icon: <IconGenderMale size={40} />,
+            icon: (
+              <Image
+                src="/icons/frontalier.svg"
+                alt="frontalier"
+                width={50}
+                height={50}
+              />
+            ),
           },
           {
             value: "future resident",
             label: "Future résident suisse",
-            icon: <IconGenderFemale size={40} />,
+            icon: (
+              <Image
+                src="/icons/resident.svg"
+                alt="resident"
+                width={50}
+                height={50}
+              />
+            ),
           },
         ]}
         className="grid grid-cols-1 gap-4 md:grid-cols-2"

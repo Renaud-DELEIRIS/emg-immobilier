@@ -62,6 +62,7 @@ const ResultFrontalier = () => {
                 key={index}
                 adhrerent={data}
                 monthPrice={monthlyPrice}
+                profilId={index}
               />
             </div>
           );

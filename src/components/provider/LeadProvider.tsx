@@ -76,7 +76,8 @@ interface LeadContext {
 
 const LeadContext = createContext<LeadContext>({
   lead: {
-    startInsurance: `..${dayjs().year().toString()}`,
+    // Start of the next month
+    startInsurance: dayjs().add(1, "month").set("date", 1).format("DD.MM.YYYY"),
     paymentFrequency: "month",
     adherent: [],
     selectedAdherent: [],
@@ -86,7 +87,7 @@ const LeadContext = createContext<LeadContext>({
 
 const LeadProvider = ({ children }: { children: React.ReactNode }) => {
   const [lead, setLead] = useState<LeadData>({
-    startInsurance: `..${dayjs().year().toString()}`,
+    startInsurance: dayjs().add(1, "month").set("date", 1).format("DD.MM.YYYY"),
     paymentFrequency: "month",
     adherent: [],
     selectedAdherent: [],

@@ -21,16 +21,18 @@ interface Props {
   adhrerent: Adherent;
   monthPrice: boolean;
   className?: string;
+  profilId: number;
 }
 
 const ResultCardFrontalier = ({
   adhrerent,
   monthPrice,
   className = "",
+  profilId,
 }: Props) => {
   const [show, setShow] = useState(false);
   const { increaseStep } = useSteps();
-  const { lead } = useLead();
+  const { lead, changeLead } = useLead();
 
   const age = dayjs().diff(dayjs(adhrerent.dob, "DD.MM.YYYY"), "year");
   const couverture = adhrerent.couverture;
@@ -130,6 +132,7 @@ const ResultCardFrontalier = ({
 
   const onSubscribe = () => {
     setShow(false);
+    changeLead({ ...lead, selectedAdherent: [profilId] });
     increaseStep("result-frontalier");
   };
 
