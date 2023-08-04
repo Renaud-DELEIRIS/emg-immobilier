@@ -26,8 +26,8 @@ const Pack = ({
       label:
         | "Médecine alternative"
         | "Traitements dentaires"
-        | "Hospitalisation"
-        | "Capital hospitalier";
+        | "Capital hospitalier"
+        | "Hospitalisation";
       level: number;
     }[];
   }) => void;
@@ -35,6 +35,7 @@ const Pack = ({
   const [selected, setSelected] = useState<
     "Essentiel" | "Confort" | "Premium" | undefined | null
   >(adherent.pack?.principal);
+  const age = dayjs().diff(dayjs(adherent.dob, "DD.MM.YYYY"), "year");
   const [optionExpanded, setOptionExpanded] = useState<boolean>(false);
   const [options, setOptions] = useState<
     {
@@ -46,16 +47,37 @@ const Pack = ({
       level: number;
     }[]
   >(
-    adherent.pack?.options || [
-      {
-        label: "Capital hospitalier",
-        level: 2,
-      },
-      {
-        label: "Hospitalisation",
-        level: 1,
-      },
-    ]
+    adherent.pack?.options || age <= 3
+      ? [
+          {
+            label: "Hospitalisation",
+            level: 3,
+          },
+        ]
+      : age <= 15
+      ? [
+          {
+            label: "Traitements dentaires",
+            level: 1,
+          },
+        ]
+      : age <= 23
+      ? [
+          {
+            label: "Médecine alternative",
+            level: 1,
+          },
+        ]
+      : [
+          {
+            label: "Capital hospitalier",
+            level: 2,
+          },
+          {
+            label: "Hospitalisation",
+            level: 1,
+          },
+        ]
   );
 
   useEffect(() => {
