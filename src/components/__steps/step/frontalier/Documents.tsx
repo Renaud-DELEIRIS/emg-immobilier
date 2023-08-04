@@ -10,7 +10,6 @@ const Documents = () => {
   const [permisTravail, setPermisTravail] = useState<string>("");
   const [pieceDidendite, setPieceDidendite] = useState<string>("");
 
-  console.log(!pieceDidendite || !permisTravail || !justificatifDomicile);
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4">

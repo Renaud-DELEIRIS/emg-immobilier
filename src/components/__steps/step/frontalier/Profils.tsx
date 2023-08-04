@@ -28,7 +28,7 @@ const Profils = () => {
         .filter((p) =>
           dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year"))
         )
-        .filter((p) => p.travailSuisse !== undefined).length === 1
+        .filter((p) => p.travailSuisse).length === 1
     ) {
       changeLead({
         selectedAdherent: [0],

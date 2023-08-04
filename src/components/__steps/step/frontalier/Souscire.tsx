@@ -1,18 +1,11 @@
-import {
-  IconCheck,
-  IconInfoCircle,
-  IconMan,
-  IconWoman,
-} from "@tabler/icons-react";
+import { IconInfoCircle } from "@tabler/icons-react";
 import dayjs from "dayjs";
-import { useEffect } from "react";
 import Button from "~/components/button/Button";
 import InputDate from "~/components/inputs/DatePicker";
 import Select from "~/components/inputs/Select";
 import TextInput from "~/components/inputs/TextInput";
 import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
-import formatAmount from "~/utils/formatAmount";
 
 const Souscrire = () => {
   const { lead, changeLead } = useLead();

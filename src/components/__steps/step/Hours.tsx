@@ -35,6 +35,7 @@ const Hours = () => {
       .filter((p) =>
         dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year"))
       )
+      .filter((p) => p.travailSuisse)
       .filter((p) => p.couverture === undefined).length === 0;
 
   lead.adherent
@@ -145,6 +146,7 @@ const Hours = () => {
                 )
               )
                 return null;
+              if (!p.travailSuisse) return null;
               return (
                 <div
                   className=""
@@ -192,8 +194,7 @@ const Hours = () => {
                               dayjs().subtract(18, "year")
                             )
                           )
-                          .filter((p) => p.travailSuisse === undefined)
-                          .length === 1
+                          .filter((p) => p.travailSuisse).length === 1
                       ) {
                         increaseStep("work-hours");
                       }
