@@ -11,6 +11,7 @@
   "dependencies": {
     "@elgorditosalsero/react-gtm-hook": "^2.7.2",
     "@headlessui/react": "^1.7.15",
+    "@mapbox/search-js-core": "^1.0.0-beta.17",
     "@t3-oss/env-nextjs": "^0.2.1",
     "@tabler/icons-react": "^2.20.0",
     "class-variance-authority": "^0.6.0",

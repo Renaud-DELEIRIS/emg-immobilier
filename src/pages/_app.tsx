@@ -8,8 +8,10 @@ import "~/styles/globals.css";
 import "~/styles/loader.scss";
 import { ToastContainer } from "react-toastify";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import fr from "dayjs/locale/fr";
 import dayjs from "dayjs";
 dayjs.extend(customParseFormat);
+dayjs.locale(fr);
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
