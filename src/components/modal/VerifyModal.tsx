@@ -38,28 +38,9 @@ const Info = ({ open }: { open: boolean }) => {
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    if (!lead.phone) return;
     e.preventDefault();
     setStep("phone");
-  };
-
-  const verifyCode = () => {
-    console.log(code, responseCode);
-    if (process.env.NODE_ENV === "development") {
-      if (code === "6121") {
-        changeLead({ ...lead, verified: true });
-        return;
-      }
-    }
-    if (!responseCode) return;
-    if (code.trim() !== responseCode) {
-      console.log("Code is not valid");
-      return;
-    }
-    changeLead({ ...lead, verified: true });
-  };
-
-  useEffect(() => {
-    if (step !== "phone" || !lead.phone) return;
     setLoading(true);
     void sendCodeSms(lead.phone)
       .then((res) => {
@@ -69,7 +50,16 @@ const Info = ({ open }: { open: boolean }) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [step]);
+  };
+
+  const verifyCode = () => {
+    if (!responseCode) return;
+    if (code.trim() !== responseCode.toString()) {
+      console.log("Code is not valid");
+      return;
+    }
+    changeLead({ ...lead, verified: true });
+  };
 
   return (
     <Transition appear show={open} as={Fragment}>

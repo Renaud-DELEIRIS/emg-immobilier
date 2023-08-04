@@ -32,6 +32,7 @@ import Hours from "../__steps/step/Hours";
 import ResultFrontalier from "../__steps/step/frontalier/ResultFrontalier";
 import Souscrire from "../__steps/step/frontalier/Souscire";
 import PersonalData from "../__steps/step/frontalier/PersonalData";
+import Documents from "../__steps/step/frontalier/Documents";
 
 interface StepContext {
   currentStep: Step;
@@ -130,6 +131,17 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
   const getStepComponent = () => {
     const childs: ReactNode[] = [];
     switch (activeStep.id) {
+      case "documents":
+        childs.push(<Documents key={"documents"} />);
+        childs.push(
+          <div
+            className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
+            key={"title"}
+          >
+            Documents
+          </div>
+        );
+        break;
       case "donnee-personnelle":
         childs.push(<PersonalData key={"personnelle"} />);
         childs.push(
