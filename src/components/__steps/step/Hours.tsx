@@ -155,13 +155,13 @@ const Hours = () => {
                   <h1 className="mb-4 text-base font-extrabold leading-[1.6] text-dark md:leading-[1.4]">
                     {p.type === "partner"
                       ? p.civility === "female"
-                        ? "Votre conjointe travaille-t-elle plus de 8h par semaine pour le même employeur sur le territoire Suisse ?"
-                        : "Votre conjoint travaille-t-il plus de 8h par semaine pour le même employeur sur le territoire Suisse ?"
+                        ? "Votre conjointe travaille-t-elle plus de 8h par semaine pour le même employeur ?"
+                        : "Votre conjoint travaille-t-il plus de 8h par semaine pour le même employeur ?"
                       : p.type === "child"
                       ? `Votre enfant né en ${dayjs(
                           p.dob,
                           "DD.MM.YYYY"
-                        ).year()} travaille-t-il plus de 8h par semaine pour le même employeur sur le territoire Suisse ?`
+                        ).year()} travaille-t-il plus de 8h par semaine pour le même employeur ?`
                       : p.type === "main"
                       ? "Travaillez-vous plus de 8h par semaine pour le même employeur ?"
                       : ""}

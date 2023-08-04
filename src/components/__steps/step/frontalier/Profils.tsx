@@ -5,7 +5,8 @@ import Button from "~/components/button/Button";
 import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
 import formatAmount from "~/utils/formatAmount";
-
+import { FaChild } from "react-icons/fa";
+import { IoIosMan, IoIosWoman } from "react-icons/io";
 const Profils = () => {
   const { lead, changeLead } = useLead();
   const { increaseStep } = useSteps();
@@ -69,10 +70,12 @@ const Profils = () => {
             }}
           >
             <div className="flex flex-row items-center gap-2">
-              {p.civility === "man" ? (
-                <IconMan size={32} />
+              {p.type === "child" ? (
+                <FaChild size={28} className="mr-1" />
+              ) : p.civility === "man" ? (
+                <IoIosMan size={32} />
               ) : (
-                <IconWoman size={32} />
+                <IoIosWoman size={32} />
               )}
               <span className="font-bold">
                 {p.type === "main"

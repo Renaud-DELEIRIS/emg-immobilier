@@ -79,7 +79,7 @@ const CompleteAddress = ({
 
   useEffect(() => {
     if (!lead.address) return;
-    getSuggestion();
+    void getSuggestion();
   }, [lead.address]);
 
   const streetRef = useRef<HTMLDivElement>(null);
