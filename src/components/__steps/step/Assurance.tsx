@@ -3,19 +3,20 @@ import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
 import AutoComplete from "~/components/inputs/Autocomplete";
 import insurers from "~/data/insurers.json";
+import { useTranslation, Trans } from "next-i18next";
 
 const Assurance = () => {
   const { lead, changeLead } = useLead();
   const { increaseStep, activeStep } = useSteps();
-
+  const { t } = useTranslation("common");
   return (
     <StepContainer
-      title="Quelle est votre assurance actuelle ?"
+      title={t('STEP_ASSURANCE_TITLE')}
       description={
-        <span>
-          Très bien !<br />
-          Possedez-vous une assurance santé ? Si oui,
-        </span>
+        <Trans
+          t={t}
+          i18nKey="STEP_ASSURANCE_DESCRIPTION"
+          />
       }
       stepId="assurance-actuelle"
     >

@@ -165,7 +165,7 @@ const StepsProvider = ({ children }: { children: ReactNode }) => {
               <span>Retour</span>
             </button>
             <div className="relative mb-6 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block">
-              Donnée personnelle
+              Données personnelles
             </div>
           </div>
         );

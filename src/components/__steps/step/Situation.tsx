@@ -1,22 +1,22 @@
-import { useState } from "react";
 import StepContainer from "../StepContainer";
 import TileInput from "~/components/inputs/Tile";
-import { IconGenderFemale, IconGenderMale } from "@tabler/icons-react";
 import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
 import Image from "next/image";
+import { useTranslation, Trans } from "next-i18next";
 
 const Situation = () => {
   const { lead, changeLead } = useLead();
   const { increaseStep, activeStep } = useSteps();
+  const { t } = useTranslation("common");
   return (
     <StepContainer
-      title="Quelle est votre situation ?"
+      title={t("STEP_SITUATION_TITLE")}
       description={
-        <span>
-          Vous ne résidez pas en Suisse ?<br />
-          J‘ai besoin d‘un peu plus d‘informations.
-        </span>
+        <Trans
+          t={t}
+          i18nKey="STEP_SITUATION_DESCRIPTION"
+          />
       }
       stepId="situation"
     >
@@ -42,7 +42,7 @@ const Situation = () => {
         options={[
           {
             value: "frontalier",
-            label: "Travailleur frontalier",
+            label: t("STEP_SITUATION_FRONTALIER"),
             icon: (
               <Image
                 src="/icons/frontalier.svg"
@@ -54,7 +54,7 @@ const Situation = () => {
           },
           {
             value: "future resident",
-            label: "Future résident suisse",
+            label: t("STEP_SITUATION_SUISSE"),
             icon: (
               <Image
                 src="/icons/resident.svg"

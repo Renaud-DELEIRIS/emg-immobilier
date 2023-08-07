@@ -46,5 +46,13 @@
   "STEP_NPA_PLACEHOLDER": "Ville ou NPA",
   "STEP_NPA_NOTHERE": "Pas sur le territoire Suisse ?",
   "STEP_NPA_NOTHERE_LINK": "Cliquez ici",
-  "STEP_NPA_NOTHERE_SPAN": "Pas sur le territoire"
+  "STEP_NPA_NOTHERE_SPAN": "Pas sur le territoire",
+
+  "STEP_SITUATION_TITLE": "Quelle est votre situation ?",
+  "STEP_SITUATION_DESCRIPTION": "Vous ne résidez pas en Suisse ?<br />J‘ai besoin d‘un peu plus d‘informations.",
+  "STEP_SITUATION_FRONTALIER": "Travailleur frontalier",
+  "STEP_SITUATION_SUISSE": "Future résident suisse",
+
+  "STEP_ASSURANCE_TITLE": "Quelle est votre assurance actuelle ?",
+  "STEP_ASSURANCE_DESCRIPTION": "Très bien !<br />Possedez-vous une assurance santé ? Si oui,"
 }
