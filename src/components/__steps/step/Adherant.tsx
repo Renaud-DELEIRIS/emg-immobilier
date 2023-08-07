@@ -16,24 +16,7 @@ import {
 ``;
 import { motion } from "framer-motion";
 import InputDate from "~/components/inputs/DatePicker";
-
-const textByIndex = [
-  {
-    title: "Nous allons maintenant établir votre profil.",
-    dob: "Quelle est votre date de naissance ?",
-    civilite: "Quelle est votre civilité ?",
-  },
-  {
-    title: "Nous allons maintenant établir le profil de votre conjoint(e).",
-    dob: "Quelle est la date de naissance de votre conjoint(e) ?",
-    civilite: "Quelle est la civilité de votre conjoint(e) ?",
-  },
-  {
-    title: "Nous allons maintenant établir le profil de votre enfant.",
-    dob: "Quelle est la date de naissance de votre enfant ?",
-    civilite: "Quelle est la civilité de votre enfant ?",
-  },
-];
+import { useTranslation, Trans } from "next-i18next";
 
 const Adherant = () => {
   const { lead, changeLead } = useLead();
@@ -41,7 +24,7 @@ const Adherant = () => {
   const [isEditing, setIsEditing] = useState<number | undefined>(undefined);
   const [adherent, setAdherent] = useState<LeadData["adherent"]["0"]>();
   const [step, setStep] = useState<"dob" | "civilite">("dob");
-
+  const { t } = useTranslation("common");
   const getType = (index: number) => {
     if (index === 0) {
       return "main";
@@ -89,6 +72,24 @@ const Adherant = () => {
         : isEditing
       : 0;
 
+      const textByIndex = [
+        {
+          title: t('STEP_ADHERENT_PROFIL_MAIN'),
+          dob: t('STEP_ADHERENT_DOB_MAIN'),
+          civilite: t('STEP_ADHERENT_CIVILITE_MAIN'),
+        },
+        {
+          title: t("STEP_ADHERENT_PROFIL_SPOUSE"),
+          dob: t("STEP_ADHERENT_DOB_SPOUSE"),
+          civilite: t("STEP_ADHERENT_CIVILITE_SPOUSE"),
+        },
+        {
+          title: t("STEP_ADHERENT_PROFIL_CHILD"),
+          dob: t("STEP_ADHERENT_DOB_CHILD"),
+          civilite: t("STEP_ADHERENT_CIVILITE_CHILD"),
+        },
+      ];
+
   useEffect(() => {
     if (activeStep.id !== "adherent") return;
     const next = nextToEdit();
@@ -103,7 +104,9 @@ const Adherant = () => {
     <div>
       {lead.adherent.length > 0 && (
         <div className="mb-8">
-          <h3 className="text-xl text-dark">Les adhérants</h3>
+          <h3 className="text-xl text-dark">
+            {t("STEP_ADHERENT_LIST_TITLE")}
+          </h3>
           <div className="mt-4 flex flex-col gap-4">
             {lead.adherent.map((adherent, index) => (
               <div className="flex items-center gap-4" key={index}>
@@ -117,50 +120,46 @@ const Adherant = () => {
                   <p className="text-base text-neutral-800">
                     {adherent.type === "main" ? (
                       adherent.civility === "female" ? (
-                        <span>
-                          Vous êtes <strong>une femme</strong>, née en{" "}
-                          <strong>
-                            {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
-                          </strong>
-                        </span>
+                        <Trans t={t} i18nKey={"STEP_ADHERENT_LIST_CIVILITY_MAIN_FEMALE"}
+                          values={{
+                            year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
+                          }}
+                        />
                       ) : (
-                        <span>
-                          Vous êtes <strong>un homme</strong>, né en{" "}
-                          <strong>
-                            {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
-                          </strong>
-                        </span>
+  
+                        <Trans t={t} i18nKey={"STEP_ADHERENT_LIST_CIVILITY_MAIN_MALE"}
+                        values={{
+                          year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
+                        }}
+                      />
+
                       )
                     ) : adherent.type === "partner" ? (
                       adherent.civility === "female" ? (
-                        <span>
-                          Votre conjointe est née en{" "}
-                          <strong>
-                            {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
-                          </strong>
-                        </span>
+                        <Trans t={t} i18nKey={"STEP_ADHERENT_LIST_CIVILITY_SPOUSE_FEMALE"}
+                        values={{
+                          year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
+                        }}
+                      />
                       ) : (
-                        <span>
-                          Votre conjoint est né en{" "}
-                          <strong>
-                            {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
-                          </strong>
-                        </span>
+                        <Trans t={t} i18nKey={"STEP_ADHERENT_LIST_CIVILITY_SPOUSE_MALE"}
+                        values={{
+                          year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
+                        }}
+                      />
                       )
                     ) : adherent.civility === "female" ? (
-                      <span>
-                        Votre enfant est née en{" "}
-                        <strong>
-                          {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
-                        </strong>
-                      </span>
+                      <Trans t={t} i18nKey={"STEP_ADHERENT_LIST_CIVILITY_CHILD_FEMALE"}
+                      values={{
+                        year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
+                      }}
+                    />
                     ) : (
-                      <span>
-                        Votre enfant est né en{" "}
-                        <strong>
-                          {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
-                        </strong>
-                      </span>
+                      <Trans t={t} i18nKey={"STEP_ADHERENT_LIST_CIVILITY_CHILD_MALE"}
+                      values={{
+                        year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
+                      }}
+                    />
                     )}
                   </p>
                   <IconEdit className="group-hover:text-primary-500" />
@@ -197,7 +196,7 @@ const Adherant = () => {
                   className="w-fit"
                   iconRight={<IconPlus />}
                 >
-                  Ajouter un enfant
+                  {t("STEP_ADHERENT_LIST_ADD")}
                 </Button>
               )}
           </div>
@@ -210,18 +209,12 @@ const Adherant = () => {
             animate={{ opacity: 1, x: 0 }}
           >
             <StepContainer
-              title={
-                isEditing !== undefined
-                  ? textByIndex[textIndex]?.dob || ""
-                  : "Voulez vous modifier un profil ?"
-              }
+              title={textByIndex[textIndex]?.dob || ""}
               description={
                 <span>
-                  Parfait !
+                  {t("STEP_ADHERENT_PERFECT")}
                   <br />
-                  {isEditing !== undefined
-                    ? textByIndex[textIndex]?.title || ""
-                    : "Voulez vous modifier un profil ?"}
+                  {textByIndex[textIndex]?.title || ""}
                 </span>
               }
               stepId="adherent"
@@ -253,21 +246,6 @@ const Adherant = () => {
                   }}
                   className="mt-1.5 w-80"
                 />
-                {/* <TextInput
-                  value={adherent?.dob || ""}
-                  onChange={(value) => {
-                    setAdherent({ ...adherent, dob: value });
-                  }}
-                  placeholder="JJ/MM/AAAA"
-                  type="date"
-                  wrapperClassName="w-80 mt-1.5"
-                  widthFull={false}
-                  error={
-                    adherent?.dob === "" || adherent?.dob === undefined
-                      ? ""
-                      : isValidDob(adherent?.dob || "")
-                  }
-                /> */}
 
                 <Button
                   type="submit"
@@ -281,7 +259,7 @@ const Adherant = () => {
                     )
                   }
                 >
-                  Valider
+                  {t("VALIDATE")}
                 </Button>
               </form>
             </StepContainer>
@@ -292,12 +270,10 @@ const Adherant = () => {
               animate={{ opacity: 1, x: 0 }}
             >
               <StepContainer
-                title={
-                  isEditing !== undefined
-                    ? textByIndex[textIndex]?.civilite || ""
-                    : "Voulez vous modifier un profil ?"
-                }
-                description={<span>Continuons !</span>}
+                title={textByIndex[textIndex]?.civilite || ""}
+                description={<span>
+                  {t("STEP_ADHERENT_CONTINUE")}
+                </span>}
                 stepId="adherent"
                 className="mt-8"
                 id="adherent-civilite"
@@ -335,12 +311,12 @@ const Adherant = () => {
                   }}
                   options={[
                     {
-                      label: "Homme",
+                      label: t("STEP_ADHERENT_CIVILITY_MAN"),
                       value: "man",
                       rightIcon: <IconGenderMale />,
                     },
                     {
-                      label: "Femme",
+                      label:  t('STEP_ADHERENT_CIVILITY_FEMALE'),
                       value: "female",
                       rightIcon: <IconGenderFemale />,
                     },
@@ -362,7 +338,7 @@ const Adherant = () => {
               size={"small"}
               intent={"secondary"}
             >
-              Annuler
+              {t("CANCEL")}
             </Button>
           )}
         </div>

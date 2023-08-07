@@ -1,6 +1,7 @@
 import { getStepById, type StepId } from "~/constants/step.constant";
 import { useLead } from "../provider/LeadProvider";
 import { useSteps } from "../provider/StepsProvider";
+import { useTranslation } from "next-i18next";
 
 const Sidebar = ({ inModal = false }) => {
   const { lead } = useLead();
@@ -21,14 +22,16 @@ const Sidebar = ({ inModal = false }) => {
       : "finalisation";
 
   const isFrontalier = lead.situation === "frontalier";
+  const { t } = useTranslation("sidebar");
 
   return (
     <>
-      <aside className={`flex flex-col ${inModal ? "" : "border-l p-7"}`}>
-        <h3 className="text-xl font-bold text-dark">Mes étapes</h3>
+      <aside className={`flex flex-col max-w-[250px] ${inModal ? "" : "border-l p-7"}`}>
+        <h3 className="text-xl font-bold text-dark">
+          {t("SIDEBAR_TITLE")}
+        </h3>
         <p className="mt-4 text-dark">
-          Cliquez pour revenir
-          <br /> sur une étape
+          {t("SIDEBAR_DESCRIPTION")}
         </p>
         <ul className="leading-4 [&>li]:my-1">
           <li>
@@ -50,7 +53,7 @@ const Sidebar = ({ inModal = false }) => {
                   active === "adherant" ? "ml-2 font-bold text-primary" : ""
                 }`}
               >
-                Adhérent
+                {t("STEP_ADHERENT")}
               </span>
             </button>
           </li>
@@ -73,7 +76,7 @@ const Sidebar = ({ inModal = false }) => {
                     active === "besoins" ? "ml-2 font-bold text-primary" : ""
                   }`}
                 >
-                  Frontalier
+                  {t("STEP_FRONTALIER")}
                 </span>
               </button>
             </li>
@@ -104,7 +107,7 @@ const Sidebar = ({ inModal = false }) => {
                       active === "besoins" ? "ml-2 font-bold text-primary" : ""
                     }`}
                   >
-                    Besoins
+                    {t("STEP_BESOINS")}
                   </span>
                 </button>
               </li>
@@ -128,7 +131,7 @@ const Sidebar = ({ inModal = false }) => {
                         : ""
                     }`}
                   >
-                    Finalisation
+                    {t("STEP_FINALISATION")}
                   </span>
                 </button>
               </li>

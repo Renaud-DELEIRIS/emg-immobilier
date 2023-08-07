@@ -10,6 +10,10 @@ import { ToastContainer } from "react-toastify";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import fr from "dayjs/locale/fr";
 import dayjs from "dayjs";
+import { api } from "~/utils/api";
+import { appWithTranslation } from "next-i18next";
+import nexti18nConfig from "next-i18next.config.mjs";
+
 dayjs.extend(customParseFormat);
 dayjs.locale(fr);
 
@@ -38,4 +42,4 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   );
 };
 
-export default MyApp;
+export default api.withTRPC(appWithTranslation(MyApp, nexti18nConfig));

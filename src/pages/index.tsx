@@ -1,5 +1,5 @@
 import { IconChevronDown, IconPhone, IconPhoneCall } from "@tabler/icons-react";
-import { type NextPage } from "next";
+import { GetStaticProps, type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
@@ -9,11 +9,26 @@ import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
 import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import nextI18nextConfig from "next-i18next.config.mjs";
+import { useTranslation } from "next-i18next";
 
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(
+        ctx.locale ?? "fr",
+        ["common", "footer", "sidebar"],
+        nextI18nextConfig
+      )),
+    },
+  };
+};
 const Home: NextPage = () => {
   const { getStepComponent, activeStep } = useSteps();
   const { changeLead, lead } = useLead();
   const [beCalled, setBeCalled] = useState(false);
+  const { t } = useTranslation("common");
   return (
     <>
       <Head>
@@ -39,7 +54,7 @@ const Home: NextPage = () => {
               <div className="w-5" />
             )}
             <span className={beCalled ? "" : "hidden md:inline"}>
-              Être rappelé gratuitement
+              {t("BECALLED_BTN")}
             </span>
             <IconChevronDown
               size={20}
@@ -86,7 +101,7 @@ const Home: NextPage = () => {
                 className="flex items-center gap-1 text-base text-white"
               >
                 <IconPhoneCall size={20} />
-                Rappelez-moi
+                {t("BECALLED_BTN_CALL")}
               </button>
             </div>
           </div>

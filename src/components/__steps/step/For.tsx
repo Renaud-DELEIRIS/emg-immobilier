@@ -8,18 +8,18 @@ import { EmgAdulte } from "~/icons/EmgAdulte";
 import { EmgCouple } from "~/icons/EmgCouple";
 import { EmgAdulteEnfant } from "~/icons/EmgAdulteEnfant";
 import { EmgCoupleEnfant } from "~/icons/EmgCoupleEnfant";
+import { useTranslation, Trans } from "next-i18next";
 
 const For = () => {
   const { lead, changeLead } = useLead();
   const { increaseStep, activeStep, setCurrentStep } = useSteps();
+  const { t } = useTranslation("common");
   return (
     <StepContainer
-      title="Pour qui souhaitez-vous comparer ?"
+      title={t("STEP_FOR_TITLE")}
       description={
         <span>
-          Bonjour ! Je suis Emma.
-          <br />
-          En quelques minutes, comparons ensemble plus de 42 compagnies.
+          <Trans t={t} i18nKey="STEP_FOR_DESCRIPTION" />
         </span>
       }
       stepId="for-who"
@@ -34,22 +34,22 @@ const For = () => {
         options={[
           {
             value: "you",
-            label: "Vous",
+            label: t("STEP_FOR_YOURSELF"),
             icon: <EmgAdulte />,
           },
           {
             value: "you and your partner",
-            label: "Vous et votre conjoint",
+            label: t("STEP_FOR_SPOUSE"),
             icon: <EmgCouple />,
           },
           {
             value: "you and your kids",
-            label: "Vous et vos enfants",
+            label: t("STEP_FOR_CHILD"),
             icon: <EmgAdulteEnfant />,
           },
           {
             value: "you, your partner and your kids",
-            label: "Vous, votre conjoint(e) et vos enfants",
+            label: t("STEP_FOR_FAMILY"),
             icon: <EmgCoupleEnfant />,
           },
         ]}

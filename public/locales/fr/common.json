@@ -1,0 +1,50 @@
+{
+  "BECALLED_BTN": "Être rappelé gratuitement",
+  "BECALLED_BTN_CALL": "Rappelez-moi",
+  "COMPARATEUR_AWARD": "Le N°1 des comparateurs en ligne",
+
+  "VALIDATE": "Valider",
+  "CONTINUE": "Continuer",
+  "CANCEL": "Annuler",
+
+  "STEP_FOR_TITLE": "Pour qui souhaitez-vous comparer ?",
+  "STEP_FOR_DESCRIPTION": "Bonjour ! Je suis Emma.<br />En quelques minutes, comparons ensemble plus de 42 compagnies.",
+  "STEP_FOR_YOURSELF": "Vous",
+  "STEP_FOR_SPOUSE": "Vous et votre conjoint",
+  "STEP_FOR_CHILD": "Vous et vos enfants",
+  "STEP_FOR_FAMILY": "Vous, votre conjoint et vos enfants",
+
+  "STEP_ADHERENT_LIST_TITLE": "Les adhérants",
+
+  "STEP_ADHERENT_LIST_CIVILITY_MAIN_FEMALE": "Vous êtes <strong>une femme</strong> née en <strong>{{year}}</strong>",
+  "STEP_ADHERENT_LIST_CIVILITY_MAIN_MALE": "Vous êtes <strong>un homme</strong> né en <strong>{{year}}</strong>",
+  "STEP_ADHERENT_LIST_CIVILITY_SPOUSE_FEMALE": "Votre conjointe est née en <strong>{{year}}</strong>",
+  "STEP_ADHERENT_LIST_CIVILITY_SPOUSE_MALE": "Votre conjoint est né en <strong>{{year}}</strong>",
+  "STEP_ADHERENT_LIST_CIVILITY_CHILD_FEMALE": "Votre enfant est née en <strong>{{year}}</strong>",
+  "STEP_ADHERENT_LIST_CIVILITY_CHILD_MALE": "Votre enfant est né en <strong>{{year}}</strong>",
+  "STEP_ADHERENT_LIST_ADD": "Ajouter un enfant",
+
+  "STEP_ADHERENT_PROFIL_MAIN": "Nous allons maintenant établir votre profil.",
+  "STEP_ADHERENT_DOB_MAIN": "Quelle est votre date de naissance ?",
+  "STEP_ADHERENT_CIVILITY_MAIN": "Quelle est votre civilité ?",
+
+  "STEP_ADHERENT_PROFIL_SPOUSE": "Nous allons maintenant établir le profil de votre conjoint(e).",
+  "STEP_ADHERENT_DOB_SPOUSE": "Quelle est la date de naissance de votre conjoint(e) ?",
+  "STEP_ADHERENT_CIVILITY_SPOUSE": "Quelle est la civilité de votre conjoint(e) ?",
+
+  "STEP_ADHERENT_PROFIL_CHILD": "Nous allons maintenant établir le profil de votre enfant.",
+  "STEP_ADHERENT_DOB_CHILD": "Quelle est la date de naissance de votre enfant ?",
+  "STEP_ADHERENT_CIVILITY_CHILD": "Quelle est la civilité de votre enfant ?",
+
+  "STEP_ADHERENT_PERFECT": "Parfait !",
+  "STEP_ADHERENT_CONTINUE": "Continuons !",
+  "STEP_ADHERENT_CIVILITY_MAN": "Homme",
+  "STEP_ADHERENT_CIVILITY_FEMALE": "Femme",
+
+  "STEP_NPA_TITLE": "Quel est votre code postal de résident (NPA) ?",
+  "STEP_NPA_DESCRIPTION": "Maintenant j‘ai besoin de savoir où vous résidez.",
+  "STEP_NPA_PLACEHOLDER": "Ville ou NPA",
+  "STEP_NPA_NOTHERE": "Pas sur le territoire Suisse ?",
+  "STEP_NPA_NOTHERE_LINK": "Cliquez ici",
+  "STEP_NPA_NOTHERE_SPAN": "Pas sur le territoire"
+}

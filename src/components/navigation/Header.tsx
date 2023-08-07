@@ -3,14 +3,15 @@ import Image from "next/image";
 import { useLead } from "../provider/LeadProvider";
 import { useSteps } from "../provider/StepsProvider";
 import ProgressBar from "./ProgressBar";
-import { IconChevronLeft, IconPhone } from "@tabler/icons-react";
-import Button from "../button/Button";
+import {  IconPhone } from "@tabler/icons-react";
+import { useTranslation } from "next-i18next";
 
 const Header = () => {
   const { activeStep, decreaseStep } = useSteps();
   const { lead } = useLead();
   const maxStep = getTotalStep(activeStep, lead);
   const actualStep = getActualStep(activeStep, lead);
+  const { t } = useTranslation("common");
 
   return (
     <>
@@ -29,7 +30,7 @@ const Header = () => {
             {activeStep.id === "result" ? (
               <div className="flex w-full items-center justify-center gap-2">
                 <span className="text-sm text-neutral-700">
-                  Le N°1 des comparateurs en ligne
+                  {t("COMPARATEUR_AWARD")}
                 </span>
                 <Image
                   src="/star-y.png"

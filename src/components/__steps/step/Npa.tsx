@@ -3,15 +3,17 @@ import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
 import AutoComplete from "~/components/inputs/Autocomplete";
 import localtion from "~/data/ch-locations.json";
+import { useTranslation } from "next-i18next";
 
 const Npa = () => {
   const { lead, changeLead } = useLead();
   const { increaseStep, activeStep } = useSteps();
+  const { t } = useTranslation("common");
 
   return (
     <StepContainer
-      title="Quel est votre code postal de résident (NPA) ?"
-      description={<>Maintenant j‘ai besoin de savoir où vous résidez.</>}
+      title={t("STEP_NPA_TITLE")}
+      description={t("STEP_NPA_DESCRIPTION")}
       stepId="npa"
     >
       <AutoComplete
@@ -29,21 +31,21 @@ const Npa = () => {
           });
         }}
         options={localtion}
-        placeholder="Ville ou NPA"
+        placeholder={t("STEP_NPA_PLACEHOLDER")}
       ></AutoComplete>
       <p className="mt-2 text-sm text-gray-500">
-        <strong>Pas sur le territoire Suisse ? </strong>
+        <strong>{t("STEP_NPA_NOTHERE")} </strong>
         <button
           className="text-primary hover:underline"
           onClick={() => {
-            changeLead({ npa: { key: -1, value: "Pas sur le territoire" } });
+            changeLead({ npa: { key: -1, value: t("STEP_NPA_NOTHERE_SPAN") } });
             increaseStep("npa", {
               ...lead,
-              npa: { key: -1, value: "Pas sur le territoire" },
+              npa: { key: -1, value: t("STEP_NPA_NOTHERE_SPAN") },
             });
           }}
         >
-          Cliquez ici
+          {t("STEP_NPA_NOTHERE_LINK")}
         </button>
       </p>
     </StepContainer>
