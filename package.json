@@ -13,6 +13,7 @@
     "@headlessui/react": "^1.7.15",
     "@mapbox/search-js-core": "^1.0.0-beta.17",
     "@prisma/client": "^5.0.0",
+    "@prisma/engines-version": "^5.2.0-5.323b794517ed4b92f1969c3bf4b7e1c88170988f",
     "@t3-oss/env-nextjs": "^0.2.1",
     "@tabler/icons-react": "^2.20.0",
     "@trpc/client": "^10.37.1",
