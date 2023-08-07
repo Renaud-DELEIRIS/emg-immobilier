@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { useClickAway } from "react-use";
 import { LeadData, useLead } from "../provider/LeadProvider";
 import TextInput from "./TextInput";
+import { env } from "~/env.mjs";
 
 interface Props {
   value: string;
@@ -55,7 +56,7 @@ const CompleteAddress = ({
     if (!autofill) {
       setAutofill(
         new MapboxAutofill({
-          accessToken: process.env.NEXT_PUBLIC_MAPBOX,
+          accessToken: env.NEXT_PUBLIC_MAPBOX,
           language: "fr",
           limit: 10,
         })

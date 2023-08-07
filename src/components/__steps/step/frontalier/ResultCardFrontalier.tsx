@@ -1,16 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import Button from "~/components/button/Button";
-import { type Lca } from "~/types/comparatif";
-import insurance_hash from "~/data/ch-insurances-hash.json";
-import {
-  IconChevronDown,
-  IconCircleCheck,
-  IconCircleCheckFilled,
-  IconCircleX,
-  IconHelp,
-} from "@tabler/icons-react";
-import Checkbox from "~/components/checkbox/Checkbox";
+import { IconChevronDown, IconCircleCheckFilled } from "@tabler/icons-react";
 import { Adherent, useLead } from "~/components/provider/LeadProvider";
 import { recallResident } from "~/utils/api/recallResident";
 import { toast } from "react-toastify";
@@ -22,6 +13,11 @@ interface Props {
   monthPrice: boolean;
   className?: string;
   profilId: number;
+  price: (age: number, couverture: boolean) => number;
+  hash: string;
+  name: string;
+  withDetails?: boolean;
+  recommended?: boolean;
 }
 
 const ResultCardFrontalier = ({
@@ -29,6 +25,11 @@ const ResultCardFrontalier = ({
   monthPrice,
   className = "",
   profilId,
+  price,
+  hash,
+  name,
+  withDetails = false,
+  recommended = false,
 }: Props) => {
   const [show, setShow] = useState(false);
   const { increaseStep } = useSteps();
@@ -36,20 +37,6 @@ const ResultCardFrontalier = ({
 
   const age = dayjs().diff(dayjs(adhrerent.dob, "DD.MM.YYYY"), "year");
   const couverture = adhrerent.couverture;
-  const price =
-    age < 19
-      ? couverture
-        ? 43.7
-        : 40.7
-      : age < 26
-      ? couverture
-        ? 157.5
-        : 146.5
-      : couverture
-      ? 175
-      : 162.8;
-
-  const hash = "1562";
 
   const prestation = [
     {
@@ -132,13 +119,27 @@ const ResultCardFrontalier = ({
 
   const onSubscribe = () => {
     setShow(false);
-    changeLead({ ...lead, selectedAdherent: [profilId] });
+    changeLead({
+      ...lead,
+      selectedAdherent: [profilId],
+      selectedOfferFrontalier: name,
+    });
     increaseStep("result-frontalier");
   };
 
   return (
     <div className={" compare-shadow flex flex-col  " + className}>
-      <div className={" rounded-b-lg rounded-t-lg border bg-white"}>
+      {recommended && (
+        <div className="flex items-center gap-2 rounded-t-lg border border-primary bg-primary-700/20 px-2 py-2 pb-1 text-sm font-semibold text-primary-600">
+          <IconCircleCheckFilled size={24} />
+          <span>Meilleur rapport qualité prix</span>
+        </div>
+      )}
+      <div
+        className={
+          " rounded-b-lg border bg-white " + (recommended ? "" : "rounded-t-lg")
+        }
+      >
         <div className="flex w-full flex-col items-center justify-center p-4 md:flex-row md:justify-between">
           <div className="flex flex-col items-center gap-2">
             <Image
@@ -152,24 +153,31 @@ const ResultCardFrontalier = ({
           <div className="flex flex-col items-center gap-px">
             <div className="flex items-end text-[#2A3775]">
               <h2 className="text-[40px] font-bold ">
-                CHF {monthPrice ? price : price * 12 * 0.99}
+                CHF{" "}
+                {monthPrice
+                  ? price(age, !!couverture)
+                  : (price(age, !!couverture) * 12 * 0.99).toFixed(2)}
               </h2>
               <span className="text-[24px] ">
                 /{monthPrice ? "mois" : "an"}
               </span>
             </div>
-            <span className="text-lg font-semibold text-neutral-500">
-              LAMal Helsana Bilas
-            </span>
-            <button
-              onClick={() => setShow(!show)}
-              className="mt-2 flex items-center gap-2 rounded-lg border-2 p-2 text-sm font-semibold text-neutral-400"
-            >
-              {show ? "Masquer" : "Afficher"} les détails
-              <IconChevronDown
-                className={`transform ${show ? "rotate-180" : ""}`}
-              />
-            </button>
+            {withDetails && (
+              <span className="text-lg font-semibold text-neutral-500">
+                {name}
+              </span>
+            )}
+            {withDetails && (
+              <button
+                onClick={() => setShow(!show)}
+                className="mt-2 flex items-center gap-2 rounded-lg border-2 p-2 text-sm font-semibold text-neutral-400"
+              >
+                {show ? "Masquer" : "Afficher"} les détails
+                <IconChevronDown
+                  className={`transform ${show ? "rotate-180" : ""}`}
+                />
+              </button>
+            )}
           </div>
           <div className="mt-4 flex min-w-[12rem] flex-col gap-4 md:mt-0">
             <Button widthFull onClick={onSubscribe}>
@@ -180,43 +188,45 @@ const ResultCardFrontalier = ({
             </Button>
           </div>
         </div>
-        <div
-          className={`grid ${
-            show ? "grid-rows-[1fr] border-t py-4" : "grid-rows-[0fr]"
-          } transition-[grid-template-rows,padding]`}
-        >
-          <div className={`overflow-hidden ${show ? "" : ""}`}>
-            <div className="grid grid-cols-[repeat(2,1fr)] gap-5 p-4">
-              <span className="px-1 text-xl font-bold text-[#2F3946]">
-                Prestations
-              </span>
-              <span className="px-1 text-xl font-bold text-[#2F3946]">
-                Détails
-              </span>
-            </div>
-            <div className="">
-              {prestation.map((p, i) => (
-                <div
-                  className={`grid grid-cols-[repeat(2,1fr)] gap-5 px-4 py-2 ${
-                    i === 0 ? "pt-2" : ""
-                  } ${i % 2 === 0 ? "bg-[#f7fcff]" : ""}`}
-                  key={i}
-                >
-                  <div className="py-2 text-[#2f3946]">
-                    <span className="px-1 text-base">{p.label}</span>
-                  </div>
-                  <div className="px-2 text-[#2f3946]">
-                    <div className="relative flex items-center gap-4">
-                      <span className="w-full " key={i}>
-                        {p.value}{" "}
-                      </span>
+        {withDetails && (
+          <div
+            className={`grid ${
+              show ? "grid-rows-[1fr] border-t py-4" : "grid-rows-[0fr]"
+            } transition-[grid-template-rows,padding]`}
+          >
+            <div className={`overflow-hidden ${show ? "" : ""}`}>
+              <div className="grid grid-cols-[repeat(2,1fr)] gap-5 p-4">
+                <span className="px-1 text-xl font-bold text-[#2F3946]">
+                  Prestations
+                </span>
+                <span className="px-1 text-xl font-bold text-[#2F3946]">
+                  Détails
+                </span>
+              </div>
+              <div className="">
+                {prestation.map((p, i) => (
+                  <div
+                    className={`grid grid-cols-[repeat(2,1fr)] gap-5 px-4 py-2 ${
+                      i === 0 ? "pt-2" : ""
+                    } ${i % 2 === 0 ? "bg-[#f7fcff]" : ""}`}
+                    key={i}
+                  >
+                    <div className="py-2 text-[#2f3946]">
+                      <span className="px-1 text-base">{p.label}</span>
+                    </div>
+                    <div className="px-2 text-[#2f3946]">
+                      <div className="relative flex items-center gap-4">
+                        <span className="w-full " key={i}>
+                          {p.value}{" "}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

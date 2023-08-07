@@ -99,7 +99,6 @@ const PersonalData = () => {
                   });
                 }}
               />
-              <div className="hidden md:block" />
               <Select
                 value={p.nationality || ""}
                 onChange={(value) => {
@@ -123,22 +122,21 @@ const PersonalData = () => {
                   },
                   {
                     value: "france",
-                    label: "France",
+                    label: "Française",
                   },
                   {
                     value: "allemand",
-                    label: "Allemand",
+                    label: "Allemande",
                   },
                   {
                     value: "italien",
-                    label: "Italien",
+                    label: "Italienne",
                   },
                   {
                     value: "autre",
                     label: "Autre",
                   },
                 ]}
-                wrapperClassName="md:grid-cols-2"
                 label="Nationalité"
                 placeholder="Sélectionnez votre nationalité"
               />

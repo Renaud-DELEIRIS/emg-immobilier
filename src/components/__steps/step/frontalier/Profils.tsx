@@ -7,21 +7,14 @@ import { useSteps } from "~/components/provider/StepsProvider";
 import formatAmount from "~/utils/formatAmount";
 import { FaChild } from "react-icons/fa";
 import { IoIosMan, IoIosWoman } from "react-icons/io";
+import { PackFrontalier } from "~/constants/frontalier.constant";
 const Profils = () => {
   const { lead, changeLead } = useLead();
   const { increaseStep } = useSteps();
-  const price = (age: number, couverture: boolean) =>
-    age < 19
-      ? couverture
-        ? 43.7
-        : 40.7
-      : age < 26
-      ? couverture
-        ? 157.5
-        : 146.5
-      : couverture
-      ? 175
-      : 162.8;
+  const pack = PackFrontalier.find(
+    (p) => p.name === lead.selectedOfferFrontalier
+  );
+  const price = pack ? pack.price : () => 0;
 
   useEffect(() => {
     if (
@@ -90,7 +83,10 @@ const Profils = () => {
                 <span className="text-primary">
                   {" "}
                   {formatAmount(
-                    price(dayjs().diff(p.dob, "year"), !!p.couverture) *
+                    price(
+                      dayjs().diff(dayjs(p.dob, "DD.MM.YYYY"), "year"),
+                      !!p.couverture
+                    ) *
                       (lead.paymentFrequency === "semester"
                         ? 0.995
                         : lead.paymentFrequency === "year"

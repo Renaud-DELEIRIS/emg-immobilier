@@ -50,7 +50,7 @@ const Sidebar = ({ inModal = false }) => {
                   active === "adherant" ? "ml-2 font-bold text-primary" : ""
                 }`}
               >
-                Adhérant
+                Adhérent
               </span>
             </button>
           </li>

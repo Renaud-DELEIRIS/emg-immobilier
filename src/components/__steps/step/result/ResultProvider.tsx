@@ -7,6 +7,7 @@ import {
   optionMedecineAlternative,
   optionTraitementsDentaires,
 } from "~/data/PackOption";
+import { env } from "~/env.mjs";
 import { type Lamal, type Lca } from "~/types/comparatif";
 
 interface ResultContext {
@@ -44,9 +45,7 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
       coverage: profil.couvertureAccident === "non" ? "0" : "1",
       insurer: lead.actualInsurance?.key.toString() || "",
     });
-    const r = await fetch(
-      `${process.env.NEXT_PUBLIC_SCRAPPER || ""}?${p.toString()}`
-    );
+    const r = await fetch(`${env.NEXT_PUBLIC_SCRAPPER}?${p.toString()}`);
     const d = (await r.json()) as { data: Lamal[] };
     setLamalItems(d.data);
   };
@@ -93,9 +92,7 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
             }),
           }),
     });
-    const r = await fetch(
-      `${process.env.NEXT_PUBLIC_LCA || ""}?${p.toString()}`
-    );
+    const r = await fetch(`${env.NEXT_PUBLIC_LCA || ""}?${p.toString()}`);
     const d = (await r.json()) as Lca[];
     setLcaItems(d);
   };

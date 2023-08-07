@@ -1,8 +1,11 @@
+import { env } from "~/env.mjs";
+
 export const sendCodeSms = async (telephone: string) => {
   if (!telephone) return Promise.reject("Erreur téléphone manquant");
-  const _url = `${
-    process.env.NEXT_PUBLIC_SMS || ""
-  }?telephone=${telephone.replace("+", "%2B")}`;
+  const _url = `${env.NEXT_PUBLIC_SMS}?telephone=${telephone.replace(
+    "+",
+    "%2B"
+  )}`;
   try {
     const response = await fetch(_url);
     if (!response.ok) {

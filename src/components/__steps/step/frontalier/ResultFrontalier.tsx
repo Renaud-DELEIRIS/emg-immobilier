@@ -8,6 +8,7 @@ import { type LeadData, useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
 import StepContainer from "../../StepContainer";
 import ResultCardFrontalier from "./ResultCardFrontalier";
+import { PackFrontalier } from "~/constants/frontalier.constant";
 
 const ResultFrontalier = () => {
   const { lead } = useLead();
@@ -58,12 +59,23 @@ const ResultFrontalier = () => {
                     dayjs(data.dob, "DD.MM.YYYY").year().toString()}
                 :
               </h1>
-              <ResultCardFrontalier
-                key={index}
-                adhrerent={data}
-                monthPrice={monthlyPrice}
-                profilId={index}
-              />
+              <div className="flex flex-col gap-4">
+                {PackFrontalier.map((pack, index) => {
+                  return (
+                    <ResultCardFrontalier
+                      key={index}
+                      adhrerent={data}
+                      monthPrice={monthlyPrice}
+                      profilId={index}
+                      hash={pack.hash}
+                      name={pack.name}
+                      price={pack.price}
+                      withDetails={pack.name === "LAMal Helsana Bilas"}
+                      recommended={pack.name === "LAMal Helsana Bilas"}
+                    />
+                  );
+                })}
+              </div>
             </div>
           );
         })}

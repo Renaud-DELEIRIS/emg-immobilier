@@ -31,6 +31,7 @@ const Info = ({ open }: { open: boolean }) => {
   const [code, setCode] = useState("");
   const [responseCode, setResponseCode] = useState<string>();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>();
 
   const isValidEmail = (email: string) => {
     const res = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
@@ -55,7 +56,7 @@ const Info = ({ open }: { open: boolean }) => {
   const verifyCode = () => {
     if (!responseCode) return;
     if (code.trim() !== responseCode.toString()) {
-      console.log("Code is not valid");
+      setError("Le code est incorrect");
       return;
     }
     changeLead({ ...lead, verified: true });
@@ -105,16 +106,34 @@ const Info = ({ open }: { open: boolean }) => {
                         <span className="text-base font-semibold">Emma</span>
                       </div>
                       <p className="col-span-6 text-sm text-gray-500">
-                        Nous avons identifié pour <b>vous</b> les{" "}
-                        <span className="font-semibold text-primary underline">
-                          12
-                        </span>{" "}
-                        meilleures offres <b>conforts</b> adaptées à votre{" "}
-                        <b>profil</b>. Ces tarifs seront bloqués pour vous
-                        jusqu’au{" "}
-                        <span className="font-semibold text-primary underline">
-                          {dayjs().add(1, "day").format("DD/MM/YYYY")}
-                        </span>
+                        {lead.situation === "frontalier" ? (
+                          <>
+                            {" "}
+                            Nous avons identifié pour <b>vous</b> les{" "}
+                            <span className="font-semibold text-primary underline">
+                              7
+                            </span>{" "}
+                            meilleures offres <b>frontalier</b> adaptées à votre{" "}
+                            <b>profil</b>. Ces tarifs seront bloqués pour vous
+                            jusqu’au{" "}
+                            <span className="font-semibold text-primary underline">
+                              {dayjs().add(1, "day").format("DD/MM/YYYY")}
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            Nous avons identifié pour <b>vous</b> les{" "}
+                            <span className="font-semibold text-primary underline">
+                              12
+                            </span>{" "}
+                            meilleures offres <b>conforts</b> adaptées à votre{" "}
+                            <b>profil</b>. Ces tarifs seront bloqués pour vous
+                            jusqu’au{" "}
+                            <span className="font-semibold text-primary underline">
+                              {dayjs().add(1, "day").format("DD/MM/YYYY")}
+                            </span>
+                          </>
+                        )}
                       </p>
                       <div className="col-span-6">
                         <label
@@ -212,33 +231,41 @@ const Info = ({ open }: { open: boolean }) => {
                       <p className="mb-4 mt-8 text-sm text-gray-500">
                         Veuillez saisir le code à 4 chiffres :
                       </p>
-                      <CodeInput
-                        onChange={(e) => setCode(e)}
-                        allowedCharacters="numeric"
-                        containerClassName="mt-36 md:mx-8"
-                      />
-                      <div className="mt-12 flex w-full flex-row items-center justify-between">
-                        <Button
-                          disabled={code.length !== 4}
-                          intent={"primary"}
-                          onClick={() => {
-                            verifyCode();
-                          }}
-                        >
-                          <span>Valider</span>
-                        </Button>
-                        <Button
-                          intent={"secondary"}
-                          size={"small"}
-                          iconLeft={<IconArrowLeft />}
-                          onClick={() => {
-                            setStep("info");
-                            setCode("");
-                          }}
-                        >
-                          <span>Retour</span>
-                        </Button>
-                      </div>
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          verifyCode();
+                        }}
+                      >
+                        <CodeInput
+                          onChange={(e) => setCode(e)}
+                          allowedCharacters="numeric"
+                          containerClassName="mt-36 md:mx-8"
+                        />
+                        {error && (
+                          <p className="mt-4 text-sm text-red-500">{error}</p>
+                        )}
+                        <div className="mt-12 flex w-full flex-row items-center justify-between">
+                          <Button
+                            disabled={code.length !== 4}
+                            intent={"primary"}
+                            type="submit"
+                          >
+                            <span>Valider</span>
+                          </Button>
+                          <Button
+                            intent={"secondary"}
+                            size={"small"}
+                            iconLeft={<IconArrowLeft />}
+                            onClick={() => {
+                              setStep("info");
+                              setCode("");
+                            }}
+                          >
+                            <span>Retour</span>
+                          </Button>
+                        </div>
+                      </form>
                     </motion.div>
                   )}
                   <div className="hidden w-64 flex-col items-center justify-center bg-neutral-300 md:flex">

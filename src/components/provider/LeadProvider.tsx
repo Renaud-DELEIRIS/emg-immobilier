@@ -65,6 +65,7 @@ export interface LeadData {
   address?: string;
 
   selectedAdherent: number[];
+  selectedOfferFrontalier?: string;
 }
 
 export type Adherent = LeadData["adherent"][0];

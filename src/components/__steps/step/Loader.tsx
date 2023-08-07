@@ -26,7 +26,7 @@ const BigLoader2: FC<Props> = ({ children }) => {
 
     setTimeout(() => {
       increaseStep("loader");
-    }, 4000);
+    }, 3000);
   }, []);
 
   return (
