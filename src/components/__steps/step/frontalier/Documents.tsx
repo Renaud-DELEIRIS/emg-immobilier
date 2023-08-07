@@ -115,8 +115,8 @@ const Documents = () => {
               A plus tard !
             </Dialog.Title>
             <p className="mt-2 max-w-sm text-sm text-dark md:max-w-lg md:text-base">
-              Un email vous a été envoyé à l'adresse <b>{lead.email}</b> avec un
-              lien vous permettant de poursuivre votre souscription.
+              Un email vous a été envoyé à l&apos;adresse <b>{lead.email}</b>{" "}
+              avec un lien vous permettant de poursuivre votre souscription.
             </p>
             <Button
               onClick={() => {
