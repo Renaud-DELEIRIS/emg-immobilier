@@ -45,7 +45,8 @@ const Documents = () => {
             />
             <p className="mt-2 text-sm text-gray-500">
               <IconInfoCircle size={16} className="mr-2 inline-block" />
-              Votre IBAN vous permettra de bénéficier des futurs remboursement de frais de santé
+              Votre IBAN vous permettra de bénéficier des futurs remboursement
+              de frais de santé
             </p>
           </div>
           <FileInput
@@ -80,7 +81,9 @@ const Documents = () => {
             />
             <p className="mt-2 text-sm text-gray-500">
               <IconInfoCircle size={16} className="mr-2 inline-block" />
-              Vous trouverez votre numéro AVS sur votre carte d'assuré. Il ne sera pas nécessaire dans le cas d'une première souscription.
+              Vous trouverez votre numéro AVS sur votre carte d&apos;assuré. Il
+              ne sera pas nécessaire dans le cas d&apos;une première
+              souscription.
             </p>
           </div>
         </div>
