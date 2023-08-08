@@ -1,11 +1,12 @@
 import { getStepById, type StepId } from "~/constants/step.constant";
-import { useLead } from "../provider/LeadProvider";
-import { useSteps } from "../provider/StepsProvider";
 import { useTranslation } from "next-i18next";
+import { useFormStore } from "~/stores/form";
 
 const Sidebar = ({ inModal = false }) => {
-  const { lead } = useLead();
-  const { currentStep, activeStep, setActiveStep } = useSteps();
+  const lead = useFormStore((state) => state.data);
+  const currentStep = useFormStore((state) => state.currentVisibleStep);
+  const activeStep = useFormStore((state) => state.currentStep);
+  const setVisibleStep = useFormStore((state) => state.setVisibleStep);
 
   const active =
     activeStep.stepInfo(lead)[0] >= 0 && activeStep.stepInfo(lead)[0] <= 4
@@ -26,13 +27,13 @@ const Sidebar = ({ inModal = false }) => {
 
   return (
     <>
-      <aside className={`flex flex-col max-w-[250px] ${inModal ? "" : "border-l p-7"}`}>
-        <h3 className="text-xl font-bold text-dark">
-          {t("SIDEBAR_TITLE")}
-        </h3>
-        <p className="mt-4 text-dark">
-          {t("SIDEBAR_DESCRIPTION")}
-        </p>
+      <aside
+        className={`flex max-w-[250px] flex-col ${
+          inModal ? "" : "border-l py-7 pl-7"
+        }`}
+      >
+        <h3 className="text-xl font-bold text-dark">{t("SIDEBAR_TITLE")}</h3>
+        <p className="mt-4 text-dark">{t("SIDEBAR_DESCRIPTION")}</p>
         <ul className="leading-4 [&>li]:my-1">
           <li>
             <button
@@ -44,7 +45,7 @@ const Sidebar = ({ inModal = false }) => {
                 while (getStepById(toStep).stepInfo(lead)[0] > activeStepInfo) {
                   toStep = getStepById(toStep).previous(lead) as StepId;
                 }
-                setActiveStep(toStep);
+                setVisibleStep(toStep);
               }}
             >
               <div className="my-3 box-content h-2.5 w-2.5 rounded-full bg-primary" />
@@ -61,7 +62,7 @@ const Sidebar = ({ inModal = false }) => {
             <li>
               <button
                 onClick={() => {
-                  setActiveStep("work-hours");
+                  setVisibleStep("work-hours");
                 }}
                 disabled={passed === "adherant"}
                 className={"flex items-center  gap-4 disabled:opacity-50"}
@@ -92,7 +93,7 @@ const Sidebar = ({ inModal = false }) => {
                     ) {
                       toStep = getStepById(toStep).previous(lead) as StepId;
                     }
-                    setActiveStep(toStep);
+                    setVisibleStep(toStep);
                   }}
                   disabled={passed === "adherant"}
                   className={"flex items-center  gap-4 disabled:opacity-50"}
@@ -115,7 +116,7 @@ const Sidebar = ({ inModal = false }) => {
                 <button
                   className="flex  items-center gap-4 disabled:opacity-50"
                   disabled={passed === "adherant" || passed === "besoins"}
-                  onClick={() => setActiveStep("name")}
+                  onClick={() => setVisibleStep("name")}
                 >
                   <div
                     className={`my-3 box-content h-2.5 w-2.5 rounded-full ${

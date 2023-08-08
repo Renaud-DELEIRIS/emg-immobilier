@@ -6,9 +6,9 @@ import {
 import { IconLoader, IconMapPin } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 import { useClickAway } from "react-use";
-import { LeadData, useLead } from "../provider/LeadProvider";
 import TextInput from "./TextInput";
 import { env } from "~/env.mjs";
+import { useFormStore } from "~/stores/form";
 
 interface Props {
   value: string;
@@ -43,7 +43,8 @@ const CompleteAddress = ({
   autofocus = false,
   boldLabel = false,
 }: Props) => {
-  const { lead, changeLead } = useLead();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [autofill, setAutofill] = useState<MapboxAutofill>();
   const sessionToken = useRef<SessionToken>(new SessionToken());

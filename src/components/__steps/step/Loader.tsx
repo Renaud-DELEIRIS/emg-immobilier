@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from "react";
 import Vivus from "vivus";
-import { useSteps } from "~/components/provider/StepsProvider";
+import { useFormStore } from "~/stores/form";
 
 interface Props {
   children?: ReactNode;
@@ -16,7 +16,7 @@ interface Props {
 const drawDuration = 6;
 
 const BigLoader2: FC<Props> = ({ children }) => {
-  const { increaseStep } = useSteps();
+  const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("common");
   useEffect(() => {
     const myAnim = new Vivus("mySVG", {
@@ -27,7 +27,7 @@ const BigLoader2: FC<Props> = ({ children }) => {
     myAnim.play();
 
     setTimeout(() => {
-      increaseStep("loader");
+      nextStep("loader");
     }, 3000);
   }, []);
 

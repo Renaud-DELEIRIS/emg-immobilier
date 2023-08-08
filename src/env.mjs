@@ -8,6 +8,7 @@ export const env = createEnv({
    */
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
+    DATABASE_URL: z.string().url(),
   },
 
   /**
@@ -27,6 +28,8 @@ export const env = createEnv({
     NEXT_PUBLIC_APIV2_ROOT: z.string().url(),
     NEXT_PUBLIC_APIV2: z.string().url(),
     NEXT_PUBLIC_MAPBOX: z.string(),
+    NEXT_PUBLIC_SITE: z.string(),
+    NEXT_PUBLIC_TUNNEL: z.string(),
   },
 
   /**
@@ -47,5 +50,8 @@ export const env = createEnv({
     NEXT_PUBLIC_APIV2_ROOT: process.env.NEXT_PUBLIC_APIV2_ROOT,
     NEXT_PUBLIC_APIV2: process.env.NEXT_PUBLIC_APIV2,
     NEXT_PUBLIC_MAPBOX: process.env.NEXT_PUBLIC_MAPBOX,
+    DATABASE_URL: process.env.DATABASE_URL,
+    NEXT_PUBLIC_SITE: process.env.NEXT_PUBLIC_SITE,
+    NEXT_PUBLIC_TUNNEL: process.env.NEXT_PUBLIC_TUNNEL,
   },
 });

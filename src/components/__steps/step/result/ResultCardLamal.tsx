@@ -4,10 +4,10 @@ import Button from "~/components/button/Button";
 import { type Lamal } from "~/types/comparatif";
 import insurance_hash from "~/data/ch-insurances-hash.json";
 import { IconChevronDown, IconCircleCheckFilled } from "@tabler/icons-react";
-import { useLead } from "~/components/provider/LeadProvider";
 import { recallFrontalier } from "~/utils/api/recallFrontalier";
 import { toast } from "react-toastify";
 import ModalSouscrireLamal from "./ModalSouscrireLamal";
+import { useFormStore } from "~/stores/form";
 
 interface Props {
   recommended?: boolean;
@@ -24,7 +24,7 @@ const ResultCardLamal = ({
 }: Props) => {
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
-  const { lead } = useLead();
+  const lead = useFormStore((state) => state.data);
 
   const comparaison = parseFloat(info.comparaison);
 
@@ -72,7 +72,13 @@ const ResultCardLamal = ({
           <div className="flex flex-col items-center gap-px">
             <div className="flex items-end text-[#2A3775]">
               <h2 className="text-[40px] font-bold ">
-                CHF {monthPrice ? info.mois : info.annee}
+                {new Intl.NumberFormat("de-CH", {
+                  style: "currency",
+                  currency: "CHF",
+                  maximumFractionDigits: 0,
+                }).format(
+                  monthPrice ? parseInt(info.mois) : parseInt(info.annee)
+                )}
               </h2>
               <span className="text-[24px] ">
                 /{monthPrice ? "mois" : "an"}

@@ -7,11 +7,17 @@ import PhoneInput from "react-phone-input-2";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
-import { useLead } from "~/components/provider/LeadProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nextConfig from "next-i18next.config.mjs";
 import { useTranslation } from "next-i18next";
+import { useFormStore } from "~/stores/form";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useSessionStore } from "~/stores/session";
+import { STEPS, schemaStep } from "~/constants/step.constant";
+import getParamsUrl from "~/utils/client/getParamsUrl";
+import dayjs from "dayjs";
+import { z } from "zod";
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
@@ -25,10 +31,82 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   };
 };
 const Home: NextPage = () => {
-  const { getStepComponent, activeStep } = useSteps();
-  const { changeLead, lead } = useLead();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const activeStep = useFormStore((state) => state.currentStep);
+  const getStepComponent = useFormStore((state) => state.getStepComponent);
   const [beCalled, setBeCalled] = useState(false);
   const { t } = useTranslation("common");
+  const router = useRouter();
+
+  const currentVisibleStep = useFormStore((state) => state.currentVisibleStep);
+  const currentStep = useFormStore((state) => state.currentStep);
+  const versionId = useFormStore((state) => state.versionId);
+  const setVersionId = useFormStore((state) => state.setVersionId);
+  const setVisibleStep = useFormStore((state) => state.setVisibleStep);
+  const trackDurationStep = useFormStore((state) => state.trackDurationStep);
+  const initStep = useFormStore((state) => state.initStep);
+
+  const fetchSession = useSessionStore((state) => state.fetchSession);
+  const setSessionId = useSessionStore((state) => state.setSessionId);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    initStep();
+    fetchSession()
+      .then((r) => {
+        setSessionId(r.session.id);
+        setVersionId(r.version.id);
+      })
+      .catch((e) => console.log(e));
+    setLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    const stepLabelFromUrl = router.query.step;
+    if (
+      typeof stepLabelFromUrl === "string" &&
+      stepLabelFromUrl !== currentVisibleStep.id
+    ) {
+      const stepFromUrl = STEPS.find((s) => s.id === stepLabelFromUrl);
+      if (stepFromUrl) {
+        setVisibleStep(stepFromUrl.id);
+      }
+    } else if (!stepLabelFromUrl) {
+      const queryParams = getParamsUrl();
+      void router.replace({
+        query: {
+          ...queryParams,
+          step: currentVisibleStep.id,
+        },
+      });
+    }
+  }, [router.query.step]);
+
+  useEffect(() => {
+    const start = dayjs();
+    return () => {
+      const end = dayjs();
+      const duration = end.diff(start, "second");
+      trackDurationStep(currentStep, duration);
+    };
+  }, [currentStep]);
+
+  // Create an event on page close that sebd api call
+  const beforeUnload = () => {
+    if (document.visibilityState === "hidden" && versionId) {
+      navigator.sendBeacon("/api/onunload", versionId);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("visibilitychange", beforeUnload);
+    window.addEventListener("beforeunload", beforeUnload);
+    return () => {
+      window.removeEventListener("visibilitychange", beforeUnload);
+      window.removeEventListener("beforeunload", beforeUnload);
+    };
+  }, []);
+
   return (
     <>
       <Head>
@@ -37,84 +115,88 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <main className="relative flex min-h-screen flex-col pt-16">
-        <Header />
-        <div
-          className={
-            "becalled-btn fixed bottom-4 right-4 z-20 gap-1 rounded-2xl bg-primary p-2 font-bold text-white " +
-            (beCalled ? "open p-4" : "w-10 md:w-auto")
-          }
-        >
-          <button
-            onClick={() => setBeCalled(!beCalled)}
-            className="flex items-center gap-1"
-          >
-            {!beCalled ? (
-              <IconPhone size={20} className="mx-auto md:mx-0" />
-            ) : (
-              <div className="w-5" />
-            )}
-            <span className={beCalled ? "" : "hidden md:inline"}>
-              {t("BECALLED_BTN")}
-            </span>
-            <IconChevronDown
-              size={20}
-              className={
-                beCalled
-                  ? "rotate-180 "
-                  : "" + "hidden transition-all md:inline"
-              }
-            />
-          </button>
-          <div
-            className={`grid ${
-              beCalled ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-            } transition-[grid-template-rows,padding]`}
-          >
+        {currentVisibleStep && !!currentVisibleStep.stepInfo && loaded && (
+          <>
+            <Header />
             <div
-              className={`overflow-hidden ${
-                beCalled
-                  ? "mt-4 flex flex-col items-center gap-2 text-dark"
-                  : ""
-              }`}
+              className={
+                "becalled-btn fixed bottom-4 right-4 z-20 gap-1 rounded-2xl bg-primary p-2 font-bold text-white " +
+                (beCalled ? "open p-4" : "w-10 md:w-auto")
+              }
             >
-              <PhoneInput
-                onChange={(e: string) =>
-                  changeLead({
-                    phone: e,
-                  })
-                }
-                inputProps={{
-                  type: "tel",
-                  name: "phone",
-                  id: "phone",
-                  autoComplete: "phone",
-                }}
-                inputClass="block !w-full border-gray-300 focus:!border-primary-500 focus:!ring-primary-500 !sm:text-sm !h-[38px] !rounded-md"
-                preferredCountries={["ch", "fr"]}
-                regions={"europe"}
-                country={"ch"}
-                containerClass="relative mt-1  h-[38px] !border-transparent"
-                value={lead.phone || ""}
-              />
               <button
-                onClick={() => changeLead({ phone: lead.phone })}
-                className="flex items-center gap-1 text-base text-white"
+                onClick={() => setBeCalled(!beCalled)}
+                className="flex items-center gap-1"
               >
-                <IconPhoneCall size={20} />
-                {t("BECALLED_BTN_CALL")}
+                {!beCalled ? (
+                  <IconPhone size={20} className="mx-auto md:mx-0" />
+                ) : (
+                  <div className="w-5" />
+                )}
+                <span className={beCalled ? "" : "hidden md:inline"}>
+                  {t("BECALLED_BTN")}
+                </span>
+                <IconChevronDown
+                  size={20}
+                  className={
+                    beCalled
+                      ? "rotate-180 "
+                      : "" + "hidden transition-all md:inline"
+                  }
+                />
               </button>
+              <div
+                className={`grid ${
+                  beCalled ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                } transition-[grid-template-rows,padding]`}
+              >
+                <div
+                  className={`overflow-hidden ${
+                    beCalled
+                      ? "mt-4 flex flex-col items-center gap-2 text-dark"
+                      : ""
+                  }`}
+                >
+                  <PhoneInput
+                    onChange={(e: string) =>
+                      changeLead({
+                        phone: e,
+                      })
+                    }
+                    inputProps={{
+                      type: "tel",
+                      name: "phone",
+                      id: "phone",
+                      autoComplete: "phone",
+                    }}
+                    inputClass="block !w-full border-gray-300 focus:!border-primary-500 focus:!ring-primary-500 !sm:text-sm !h-[38px] !rounded-md"
+                    preferredCountries={["ch", "fr"]}
+                    regions={"europe"}
+                    country={"ch"}
+                    containerClass="relative mt-1  h-[38px] !border-transparent"
+                    value={lead.phone || ""}
+                  />
+                  <button
+                    onClick={() => changeLead({ phone: lead.phone })}
+                    className="flex items-center gap-1 text-base text-white"
+                  >
+                    <IconPhoneCall size={20} />
+                    {t("BECALLED_BTN_CALL")}
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="mx-auto w-full flex-1 pb-36 pt-12 md:pt-0">
-          {getStepComponent()}
-        </div>
-        {activeStep.id !== "loader" && activeStep.id !== "result" && (
-          <div className="fixed top-1/3 z-10 hidden  items-center md:right-5 md:block xl:right-[5%]">
-            <Sidebar />
-          </div>
+            <div className="mx-auto w-full flex-1 pb-36 pt-12 md:pt-0">
+              {getStepComponent()}
+            </div>
+            {activeStep.id !== "loader" && activeStep.id !== "result" && (
+              <div className="fixed right-0 top-1/3 z-10  hidden items-center xl:block 2xl:right-[5%]">
+                <Sidebar />
+              </div>
+            )}
+            <Footer />
+          </>
         )}
-        <Footer />
       </main>
     </>
   );

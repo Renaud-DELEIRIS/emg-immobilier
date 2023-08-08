@@ -3,13 +3,12 @@ import Button from "~/components/button/Button";
 import InputDate from "~/components/inputs/DatePicker";
 import Select from "~/components/inputs/Select";
 import TextInput from "~/components/inputs/TextInput";
-import { useLead } from "~/components/provider/LeadProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
+import { useFormStore } from "~/stores/form";
 
 const PersonalData = () => {
-  const { lead, changeLead } = useLead();
-  const { increaseStep } = useSteps();
-
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
   const isValid =
     lead.adherent
       .filter((p, i) => lead.selectedAdherent.includes(i))
@@ -20,7 +19,7 @@ const PersonalData = () => {
           p.prenom &&
           p.prenom.length > 1 &&
           p.dob &&
-          dayjs(p.dob, "DD.MM.YYY").isValid()
+          dayjs(p.dob).isValid()
       ).length === lead.selectedAdherent.length;
 
   return (
@@ -36,10 +35,7 @@ const PersonalData = () => {
                 ? p.civility === "female"
                   ? "Votre conjointe"
                   : "Votre conjoint"
-                : `Votre enfant né en ${dayjs(
-                    p.dob,
-                    "DD.MM.YYYY"
-                  ).year()}`}{" "}
+                : `Votre enfant né en ${p.year || ""}`}{" "}
               :
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -98,6 +94,7 @@ const PersonalData = () => {
                     }),
                   });
                 }}
+                format="DD.MM.YYYY"
               />
               <Select
                 value={p.nationality || ""}
@@ -117,12 +114,12 @@ const PersonalData = () => {
                 }}
                 options={[
                   {
-                    value: "suisse",
-                    label: "Suisse",
-                  },
-                  {
                     value: "france",
                     label: "Française",
+                  },
+                  {
+                    value: "suisse",
+                    label: "Suisse",
                   },
                   {
                     value: "allemand",
@@ -146,7 +143,7 @@ const PersonalData = () => {
       })}{" "}
       <Button
         onClick={() => {
-          increaseStep("donnee-personnelle");
+          nextStep("donnee-personnelle");
         }}
         className="mt-4 w-52"
         disabled={!isValid}

@@ -2,15 +2,15 @@ import { IconCheck, IconMan, IconWoman } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import Button from "~/components/button/Button";
-import { useLead } from "~/components/provider/LeadProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
 import formatAmount from "~/utils/formatAmount";
 import { FaChild } from "react-icons/fa";
 import { IoIosMan, IoIosWoman } from "react-icons/io";
 import { PackFrontalier } from "~/constants/frontalier.constant";
+import { useFormStore } from "~/stores/form";
 const Profils = () => {
-  const { lead, changeLead } = useLead();
-  const { increaseStep } = useSteps();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
   const pack = PackFrontalier.find(
     (p) => p.name === lead.selectedOfferFrontalier
   );
@@ -20,14 +20,14 @@ const Profils = () => {
     if (
       lead.adherent
         .filter((p) =>
-          dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year"))
+          dayjs(p.year, "YYYY").isBefore(dayjs().subtract(18, "year"))
         )
         .filter((p) => p.travailSuisse).length === 1
     ) {
       changeLead({
         selectedAdherent: [0],
       });
-      increaseStep("profils");
+      nextStep("profils");
     }
   }, []);
 
@@ -37,7 +37,7 @@ const Profils = () => {
     <div className="flex max-w-xl flex-col gap-2">
       <label className="font-bold">Les offres qui vous intéressent :</label>
       {lead.adherent.map((p, index) => {
-        if (!dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year")))
+        if (!dayjs(p.year, "YYYY").isBefore(dayjs().subtract(18, "year")))
           return null;
         if (p.travailSuisse === false) return null;
         const isSelected = lead.selectedAdherent.includes(index);
@@ -77,14 +77,13 @@ const Profils = () => {
                   ? p.civility === "female"
                     ? "Pour votre conjointe"
                     : "Pour votre coinjoint"
-                  : "Pour votre enfant né en " +
-                    dayjs(p.dob, "DD.MM.YYYY").format("YYYY")}
+                  : "Pour votre enfant né en " + (p.year || "")}
                 :
                 <span className="text-primary">
                   {" "}
                   {formatAmount(
                     price(
-                      dayjs().diff(dayjs(p.dob, "DD.MM.YYYY"), "year"),
+                      dayjs().diff(dayjs(p.year, "YYYY"), "year"),
                       !!p.couverture
                     ) *
                       (lead.paymentFrequency === "semester"
@@ -116,7 +115,7 @@ const Profils = () => {
       <Button
         disabled={!isValid}
         onClick={() => {
-          increaseStep("profils");
+          nextStep("profils");
         }}
         className="mt-6 w-52"
       >

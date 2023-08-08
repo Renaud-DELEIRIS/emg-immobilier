@@ -2,16 +2,16 @@ import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { useState } from "react";
 import Button from "~/components/button/Button";
-import { type Adherent, useLead } from "~/components/provider/LeadProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
 import Pack from "~/components/steps/Pack";
 import StepContainer from "../StepContainer";
 import { Trans, useTranslation } from "next-i18next";
+import { useFormStore } from "~/stores/form";
 
 const ChoosePack = () => {
-  const { lead, changeLead } = useLead();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
   const [adherent, setAdherent] = useState<number>(0);
-  const { increaseStep } = useSteps();
   const { t } = useTranslation("common");
   return (
     <>
@@ -30,7 +30,7 @@ const ChoosePack = () => {
                     ? t("STEP_PACK_SPOUSE_FEMALE")
                     : t("STEP_PACK_SPOUSE_MALE")
                   : t("STEP_PACK_CHILD", {
-                      year: dayjs(data.dob, "DD.MM.YYYY").year().toString(),
+                      year: data.year,
                     })
               }
               className="pb-12"
@@ -62,7 +62,7 @@ const ChoosePack = () => {
         <Button
           onClick={() => {
             if (lead.adherent.length === adherent + 1) {
-              increaseStep("package");
+              nextStep("package");
               return;
             }
             setAdherent(adherent + 1);

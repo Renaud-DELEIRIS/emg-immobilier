@@ -4,10 +4,10 @@ import { Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import Button from "~/components/button/Button";
 import FlatModal from "~/components/modal/FlatModal";
-import { useLead } from "~/components/provider/LeadProvider";
 import { type Lca } from "~/types/comparatif";
 import { recallResident } from "~/utils/api/recallResident";
 import ModalSouscrireLca from "./ModalSouscrireLca";
+import { useFormStore } from "~/stores/form";
 
 interface Props {
   open: boolean;
@@ -72,7 +72,7 @@ const ModalComparatifTable = ({ open, onClose, offres }: Props) => {
       "Lors d'une hospitalisation de plus de 24h, un montant définie est versé à la personne pour p.ex. aider à payer la franchise de la LAMal.",
   };
 
-  const { lead } = useLead();
+  const lead = useFormStore((state) => state.data);
 
   const beCalled = () => {
     void recallResident(lead.phone || "")
@@ -93,7 +93,7 @@ const ModalComparatifTable = ({ open, onClose, offres }: Props) => {
             {offres.map((lca, i) => (
               <th
                 className="px-2 py-4 text-xl font-extrabold"
-                key={lca.id}
+                key={i}
                 style={{ width: `${85 / offres.length}%` }}
               >
                 <div className="flex max-w-xs flex-col justify-between gap-4 rounded-lg p-4 shadow">
@@ -133,8 +133,8 @@ const ModalComparatifTable = ({ open, onClose, offres }: Props) => {
           </tr>
         </thead>
         <tbody>
-          {Object.entries(groupPrestations).map(([group, prestations], i) => (
-            <Fragment key={i}>
+          {Object.entries(groupPrestations).map(([group, prestations], z) => (
+            <Fragment key={z}>
               <tr>
                 <td className="px-4 py-5 text-lg font-extrabold">{group}</td>
               </tr>
@@ -151,13 +151,13 @@ const ModalComparatifTable = ({ open, onClose, offres }: Props) => {
                       </span>
                     </div>
                   </td>
-                  {offres.map((lca) => (
-                    <td className="px-6 py-2 text-[#2f3946]" key={lca.id}>
+                  {offres.map((lca, y) => (
+                    <td className="px-6 py-2 text-[#2f3946]" key={y}>
                       <div className="relative flex items-center gap-4">
                         {lca.prestations
                           .filter((p) => p.label === prestation)
-                          .map((offre) => (
-                            <>
+                          .map((offre, v) => (
+                            <div key={v}>
                               <span className="text-primary">
                                 {offre.status ? (
                                   <IconCircleCheck
@@ -171,13 +171,13 @@ const ModalComparatifTable = ({ open, onClose, offres }: Props) => {
                                   />
                                 )}
                               </span>
-                              {offre.details.map((detail, i) => {
+                              {offre.details.map((detail, w) => {
                                 if (detail.value)
                                   return (
                                     <span
                                       className="w-full font-bold"
                                       data-tooltip={`Franchise: ${detail.franchise}`}
-                                      key={i}
+                                      key={w}
                                     >
                                       {detail.value}
                                       <span className="font-normal">
@@ -186,7 +186,7 @@ const ModalComparatifTable = ({ open, onClose, offres }: Props) => {
                                     </span>
                                   );
                               })}
-                            </>
+                            </div>
                           ))}
                       </div>
                     </td>

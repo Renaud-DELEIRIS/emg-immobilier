@@ -1,16 +1,16 @@
 import StepContainer from "../StepContainer";
-import { useLead } from "~/components/provider/LeadProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
 import TileInput from "~/components/inputs/Tile";
 import { IconThumbDown, IconThumbUp } from "@tabler/icons-react";
 import Button from "~/components/button/Button";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
 import { Trans, useTranslation } from "next-i18next";
+import { useFormStore } from "~/stores/form";
 
 const Hours = () => {
-  const { lead, changeLead } = useLead();
-  const { increaseStep, activeStep } = useSteps();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("common");
 
   const hasOtherWorkers =
@@ -18,29 +18,27 @@ const Hours = () => {
       .filter((p) => p.type !== "main")
       // Has more than 18
       .filter((p) =>
-        dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year"))
+        dayjs(p.year, "YYYY").isBefore(dayjs().subtract(18, "year"))
       ).length > 0;
 
   const otherWorkersRenseignedWorkPlace =
     lead.adherent
       .filter((p) => p.type !== "main")
       .filter((p) =>
-        dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year"))
+        dayjs(p.year, "YYYY").isBefore(dayjs().subtract(18, "year"))
       )
       .filter((p) => p.travailSuisse === undefined).length === 0;
 
   const showContinue =
     lead.adherent
       .filter((p) =>
-        dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year"))
+        dayjs(p.year, "YYYY").isBefore(dayjs().subtract(18, "year"))
       )
       .filter((p) => p.travailSuisse)
       .filter((p) => p.couverture === undefined).length === 0;
 
   lead.adherent
-    .filter((p) =>
-      dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year"))
-    )
+    .filter((p) => dayjs(p.year, "YYYY").isBefore(dayjs().subtract(18, "year")))
     .filter((p) => p.travailSuisse === undefined).length === 1;
 
   return (
@@ -56,15 +54,11 @@ const Hours = () => {
           <div className="flex flex-col gap-6">
             {lead.adherent.map((p, index) => {
               if (p.type === "main") return null;
-              if (
-                !dayjs(p.dob, "DD.MM.YYYY").isBefore(
-                  dayjs().subtract(18, "year")
-                )
-              )
+              if (!dayjs(p.year, "YYYY").isBefore(dayjs().subtract(18, "year")))
                 return null;
               return (
                 <div
-                  key={index.toString() + "" + (p.dob || "") + (p.type || "")}
+                  key={index.toString() + "" + (p.year || "") + (p.type || "")}
                 >
                   <h1 className="mb-4 text-base font-extrabold leading-[1.6] text-dark md:leading-[1.4]">
                     {p.type === "partner"
@@ -72,7 +66,7 @@ const Hours = () => {
                         ? t("STEP_HOURS_SUISSE_SPOUSE_FEMALE")
                         : t("STEP_HOURS_SUISSE_SPOUSE_MALE")
                       : t("STEP_HOURS_SUISSE_CHILD", {
-                          year: dayjs(p.dob, "DD.MM.YYYY").year(),
+                          year: dayjs(p.year, "YYYY").year(),
                         })}
                   </h1>
                   <TileInput
@@ -125,17 +119,13 @@ const Hours = () => {
         >
           <div className="flex flex-col gap-6">
             {lead.adherent.map((p, index) => {
-              if (
-                !dayjs(p.dob, "DD.MM.YYYY").isBefore(
-                  dayjs().subtract(18, "year")
-                )
-              )
+              if (!dayjs(p.year, "YYYY").isBefore(dayjs().subtract(18, "year")))
                 return null;
               if (!p.travailSuisse) return null;
               return (
                 <div
                   className=""
-                  key={index.toString() + "" + (p.dob || "") + (p.type || "")}
+                  key={index.toString() + "" + (p.year || "") + (p.type || "")}
                 >
                   <h1 className="mb-4 text-base font-extrabold leading-[1.6] text-dark md:leading-[1.4]">
                     {p.type === "partner"
@@ -144,7 +134,7 @@ const Hours = () => {
                         : t("STEP_HOURS_SPOUSE_MALE")
                       : p.type === "child"
                       ? t("STEP_HOURS_SPOUSE_CHILD", {
-                          year: dayjs(p.dob, "DD.MM.YYYY").year(),
+                          year: dayjs(p.year, "YYYY").year(),
                         })
                       : p.type === "main"
                       ? t("STEP_HOURS_MAIN")
@@ -174,13 +164,13 @@ const Hours = () => {
                       if (
                         lead.adherent
                           .filter((p) =>
-                            dayjs(p.dob, "DD.MM.YYYY").isBefore(
+                            dayjs(p.year, "YYYY").isBefore(
                               dayjs().subtract(18, "year")
                             )
                           )
                           .filter((p) => p.travailSuisse).length === 1
                       ) {
-                        increaseStep("work-hours");
+                        nextStep("work-hours");
                       }
                     }}
                     options={[
@@ -210,7 +200,7 @@ const Hours = () => {
             >
               <Button
                 onClick={() => {
-                  increaseStep("work-hours");
+                  nextStep("work-hours");
                 }}
                 className="mt-4 w-52"
               >

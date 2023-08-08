@@ -1,4 +1,5 @@
 import { cva } from "class-variance-authority";
+import { useId } from "react";
 
 const TextInput = ({
   value,
@@ -64,7 +65,7 @@ const TextInput = ({
     }
   );
 
-  const id = Math.random().toString(12);
+  const id = useId();
 
   return (
     <div className={(widthFull ? " w-full " : " ") + wrapperClassName}>

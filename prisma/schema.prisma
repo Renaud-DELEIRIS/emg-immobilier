@@ -1,19 +1,55 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
-    previewFeatures = ["jsonProtocol"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "mongodb"
-    url      = env("DATABASE_URL")
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
-model User {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  email String  @unique
-  name  String?
+model Session {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  site String
+
+  versions Version[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("sessions")
 }
 
+model Version {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  ip                       String
+  data                     Json
+  currentStep              Step
+  tunnel                   String
+  gtmparams                Json
+  listStepDuration         StepDuration[]
+  dateLastVisibilityChange DateTime?
+  isBot                    Boolean        @default(false)
+  isMobile                 Boolean        @default(false)
+  formVersion              String?
+
+  sessionId String  @db.ObjectId
+  session   Session @relation(fields: [sessionId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("versions")
+}
+
+type Step {
+  id    String
+  stepNumber Int
+  lastStep Int
+}
+
+type StepDuration {
+  id       String
+  duration Int
+}

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import StepContainer from "../StepContainer";
 import TileInput from "~/components/inputs/Tile";
-import { type LeadData, useLead } from "~/components/provider/LeadProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
 import TextInput from "~/components/inputs/TextInput";
 import dayjs from "dayjs";
 import Button from "~/components/button/Button";
@@ -15,14 +13,17 @@ import {
 } from "@tabler/icons-react";
 ``;
 import { motion } from "framer-motion";
-import InputDate from "~/components/inputs/DatePicker";
 import { useTranslation, Trans } from "next-i18next";
+import { useFormStore } from "~/stores/form";
+import { Adherent } from "~/constants/lead.constant";
 
 const Adherant = () => {
-  const { lead, changeLead } = useLead();
-  const { increaseStep, activeStep } = useSteps();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
+  const activeStep = useFormStore((state) => state.currentVisibleStep);
   const [isEditing, setIsEditing] = useState<number | undefined>(undefined);
-  const [adherent, setAdherent] = useState<LeadData["adherent"]["0"]>();
+  const [adherent, setAdherent] = useState<Partial<Adherent>>();
   const [step, setStep] = useState<"dob" | "civilite">("dob");
   const { t } = useTranslation("common");
   const getType = (index: number) => {
@@ -37,16 +38,14 @@ const Adherant = () => {
 
   const isValidDob = (dob: string) => {
     // Is valid date*
-    if (!dayjs(dob, "DD.MM.YYYY").isValid()) {
+    if (!dayjs(dob, "YYYY").isValid()) {
       return "La date de naissance n'est pas valide.";
     }
-    // check if more than 100 years old
-    if (dayjs().diff(dayjs(dob, "DD.MM.YYYY"), "year") > 100) {
+    if (dayjs().diff(dayjs(dob, "YYYY"), "year") > 100) {
       return "Vous devez avoir moins de 100 ans.";
     }
-    // Check if is more than 9 months in the future
-    if (dayjs().diff(dayjs(dob, "DD.MM.YYYY"), "month") < -9) {
-      return "Vous devez avoir plus de 9 mois.";
+    if (dob.length !== 4) {
+      return "La date de naissance n'est pas valide.";
     }
   };
 
@@ -96,7 +95,7 @@ const Adherant = () => {
     if (next !== undefined) {
       setIsEditing(nextToEdit());
     } else {
-      increaseStep("adherent");
+      nextStep("adherent");
     }
   }, [lead, activeStep]);
 
@@ -122,9 +121,7 @@ const Adherant = () => {
                           t={t}
                           i18nKey={"STEP_ADHERENT_LIST_CIVILITY_MAIN_FEMALE"}
                           values={{
-                            year: dayjs(adherent.dob, "DD.MM.YYYY").format(
-                              "YYYY"
-                            ),
+                            year: adherent.year,
                           }}
                         />
                       ) : (
@@ -132,9 +129,7 @@ const Adherant = () => {
                           t={t}
                           i18nKey={"STEP_ADHERENT_LIST_CIVILITY_MAIN_MALE"}
                           values={{
-                            year: dayjs(adherent.dob, "DD.MM.YYYY").format(
-                              "YYYY"
-                            ),
+                            year: adherent.year,
                           }}
                         />
                       )
@@ -144,9 +139,7 @@ const Adherant = () => {
                           t={t}
                           i18nKey={"STEP_ADHERENT_LIST_CIVILITY_SPOUSE_FEMALE"}
                           values={{
-                            year: dayjs(adherent.dob, "DD.MM.YYYY").format(
-                              "YYYY"
-                            ),
+                            year: adherent.year,
                           }}
                         />
                       ) : (
@@ -154,9 +147,7 @@ const Adherant = () => {
                           t={t}
                           i18nKey={"STEP_ADHERENT_LIST_CIVILITY_SPOUSE_MALE"}
                           values={{
-                            year: dayjs(adherent.dob, "DD.MM.YYYY").format(
-                              "YYYY"
-                            ),
+                            year: adherent.year,
                           }}
                         />
                       )
@@ -165,9 +156,7 @@ const Adherant = () => {
                         t={t}
                         i18nKey={"STEP_ADHERENT_LIST_CIVILITY_CHILD_FEMALE"}
                         values={{
-                          year: dayjs(adherent.dob, "DD.MM.YYYY").format(
-                            "YYYY"
-                          ),
+                          year: adherent.year,
                         }}
                       />
                     ) : (
@@ -175,9 +164,7 @@ const Adherant = () => {
                         t={t}
                         i18nKey={"STEP_ADHERENT_LIST_CIVILITY_CHILD_MALE"}
                         values={{
-                          year: dayjs(adherent.dob, "DD.MM.YYYY").format(
-                            "YYYY"
-                          ),
+                          year: adherent.year,
                         }}
                       />
                     )}
@@ -210,7 +197,10 @@ const Adherant = () => {
                 <Button
                   onClick={() => {
                     setIsEditing(lead.adherent.length);
-                    setAdherent({});
+                    setAdherent({
+                      type: "child",
+                      civility: "man",
+                    });
                   }}
                   size="small"
                   className="w-fit"
@@ -258,13 +248,15 @@ const Adherant = () => {
                   }, 100);
                 }}
               >
-                <InputDate
-                  value={adherent?.dob || ""}
+                <TextInput
+                  value={adherent?.year || ""}
                   onChange={(value) => {
-                    console.log(value);
-                    setAdherent({ ...adherent, dob: value });
+                    setAdherent({ ...adherent, year: value });
                   }}
-                  className="mt-1.5 w-80"
+                  wrapperClassName="mt-1.5 w-80"
+                  widthFull={false}
+                  type="number"
+                  placeholder="1985"
                 />
 
                 <Button
@@ -272,10 +264,10 @@ const Adherant = () => {
                   className="w-52"
                   disabled={
                     !(
-                      !isValidDob(adherent?.dob || "") &&
+                      !isValidDob(adherent?.year || "") &&
                       step === "dob" &&
-                      adherent?.dob !== undefined &&
-                      adherent?.dob !== ""
+                      adherent?.year !== undefined &&
+                      adherent?.year !== ""
                     )
                   }
                 >
@@ -305,8 +297,7 @@ const Adherant = () => {
                           ...lead.adherent,
                           {
                             ...adherent,
-                            civility:
-                              value as LeadData["adherent"]["0"]["civility"],
+                            civility: value as Adherent["civility"],
                             type: getType(isEditing),
                           },
                         ],
@@ -315,8 +306,7 @@ const Adherant = () => {
                       const newAdherents = [...lead.adherent];
                       newAdherents[isEditing] = {
                         ...adherent,
-                        civility:
-                          value as LeadData["adherent"]["0"]["civility"],
+                        civility: value as Adherent["civility"],
                         type: getType(isEditing),
                       };
                       changeLead({

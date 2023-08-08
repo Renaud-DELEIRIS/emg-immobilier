@@ -4,8 +4,6 @@ import { IconArrowLeft, IconMail } from "@tabler/icons-react";
 import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
-import { useLead } from "../provider/LeadProvider";
-import { useSteps } from "../provider/StepsProvider";
 import TextInput from "../inputs/TextInput";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
@@ -15,6 +13,7 @@ import { sendCodeSms } from "~/utils/api/sendSms";
 
 import { parsePhoneNumber } from "libphonenumber-js";
 import { Trans, useTranslation } from "next-i18next";
+import { useFormStore } from "~/stores/form";
 
 export const formatTelephone = (p: string) => {
   try {
@@ -26,7 +25,9 @@ export const formatTelephone = (p: string) => {
 };
 
 const Info = ({ open }: { open: boolean }) => {
-  const { lead, changeLead } = useLead();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
   const [step, setStep] = useState<"info" | "phone">("info");
   const [code, setCode] = useState("");
   const [responseCode, setResponseCode] = useState<string>();
@@ -79,7 +80,7 @@ const Info = ({ open }: { open: boolean }) => {
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-start justify-center p-4 pt-20 text-center">
+          <div className="flex min-h-full items-center justify-center p-4  text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -89,7 +90,7 @@ const Info = ({ open }: { open: boolean }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="h-[485px] w-full max-w-3xl transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="h-[485px] w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                 <div className="flex h-full w-full">
                   {step === "info" && (
                     <form

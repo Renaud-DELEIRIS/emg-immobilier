@@ -4,7 +4,6 @@ import Button from "~/components/button/Button";
 import Tile from "~/components/button/Tile";
 import Select from "~/components/inputs/Select";
 import TextInput from "~/components/inputs/TextInput";
-import TileInput from "~/components/inputs/Tile";
 import FlatModal from "~/components/modal/FlatModal";
 import { type Lamal } from "~/types/comparatif";
 

@@ -1,17 +1,14 @@
-import { IconEdit, IconLoader } from "@tabler/icons-react";
 import dayjs from "dayjs";
-import { motion } from "framer-motion";
 import { useState } from "react";
 import ReactSwitch from "react-switch";
-import Select from "~/components/inputs/Select";
-import { type LeadData, useLead } from "~/components/provider/LeadProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
+
 import StepContainer from "../../StepContainer";
 import ResultCardFrontalier from "./ResultCardFrontalier";
 import { PackFrontalier } from "~/constants/frontalier.constant";
+import { useFormStore } from "~/stores/form";
 
 const ResultFrontalier = () => {
-  const { lead } = useLead();
+  const lead = useFormStore((state) => state.data);
   const [monthlyPrice, setMonthlyPrice] = useState<boolean>(true);
   return (
     <StepContainer
@@ -43,8 +40,7 @@ const ResultFrontalier = () => {
       <div className="mt-8 flex flex-col gap-8">
         {lead.adherent.map((data, index) => {
           // if not 18+
-          if (dayjs().diff(dayjs(data.dob, "DD.MM.YYYY"), "year") < 18)
-            return null;
+          if (dayjs().diff(dayjs(data.year, "YYYY"), "year") < 18) return null;
           if (data.travailSuisse === false) return null;
           return (
             <div key={index}>
@@ -55,8 +51,7 @@ const ResultFrontalier = () => {
                   ? data.civility === "female"
                     ? "Pour votre conjointe"
                     : "Pour votre conjoint"
-                  : "Pour votre enfant née en " +
-                    dayjs(data.dob, "DD.MM.YYYY").year().toString()}
+                  : "Pour votre enfant née en " + (data.year || "")}
                 :
               </h1>
               <div className="flex flex-col gap-4">

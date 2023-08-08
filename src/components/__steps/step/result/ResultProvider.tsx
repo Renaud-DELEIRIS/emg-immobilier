@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useLead, type LeadData } from "~/components/provider/LeadProvider";
+import { Adherent } from "~/constants/lead.constant";
 import {
   optionHospitalisation,
   optionCapitalHospitalier,
@@ -8,6 +8,7 @@ import {
   optionTraitementsDentaires,
 } from "~/data/PackOption";
 import { env } from "~/env.mjs";
+import { useFormStore } from "~/stores/form";
 import { type Lamal, type Lca } from "~/types/comparatif";
 
 interface ResultContext {
@@ -27,9 +28,9 @@ const context = createContext<ResultContext>({
 });
 
 export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
-  const { lead } = useLead();
+  const lead = useFormStore((state) => state.data);
   const [profilIndex, setProfileIndex] = useState<number>(0);
-  const profil = lead.adherent[profilIndex] as LeadData["adherent"][0];
+  const profil = lead.adherent[profilIndex] as Adherent;
   const [lcaItems, setLcaItems] = useState<Lca[]>([]);
   const [lamalItems, setLamalItems] = useState<Lamal[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -40,7 +41,7 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
     }
     const p = new URLSearchParams({
       location: lead.npa?.key.toString() || "",
-      yob: profil.dob || "",
+      yob: profil.year || "",
       franchise: profil.franchise?.replaceAll("'", "") || "",
       coverage: profil.couvertureAccident === "non" ? "0" : "1",
       insurer: lead.actualInsurance?.key.toString() || "",
@@ -56,7 +57,7 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
     }
     const p = new URLSearchParams({
       age: (
-        dayjs().year() - +dayjs(profil.dob || "", "DD.MM.YYYY").year()
+        dayjs().year() - +dayjs(profil.year || "", "YYYY").year()
       ).toString(),
       sexe: profil.civility === "female" ? "Femme" : "Homme",
       pack: !profil.pack?.principal
@@ -69,27 +70,29 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
                 ? 1
                 : 3,
             name: profil.pack.principal,
-            options: profil.pack.options.map((o) => {
-              return {
-                id:
-                  o.label === "Hospitalisation"
-                    ? 4
-                    : o.label === "Capital hospitalier"
-                    ? 3
-                    : o.label === "Traitements dentaires"
-                    ? 2
-                    : 1,
-                label: o.label,
-                prestation:
-                  o.label === "Hospitalisation"
-                    ? optionHospitalisation[o.level - 1]
-                    : o.label === "Capital hospitalier"
-                    ? optionCapitalHospitalier[o.level - 1]
-                    : o.label === "Traitements dentaires"
-                    ? optionTraitementsDentaires[o.level - 1]
-                    : optionMedecineAlternative[o.level - 1],
-              };
-            }),
+            options: profil.pack.options
+              ? profil.pack.options.map((o) => {
+                  return {
+                    id:
+                      o.label === "Hospitalisation"
+                        ? 4
+                        : o.label === "Capital hospitalier"
+                        ? 3
+                        : o.label === "Traitements dentaires"
+                        ? 2
+                        : 1,
+                    label: o.label,
+                    prestation:
+                      o.label === "Hospitalisation"
+                        ? optionHospitalisation[o.level - 1]
+                        : o.label === "Capital hospitalier"
+                        ? optionCapitalHospitalier[o.level - 1]
+                        : o.label === "Traitements dentaires"
+                        ? optionTraitementsDentaires[o.level - 1]
+                        : optionMedecineAlternative[o.level - 1],
+                  };
+                })
+              : undefined,
           }),
     });
     const r = await fetch(`${env.NEXT_PUBLIC_LCA || ""}?${p.toString()}`);

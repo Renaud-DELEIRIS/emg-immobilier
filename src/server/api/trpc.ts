@@ -6,11 +6,6 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import superjson from "superjson";
-import { ZodError } from "zod";
-import { prisma } from "~/server/db";
 
 /**
  * 1. CONTEXT
@@ -19,8 +14,12 @@ import { prisma } from "~/server/db";
  *
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
+import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 
-type CreateContextOptions = Record<string, never>;
+/** Replace this with an object if you want to pass things to `createContextInner`. */
+type CreateContextOptions = {
+  req: NextApiRequest | null;
+};
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
@@ -34,7 +33,7 @@ type CreateContextOptions = Record<string, never>;
  */
 const createInnerTRPCContext = (_opts: CreateContextOptions) => {
   return {
-    prisma,
+    req: _opts.req,
   };
 };
 
@@ -45,7 +44,10 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = (_opts: CreateNextContextOptions) => {
-  return createInnerTRPCContext({});
+  const { req } = _opts;
+  return createInnerTRPCContext({
+    req,
+  });
 };
 
 /**
@@ -55,6 +57,10 @@ export const createTRPCContext = (_opts: CreateNextContextOptions) => {
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
+import { initTRPC } from "@trpc/server";
+import { type NextApiRequest } from "next";
+import superjson from "superjson";
+import { ZodError } from "zod";
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,

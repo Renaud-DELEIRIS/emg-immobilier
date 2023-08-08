@@ -2,11 +2,12 @@ import Image from "next/image";
 import { useState } from "react";
 import Button from "~/components/button/Button";
 import { IconChevronDown, IconCircleCheckFilled } from "@tabler/icons-react";
-import { Adherent, useLead } from "~/components/provider/LeadProvider";
+
 import { recallResident } from "~/utils/api/recallResident";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
-import { useSteps } from "~/components/provider/StepsProvider";
+import { Adherent } from "~/constants/lead.constant";
+import { useFormStore } from "~/stores/form";
 
 interface Props {
   adhrerent: Adherent;
@@ -32,10 +33,11 @@ const ResultCardFrontalier = ({
   recommended = false,
 }: Props) => {
   const [show, setShow] = useState(false);
-  const { increaseStep } = useSteps();
-  const { lead, changeLead } = useLead();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
 
-  const age = dayjs().diff(dayjs(adhrerent.dob, "DD.MM.YYYY"), "year");
+  const age = dayjs().diff(dayjs(adhrerent.year, "YYYY"), "year");
   const couverture = adhrerent.couverture;
 
   const prestation = [
@@ -124,7 +126,7 @@ const ResultCardFrontalier = ({
       selectedAdherent: [profilId],
       selectedOfferFrontalier: name,
     });
-    increaseStep("result-frontalier");
+    nextStep("result-frontalier");
   };
 
   return (
@@ -153,10 +155,15 @@ const ResultCardFrontalier = ({
           <div className="flex flex-col items-center gap-px">
             <div className="flex items-end text-[#2A3775]">
               <h2 className="text-[40px] font-bold ">
-                CHF{" "}
-                {monthPrice
-                  ? price(age, !!couverture)
-                  : (price(age, !!couverture) * 12 * 0.99).toFixed(2)}
+                {new Intl.NumberFormat("de-CH", {
+                  style: "currency",
+                  currency: "CHF",
+                  maximumFractionDigits: 0,
+                }).format(
+                  monthPrice
+                    ? price(age, !!couverture)
+                    : price(age, !!couverture) * 12 * 0.99
+                )}
               </h2>
               <span className="text-[24px] ">
                 /{monthPrice ? "mois" : "an"}

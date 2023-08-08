@@ -1,6 +1,4 @@
 import { type AppType } from "next/dist/shared/lib/utils";
-import { LeadProvider } from "~/components/provider/LeadProvider";
-import { StepsProvider } from "~/components/provider/StepsProvider";
 import "react-phone-input-2/lib/style.css";
 import { GTMProvider } from "@elgorditosalsero/react-gtm-hook";
 
@@ -13,31 +11,33 @@ import dayjs from "dayjs";
 import { api } from "~/utils/api";
 import { appWithTranslation } from "next-i18next";
 import nexti18nConfig from "next-i18next.config.mjs";
+import { useEffect } from "react";
+import "react-toastify/dist/ReactToastify.css";
 
 dayjs.extend(customParseFormat);
 dayjs.locale(fr);
 
 const MyApp: AppType = ({ Component, pageProps }) => {
+  useEffect(() => {
+    if (!sessionStorage.getItem("createdAt"))
+      sessionStorage.setItem("createdAt", new Date().toISOString());
+  }, []);
   return (
     <GTMProvider state={{ id: "GTM-W6DFR53", dataLayerName: "dataLayer" }}>
-      <LeadProvider>
-        <StepsProvider>
-          <Component {...pageProps} />
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
-          <ToastContainer />
-        </StepsProvider>
-      </LeadProvider>
+      <Component {...pageProps} />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      <ToastContainer />
     </GTMProvider>
   );
 };

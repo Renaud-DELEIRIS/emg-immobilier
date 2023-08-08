@@ -1,13 +1,13 @@
 import StepContainer from "../StepContainer";
-import { useLead } from "~/components/provider/LeadProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
 import AutoComplete from "~/components/inputs/Autocomplete";
 import localtion from "~/data/ch-locations.json";
 import { useTranslation } from "next-i18next";
+import { useFormStore } from "~/stores/form";
 
 const Npa = () => {
-  const { lead, changeLead } = useLead();
-  const { increaseStep, activeStep } = useSteps();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("common");
 
   return (
@@ -25,7 +25,7 @@ const Npa = () => {
         }
         onChange={(value) => {
           changeLead({ npa: value });
-          increaseStep("npa", {
+          nextStep("npa", {
             ...lead,
             npa: value,
           });
@@ -39,7 +39,7 @@ const Npa = () => {
           className="text-primary hover:underline"
           onClick={() => {
             changeLead({ npa: { key: -1, value: t("STEP_NPA_NOTHERE_SPAN") } });
-            increaseStep("npa", {
+            nextStep("npa", {
               ...lead,
               npa: { key: -1, value: t("STEP_NPA_NOTHERE_SPAN") },
             });

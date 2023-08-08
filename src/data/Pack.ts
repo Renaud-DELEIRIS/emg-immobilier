@@ -4,6 +4,9 @@ export type Prestation = {
   important?: boolean;
 };
 
+export const packById = (id: number) =>
+  id === 1 ? "Essentials" : id === 2 ? "Confort" : "Premium";
+
 const prestationsEssentials: Prestation[] = [
   { label: "Chambre commune", status: true },
   { label: "Lunettes", status: true },

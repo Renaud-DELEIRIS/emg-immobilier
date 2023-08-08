@@ -1,12 +1,13 @@
 import dayjs from "dayjs";
-import { type LeadData } from "~/components/provider/LeadProvider";
+import { z } from "zod";
+import { schemaData } from "./lead.constant";
 
 export interface Step {
   id: StepId;
-  next: (lead: LeadData) => StepId;
-  previous: (lead: LeadData) => StepId | null;
-  disabled: (lead: LeadData) => boolean;
-  stepInfo: (lead: LeadData) => [number, number];
+  next: (lead: schemaData) => StepId;
+  previous: (lead: schemaData) => StepId | null;
+  disabled: (lead: schemaData) => boolean;
+  stepInfo: (lead: schemaData) => [number, number];
   bis?: boolean;
 }
 
@@ -288,7 +289,7 @@ export const STEPS: Step[] = [
     previous: (lead) => {
       return lead.adherent
         .filter((p) =>
-          dayjs(p.dob, "DD.MM.YYYY").isBefore(dayjs().subtract(18, "year"))
+          dayjs(p.year, "YYYY").isBefore(dayjs().subtract(18, "year"))
         )
         .filter((p) => p.travailSuisse !== undefined).length === 1
         ? "result-frontalier"
@@ -330,11 +331,11 @@ export const STEPS: Step[] = [
   },
 ];
 
-export const getNextStep = (step: Step, lead: LeadData) => {
+export const getNextStep = (step: Step, lead: schemaData) => {
   return getStepById(step.next(lead));
 };
 
-export const isStepDisabled = (step: Step, lead: LeadData) => {
+export const isStepDisabled = (step: Step, lead: schemaData) => {
   return step.disabled(lead);
 };
 
@@ -342,7 +343,7 @@ export const getStepById = (id: string) => {
   return STEPS.find((step) => step.id === id) as Step;
 };
 
-export const getPreviousStep = (step: Step, lead: LeadData) => {
+export const getPreviousStep = (step: Step, lead: schemaData) => {
   const prev = step.previous(lead);
   if (prev) {
     return getStepById(prev);
@@ -350,14 +351,22 @@ export const getPreviousStep = (step: Step, lead: LeadData) => {
   return null;
 };
 
-export const getStepInfo = (step: Step, lead: LeadData) => {
+export const getStepInfo = (step: Step, lead: schemaData) => {
   return step.stepInfo(lead);
 };
 
-export const getActualStep = (step: Step, lead: LeadData) => {
+export const getActualStep = (step: Step, lead: schemaData) => {
   return getStepInfo(step, lead)[0];
 };
 
-export const getTotalStep = (step: Step, lead: LeadData) => {
+export const getTotalStep = (step: Step, lead: schemaData) => {
   return getStepInfo(step, lead)[1];
 };
+
+export const schemaStep = z.object({
+  id: z.string(),
+  stepNumber: z.number(),
+  lastStep: z.number(),
+});
+
+export type schemaStep = z.infer<typeof schemaStep>;

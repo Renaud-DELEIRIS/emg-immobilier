@@ -1,75 +1,115 @@
-import { useEffect, useId, useRef, useState } from "react";
-
-interface Props {
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import {
+  Fragment,
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FC,
+  type KeyboardEvent,
+  type MutableRefObject,
+  useId,
+} from "react";
+dayjs.extend(customParseFormat);
+interface IProps {
+  onChange: (v: string) => void;
   value: string;
-  onChange: (value: string) => void;
-  className?: string;
+  format: "DD.MM.YYYY" | "YYYY-MM-DD" | "DD/MM/YYYY" | "YYYY";
   label?: string;
   boldLabel?: boolean;
+  className?: string;
 }
-
-function InputDate({
+const InputDate: FC<IProps> = ({
   value,
+  format,
   onChange,
-  className = "",
   label,
-  boldLabel = false,
-}: Props) {
-  const [day, month, year] = value.split(".").map(Number);
-  const dayRef = useRef<HTMLInputElement>(null);
-  const monthRef = useRef<HTMLInputElement>(null);
-  const yearRef = useRef<HTMLInputElement>(null);
+  boldLabel,
+  className = "",
+}) => {
+  const separator =
+    format.replace("DD", "").replace("MM", "").replace("YYYY", "").charAt(0) ||
+    "reytayfhabh";
   const id = useId();
-
-  const onBackSpace = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    format: "DD" | "MM" | "YYYY"
-  ) => {
-    if (e.key !== "Backspace") return;
-    // Focus the previous input if the current one is empty
-    if (e.currentTarget.value === "") {
-      e.preventDefault();
-      switch (format) {
-        case "DD":
-          break;
-        case "MM":
-          dayRef.current?.focus();
-          break;
-        case "YYYY":
-          monthRef.current?.focus();
-          break;
+  const arrFormat = format.split(separator);
+  const asDate =
+    value && dayjs(value, "YYYY-MM-DD", true).isValid()
+      ? dayjs(value, "YYYY-MM-DD")
+      : undefined;
+  const [day, setDay] = useState(asDate?.date().toString() ?? "");
+  const [month, setMonth] = useState(
+    asDate ? (asDate.month() + 1).toString() : ""
+  );
+  const [year, setYear] = useState(asDate?.year().toString() ?? "");
+  const objectRef: Record<string, MutableRefObject<HTMLInputElement | null>> = {
+    DD: useRef<HTMLInputElement | null>(null),
+    MM: useRef<HTMLInputElement | null>(null),
+    YYYY: useRef<HTMLInputElement | null>(null),
+  };
+  const onChangeDay = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.slice(0, 2);
+    setDay(value);
+    if (value.length === 2) {
+      const indexinput = arrFormat.indexOf("DD");
+      if (indexinput < arrFormat.length - 1) {
+        const formatNextInput = arrFormat[indexinput + 1];
+        if (formatNextInput) {
+          const r = objectRef[formatNextInput];
+          r?.current?.focus();
+        }
       }
     }
   };
-
-  const onChangeHandler = (e: string, format: "DD" | "MM" | "YYYY") => {
-    const value = Number(e);
-    if (isNaN(value)) return;
-    switch (format) {
-      case "DD":
-        if (value > 31) return;
-        if (e.length > 2) return;
-        if (e.length === 2) {
-          monthRef.current?.focus();
+  const onChangeMonth = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.slice(0, 2);
+    setMonth(value);
+    if (value.length === 2) {
+      const indexinput = arrFormat.indexOf("MM");
+      if (indexinput < arrFormat.length - 1) {
+        const formatNextInput = arrFormat[indexinput + 1];
+        if (formatNextInput) {
+          const r = objectRef[formatNextInput];
+          r?.current?.focus();
         }
-        break;
-      case "MM":
-        if (value > 12) return;
-        if (e.length > 2) return;
-        if (e.length === 2) {
-          yearRef.current?.focus();
-        }
-        break;
-      case "YYYY":
-        if (e.length > 4) return;
-        break;
+      }
     }
-    const [day, month, year] = [dayRef, monthRef, yearRef].map(
-      (ref) => ref.current?.value
-    );
-    onChange(`${day || ""}.${month || ""}.${year || ""}`);
   };
-
+  const onChangeYear = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.slice(0, 4);
+    setYear(value);
+    if (value.length === 2) {
+      const indexinput = arrFormat.indexOf("YYYY");
+      if (indexinput < arrFormat.length - 1) {
+        const formatNextInput = arrFormat[indexinput + 1];
+        if (formatNextInput) {
+          const r = objectRef[formatNextInput];
+          r?.current?.focus();
+        }
+      }
+    }
+  };
+  const onBackSpace = (
+    e: KeyboardEvent<HTMLInputElement>,
+    format: "DD" | "MM" | "YYYY"
+  ) => {
+    if (e.key === "Backspace") {
+      const indexInput = arrFormat.indexOf(format);
+      if (indexInput > 0) {
+        const formatPrevInput = arrFormat[indexInput - 1];
+        if (formatPrevInput && format === "DD" && day.length === 0) {
+          objectRef[formatPrevInput]?.current?.focus();
+        } else if (formatPrevInput && format === "MM" && month.length === 0) {
+          objectRef[formatPrevInput]?.current?.focus();
+        } else if (formatPrevInput && format === "YYYY" && year.length === 0) {
+          objectRef[formatPrevInput]?.current?.focus();
+        }
+      }
+    }
+  };
+  useEffect(() => {
+    onChange(`${year}-${month}-${day}`);
+  }, [day, month, year]);
   return (
     <div>
       {label && (
@@ -90,54 +130,61 @@ function InputDate({
           className
         }
       >
-        <input
-          type="number"
-          pattern="[0-9]*"
-          inputMode="numeric"
-          placeholder="dd"
-          id={id}
-          className="w-0 flex-1 text-center placeholder:text-neutral-400 focus:outline-none focus:outline-0"
-          value={day || ""}
-          onChange={(e) => {
-            onChangeHandler(e.target.value, "DD");
-          }}
-          onKeyDown={(e) => onBackSpace(e, "DD")}
-          ref={dayRef}
-          autoComplete="birthday-day"
-        />
-        <span className="text-neutral-400">.</span>
-        <input
-          type="number"
-          pattern="[0-9]*"
-          inputMode="numeric"
-          placeholder="mm"
-          className="w-0 flex-1 text-center placeholder:text-neutral-400 focus:outline-none focus:outline-0"
-          value={month || ""}
-          onChange={(e) => {
-            onChangeHandler(e.target.value, "MM");
-          }}
-          onKeyDown={(e) => onBackSpace(e, "MM")}
-          ref={monthRef}
-          autoComplete="birthday-month"
-        />
-        <span className="text-neutral-400">.</span>
-        <input
-          type="number"
-          pattern="[0-9]*"
-          inputMode="numeric"
-          placeholder="yyyy"
-          className="w-0 flex-1 text-center placeholder:text-neutral-400 focus:outline-none focus:outline-0"
-          value={year || ""}
-          onChange={(e) => {
-            onChangeHandler(e.target.value, "YYYY");
-          }}
-          onKeyDown={(e) => onBackSpace(e, "YYYY")}
-          ref={yearRef}
-          autoComplete="birthday-year"
-        />
+        {arrFormat.map((m, i) => (
+          <Fragment key={m}>
+            {i > 0 && <span className="pb-2">{separator}</span>}
+            {m === "DD" ? (
+              <input
+                value={day}
+                onKeyUp={(e) => onBackSpace(e, "DD")}
+                onChange={onChangeDay}
+                maxLength={2}
+                size={2}
+                id={id}
+                className="w-0 flex-1 text-center placeholder:text-neutral-400 focus:outline-none focus:outline-0"
+                pattern="[0-9]*"
+                type="number"
+                inputMode="numeric"
+                placeholder="DD"
+                min={1}
+                max={31}
+                ref={objectRef["DD"]}
+              />
+            ) : m === "MM" ? (
+              <input
+                value={month}
+                onKeyUp={(e) => onBackSpace(e, "MM")}
+                onChange={onChangeMonth}
+                maxLength={2}
+                size={2}
+                className="w-0 flex-1 text-center placeholder:text-neutral-400 focus:outline-none focus:outline-0"
+                pattern="[0-9]*"
+                type="number"
+                inputMode="numeric"
+                placeholder="MM"
+                min={1}
+                max={12}
+                ref={objectRef["MM"]}
+              />
+            ) : (
+              <input
+                value={year}
+                onKeyUp={(e) => onBackSpace(e, "YYYY")}
+                onChange={onChangeYear}
+                maxLength={4}
+                size={4}
+                className="w-0 flex-1 text-center placeholder:text-neutral-400 focus:outline-none focus:outline-0"
+                pattern="[0-9]*"
+                type="number"
+                inputMode="numeric"
+                placeholder="YYYY"
+                ref={objectRef["YYYY"]}
+              />
+            )}
+          </Fragment>
+        ))}
       </div>
     </div>
   );
-}
-
+};
 export default InputDate;

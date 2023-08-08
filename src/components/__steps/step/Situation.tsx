@@ -1,23 +1,19 @@
 import StepContainer from "../StepContainer";
 import TileInput from "~/components/inputs/Tile";
-import { useLead } from "~/components/provider/LeadProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
+
 import Image from "next/image";
 import { useTranslation, Trans } from "next-i18next";
+import { useFormStore } from "~/stores/form";
 
 const Situation = () => {
-  const { lead, changeLead } = useLead();
-  const { increaseStep, activeStep } = useSteps();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("common");
   return (
     <StepContainer
       title={t("STEP_SITUATION_TITLE")}
-      description={
-        <Trans
-          t={t}
-          i18nKey="STEP_SITUATION_DESCRIPTION"
-          />
-      }
+      description={<Trans t={t} i18nKey="STEP_SITUATION_DESCRIPTION" />}
       stepId="situation"
     >
       <TileInput
@@ -34,7 +30,7 @@ const Situation = () => {
               return a;
             }),
           });
-          increaseStep("situation", {
+          nextStep("situation", {
             ...lead,
             situation: value as "frontalier" | "future resident",
           });

@@ -1,16 +1,15 @@
 import { getActualStep, getTotalStep } from "~/constants/step.constant";
 import Image from "next/image";
-import { useLead } from "../provider/LeadProvider";
-import { useSteps } from "../provider/StepsProvider";
 import ProgressBar from "./ProgressBar";
-import {  IconPhone } from "@tabler/icons-react";
+import { IconPhone } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
+import { useFormStore } from "~/stores/form";
 
 const Header = () => {
-  const { activeStep, decreaseStep } = useSteps();
-  const { lead } = useLead();
-  const maxStep = getTotalStep(activeStep, lead);
-  const actualStep = getActualStep(activeStep, lead);
+  const lead = useFormStore((state) => state.data);
+  const currentStep = useFormStore((state) => state.currentVisibleStep);
+  const maxStep = getTotalStep(currentStep, lead);
+  const actualStep = getActualStep(currentStep, lead);
   const { t } = useTranslation("common");
 
   return (
@@ -27,7 +26,7 @@ const Header = () => {
             ></Image>
           </div>
           <div className="hidden w-1/3 md:block">
-            {activeStep.id === "result" ? (
+            {currentStep.id === "result" ? (
               <div className="flex w-full items-center justify-center gap-2">
                 <span className="text-sm text-neutral-700">
                   {t("COMPARATEUR_AWARD")}
@@ -54,7 +53,7 @@ const Header = () => {
             </a>
           </div>
         </header>
-        {activeStep.id !== "result" && (
+        {currentStep.id !== "result" && (
           <div className="absolute bottom-0 z-[100] block w-full md:hidden">
             <ProgressBar now={actualStep / maxStep} />
           </div>

@@ -1,13 +1,12 @@
 import { Fragment, useMemo, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { IconCheck, IconChevronUp } from "@tabler/icons-react";
-import type DefaultProps from "~/types/DefaultProps";
-import { type KeyValues } from "~/types/type";
+import { keyvalue } from "~/constants/lead.constant";
 
 interface Autocomplete {
-  options: { key: number; value: string }[];
-  value: { key: number; value: string };
-  onChange: (value: { key: number; value: string }) => void;
+  options: keyvalue[];
+  value: keyvalue;
+  onChange: (value: keyvalue) => void;
   label?: string;
   className?: string;
   placeholder?: string;
@@ -31,6 +30,7 @@ export default function AutoComplete({
         ? options
         : options.filter((option) =>
             option.value
+              .toString()
               .toLowerCase()
               .replace(/\s+/g, "")
               .includes(query.toLowerCase().replace(/\s+/g, ""))
@@ -54,7 +54,7 @@ export default function AutoComplete({
           <div className="relative w-full cursor-default overflow-hidden bg-white text-left ">
             <Combobox.Input
               className="bg-dark-900 border-dark-600 block w-full rounded-lg border p-2.5 text-neutral-800 placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none"
-              displayValue={(person: KeyValues) => person.value}
+              displayValue={(person: keyvalue) => person.value.toString()}
               onChange={(event) => setQuery(event.target.value)}
               id={id}
               placeholder={placeholder}
@@ -82,7 +82,7 @@ export default function AutoComplete({
               ) : (
                 filteredPeople.slice(0, 100).map((person) => (
                   <Combobox.Option
-                    key={person.value}
+                    key={person.value.toString()}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
                         active ? "bg-neutral-100" : "text-gray-900"

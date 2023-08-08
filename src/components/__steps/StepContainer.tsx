@@ -3,7 +3,7 @@ import type DefaultProps from "~/types/DefaultProps";
 import { motion } from "framer-motion";
 import { type ReactElement } from "react";
 import { type StepId } from "~/constants/step.constant";
-import { useSteps } from "../provider/StepsProvider";
+import { useFormStore } from "~/stores/form";
 
 const StepContainer = ({
   title,
@@ -23,7 +23,7 @@ const StepContainer = ({
   stepId: StepId;
   forceActive?: boolean;
 } & DefaultProps) => {
-  const { activeStep, increaseSignal } = useSteps();
+  const activeStep = useFormStore((state) => state.currentVisibleStep);
   const active = forceActive ? forceActive : activeStep.id === stepId;
 
   return (

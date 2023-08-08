@@ -11,10 +11,10 @@ import {
   IconHelp,
 } from "@tabler/icons-react";
 import Checkbox from "~/components/checkbox/Checkbox";
-import { useLead } from "~/components/provider/LeadProvider";
 import { recallResident } from "~/utils/api/recallResident";
 import { toast } from "react-toastify";
 import ModalSouscrireLca from "./ModalSouscrireLca";
+import { useFormStore } from "~/stores/form";
 
 interface Props {
   recommended?: boolean;
@@ -37,7 +37,7 @@ const ResultCardLca = ({
 }: Props) => {
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
-  const { lead } = useLead();
+  const lead = useFormStore((state) => state.data);
 
   const month = info.prix.toFixed(2);
   const year = (info.prix * 12).toFixed(2);
@@ -146,7 +146,11 @@ const ResultCardLca = ({
           <div className="flex flex-col items-center gap-px">
             <div className="flex items-end text-[#2A3775]">
               <h2 className="text-[40px] font-bold ">
-                CHF {monthPrice ? month : year}
+                {new Intl.NumberFormat("de-CH", {
+                  style: "currency",
+                  currency: "CHF",
+                  maximumFractionDigits: 0,
+                }).format(monthPrice ? parseInt(month) : parseInt(year))}
               </h2>
               <span className="text-[24px] ">
                 /{monthPrice ? "mois" : "an"}
@@ -199,59 +203,64 @@ const ResultCardLca = ({
               </span>
             </div>
             <div className="px-4">
-              {Object.entries(groupPrestations).map(([group, prestations]) => (
-                <>
-                  <span className="py-3 text-lg font-bold text-[#2F3946]">
-                    {group}
-                  </span>
-                  {info.prestations
-                    .filter((p) => prestations.includes(p.label))
-                    .map((p, i) => (
-                      <div
-                        className={`grid grid-cols-[repeat(2,1fr)] gap-5 ${
-                          i === 0 ? "pt-2" : ""
-                        } ${i % 2 === 0 ? "bg-[#f7fcff]" : ""}`}
-                        key={i}
-                      >
-                        <div className="py-2 text-[#2f3946]">
-                          <div className="relative flex items-center gap-4">
-                            {p.status ? (
-                              <IconCircleCheck
-                                size={24}
-                                className="text-primary-600"
-                              />
-                            ) : (
-                              <IconCircleX size={24} className="text-red-600" />
-                            )}
-                            <span className="px-1 text-base">{p.label}</span>
+              {Object.entries(groupPrestations).map(
+                ([group, prestations], z) => (
+                  <div key={z}>
+                    <span className="py-3 text-lg font-bold text-[#2F3946]">
+                      {group}
+                    </span>
+                    {info.prestations
+                      .filter((p) => prestations.includes(p.label))
+                      .map((p, i) => (
+                        <div
+                          className={`grid grid-cols-[repeat(2,1fr)] gap-5 ${
+                            i === 0 ? "pt-2" : ""
+                          } ${i % 2 === 0 ? "bg-[#f7fcff]" : ""}`}
+                          key={i}
+                        >
+                          <div className="py-2 text-[#2f3946]">
+                            <div className="relative flex items-center gap-4">
+                              {p.status ? (
+                                <IconCircleCheck
+                                  size={24}
+                                  className="text-primary-600"
+                                />
+                              ) : (
+                                <IconCircleX
+                                  size={24}
+                                  className="text-red-600"
+                                />
+                              )}
+                              <span className="px-1 text-base">{p.label}</span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="px-2 text-[#2f3946]">
-                          <div className="relative flex items-center gap-4">
-                            <span data-tooltip={tooltipsPrestations[p.label]}>
-                              <IconHelp size={24} className="text-blue-600" />
-                            </span>
-                            {p.details.map((d, i) => {
-                              if (!d.status) return null;
-                              return (
-                                <span
-                                  className="w-full font-extrabold"
-                                  data-tooltip={`Franchise: ${d.franchise}`}
-                                  key={i}
-                                >
-                                  {d.value}{" "}
-                                  <span className="text-sm font-normal text-neutral-500">
-                                    ({d.produit})
+                          <div className="px-2 text-[#2f3946]">
+                            <div className="relative flex items-center gap-4">
+                              <span data-tooltip={tooltipsPrestations[p.label]}>
+                                <IconHelp size={24} className="text-blue-600" />
+                              </span>
+                              {p.details.map((d, y) => {
+                                if (!d.status) return null;
+                                return (
+                                  <span
+                                    className="w-full font-extrabold"
+                                    data-tooltip={`Franchise: ${d.franchise}`}
+                                    key={y}
+                                  >
+                                    {d.value}{" "}
+                                    <span className="text-sm font-normal text-neutral-500">
+                                      ({d.produit})
+                                    </span>
                                   </span>
-                                </span>
-                              );
-                            })}
+                                );
+                              })}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                </>
-              ))}
+                      ))}
+                  </div>
+                )
+              )}
             </div>
           </div>
         </div>

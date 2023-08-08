@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import StepContainer from "../StepContainer";
 import TileInput from "~/components/inputs/Tile";
-import { type Adherent, useLead } from "~/components/provider/LeadProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
 import dayjs from "dayjs";
 import Button from "~/components/button/Button";
 import {
@@ -14,10 +12,14 @@ import {
 import Select from "~/components/inputs/Select";
 import { motion } from "framer-motion";
 import { Trans, useTranslation } from "next-i18next";
+import { useFormStore } from "~/stores/form";
+import { Adherent } from "~/constants/lead.constant";
 
 const Franchise = () => {
-  const { lead, changeLead } = useLead();
-  const { increaseStep, activeStep } = useSteps();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
+  const activeStep = useFormStore((state) => state.currentVisibleStep);
   const [isEditing, setIsEditing] = useState<number | undefined>(undefined);
   const [step, setStep] = useState<"franchise" | "couverture">("franchise");
   const [showContinue, setShowContinue] = useState<boolean>(false);
@@ -35,7 +37,7 @@ const Franchise = () => {
   };
 
   const isChild = (dob: string) => {
-    return dayjs().diff(dayjs(dob, "DD.MM.YYYY"), "year") < 19;
+    return dayjs().diff(dayjs(dob, "YYYY"), "year") < 19;
   };
 
   useEffect(() => {
@@ -48,10 +50,10 @@ const Franchise = () => {
             ...lead.adherent.slice(0, next),
             {
               ...lead.adherent[next],
-              franchise: isChild((lead.adherent[next] as Adherent).dob || "")
+              franchise: isChild((lead.adherent[next] as Adherent).year || "")
                 ? "0"
                 : "2500",
-            },
+            } as Adherent,
             ...lead.adherent.slice(next + 1),
           ],
         });
@@ -166,9 +168,7 @@ const Franchise = () => {
                           t={t}
                           values={{
                             value: adherent.franchise,
-                            year: dayjs(adherent.dob, "DD.MM.YYYY").format(
-                              "YYYY"
-                            ),
+                            year: adherent.year,
                           }}
                         />
                       )}
@@ -206,7 +206,7 @@ const Franchise = () => {
               >
                 <Select
                   options={
-                    isChild(adherant.dob || "")
+                    isChild(adherant.year || "")
                       ? [
                           {
                             label: "0 CHF",
@@ -266,7 +266,7 @@ const Franchise = () => {
                   }
                   value={
                     adherant.franchise ||
-                    (isChild(adherant.dob || "") ? "600" : "2500")
+                    (isChild(adherant.year || "") ? "600" : "2500")
                   }
                   onChange={(value: string) => {
                     changeLead({
@@ -301,7 +301,7 @@ const Franchise = () => {
                             ...lead.adherent.slice(0, isEditing),
                             {
                               ...adherant,
-                              franchise: isChild(adherant.dob || "")
+                              franchise: isChild(adherant.year || "")
                                 ? "600"
                                 : "2500",
                             },
@@ -416,12 +416,12 @@ const Franchise = () => {
               >
                 <p className="mb-4 text-base font-bold">
                   {t("STEP_FRANCHISE_CHILD_TITLE", {
-                    year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
+                    year: adherent.year,
                   })}
                 </p>
                 <Select
                   options={
-                    isChild(adherent.dob || "")
+                    isChild(adherent.year || "")
                       ? [
                           {
                             label: "0 CHF",
@@ -481,7 +481,7 @@ const Franchise = () => {
                   }
                   value={
                     adherent.franchise ||
-                    (isChild(adherent.dob || "") ? "600" : "2500")
+                    (isChild(adherent.year || "") ? "600" : "2500")
                   }
                   onChange={(value: string) => {
                     const i =
@@ -522,7 +522,7 @@ const Franchise = () => {
         >
           <Button
             onClick={() => {
-              increaseStep("franchise");
+              nextStep("franchise");
             }}
             className="mt-4 w-52"
           >

@@ -11,10 +11,9 @@ import Button from "~/components/button/Button";
 import AvsInput from "~/components/inputs/Avs";
 import FileInput from "~/components/inputs/FileInput";
 import TextInput from "~/components/inputs/TextInput";
-import { useLead } from "~/components/provider/LeadProvider";
+import { useFormStore } from "~/stores/form";
 
 const Documents = () => {
-  const { lead } = useLead();
   const [iban, setIban] = useState<string>("");
   const [avs, setAvs] = useState<string>("");
   const [justificatifDomicile, setJustificatifDomicile] = useState<string>("");
@@ -22,6 +21,8 @@ const Documents = () => {
   const [pieceDidendite, setPieceDidendite] = useState<string>("");
   const [openCompleteLater, setOpenCompleteLater] = useState<boolean>(false);
   const [openComplete, setOpenComplete] = useState<boolean>(false);
+  const lead = useFormStore((state) => state.data);
+
   const onPressLater = () => {
     setOpenCompleteLater(true);
     // TODO

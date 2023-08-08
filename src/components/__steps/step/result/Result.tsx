@@ -4,13 +4,13 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import ReactSwitch from "react-switch";
 import Select from "~/components/inputs/Select";
-import { type LeadData, useLead } from "~/components/provider/LeadProvider";
 import ResultLamal from "./ResultLamal";
 import ResultLca from "./ResultLca";
 import { useResult } from "./ResultProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
+import { Adherent, schemaData } from "~/constants/lead.constant";
+import { useFormStore } from "~/stores/form";
 
-const textByIndex = (profile: LeadData["adherent"][0]) => {
+const textByIndex = (profile: Adherent) => {
   if (profile.type === "main") return "Vous";
   if (profile.type === "partner")
     return "Votre conjoint" + (profile.civility === "female" ? "e" : "");
@@ -19,19 +19,19 @@ const textByIndex = (profile: LeadData["adherent"][0]) => {
       "Votre enfant né" +
       (profile.civility === "female" ? "e" : "") +
       " en " +
-      dayjs(profile.dob, "DD.MM.YYYY").format("YYYY")
+      (profile.year || "")
     );
   return "";
 };
 
 const Result = () => {
-  const { lead } = useLead();
+  const lead = useFormStore((state) => state.data);
+  const nextStep = useFormStore((state) => state.nextStep);
   const {
     profilIndex: profil,
     setProfileIndex: setProfile,
     loading,
   } = useResult();
-  const { setActiveStep } = useSteps();
   const [monthlyPrice, setMonthlyPrice] = useState<boolean>(true);
   const [show, setShow] = useState<"lca" | "lamal">("lca");
   return (
@@ -51,9 +51,7 @@ const Result = () => {
         <button
           className="flex items-center gap-2 rounded-lg border border-primary bg-white p-1 font-bold text-primary hover:bg-primary-50"
           onClick={() =>
-            setActiveStep(
-              lead.npa?.key === -1 ? "situation" : "assurance-actuelle"
-            )
+            nextStep(lead.npa?.key === -1 ? "situation" : "assurance-actuelle")
           }
         >
           <span className="hidden md:block">Modifier mon profil</span>

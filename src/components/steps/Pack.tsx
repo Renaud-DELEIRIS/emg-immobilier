@@ -2,6 +2,7 @@ import { IconCheck, IconCircleCaretDown } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import {
+  packById,
   prestationsConfort,
   prestationsEssentials,
   prestationsPremium,
@@ -12,44 +13,26 @@ import {
   optionMedecineAlternative,
   optionTraitementsDentaires,
 } from "~/data/PackOption";
-import type { Adherent } from "../provider/LeadProvider";
 import PackShowOption from "./PackShowOption";
+import { Adherent, Pack } from "~/constants/lead.constant";
 
 const Pack = ({
   adherent,
   setPack,
 }: {
   adherent: Adherent;
-  setPack: (pack: {
-    principal: "Essentiel" | "Confort" | "Premium" | undefined | null;
-    options: {
-      label:
-        | "Médecine alternative"
-        | "Traitements dentaires"
-        | "Capital hospitalier"
-        | "Hospitalisation";
-      level: number;
-    }[];
-  }) => void;
+  setPack: (pack: Pack) => void;
 }) => {
-  const [selected, setSelected] = useState<
-    "Essentiel" | "Confort" | "Premium" | undefined | null
-  >(adherent.pack?.principal);
-  const age = dayjs().diff(dayjs(adherent.dob, "DD.MM.YYYY"), "year");
+  const [selected, setSelected] = useState<number | undefined>(
+    adherent.pack?.id
+  );
+  const age = dayjs().diff(dayjs(adherent.year, "YYYY"), "year");
   const [optionExpanded, setOptionExpanded] = useState<boolean>(false);
-  const [options, setOptions] = useState<
-    {
-      label:
-        | "Médecine alternative"
-        | "Traitements dentaires"
-        | "Hospitalisation"
-        | "Capital hospitalier";
-      level: number;
-    }[]
-  >(
+  const [options, setOptions] = useState<Pack["options"]>(
     adherent.pack?.options || age <= 3
       ? [
           {
+            id: 4,
             label: "Hospitalisation",
             level: 3,
           },
@@ -57,6 +40,7 @@ const Pack = ({
       : age <= 15
       ? [
           {
+            id: 2,
             label: "Traitements dentaires",
             level: 1,
           },
@@ -64,16 +48,19 @@ const Pack = ({
       : age <= 23
       ? [
           {
+            id: 1,
             label: "Médecine alternative",
             level: 1,
           },
         ]
       : [
           {
+            id: 3,
             label: "Capital hospitalier",
             level: 2,
           },
           {
+            id: 4,
             label: "Hospitalisation",
             level: 1,
           },
@@ -83,20 +70,21 @@ const Pack = ({
   useEffect(() => {
     // If adherent age is under or equal at 3 make premium selected
     if (
-      dayjs().diff(dayjs(adherent.dob, "DD.MM.YYYY"), "year") <= 3 &&
+      dayjs().diff(dayjs(adherent.year, "YYYY"), "year") <= 3 &&
       selected === undefined
     )
-      setSelected("Premium");
+      setSelected(3);
     else if (
-      dayjs().diff(dayjs(adherent.dob, "DD.MM.YYYY"), "year") > 3 &&
+      dayjs().diff(dayjs(adherent.year, "YYYY"), "year") > 3 &&
       selected === undefined
     )
-      setSelected("Confort");
+      setSelected(2);
   }, []);
 
   useEffect(() => {
     setPack({
-      principal: selected,
+      id: selected as number,
+      principal: packById(selected as number),
       options,
     });
   }, [options, selected]);
@@ -109,28 +97,24 @@ const Pack = ({
           defaultLevel={1}
           pack="Essentiel"
           recommended={false}
-          selected={selected === "Essentiel"}
-          onClick={() => setSelected("Essentiel")}
+          selected={selected === 1}
+          onClick={() => setSelected(1)}
         />
         <PackShowOption
           prestation={[prestationsConfort]}
           pack="Confort"
           defaultLevel={1}
-          recommended={
-            dayjs().diff(dayjs(adherent.dob, "DD.MM.YYYY"), "year") > 3
-          }
-          selected={selected === "Confort"}
-          onClick={() => setSelected("Confort")}
+          recommended={dayjs().diff(dayjs(adherent.year, "YYYY"), "year") > 3}
+          selected={selected === 2}
+          onClick={() => setSelected(2)}
         />
         <PackShowOption
           defaultLevel={1}
           prestation={[prestationsPremium]}
           pack="Premium"
-          recommended={
-            dayjs().diff(dayjs(adherent.dob, "DD.MM.YYYY"), "year") <= 3
-          }
-          selected={selected === "Premium"}
-          onClick={() => setSelected("Premium")}
+          recommended={dayjs().diff(dayjs(adherent.year, "YYYY"), "year") <= 3}
+          selected={selected === 3}
+          onClick={() => setSelected(3)}
         />
       </div>
       <div className="container-shadow mt-8 rounded-lg border p-4">
@@ -160,21 +144,21 @@ const Pack = ({
               prestation={optionMedecineAlternative}
               pack="Médecine alternative"
               defaultLevel={
-                options.find(
+                options?.find(
                   (option) => option.label === "Médecine alternative"
                 )?.level || 1
               }
               onChangeLevel={(level) => {
                 if (selected === undefined) return;
                 if (
-                  options.find(
+                  options?.find(
                     (option) => option.label === "Médecine alternative"
                   )
                 ) {
                   setOptions(
                     options.map((option) =>
                       option.label === "Médecine alternative"
-                        ? { label: "Médecine alternative", level: level }
+                        ? { label: "Médecine alternative", level: level, id: 1 }
                         : option
                     )
                   );
@@ -182,14 +166,14 @@ const Pack = ({
               }}
               recommended={false}
               selected={
-                !!options.find(
+                !!options?.find(
                   (option) => option.label === "Médecine alternative"
                 )
               }
               onClick={(level) => {
                 if (selected === undefined) return;
                 if (
-                  options.find(
+                  options?.find(
                     (option) => option.label === "Médecine alternative"
                   )
                 ) {
@@ -199,10 +183,16 @@ const Pack = ({
                     )
                   );
                 } else {
-                  setOptions([
-                    ...options,
-                    { label: "Médecine alternative", level: level },
-                  ]);
+                  if (options)
+                    setOptions([
+                      ...options,
+                      { label: "Médecine alternative", level: level, id: 1 },
+                    ]);
+                  else {
+                    setOptions([
+                      { label: "Médecine alternative", level: level, id: 1 },
+                    ]);
+                  }
                 }
               }}
             />{" "}
@@ -211,14 +201,14 @@ const Pack = ({
               pack="Traitements dentaires"
               recommended={false}
               selected={
-                !!options.find(
+                !!options?.find(
                   (option) => option.label === "Traitements dentaires"
                 )
               }
               onClick={(level) => {
                 if (selected === undefined) return;
                 if (
-                  options.find(
+                  options?.find(
                     (option) => option.label === "Traitements dentaires"
                   )
                 ) {
@@ -228,28 +218,38 @@ const Pack = ({
                     )
                   );
                 } else {
-                  setOptions([
-                    ...options,
-                    { label: "Traitements dentaires", level },
-                  ]);
+                  if (options)
+                    setOptions([
+                      ...options,
+                      { label: "Traitements dentaires", level, id: 2 },
+                    ]);
+                  else {
+                    setOptions([
+                      { label: "Traitements dentaires", level, id: 2 },
+                    ]);
+                  }
                 }
               }}
               defaultLevel={
-                options.find(
+                options?.find(
                   (option) => option.label === "Traitements dentaires"
                 )?.level || 1
               }
               onChangeLevel={(level) => {
                 if (selected === undefined) return;
                 if (
-                  options.find(
+                  options?.find(
                     (option) => option.label === "Traitements dentaires"
                   )
                 ) {
                   setOptions(
                     options.map((option) =>
                       option.label === "Traitements dentaires"
-                        ? { label: "Traitements dentaires", level: level }
+                        ? {
+                            label: "Traitements dentaires",
+                            level: level,
+                            id: 2,
+                          }
                         : option
                     )
                   );
@@ -261,14 +261,14 @@ const Pack = ({
               pack="Capital hospitalier"
               recommended={false}
               selected={
-                !!options.find(
+                !!options?.find(
                   (option) => option.label === "Capital hospitalier"
                 )
               }
               onClick={(level) => {
                 if (selected === undefined) return;
                 if (
-                  options.find(
+                  options?.find(
                     (option) => option.label === "Capital hospitalier"
                   )
                 ) {
@@ -278,27 +278,34 @@ const Pack = ({
                     )
                   );
                 } else {
-                  setOptions([
-                    ...options,
-                    { label: "Capital hospitalier", level: level },
-                  ]);
+                  if (options)
+                    setOptions([
+                      ...options,
+                      { label: "Capital hospitalier", level: level, id: 3 },
+                    ]);
+                  else {
+                    setOptions([
+                      { label: "Capital hospitalier", level: level, id: 3 },
+                    ]);
+                  }
                 }
               }}
               defaultLevel={
-                options.find((option) => option.label === "Capital hospitalier")
-                  ?.level || 1
+                options?.find(
+                  (option) => option.label === "Capital hospitalier"
+                )?.level || 1
               }
               onChangeLevel={(level) => {
                 if (selected === undefined) return;
                 if (
-                  options.find(
+                  options?.find(
                     (option) => option.label === "Capital hospitalier"
                   )
                 ) {
                   setOptions(
                     options.map((option) =>
                       option.label === "Capital hospitalier"
-                        ? { label: "Capital hospitalier", level: level }
+                        ? { label: "Capital hospitalier", level: level, id: 3 }
                         : option
                     )
                   );
@@ -311,12 +318,12 @@ const Pack = ({
               customLevel={["Flexible", "Semi-privée", "Privée"]}
               recommended={true}
               selected={
-                !!options.find((option) => option.label === "Hospitalisation")
+                !!options?.find((option) => option.label === "Hospitalisation")
               }
               onClick={(level) => {
                 if (selected === undefined) return;
                 if (
-                  options.find((option) => option.label === "Hospitalisation")
+                  options?.find((option) => option.label === "Hospitalisation")
                 ) {
                   setOptions(
                     options.filter(
@@ -324,25 +331,31 @@ const Pack = ({
                     )
                   );
                 } else {
-                  setOptions([
-                    ...options,
-                    { label: "Hospitalisation", level: level },
-                  ]);
+                  if (options)
+                    setOptions([
+                      ...options,
+                      { label: "Hospitalisation", level: level, id: 4 },
+                    ]);
+                  else {
+                    setOptions([
+                      { label: "Hospitalisation", level: level, id: 4 },
+                    ]);
+                  }
                 }
               }}
               defaultLevel={
-                options.find((option) => option.label === "Hospitalisation")
+                options?.find((option) => option.label === "Hospitalisation")
                   ?.level || 1
               }
               onChangeLevel={(level) => {
                 if (selected === undefined) return;
                 if (
-                  options.find((option) => option.label === "Hospitalisation")
+                  options?.find((option) => option.label === "Hospitalisation")
                 ) {
                   setOptions(
                     options.map((option) =>
                       option.label === "Hospitalisation"
-                        ? { label: "Hospitalisation", level: level }
+                        ? { label: "Hospitalisation", level: level, id: 4 }
                         : option
                     )
                   );
@@ -356,7 +369,7 @@ const Pack = ({
         className="mt-8 flex w-fit items-center gap-2 rounded-lg border border-red-500 bg-white p-2 text-lg font-bold text-red-500 hover:bg-red-100"
         onClick={() => {
           setOptions([]);
-          setSelected(null);
+          setSelected(undefined);
         }}
       >
         Je ne veux que la base

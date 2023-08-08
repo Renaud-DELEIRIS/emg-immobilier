@@ -1,18 +1,17 @@
 import { useState } from "react";
 import StepContainer from "../StepContainer";
 import TileInput from "~/components/inputs/Tile";
-import { IconGenderFemale, IconGenderMale } from "@tabler/icons-react";
-import { useLead } from "~/components/provider/LeadProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
 import { EmgAdulte } from "~/icons/EmgAdulte";
 import { EmgCouple } from "~/icons/EmgCouple";
 import { EmgAdulteEnfant } from "~/icons/EmgAdulteEnfant";
 import { EmgCoupleEnfant } from "~/icons/EmgCoupleEnfant";
 import { useTranslation, Trans } from "next-i18next";
+import { useFormStore } from "~/stores/form";
 
 const For = () => {
-  const { lead, changeLead } = useLead();
-  const { increaseStep, activeStep, setCurrentStep } = useSteps();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("common");
   return (
     <StepContainer
@@ -28,8 +27,7 @@ const For = () => {
         value={lead.for}
         onChange={(value) => {
           changeLead({ for: value as "you", adherent: [] });
-          setCurrentStep("adherent");
-          increaseStep("for-who");
+          nextStep("for-who");
         }}
         options={[
           {

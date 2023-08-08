@@ -1,35 +1,30 @@
 import StepContainer from "../StepContainer";
-import { useLead } from "~/components/provider/LeadProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
 import AutoComplete from "~/components/inputs/Autocomplete";
 import insurers from "~/data/insurers.json";
 import { useTranslation, Trans } from "next-i18next";
+import { useFormStore } from "~/stores/form";
 
 const Assurance = () => {
-  const { lead, changeLead } = useLead();
-  const { increaseStep, activeStep } = useSteps();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("common");
   return (
     <StepContainer
-      title={t('STEP_ASSURANCE_TITLE')}
-      description={
-        <Trans
-          t={t}
-          i18nKey="STEP_ASSURANCE_DESCRIPTION"
-          />
-      }
+      title={t("STEP_ASSURANCE_TITLE")}
+      description={<Trans t={t} i18nKey="STEP_ASSURANCE_DESCRIPTION" />}
       stepId="assurance-actuelle"
     >
       <AutoComplete
         value={
           lead.actualInsurance || {
-            key: 0,
+            key: 0 as number | string,
             value: "",
           }
         }
         onChange={(value) => {
           changeLead({ actualInsurance: value });
-          increaseStep("assurance-actuelle", {
+          nextStep("assurance-actuelle", {
             ...lead,
             actualInsurance: value,
           });
@@ -45,7 +40,7 @@ const Assurance = () => {
             changeLead({
               actualInsurance: { key: -1, value: t("STEP_ASSURANCE_NO_SPAN") },
             });
-            increaseStep("assurance-actuelle", {
+            nextStep("assurance-actuelle", {
               ...lead,
               actualInsurance: { key: -1, value: t("STEP_ASSURANCE_NO_SPAN") },
             });

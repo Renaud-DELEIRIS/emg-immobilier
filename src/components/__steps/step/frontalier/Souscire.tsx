@@ -6,14 +6,14 @@ import Tile from "~/components/button/Tile";
 import InputDate from "~/components/inputs/DatePicker";
 import Select from "~/components/inputs/Select";
 import TextInput from "~/components/inputs/TextInput";
-import { useLead } from "~/components/provider/LeadProvider";
-import { useSteps } from "~/components/provider/StepsProvider";
 import { motion } from "framer-motion";
 import CompleteAddress from "~/components/inputs/AddressInput";
+import { useFormStore } from "~/stores/form";
 
 const Souscrire = () => {
-  const { lead, changeLead } = useLead();
-  const { increaseStep } = useSteps();
+  const lead = useFormStore((state) => state.data);
+  const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
   const [preDate, setPreDate] = useState<"ajd" | "demain" | "mois" | "autre">();
 
   const isValid =
@@ -109,6 +109,7 @@ const Souscrire = () => {
               value={lead.startInsurance}
               onChange={(date) => changeLead({ startInsurance: date })}
               className="mt-2 md:w-80"
+              format="DD.MM.YYYY"
             />
           )}
         </motion.div>
@@ -137,14 +138,14 @@ const Souscrire = () => {
         value={lead.address || ""}
         onChange={(value) => changeLead({ address: value })}
         label="Votre adresse de résidence :"
-        placeholder="p. ex. Rue du parc 12, 1201 Genève GE"
+        placeholder="p. ex. Rue du parc 12, 01210 Ferney-Voltaire France"
         autocomplete="street-address"
         boldLabel
       />
 
       <Button
         onClick={() => {
-          increaseStep("souscrire");
+          nextStep("souscrire");
         }}
         className="mt-4 w-52"
         disabled={!isValid}
