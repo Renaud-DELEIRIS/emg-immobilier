@@ -2,13 +2,12 @@
 import Router from "next/router";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
-import { trcpProxyClient } from "~/utils/api";
-import getCookie from "~/utils/client/getCookie";
-import getParamsUrl from "~/utils/client/getParamsUrl";
-import { useSessionStore } from "./session";
-import { STEPS, Step, StepId, getStepById } from "~/constants/step.constant";
 import { initialData, schemaData } from "~/constants/lead.constant";
+import { STEPS, Step, StepId, getStepById } from "~/constants/step.constant";
+import { trcpProxyClient } from "~/utils/api";
+import getParamsUrl from "~/utils/client/getParamsUrl";
 import { getStepComponent } from "./getComponent";
+import { useSessionStore } from "./session";
 
 interface FormState {
   currentStep: Step;

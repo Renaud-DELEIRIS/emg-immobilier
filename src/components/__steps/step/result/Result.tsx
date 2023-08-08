@@ -1,14 +1,13 @@
 import { IconEdit, IconLoader } from "@tabler/icons-react";
-import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import ReactSwitch from "react-switch";
 import Select from "~/components/inputs/Select";
+import { Adherent } from "~/constants/lead.constant";
+import { useFormStore } from "~/stores/form";
 import ResultLamal from "./ResultLamal";
 import ResultLca from "./ResultLca";
 import { useResult } from "./ResultProvider";
-import { Adherent, schemaData } from "~/constants/lead.constant";
-import { useFormStore } from "~/stores/form";
 
 const textByIndex = (profile: Adherent) => {
   if (profile.type === "main") return "Vous";
@@ -115,8 +114,18 @@ const Result = () => {
           </div>
         ) : (
           <>
-            {show === "lamal" && <ResultLamal monthlyPrice={monthlyPrice} />}
-            {show === "lca" && <ResultLca monthlyPrice={monthlyPrice} />}
+            {show === "lamal" && (
+              <ResultLamal
+                monthlyPrice={monthlyPrice}
+                adherent={lead.adherent[profil]!}
+              />
+            )}
+            {show === "lca" && (
+              <ResultLca
+                monthlyPrice={monthlyPrice}
+                adherent={lead.adherent[profil]!}
+              />
+            )}
           </>
         )}
       </div>

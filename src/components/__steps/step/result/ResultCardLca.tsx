@@ -1,8 +1,3 @@
-import Image from "next/image";
-import { useState } from "react";
-import Button from "~/components/button/Button";
-import { type Lca } from "~/types/comparatif";
-import insurance_hash from "~/data/ch-insurances-hash.json";
 import {
   IconChevronDown,
   IconCircleCheck,
@@ -10,11 +5,17 @@ import {
   IconCircleX,
   IconHelp,
 } from "@tabler/icons-react";
-import Checkbox from "~/components/checkbox/Checkbox";
-import { recallResident } from "~/utils/api/recallResident";
+import Image from "next/image";
+import { useState } from "react";
 import { toast } from "react-toastify";
-import ModalSouscrireLca from "./ModalSouscrireLca";
+import Button from "~/components/button/Button";
+import Checkbox from "~/components/checkbox/Checkbox";
+import { Adherent } from "~/constants/lead.constant";
+import insurance_hash from "~/data/ch-insurances-hash.json";
 import { useFormStore } from "~/stores/form";
+import { type Lca } from "~/types/comparatif";
+import { recallResident } from "~/utils/api/recallResident";
+import ModalSouscrireLca from "./ModalSouscrireLca";
 
 interface Props {
   recommended?: boolean;
@@ -24,6 +25,7 @@ interface Props {
   onCompare: (id: string) => void;
   compare: boolean;
   className?: string;
+  adherent: Adherent;
 }
 
 const ResultCardLca = ({
@@ -34,6 +36,7 @@ const ResultCardLca = ({
   onCompare,
   compare,
   className = "",
+  adherent,
 }: Props) => {
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
@@ -269,6 +272,7 @@ const ResultCardLca = ({
         open={open}
         onClose={() => setOpen(false)}
         lca={info}
+        adherent={adherent}
       />
     </div>
   );

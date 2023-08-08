@@ -1,25 +1,52 @@
-import { IconCheck, IconCircleCheck } from "@tabler/icons-react";
+import { IconCircleCheck } from "@tabler/icons-react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import Button from "~/components/button/Button";
 import Tile from "~/components/button/Tile";
 import Select from "~/components/inputs/Select";
 import TextInput from "~/components/inputs/TextInput";
 import FlatModal from "~/components/modal/FlatModal";
+import { Adherent } from "~/constants/lead.constant";
+import { env } from "~/env.mjs";
+import { useFormStore } from "~/stores/form";
 import { type Lamal } from "~/types/comparatif";
 
 interface Props {
   open: boolean;
   onClose: () => void;
   lamal: Lamal;
+  adherent: Adherent;
 }
 
-const ModalSouscrireLamal = ({ open, onClose, lamal }: Props) => {
+const ModalSouscrireLamal = ({ open, onClose, lamal, adherent }: Props) => {
   const [affiliation, setAffiliation] = useState<string>();
   const [affiliattionCaisse, setAffiliationCaisse] = useState("");
   const [affiliationTime, setAffiliationTime] = useState("");
+  const lead = useFormStore((state) => state.data);
 
   const sendInfo = () => {
-    onClose();
+    const commentaire = `Pour ${
+      adherent.type === "main"
+        ? "personne principal"
+        : adherent.type === "partner"
+        ? adherent.civility === "man"
+          ? "conjoint"
+          : "conjointe"
+        : `enfant né en ${adherent?.year}`
+    } : ${
+      !!(affiliation === "non")
+        ? `Non affilié pour Lamal.`
+        : `Affilié Lamal chez ${affiliattionCaisse} depuis ${affiliationTime}.`
+    }`;
+    try {
+      fetch(
+        `${env.NEXT_PUBLIC_ADDCMT}?commentaire=${commentaire}&idlead=${lead.idLead}`
+      );
+      toast.success("Vos informations ont bien été reçus.");
+    } catch (error: any) {
+    } finally {
+      onClose();
+    }
   };
 
   return (
@@ -40,8 +67,7 @@ const ModalSouscrireLamal = ({ open, onClose, lamal }: Props) => {
           questions suivantes
         </p>
         <p className="mt-4 text-sm font-bold">
-          Possedez-vous une caisse d‘assurance pour vos assurances
-          complémentaires ?
+          Possedez-vous une caisse d‘assurance pour votre assurance de base ?
         </p>
         <div className="mt-4 flex w-full flex-col gap-4">
           <div className="flex w-full flex-row items-center gap-2">

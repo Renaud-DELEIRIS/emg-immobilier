@@ -32,6 +32,7 @@ export const env = createEnv({
     NEXT_PUBLIC_MAPBOX: z.string(),
     NEXT_PUBLIC_SITE: z.string(),
     NEXT_PUBLIC_TUNNEL: z.string(),
+    NEXT_PUBLIC_ADDCMT: z.string().url(),
   },
 
   /**
@@ -57,5 +58,6 @@ export const env = createEnv({
     NEXT_PUBLIC_TUNNEL: process.env.NEXT_PUBLIC_TUNNEL,
     AWS_PUBLIC: process.env.AWS_PUBLIC,
     AWS_SECRET: process.env.AWS_SECRET,
+    NEXT_PUBLIC_ADDCMT: process.env.NEXT_PUBLIC_ADDCMT,
   },
 });

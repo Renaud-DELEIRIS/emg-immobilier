@@ -1,19 +1,21 @@
+import { IconChevronDown, IconCircleCheckFilled } from "@tabler/icons-react";
 import Image from "next/image";
 import { useState } from "react";
-import Button from "~/components/button/Button";
-import { type Lamal } from "~/types/comparatif";
-import insurance_hash from "~/data/ch-insurances-hash.json";
-import { IconChevronDown, IconCircleCheckFilled } from "@tabler/icons-react";
-import { recallFrontalier } from "~/utils/api/recallFrontalier";
 import { toast } from "react-toastify";
-import ModalSouscrireLamal from "./ModalSouscrireLamal";
+import Button from "~/components/button/Button";
+import { Adherent } from "~/constants/lead.constant";
+import insurance_hash from "~/data/ch-insurances-hash.json";
 import { useFormStore } from "~/stores/form";
+import { type Lamal } from "~/types/comparatif";
+import { recallFrontalier } from "~/utils/api/recallFrontalier";
+import ModalSouscrireLamal from "./ModalSouscrireLamal";
 
 interface Props {
   recommended?: boolean;
   info: Lamal;
   monthPrice: boolean;
   className?: string;
+  adherent: Adherent;
 }
 
 const ResultCardLamal = ({
@@ -21,6 +23,7 @@ const ResultCardLamal = ({
   info,
   monthPrice,
   className = "",
+  adherent,
 }: Props) => {
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
@@ -137,6 +140,7 @@ const ResultCardLamal = ({
         open={open}
         onClose={() => setOpen(false)}
         lamal={info}
+        adherent={adherent}
       />
     </div>
   );

@@ -1,25 +1,52 @@
 import { IconCircleCheck } from "@tabler/icons-react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import Button from "~/components/button/Button";
 import Tile from "~/components/button/Tile";
 import Select from "~/components/inputs/Select";
 import TextInput from "~/components/inputs/TextInput";
 import FlatModal from "~/components/modal/FlatModal";
+import { Adherent } from "~/constants/lead.constant";
+import { env } from "~/env.mjs";
+import { useFormStore } from "~/stores/form";
 import { type Lca } from "~/types/comparatif";
 
 interface Props {
   open: boolean;
   onClose: () => void;
   lca: Lca;
+  adherent: Adherent;
 }
 
-const ModalSouscrireLca = ({ open, onClose, lca }: Props) => {
+const ModalSouscrireLca = ({ open, onClose, lca, adherent }: Props) => {
   const [affiliation, setAffiliation] = useState<string>();
   const [affiliattionCaisse, setAffiliationCaisse] = useState("");
   const [affiliationTime, setAffiliationTime] = useState("");
+  const lead = useFormStore((state) => state.data);
 
   const sendInfo = () => {
-    onClose();
+    const commentaire = `Pour ${
+      adherent.type === "main"
+        ? "personne principal"
+        : adherent.type === "partner"
+        ? adherent.civility === "man"
+          ? "conjoint"
+          : "conjointe"
+        : `enfant né en ${adherent?.year}`
+    } : ${
+      !!(affiliation === "non")
+        ? `Non affilié pour LCA.`
+        : `Affilié Lamal chez ${affiliattionCaisse} depuis ${affiliationTime}.`
+    }`;
+    try {
+      fetch(
+        `${env.NEXT_PUBLIC_ADDCMT}?commentaire=${commentaire}&idlead=${lead.idLead}`
+      );
+      toast.success("Vos informations ont bien été reçus.");
+    } catch (error: any) {
+    } finally {
+      onClose();
+    }
   };
 
   return (

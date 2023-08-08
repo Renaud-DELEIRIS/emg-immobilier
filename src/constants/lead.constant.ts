@@ -69,6 +69,7 @@ export const schemaData = z.object({
   selectedOfferFrontalier: z.string().optional(),
   situation: z.enum(["frontalier", "future resident"]).optional(),
   verified: z.boolean(),
+  idLead: z.string().optional(),
 });
 
 export type schemaData = z.infer<typeof schemaData>;

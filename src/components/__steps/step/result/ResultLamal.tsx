@@ -1,8 +1,15 @@
+import { motion } from "framer-motion";
+import { Adherent } from "~/constants/lead.constant";
 import ResultCardLamal from "./ResultCardLamal";
 import { useResult } from "./ResultProvider";
-import { motion } from "framer-motion";
 
-const ResultLamal = ({ monthlyPrice }: { monthlyPrice: boolean }) => {
+const ResultLamal = ({
+  monthlyPrice,
+  adherent,
+}: {
+  monthlyPrice: boolean;
+  adherent: Adherent;
+}) => {
   const { lamalItems } = useResult();
   return (
     <motion.div
@@ -22,6 +29,7 @@ const ResultLamal = ({ monthlyPrice }: { monthlyPrice: boolean }) => {
             info={item}
             monthPrice={monthlyPrice}
             recommended={index === 0}
+            adherent={adherent}
           />
         </div>
       ))}

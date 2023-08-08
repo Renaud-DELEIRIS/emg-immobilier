@@ -100,9 +100,18 @@ const optionHospitalisation: Prestation[][] = [
   ],
 ];
 
+export const packOptionById = (id: number) =>
+  id === 1
+    ? optionMedecineAlternative
+    : id === 2
+    ? optionTraitementsDentaires
+    : id === 3
+    ? optionCapitalHospitalier
+    : optionHospitalisation;
+
 export {
-  optionMedecineAlternative,
-  optionTraitementsDentaires,
   optionCapitalHospitalier,
   optionHospitalisation,
+  optionMedecineAlternative,
+  optionTraitementsDentaires,
 };

@@ -1,19 +1,20 @@
-import { type StepId } from "~/constants/step.constant";
-import PhoneInput from "react-phone-input-2";
-import { IconArrowLeft, IconMail } from "@tabler/icons-react";
-import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import Image from "next/image";
-import TextInput from "../inputs/TextInput";
+import { IconArrowLeft, IconMail } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
-import CodeInput from "../inputs/CodeInput";
-import Button from "../button/Button";
+import Image from "next/image";
+import { Fragment, useState } from "react";
+import PhoneInput from "react-phone-input-2";
 import { sendCodeSms } from "~/utils/api/sendSms";
+import Button from "../button/Button";
+import CodeInput from "../inputs/CodeInput";
+import TextInput from "../inputs/TextInput";
 
 import { parsePhoneNumber } from "libphonenumber-js";
 import { Trans, useTranslation } from "next-i18next";
 import { useFormStore } from "~/stores/form";
+import { sendLeadComparea } from "~/utils/api/createLead";
+import getParamsUrl from "~/utils/client/getParamsUrl";
 
 export const formatTelephone = (p: string) => {
   try {
@@ -55,13 +56,16 @@ const Info = ({ open }: { open: boolean }) => {
       });
   };
 
-  const verifyCode = () => {
+  const verifyCode = async () => {
     if (!responseCode) return;
     if (code.trim() !== responseCode.toString()) {
       setError(t("STEP_VERIFY_ERROR"));
       return;
     }
-    changeLead({ ...lead, verified: true });
+    const gmtParams = getParamsUrl();
+    const idLead = await sendLeadComparea(lead, gmtParams);
+    console.log(idLead);
+    changeLead({ ...lead, verified: true, idLead: idLead });
   };
 
   return (

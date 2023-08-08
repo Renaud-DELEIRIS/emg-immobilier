@@ -1,12 +1,18 @@
-import { useResult } from "./ResultProvider";
 import { motion } from "framer-motion";
-import ResultCardLca from "./ResultCardLca";
 import { useState } from "react";
 import Button from "~/components/button/Button";
-import FlatModal from "~/components/modal/FlatModal";
+import { Adherent } from "~/constants/lead.constant";
 import ModalComparatifTable from "./ModalComparatifTable";
+import ResultCardLca from "./ResultCardLca";
+import { useResult } from "./ResultProvider";
 
-const ResultLca = ({ monthlyPrice }: { monthlyPrice: boolean }) => {
+const ResultLca = ({
+  monthlyPrice,
+  adherent,
+}: {
+  monthlyPrice: boolean;
+  adherent: Adherent;
+}) => {
   const { lcaItems } = useResult();
   const [compare, setCompare] = useState<string[]>([]);
 
@@ -32,6 +38,7 @@ const ResultLca = ({ monthlyPrice }: { monthlyPrice: boolean }) => {
               info={item}
               monthPrice={monthlyPrice}
               recommended={item.bestChoice}
+              adherent={adherent}
               canCompare={
                 compare.length < 3 || compare.includes(item.id.toString())
               }
