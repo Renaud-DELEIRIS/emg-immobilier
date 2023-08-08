@@ -1,8 +1,8 @@
-import { Step, type Prisma } from "@prisma/client";
+import { type Prisma, type Step } from "@prisma/client";
+import { initialData, type schemaData } from "~/constants/lead.constant";
+import { STEPS } from "~/constants/step.constant";
 import { env } from "~/env.mjs";
 import { prisma } from "../db";
-import { initialData, schemaData } from "~/constants/lead.constant";
-import { STEPS } from "~/constants/step.constant";
 
 export const getVersion = async (id: string | null) => {
   if (!id) return null;

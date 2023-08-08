@@ -1,8 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { PutObjectCommand, S3 } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { z } from "zod";
+import { schemaData } from "~/constants/lead.constant";
+import { schemaStep } from "~/constants/step.constant";
+import { env } from "~/env.mjs";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { getIpFromRequest } from "~/utils/server/getIpFromRequest";
 import {
@@ -13,11 +18,17 @@ import {
   updateTrackingStepDuration,
   updateVersion,
 } from "../data/session";
-import { schemaData } from "~/constants/lead.constant";
-import { schemaStep } from "~/constants/step.constant";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
+
+const s3 = new S3({
+  region: "eu-west-3",
+  credentials: {
+    accessKeyId: env.AWS_PUBLIC,
+    secretAccessKey: env.AWS_SECRET,
+  },
+});
 
 export const appRouter = createTRPCRouter({
   fetchSession: publicProcedure
@@ -74,6 +85,23 @@ export const appRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const { versionId, stepId, duration } = input;
       await updateTrackingStepDuration(versionId, stepId, duration);
+    }),
+  createPresignedUrl: publicProcedure
+    .input(
+      z.object({
+        token: z.string(),
+        filename: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { token, filename } = input;
+      const key = `dashboard/${token}/${filename}`;
+      const command = new PutObjectCommand({
+        Bucket: "emg-sa",
+        Key: key,
+      });
+      const url = await getSignedUrl(s3, command, { expiresIn: 30 });
+      return { key, url };
     }),
 });
 
