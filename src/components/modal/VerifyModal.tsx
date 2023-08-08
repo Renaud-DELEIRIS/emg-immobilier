@@ -63,6 +63,7 @@ const Info = ({ open }: { open: boolean }) => {
       return;
     }
     const gmtParams = getParamsUrl();
+    // TODO Create lead frontaluer
     const idLead = await sendLeadComparea(lead, gmtParams);
     console.log(idLead);
     changeLead({ ...lead, verified: true, idLead: idLead });
