@@ -1,18 +1,17 @@
 import StepContainer from "../StepContainer";
 import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
-import AutoComplete from "~/components/inputs/Autocomplete";
-import localtion from "~/data/ch-locations.json";
 import TileInput from "~/components/inputs/Tile";
 import { IconThumbDown, IconThumbUp } from "@tabler/icons-react";
-import { useState } from "react";
 import Button from "~/components/button/Button";
 import { motion } from "framer-motion";
 import dayjs from "dayjs";
+import { Trans, useTranslation } from "next-i18next";
 
 const Hours = () => {
   const { lead, changeLead } = useLead();
   const { increaseStep, activeStep } = useSteps();
+  const { t } = useTranslation("common");
 
   const hasOtherWorkers =
     lead.adherent
@@ -49,13 +48,7 @@ const Hours = () => {
       {hasOtherWorkers && (
         <StepContainer
           title=""
-          description={
-            <span>
-              Parfait!
-              <br />
-              Nous allons préciser votre profil.
-            </span>
-          }
+          description={<Trans i18nKey={"STEP_HOURS_SUISSE"} t={t} />}
           stepId="package"
           id="partner"
           forceActive={!otherWorkersRenseignedWorkPlace}
@@ -76,13 +69,11 @@ const Hours = () => {
                   <h1 className="mb-4 text-base font-extrabold leading-[1.6] text-dark md:leading-[1.4]">
                     {p.type === "partner"
                       ? p.civility === "female"
-                        ? "Votre conjointe travaille-t-elle sur le territoire Suisse ?"
-                        : "Votre conjoint travaille-t-il sur le territoire Suisse ?"
-                      : `Votre enfant né en ${dayjs(
-                          p.dob,
-                          "DD.MM.YYYY"
-                        ).year()} travaille-t-il sur le territoire Suisse ?
-                  `}
+                        ? t("STEP_HOURS_SUISSE_SPOUSE_FEMALE")
+                        : t("STEP_HOURS_SUISSE_SPOUSE_MALE")
+                      : t("STEP_HOURS_SUISSE_CHILD", {
+                          year: dayjs(p.dob, "DD.MM.YYYY").year(),
+                        })}
                   </h1>
                   <TileInput
                     value={
@@ -108,12 +99,12 @@ const Hours = () => {
                     }}
                     options={[
                       {
-                        label: "Oui",
+                        label: t("YES"),
                         value: "yes",
                         rightIcon: <IconThumbUp />,
                       },
                       {
-                        label: "Non",
+                        label: t("NO"),
                         value: "no",
                         rightIcon: <IconThumbDown />,
                       },
@@ -129,13 +120,7 @@ const Hours = () => {
       {otherWorkersRenseignedWorkPlace && (
         <StepContainer
           title=""
-          description={
-            <span>
-              Très bien,
-              <br />
-              Concernant votre travail en Suisse,
-            </span>
-          }
+          description={<Trans i18nKey={"STEP_HOURS_TITLE"} t={t} />}
           stepId="work-hours"
         >
           <div className="flex flex-col gap-6">
@@ -155,15 +140,14 @@ const Hours = () => {
                   <h1 className="mb-4 text-base font-extrabold leading-[1.6] text-dark md:leading-[1.4]">
                     {p.type === "partner"
                       ? p.civility === "female"
-                        ? "Votre conjointe travaille-t-elle plus de 8h par semaine pour le même employeur ?"
-                        : "Votre conjoint travaille-t-il plus de 8h par semaine pour le même employeur ?"
+                        ? t("STEP_HOURS_SPOUSE_FEMALE")
+                        : t("STEP_HOURS_SPOUSE_MALE")
                       : p.type === "child"
-                      ? `Votre enfant né en ${dayjs(
-                          p.dob,
-                          "DD.MM.YYYY"
-                        ).year()} travaille-t-il plus de 8h par semaine pour le même employeur ?`
+                      ? t("STEP_HOURS_SPOUSE_CHILD", {
+                          year: dayjs(p.dob, "DD.MM.YYYY").year(),
+                        })
                       : p.type === "main"
-                      ? "Travaillez-vous plus de 8h par semaine pour le même employeur ?"
+                      ? t("STEP_HOURS_MAIN")
                       : ""}
                   </h1>
                   <TileInput
@@ -201,12 +185,12 @@ const Hours = () => {
                     }}
                     options={[
                       {
-                        label: "Oui",
+                        label: t("YES"),
                         value: "oui",
                         rightIcon: <IconThumbUp />,
                       },
                       {
-                        label: "Non",
+                        label: t("NO"),
                         value: "non",
                         rightIcon: <IconThumbDown />,
                       },
@@ -230,7 +214,7 @@ const Hours = () => {
                 }}
                 className="mt-4 w-52"
               >
-                Continuer
+                {t("CONTINUE")}
               </Button>
             </motion.div>
           )}

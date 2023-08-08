@@ -14,6 +14,7 @@ import Button from "../button/Button";
 import { sendCodeSms } from "~/utils/api/sendSms";
 
 import { parsePhoneNumber } from "libphonenumber-js";
+import { Trans, useTranslation } from "next-i18next";
 
 export const formatTelephone = (p: string) => {
   try {
@@ -26,12 +27,12 @@ export const formatTelephone = (p: string) => {
 
 const Info = ({ open }: { open: boolean }) => {
   const { lead, changeLead } = useLead();
-  const { increaseStep } = useSteps();
   const [step, setStep] = useState<"info" | "phone">("info");
   const [code, setCode] = useState("");
   const [responseCode, setResponseCode] = useState<string>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>();
+  const { t } = useTranslation("common");
 
   const isValidEmail = (email: string) => {
     const res = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
@@ -56,7 +57,7 @@ const Info = ({ open }: { open: boolean }) => {
   const verifyCode = () => {
     if (!responseCode) return;
     if (code.trim() !== responseCode.toString()) {
-      setError("Le code est incorrect");
+      setError(t("STEP_VERIFY_ERROR"));
       return;
     }
     changeLead({ ...lead, verified: true });
@@ -103,36 +104,35 @@ const Info = ({ open }: { open: boolean }) => {
                           height={40}
                           className="rounded-full"
                         />
-                        <span className="text-base font-semibold">Emma</span>
+                        <span className="text-base font-semibold">Emma </span>
                       </div>
                       <p className="col-span-6 text-sm text-gray-500">
                         {lead.situation === "frontalier" ? (
-                          <>
-                            {" "}
-                            Nous avons identifié pour <b>vous</b> les{" "}
-                            <span className="font-semibold text-primary underline">
-                              7
-                            </span>{" "}
-                            meilleures offres <b>frontalier</b> adaptées à votre{" "}
-                            <b>profil</b>. Ces tarifs seront bloqués pour vous
-                            jusqu’au{" "}
-                            <span className="font-semibold text-primary underline">
-                              {dayjs().add(1, "day").format("DD/MM/YYYY")}
-                            </span>
-                          </>
+                          <Trans
+                            i18nKey="STEP_VERIFY_TITLE_FRONTALIER"
+                            t={t}
+                            values={{
+                              date: dayjs().add(1, "day").format("DD/MM/YYYY"),
+                            }}
+                            components={{
+                              span: (
+                                <span className="font-semibold text-primary underline" />
+                              ),
+                            }}
+                          />
                         ) : (
-                          <>
-                            Nous avons identifié pour <b>vous</b> les{" "}
-                            <span className="font-semibold text-primary underline">
-                              12
-                            </span>{" "}
-                            meilleures offres <b>conforts</b> adaptées à votre{" "}
-                            <b>profil</b>. Ces tarifs seront bloqués pour vous
-                            jusqu’au{" "}
-                            <span className="font-semibold text-primary underline">
-                              {dayjs().add(1, "day").format("DD/MM/YYYY")}
-                            </span>
-                          </>
+                          <Trans
+                            i18nKey="STEP_VERIFY_TITLE_SUISSE"
+                            t={t}
+                            values={{
+                              date: dayjs().add(1, "day").format("DD/MM/YYYY"),
+                            }}
+                            components={{
+                              span: (
+                                <span className="font-semibold text-primary underline" />
+                              ),
+                            }}
+                          />
                         )}
                       </p>
                       <div className="col-span-6">
@@ -140,7 +140,7 @@ const Info = ({ open }: { open: boolean }) => {
                           htmlFor="email"
                           className="block text-sm font-medium text-gray-700"
                         >
-                          Votre adresse email
+                          {t("STEP_VERIFY_LABEL_EMAIL")}
                         </label>
                         <div className="relative mt-1 rounded-md shadow-sm">
                           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -169,7 +169,7 @@ const Info = ({ open }: { open: boolean }) => {
                           htmlFor="phone"
                           className="block text-sm font-medium text-gray-700"
                         >
-                          Votre numéro de téléphone
+                          {t("STEP_VERIFY_LABEL_PHONE")}
                         </label>
                         <PhoneInput
                           onChange={(e: string) =>
@@ -192,8 +192,7 @@ const Info = ({ open }: { open: boolean }) => {
                         />
                       </div>
                       <span className="col-span-6 text-xs text-gray-400">
-                        Ces <strong>informations protégées</strong> seront
-                        utilisées uniquement dans le cadre de votre dossier.
+                        <Trans i18nKey={"STEP_VERIFY_INFO"} t={t} />.
                       </span>
 
                       <div className="col-span-6 flex justify-around">
@@ -209,7 +208,7 @@ const Info = ({ open }: { open: boolean }) => {
                             )
                           }
                         >
-                          <span>ACCÉDER AUX TARIFS NÉGOCIÉS</span>
+                          <span>{t("STEP_VERIFY_ACTION")}</span>
                         </Button>
                       </div>
                     </form>
@@ -222,14 +221,16 @@ const Info = ({ open }: { open: boolean }) => {
                       className="flex h-full flex-1 flex-col p-6"
                     >
                       <p className="text-sm text-gray-500">
-                        Afin de vérifier votre identité, nous vous avons envoyé
-                        un code de vérification par SMS au numéro :{" "}
-                        <span className="text-primary">
-                          {formatTelephone(lead.phone || "")}
-                        </span>
+                        <Trans
+                          i18nKey="STEP_VERIFY_CODE_TITLE"
+                          t={t}
+                          values={{
+                            phone: formatTelephone(lead.phone || ""),
+                          }}
+                        />
                       </p>
                       <p className="mb-4 mt-8 text-sm text-gray-500">
-                        Veuillez saisir le code à 4 chiffres :
+                        {t("STEP_VERIFY_DESCRIPTION")}
                       </p>
                       <form
                         onSubmit={(e) => {
@@ -251,7 +252,7 @@ const Info = ({ open }: { open: boolean }) => {
                             intent={"primary"}
                             type="submit"
                           >
-                            <span>Valider</span>
+                            <span>{t("VALIDATE")}</span>
                           </Button>
                           <Button
                             intent={"secondary"}
@@ -262,7 +263,7 @@ const Info = ({ open }: { open: boolean }) => {
                               setCode("");
                             }}
                           >
-                            <span>Retour</span>
+                            <span>{t("BACK")}</span>
                           </Button>
                         </div>
                       </form>
@@ -282,8 +283,13 @@ const Info = ({ open }: { open: boolean }) => {
                       height={200}
                     />
                     <span className="mt-4 text-center text-base font-semibold text-primary-500">
-                      Une équipe d‘expert pour vous conseiller{" "}
-                      <u>gratuitement</u>
+                      <Trans
+                        i18nKey="STEP_VERIFY_EXPERT"
+                        t={t}
+                        components={{
+                          u: <u />,
+                        }}
+                      />
                     </span>
                   </div>
                 </div>

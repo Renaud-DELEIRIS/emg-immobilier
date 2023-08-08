@@ -35,23 +35,23 @@ const Assurance = () => {
           });
         }}
         options={insurers}
-        placeholder="p. ex. Helsana"
+        placeholder={t("STEP_ASSURANCE_PLACEHOLDER")}
       ></AutoComplete>
       <p className="mt-2 text-sm text-gray-500">
-        <strong>Pas encore d‘assurance ? </strong>
+        <strong>{t("STEP_ASSURANCE_NO")} </strong>
         <button
           className="text-primary hover:underline"
           onClick={() => {
             changeLead({
-              actualInsurance: { key: -1, value: "Pas d'assurance" },
+              actualInsurance: { key: -1, value: t("STEP_ASSURANCE_NO_SPAN") },
             });
             increaseStep("assurance-actuelle", {
               ...lead,
-              actualInsurance: { key: -1, value: "Pas d'assurance" },
+              actualInsurance: { key: -1, value: t("STEP_ASSURANCE_NO_SPAN") },
             });
           }}
         >
-          Cliquez ici
+          {t("STEP_ASSURANCE_NO_LINK")}
         </button>
       </p>
     </StepContainer>

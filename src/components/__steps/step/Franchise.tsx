@@ -13,6 +13,7 @@ import {
 } from "@tabler/icons-react";
 import Select from "~/components/inputs/Select";
 import { motion } from "framer-motion";
+import { Trans, useTranslation } from "next-i18next";
 
 const Franchise = () => {
   const { lead, changeLead } = useLead();
@@ -20,6 +21,7 @@ const Franchise = () => {
   const [isEditing, setIsEditing] = useState<number | undefined>(undefined);
   const [step, setStep] = useState<"franchise" | "couverture">("franchise");
   const [showContinue, setShowContinue] = useState<boolean>(false);
+  const { t } = useTranslation("common");
 
   const nextToEdit = () => {
     for (const adherent of lead.adherent) {
@@ -76,7 +78,7 @@ const Franchise = () => {
           data.franchise !== undefined && data.couvertureAccident !== undefined
       ).length > 0 && (
         <div className="mb-8">
-          <h3 className="text-xl">Vos franchises</h3>
+          <h3 className="text-xl">{t("STEP_FRANCHISE_LIST_TITLE")}</h3>
           <div className="mt-4 flex flex-col gap-4">
             {lead.adherent
               .filter(
@@ -95,12 +97,20 @@ const Franchise = () => {
                     <p className="text-base text-neutral-800">
                       {adherent.type === "main" && (
                         <span>
-                          Vous souhaitez une franchise de{" "}
-                          <b>{adherent.franchise} CHF</b>
+                          <Trans
+                            i18nKey="STEP_FRANCHISE_LIST_MAIN"
+                            t={t}
+                            values={{
+                              value: adherent.franchise,
+                            }}
+                          />
                           {adherent.couvertureAccident === "oui" && (
                             <span>
                               {" "}
-                              ainsi que d‘une <b>couverture accident</b>
+                              <Trans
+                                i18nKey={"STEP_FRANCHISE_LIST_COUVERTURE"}
+                                t={t}
+                              />
                             </span>
                           )}
                           .
@@ -110,24 +120,40 @@ const Franchise = () => {
                       {adherent.type === "partner" &&
                         (adherent.civility === "female" ? (
                           <span>
-                            Votre conjointe a besoin d‘une franchise de{" "}
-                            <b>{adherent.franchise} CHF</b>
+                            <Trans
+                              i18nKey={"STEP_FRANCHISE_LIST_SPOUSE_FEMALE"}
+                              t={t}
+                              values={{
+                                value: adherent.franchise,
+                              }}
+                            />
                             {adherent.couvertureAccident === "oui" && (
                               <span>
                                 {" "}
-                                ainsi que d‘une <b>couverture accident</b>
+                                <Trans
+                                  i18nKey={"STEP_FRANCHISE_LIST_COUVERTURE"}
+                                  t={t}
+                                />
                               </span>
                             )}
                             .
                           </span>
                         ) : (
                           <span>
-                            Votre conjoint a besoin d‘une franchise de{" "}
-                            <b>{adherent.franchise} CHF</b>
+                            <Trans
+                              i18nKey={"STEP_FRANCHISE_LIST_SPOUSE_MALE"}
+                              t={t}
+                              values={{
+                                value: adherent.franchise,
+                              }}
+                            />
                             {adherent.couvertureAccident === "oui" && (
                               <span>
                                 {" "}
-                                ainsi que d‘une <b>couverture accident</b>
+                                <Trans
+                                  i18nKey={"STEP_FRANCHISE_LIST_COUVERTURE"}
+                                  t={t}
+                                />
                               </span>
                             )}
                             .
@@ -135,12 +161,16 @@ const Franchise = () => {
                         ))}
 
                       {adherent.type === "child" && (
-                        <span>
-                          Votre enfant né en{" "}
-                          {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")} a
-                          besoin d‘une franchise de{" "}
-                          <b>{adherent.franchise} CHF</b>
-                        </span>
+                        <Trans
+                          i18nKey={"STEP_FRANCHISE_LIST_CHILD"}
+                          t={t}
+                          values={{
+                            value: adherent.franchise,
+                            year: dayjs(adherent.dob, "DD.MM.YYYY").format(
+                              "YYYY"
+                            ),
+                          }}
+                        />
                       )}
                     </p>
                     <IconEdit className="group-hover:text-primary-500" />
@@ -160,17 +190,17 @@ const Franchise = () => {
               <StepContainer
                 description={
                   isEditing === 0
-                    ? "Je vais maintenant m'interesser à vos besoins."
+                    ? t("STEP_FRANCHISE_DESCRIPTION_MAIN")
                     : adherant.civility === "female"
-                    ? "Concernant votre conjointe,"
-                    : "Concernant votre coinjoit,"
+                    ? t("STEP_FRANCHISE_DESCRIPTION_SPOUSE_FEMALE")
+                    : t("STEP_FRANCHISE_DESCRIPTION_SPOUSE_MALE")
                 }
                 title={
                   isEditing === 0
-                    ? "Quelle franchise souhaitez-vous ?"
+                    ? t("STEP_FRANCHISE_TITLE_MAIN")
                     : adherant.civility === "female"
-                    ? "Quelle franchise souhaitez-vous pour votre elle ?"
-                    : "Quelle franchise souhaitez-vous pour votre lui ?"
+                    ? t("STEP_FRANCHISE_TITLE_SPOUSE_FEMALE")
+                    : t("STEP_FRANCHISE_TITLE_SPOUSE_MALE")
                 }
                 stepId="franchise"
               >
@@ -254,10 +284,7 @@ const Franchise = () => {
                 />
                 <p className="mt-2 text-sm text-neutral-400">
                   <IconInfoCircle className="mr-1 inline" size={16} />
-                  Si vos dépenses médicales sont <b>
-                    inférieures à 1‘700 CHF
-                  </b>{" "}
-                  par année, je vous conseille <b>une franchise à 2‘500 CHF</b>.
+                  <Trans i18nKey={"STEP_FRANCHISE_INFO_FRANCHISE"} t={t} />.
                 </p>
 
                 <motion.div
@@ -286,7 +313,7 @@ const Franchise = () => {
                     }}
                     className="mt-4 w-52"
                   >
-                    Continuer
+                    {t("CONTINUE")}
                   </Button>
                 </motion.div>
               </StepContainer>
@@ -301,15 +328,15 @@ const Franchise = () => {
               <StepContainer
                 description={
                   isEditing === 0
-                    ? "Concernant le risque accident,"
-                    : "Concernant son risque accident,"
+                    ? t("STEP_FRANCHISE_COUVERTURE_TITLE")
+                    : t("STEP_FRANCHISE_COUVERTURE_OTHER")
                 }
                 title={
                   isEditing === 0
-                    ? "Souhaitez-vous une couverture accident ?"
+                    ? t("STEP_FRANCHISE_COUVERTURE_TITLE_MAIN")
                     : adherant.civility === "female"
-                    ? "Souhaitez-vous une couverture accident pour votre conjointe ?"
-                    : "Souhaitez-vous une couverture accident pour votre conjoint ?"
+                    ? t("STEP_FRANCHISE_COUVERTURE_TITLE_SPOUSE_FEMALE")
+                    : t("STEP_FRANCHISE_COUVERTURE_TITLE_SPOUSE_MALE")
                 }
                 stepId="franchise"
               >
@@ -329,12 +356,12 @@ const Franchise = () => {
                   }}
                   options={[
                     {
-                      label: "Oui",
+                      label: t("YES"),
                       value: "oui",
                       rightIcon: <IconCheck />,
                     },
                     {
-                      label: "Non",
+                      label: t("NO"),
                       value: "non",
                       rightIcon: <IconX />,
                     },
@@ -343,8 +370,7 @@ const Franchise = () => {
                 ></TileInput>
                 <p className="mt-2 text-sm text-neutral-400">
                   <IconInfoCircle className="mr-1 inline" size={16} />
-                  Si vous travaillez plus de 8h/semaine pour le même employeur,
-                  le risque accident est couvert par votre employeur.
+                  <Trans i18nKey={"STEP_FRANCHISE_INFO_COUVERTURE"} t={t} />.
                 </p>
                 <motion.div
                   className="flex w-full justify-center"
@@ -371,7 +397,7 @@ const Franchise = () => {
                     }}
                     className="mt-4 w-52"
                   >
-                    Valider
+                    {t("VALIDATE")}
                   </Button>
                 </motion.div>
               </StepContainer>
@@ -389,8 +415,9 @@ const Franchise = () => {
                 key={index}
               >
                 <p className="mb-4 text-base font-bold">
-                  Votre enfant né(e) en{" "}
-                  {dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY")}
+                  {t("STEP_FRANCHISE_CHILD_TITLE", {
+                    year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
+                  })}
                 </p>
                 <Select
                   options={
@@ -479,8 +506,7 @@ const Franchise = () => {
                 />
                 <p className="mt-2 text-sm text-neutral-400">
                   <IconInfoCircle className="mr-1 inline" size={16} />
-                  La franchise 0 est recommandée pour les enfants de moins de 15
-                  ans.
+                  <Trans i18nKey={"STEP_FRANCHISE_INFO_CHILD"} t={t} />
                 </p>
               </div>
             ))}
@@ -500,7 +526,7 @@ const Franchise = () => {
             }}
             className="mt-4 w-52"
           >
-            Continuer
+            {t("CONTINUE")}
           </Button>
         </motion.div>
       )}

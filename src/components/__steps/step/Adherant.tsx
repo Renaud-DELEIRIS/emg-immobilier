@@ -72,23 +72,23 @@ const Adherant = () => {
         : isEditing
       : 0;
 
-      const textByIndex = [
-        {
-          title: t('STEP_ADHERENT_PROFIL_MAIN'),
-          dob: t('STEP_ADHERENT_DOB_MAIN'),
-          civilite: t('STEP_ADHERENT_CIVILITE_MAIN'),
-        },
-        {
-          title: t("STEP_ADHERENT_PROFIL_SPOUSE"),
-          dob: t("STEP_ADHERENT_DOB_SPOUSE"),
-          civilite: t("STEP_ADHERENT_CIVILITE_SPOUSE"),
-        },
-        {
-          title: t("STEP_ADHERENT_PROFIL_CHILD"),
-          dob: t("STEP_ADHERENT_DOB_CHILD"),
-          civilite: t("STEP_ADHERENT_CIVILITE_CHILD"),
-        },
-      ];
+  const textByIndex = [
+    {
+      title: t("STEP_ADHERENT_PROFIL_MAIN"),
+      dob: t("STEP_ADHERENT_DOB_MAIN"),
+      civilite: t("STEP_ADHERENT_CIVILITY_MAIN"),
+    },
+    {
+      title: t("STEP_ADHERENT_PROFIL_SPOUSE"),
+      dob: t("STEP_ADHERENT_DOB_SPOUSE"),
+      civilite: t("STEP_ADHERENT_CIVILITY_SPOUSE"),
+    },
+    {
+      title: t("STEP_ADHERENT_PROFIL_CHILD"),
+      dob: t("STEP_ADHERENT_DOB_CHILD"),
+      civilite: t("STEP_ADHERENT_CIVILITY_CHILD"),
+    },
+  ];
 
   useEffect(() => {
     if (activeStep.id !== "adherent") return;
@@ -104,9 +104,7 @@ const Adherant = () => {
     <div>
       {lead.adherent.length > 0 && (
         <div className="mb-8">
-          <h3 className="text-xl text-dark">
-            {t("STEP_ADHERENT_LIST_TITLE")}
-          </h3>
+          <h3 className="text-xl text-dark">{t("STEP_ADHERENT_LIST_TITLE")}</h3>
           <div className="mt-4 flex flex-col gap-4">
             {lead.adherent.map((adherent, index) => (
               <div className="flex items-center gap-4" key={index}>
@@ -120,46 +118,68 @@ const Adherant = () => {
                   <p className="text-base text-neutral-800">
                     {adherent.type === "main" ? (
                       adherent.civility === "female" ? (
-                        <Trans t={t} i18nKey={"STEP_ADHERENT_LIST_CIVILITY_MAIN_FEMALE"}
+                        <Trans
+                          t={t}
+                          i18nKey={"STEP_ADHERENT_LIST_CIVILITY_MAIN_FEMALE"}
                           values={{
-                            year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
+                            year: dayjs(adherent.dob, "DD.MM.YYYY").format(
+                              "YYYY"
+                            ),
                           }}
                         />
                       ) : (
-  
-                        <Trans t={t} i18nKey={"STEP_ADHERENT_LIST_CIVILITY_MAIN_MALE"}
-                        values={{
-                          year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
-                        }}
-                      />
-
+                        <Trans
+                          t={t}
+                          i18nKey={"STEP_ADHERENT_LIST_CIVILITY_MAIN_MALE"}
+                          values={{
+                            year: dayjs(adherent.dob, "DD.MM.YYYY").format(
+                              "YYYY"
+                            ),
+                          }}
+                        />
                       )
                     ) : adherent.type === "partner" ? (
                       adherent.civility === "female" ? (
-                        <Trans t={t} i18nKey={"STEP_ADHERENT_LIST_CIVILITY_SPOUSE_FEMALE"}
-                        values={{
-                          year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
-                        }}
-                      />
+                        <Trans
+                          t={t}
+                          i18nKey={"STEP_ADHERENT_LIST_CIVILITY_SPOUSE_FEMALE"}
+                          values={{
+                            year: dayjs(adherent.dob, "DD.MM.YYYY").format(
+                              "YYYY"
+                            ),
+                          }}
+                        />
                       ) : (
-                        <Trans t={t} i18nKey={"STEP_ADHERENT_LIST_CIVILITY_SPOUSE_MALE"}
-                        values={{
-                          year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
-                        }}
-                      />
+                        <Trans
+                          t={t}
+                          i18nKey={"STEP_ADHERENT_LIST_CIVILITY_SPOUSE_MALE"}
+                          values={{
+                            year: dayjs(adherent.dob, "DD.MM.YYYY").format(
+                              "YYYY"
+                            ),
+                          }}
+                        />
                       )
                     ) : adherent.civility === "female" ? (
-                      <Trans t={t} i18nKey={"STEP_ADHERENT_LIST_CIVILITY_CHILD_FEMALE"}
-                      values={{
-                        year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
-                      }}
-                    />
+                      <Trans
+                        t={t}
+                        i18nKey={"STEP_ADHERENT_LIST_CIVILITY_CHILD_FEMALE"}
+                        values={{
+                          year: dayjs(adherent.dob, "DD.MM.YYYY").format(
+                            "YYYY"
+                          ),
+                        }}
+                      />
                     ) : (
-                      <Trans t={t} i18nKey={"STEP_ADHERENT_LIST_CIVILITY_CHILD_MALE"}
-                      values={{
-                        year: dayjs(adherent.dob, "DD.MM.YYYY").format("YYYY"),
-                      }}
-                    />
+                      <Trans
+                        t={t}
+                        i18nKey={"STEP_ADHERENT_LIST_CIVILITY_CHILD_MALE"}
+                        values={{
+                          year: dayjs(adherent.dob, "DD.MM.YYYY").format(
+                            "YYYY"
+                          ),
+                        }}
+                      />
                     )}
                   </p>
                   <IconEdit className="group-hover:text-primary-500" />
@@ -271,9 +291,7 @@ const Adherant = () => {
             >
               <StepContainer
                 title={textByIndex[textIndex]?.civilite || ""}
-                description={<span>
-                  {t("STEP_ADHERENT_CONTINUE")}
-                </span>}
+                description={<span>{t("STEP_ADHERENT_CONTINUE")}</span>}
                 stepId="adherent"
                 className="mt-8"
                 id="adherent-civilite"
@@ -316,7 +334,7 @@ const Adherant = () => {
                       rightIcon: <IconGenderMale />,
                     },
                     {
-                      label:  t('STEP_ADHERENT_CIVILITY_FEMALE'),
+                      label: t("STEP_ADHERENT_CIVILITY_FEMALE"),
                       value: "female",
                       rightIcon: <IconGenderFemale />,
                     },

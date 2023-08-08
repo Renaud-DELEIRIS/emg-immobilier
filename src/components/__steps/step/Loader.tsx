@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import React, {
   type CSSProperties,
   type FC,
@@ -16,6 +17,7 @@ const drawDuration = 6;
 
 const BigLoader2: FC<Props> = ({ children }) => {
   const { increaseStep } = useSteps();
+  const { t } = useTranslation("common");
   useEffect(() => {
     const myAnim = new Vivus("mySVG", {
       duration: drawDuration,
@@ -139,11 +141,7 @@ const BigLoader2: FC<Props> = ({ children }) => {
       </svg>
 
       <div className="bigloader-text">
-        {children ?? (
-          <span>
-            {"Nous préparons les éléments nécessaires. Veuillez patienter."}
-          </span>
-        )}
+        {children ?? <span>{t("STEP_LOADER_TITLE")}</span>}
       </div>
     </div>
   );

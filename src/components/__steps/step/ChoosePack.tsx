@@ -6,12 +6,13 @@ import { type Adherent, useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
 import Pack from "~/components/steps/Pack";
 import StepContainer from "../StepContainer";
+import { Trans, useTranslation } from "next-i18next";
 
 const ChoosePack = () => {
   const { lead, changeLead } = useLead();
   const [adherent, setAdherent] = useState<number>(0);
   const { increaseStep } = useSteps();
-
+  const { t } = useTranslation("common");
   return (
     <>
       <div className="flex flex-col gap-8">
@@ -20,22 +21,17 @@ const ChoosePack = () => {
           if (index > adherent) return null;
           return (
             <StepContainer
-              description={
-                <span>
-                  Parfait, en matière de prestations complémentaires.
-                  <br />
-                  Choissisez ce qui convient le mieux.
-                </span>
-              }
+              description={<Trans i18nKey={"STEP_PACK_DESCRIPTION"} t={t} />}
               title={
                 data.type === "main"
-                  ? "Pour vous"
+                  ? t("STEP_PACK_MAIN")
                   : data.type === "partner"
                   ? data.civility === "female"
-                    ? "Pour votre conjointe"
-                    : "Pour votre conjoint"
-                  : "Pour votre enfant née en " +
-                    dayjs(data.dob, "DD.MM.YYYY").year().toString()
+                    ? t("STEP_PACK_SPOUSE_FEMALE")
+                    : t("STEP_PACK_SPOUSE_MALE")
+                  : t("STEP_PACK_CHILD", {
+                      year: dayjs(data.dob, "DD.MM.YYYY").year().toString(),
+                    })
               }
               className="pb-12"
               stepId={"package"}
@@ -86,7 +82,7 @@ const ChoosePack = () => {
           }}
           iconRight={<IconArrowRight />}
         >
-          Suivant
+          {t("VALIDATE")}
         </Button>
       </div>
     </>

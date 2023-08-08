@@ -3,23 +3,17 @@ import { useLead } from "~/components/provider/LeadProvider";
 import { useSteps } from "~/components/provider/StepsProvider";
 import Button from "~/components/button/Button";
 import TextInput from "~/components/inputs/TextInput";
+import { Trans, useTranslation } from "next-i18next";
 
 const Name = () => {
   const { lead, changeLead } = useLead();
   const { increaseStep, isDisabled } = useSteps();
+  const { t } = useTranslation("common");
 
   return (
     <StepContainer
-      title="Comment vous appelez-vous ?
-
-      "
-      description={
-        <span>
-          Nous sommes sur la fin !
-          <br />
-          J‘ai besoin d‘informations supplémentaires pour établir votre offre.
-        </span>
-      }
+      title={t("STEP_NAME_TITLE")}
+      description={<Trans i18nKey="STEP_NAME_DESCRIPTION" t={t} />}
       stepId="name"
     >
       <form
@@ -34,7 +28,7 @@ const Name = () => {
             onChange={(value) => {
               changeLead({ nom: value });
             }}
-            placeholder="Nom"
+            placeholder={t("STEP_NAME_PLACEHOLDER_LASTNAME")}
             autocomplete="family-name"
           ></TextInput>
           <TextInput
@@ -42,7 +36,7 @@ const Name = () => {
             onChange={(value) => {
               changeLead({ prenom: value });
             }}
-            placeholder="Prénom"
+            placeholder={t("STEP_NAME_PLACEHOLDER_FIRSTNAME")}
             autocomplete="given-name"
           ></TextInput>
         </div>
@@ -51,7 +45,7 @@ const Name = () => {
             type="submit"
             disabled={isDisabled() || !lead.nom || !lead.prenom}
           >
-            Continuer
+            {t("CONTINUE")}
           </Button>
         </div>
       </form>
