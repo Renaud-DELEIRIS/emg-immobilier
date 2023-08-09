@@ -233,6 +233,11 @@ const Info = ({ open }: { open: boolean }) => {
                           values={{
                             phone: formatTelephone(lead.phone || ""),
                           }}
+                          components={{
+                            span: (
+                              <span className="font-semibold text-primary" />
+                            ),
+                          }}
                         />
                       </p>
                       <p className="mb-4 mt-8 text-sm text-gray-500">

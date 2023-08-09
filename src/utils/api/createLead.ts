@@ -1,4 +1,4 @@
-import { schemaData } from "~/constants/lead.constant";
+import { Adherent, schemaData } from "~/constants/lead.constant";
 import { packOptionById } from "~/data/PackOption";
 import { env } from "~/env.mjs";
 
@@ -17,153 +17,68 @@ export const sendLeadComparea = async (
 
   if (!main) return Promise.reject("Erreur principal manquant");
 
-  const body = {
-    profilprincipal: {
-      ddn: main.year,
-      id: 1,
-      civilite: {
-        key: main.civility === "female" ? 1 : 2,
-        value: main.civility,
-      },
-      franchise: {
-        key: main.franchise,
-        value: main.franchise,
-      },
-      couverture: {
-        key: main.couvertureAccident === "oui" ? 1 : 2,
-        value:
-          main.couvertureAccident === "oui"
-            ? "Avec couverture accident"
-            : "Sans couverture accident",
-      },
-      packselected: !!main.pack,
-      completed: true,
-      ...(main.pack
-        ? {
-            pack: {
-              id: main.pack.id,
-              name: main.pack.principal,
-              ...(main.pack.options
-                ? {
-                    options: [
-                      ...main.pack.options.map((option) => ({
-                        id: option.id,
-                        label: option.label,
-                        niveau: option.level,
-                        prestations: packOptionById(option.id)[
-                          option.level
-                        ]!.map((prestation) => ({
+  const createProfile = (p: Adherent) => ({
+    ddn: p.year,
+    id: 1,
+    civilite: {
+      key: p.civility === "female" ? 1 : 2,
+      value: p.civility,
+    },
+    franchise: p.franchise
+      ? {
+          key: p.franchise,
+          value: p.franchise,
+        }
+      : {
+          key: "300",
+          value: "300",
+        },
+    couverture: {
+      key: p.couvertureAccident === "oui" ? 1 : 2,
+      value:
+        p.couvertureAccident === "oui"
+          ? "Avec couverture accident"
+          : "Sans couverture accident",
+    },
+
+    packselected: !!p.pack,
+    completed: true,
+    ...(p.pack
+      ? {
+          pack: {
+            id: p.pack.id,
+            name: p.pack.principal,
+            ...(p.pack.options
+              ? {
+                  options: [
+                    ...p.pack.options.map((option) => ({
+                      id: option.id,
+                      label: option.label,
+                      niveau: option.level,
+                      prestations: packOptionById(option.id)[option.level]!.map(
+                        (prestation) => ({
                           label: prestation.label,
                           status: prestation.status,
-                        })),
-                      })),
-                    ],
-                  }
-                : {}),
-            },
-          }
-        : {}),
-    },
-    ...(partner
-      ? {
-          profilconjoint: {
-            ddn: partner.year,
-            id: 1,
-            civilite: {
-              key: partner.civility === "female" ? 1 : 2,
-              value: partner.civility,
-            },
-            franchise: {
-              key: partner.franchise,
-              value: partner.franchise,
-            },
-            couverture: {
-              key: partner.couvertureAccident === "oui" ? 1 : 2,
-              value:
-                partner.couvertureAccident === "oui"
-                  ? "Avec couverture accident"
-                  : "Sans couverture accident",
-            },
-            packselected: !!partner.pack,
-            completed: true,
-            ...(partner.pack
-              ? {
-                  pack: {
-                    id: partner.pack.id,
-                    name: partner.pack.principal,
-                    ...(partner.pack.options
-                      ? {
-                          options: [
-                            ...partner.pack.options.map((option) => ({
-                              id: option.id,
-                              label: option.label,
-                              niveau: option.level,
-                              prestations: packOptionById(option.id)[
-                                option.level
-                              ]!.map((prestation) => ({
-                                label: prestation.label,
-                                status: prestation.status,
-                              })),
-                            })),
-                          ],
-                        }
-                      : {}),
-                  },
+                        })
+                      ),
+                    })),
+                  ],
                 }
               : {}),
           },
         }
       : {}),
-    profilsenfants: children.map((p) => ({
-      profilconjoint: {
-        ddn: p.year,
-        id: 1,
-        civilite: {
-          key: p.civility === "female" ? 1 : 2,
-          value: p.civility,
-        },
-        franchise: {
-          key: p.franchise,
-          value: p.franchise,
-        },
-        couverture: {
-          key: p.couvertureAccident === "oui" ? 1 : 2,
-          value:
-            p.couvertureAccident === "oui"
-              ? "Avec couverture accident"
-              : "Sans couverture accident",
-        },
-        packselected: !!p.pack,
-        completed: true,
-        ...(p.pack
-          ? {
-              pack: {
-                id: p.pack.id,
-                name: p.pack.principal,
-                ...(p.pack.options
-                  ? {
-                      options: [
-                        ...p.pack.options.map((option) => ({
-                          id: option.id,
-                          label: option.label,
-                          niveau: option.level,
-                          prestations: packOptionById(option.id)[
-                            option.level
-                          ]!.map((prestation) => ({
-                            label: prestation.label,
-                            status: prestation.status,
-                          })),
-                        })),
-                      ],
-                    }
-                  : {}),
-              },
-            }
-          : {}),
-      },
-    })),
+  });
+  const body = {
+    profilprincipal: createProfile(main),
+    ...(partner ? createProfile(partner) : {}),
+    profilsenfants: children.map((p) => createProfile(p)),
     npa: restdata.npa,
     assuranceactuelle: restdata.actualInsurance,
+    nouveauresident: {
+      key: restdata.situation === "frontalier" ? 1 : 2,
+      value: restdata.situation,
+    },
     ...restdata,
     telephone: "+" + data.phone,
     gtmparams: gtmParams,

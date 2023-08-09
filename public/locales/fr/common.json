@@ -101,7 +101,7 @@
   "STEP_VERIFY_LABEL_PHONE": "Votre numéro de téléphone",
   "STEP_VERIFY_INFO": "Ces <strong>informations protégées</strong> seront utilisées uniquement dans le cadre de votre dossier",
   "STEP_VERIFY_ACTION": "ACCÉDER AUX TARIFS NÉGOCIÉS",
-  "STEP_VERIFY_CODE_TITLE": "Afin de vérifier votre identité, nous vous avons envoyé un code de vérification par SMS au numéro : <span className='text-primary'>{{phone}}</span>",
+  "STEP_VERIFY_CODE_TITLE": "Afin de vérifier votre identité, nous vous avons envoyé un code de vérification par SMS au numéro : <span>{{phone}}</span>",
   "STEP_VERIFY_DESCRIPTION": "Veuillez saisir le code à 4 chiffres :",
   "STEP_VERIFY_EXPERT": "Une équipe d‘expert pour vous conseiller <u>gratuitement</u>",
 
