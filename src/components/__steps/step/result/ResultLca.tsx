@@ -64,6 +64,7 @@ const ResultLca = ({
         offres={lcaItems.filter((item) => compare.includes(item.id.toString()))}
         open={open}
         onClose={() => setOpen(false)}
+        adherent={adherent}
       />
     </motion.div>
   );

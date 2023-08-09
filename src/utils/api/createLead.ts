@@ -92,9 +92,9 @@ export const sendLeadComparea = async (
     body: JSON.stringify(body),
   });
   if (!response.ok) {
-    const result = await response.json();
+    const result = (await response.json()) as { message: string };
     return Promise.reject(result.message);
   }
-  const result = await response.json();
+  const result = (await response.json()) as string;
   return Promise.resolve(result);
 };

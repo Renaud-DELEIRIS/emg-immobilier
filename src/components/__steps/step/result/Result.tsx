@@ -1,5 +1,6 @@
 import { IconEdit, IconLoader } from "@tabler/icons-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import ReactSwitch from "react-switch";
 import Select from "~/components/inputs/Select";
@@ -33,6 +34,7 @@ const Result = () => {
   } = useResult();
   const [monthlyPrice, setMonthlyPrice] = useState<boolean>(true);
   const [show, setShow] = useState<"lca" | "lamal">("lca");
+  const { t } = useTranslation("result");
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -41,11 +43,11 @@ const Result = () => {
     >
       <div className="flex w-full max-w-6xl flex-row items-center justify-between">
         <h2 className="hidden text-[20px] font-bold text-[#2F3946] md:block">
-          12 offres trouvées pour vous! Plus qu‘un clic pour être assuré
+          {t("RESULT_TITLE")}
           {lead.adherent[0]?.civility === "female" ? "e" : ""}
         </h2>
         <h2 className="block text-[20px] font-bold text-[#2F3946] md:hidden">
-          Mon comparatif
+          {t("RESULT_MY_COMPARATIF")}
         </h2>
         <button
           className="flex items-center gap-2 rounded-lg border border-primary bg-white p-1 font-bold text-primary hover:bg-primary-50"
@@ -53,15 +55,15 @@ const Result = () => {
             nextStep(lead.npa?.key === -1 ? "situation" : "assurance-actuelle")
           }
         >
-          <span className="hidden md:block">Modifier mon profil</span>
-          <span className="md:hidden">Modifier</span>
+          <span className="hidden md:block">{t("RESULT_MY_COMPARATIF")}</span>
+          <span className="md:hidden">{t("RESULT_MODIFY_PROFILE_MOBILE")}</span>
           <IconEdit />
         </button>
       </div>
       <div className="flex w-full max-w-6xl flex-row items-center gap-6">
         {lead.adherent.length > 1 && (
           <Select
-            label="Personne à assurer"
+            label={t("PROFIL_SELECT_LABEL")}
             options={lead.adherent.map((adherent, index) => ({
               label: textByIndex(adherent),
               value: index.toString(),
@@ -73,7 +75,7 @@ const Result = () => {
         )}
         <div className="hidden flex-col sm:flex">
           <p className="mb-1 block text-sm font-normal text-neutral-800">
-            Prix mensuel
+            {t("PRICE_SWITCH_LABEL")}
           </p>
           <div className="grid h-[46px] place-items-center">
             <ReactSwitch
@@ -95,7 +97,7 @@ const Result = () => {
             }`}
             onClick={() => setShow("lca")}
           >
-            LCA
+            {t("LCA")}
           </button>
           <button
             className={`flex-1 rounded-lg py-4 font-bold ${
@@ -103,7 +105,7 @@ const Result = () => {
             }`}
             onClick={() => setShow("lamal")}
           >
-            LAMAL
+            {t("LAMAL")}
           </button>
         </div>
       </div>

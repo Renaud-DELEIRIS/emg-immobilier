@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { useTranslation } from "next-i18next";
 import Button from "~/components/button/Button";
 import InputDate from "~/components/inputs/DatePicker";
 import Select from "~/components/inputs/Select";
@@ -22,6 +23,9 @@ const PersonalData = () => {
           dayjs(p.dob).isValid()
       ).length === lead.selectedAdherent.length;
 
+  const { t: tCommon } = useTranslation("common");
+  const { t } = useTranslation("frontalier");
+
   return (
     <div className="flex flex-col gap-8">
       {lead.adherent.map((p, index) => {
@@ -30,18 +34,20 @@ const PersonalData = () => {
           <div className="flex flex-col gap-6" key={index}>
             <h3 className="text-lg font-bold">
               {p.type === "main"
-                ? "Vous"
+                ? t("DATA_TITLE_MAIN")
                 : p.type === "partner"
                 ? p.civility === "female"
-                  ? "Votre conjointe"
-                  : "Votre conjoint"
-                : `Votre enfant né en ${p.year || ""}`}{" "}
+                  ? t("DATA_TITLE_SPOUSE_FEMALE")
+                  : t("DATA_TITLE_SPOUSE_MALE")
+                : t("DATA_TITLE_CHILD", {
+                    year: p.year || "",
+                  })}{" "}
               :
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <TextInput
-                label="Prénom"
-                placeholder="Prénom"
+                label={t("DATA_PRENOM_LABEL")}
+                placeholder={t("DATA_PRENOM_LABEL")}
                 value={p.prenom || ""}
                 onChange={(value) => {
                   changeLead({
@@ -59,9 +65,9 @@ const PersonalData = () => {
                 }}
               />
               <TextInput
-                label="Nom"
+                label={t("DATA_NOM_LABEL")}
                 value={p.nom || ""}
-                placeholder="Nom"
+                placeholder={t("DATA_NOM_LABEL")}
                 onChange={(value) => {
                   changeLead({
                     ...lead,
@@ -79,7 +85,7 @@ const PersonalData = () => {
               />
               <InputDate
                 value={p.dob || ""}
-                label="Date de naissance"
+                label={t("DATA_BIRTH_LABEL")}
                 onChange={(value) => {
                   changeLead({
                     ...lead,
@@ -115,27 +121,27 @@ const PersonalData = () => {
                 options={[
                   {
                     value: "france",
-                    label: "Française",
+                    label: t("DATA_NATIONALITY_FRENCH"),
                   },
                   {
                     value: "suisse",
-                    label: "Suisse",
+                    label: t("DATA_NATIONALITY_SUISSE"),
                   },
                   {
                     value: "allemand",
-                    label: "Allemande",
+                    label: t("DATA_NATIONALITY_ALLEMANDE"),
                   },
                   {
                     value: "italien",
-                    label: "Italienne",
+                    label: t("DATA_NATIONALITY_ITALIENNE"),
                   },
                   {
                     value: "autre",
-                    label: "Autre",
+                    label: t("DATA_NATIONALITY_OTHER"),
                   },
                 ]}
-                label="Nationalité"
-                placeholder="Sélectionnez votre nationalité"
+                label={t("DATA_NATIONALITY_LABEL")}
+                placeholder={t("DATA_NATIONALITY_PLACEHOLDER")}
               />
             </div>
           </div>
@@ -148,7 +154,7 @@ const PersonalData = () => {
         className="mt-4 w-52"
         disabled={!isValid}
       >
-        Continuer
+        {tCommon("CONTINUE")}
       </Button>
     </div>
   );

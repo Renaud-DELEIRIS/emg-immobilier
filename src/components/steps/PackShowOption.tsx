@@ -1,4 +1,5 @@
 import { IconCheck, IconX } from "@tabler/icons-react";
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import ReactSwitch from "react-switch";
 import { type Prestation } from "~/data/Pack";
@@ -25,6 +26,7 @@ const PackShowOption = ({
 }) => {
   const [options, setOptions] = useState<number>(defaultLevel || 1);
   const maxLevel = prestation.length;
+  const { t } = useTranslation("common");
 
   return (
     <div
@@ -35,13 +37,13 @@ const PackShowOption = ({
       {recommended && (
         <div className="absolute left-0 top-0 rounded-br-md rounded-tl-md bg-primary-400 text-white">
           <span className="px-1 text-[10px] font-bold leading-3">
-            Recommandé
+            {t("STEP_PACK_RECOMMENDATION")}
           </span>
         </div>
       )}
       <h3 className="flex w-full items-center justify-between rounded-t-md bg-stone-600 pb-4 pt-4 text-lg font-bold text-white [&>*]:flex-1">
         <div />
-        {pack}
+        {t(pack)}
         <div className="mr-2 flex w-full justify-end">
           <ReactSwitch
             checked={selected}
@@ -59,7 +61,8 @@ const PackShowOption = ({
       {maxLevel > 1 && (
         <div className="mt-4 w-full px-8">
           <span className="text-sm font-bold text-neutral-600">
-            Niveau {customLevel ? customLevel[options - 1] : options}
+            {t("STEP_PACK_LEVEL")}{" "}
+            {customLevel ? customLevel[options - 1] : options}
           </span>
           <RangeSlider
             values={[options]}
@@ -90,7 +93,7 @@ const PackShowOption = ({
                 presta.status ? "text-neutral-600" : "text-neutral-400"
               }`}
             >
-              {presta.label}
+              {t(presta.label)}
             </span>
           </li>
         ))}

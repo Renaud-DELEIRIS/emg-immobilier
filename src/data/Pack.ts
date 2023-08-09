@@ -8,88 +8,48 @@ export const packById = (id: number) =>
   id === 1 ? "Essentials" : id === 2 ? "Confort" : "Premium";
 
 const prestationsEssentials: Prestation[] = [
-  { label: "Chambre commune", status: true },
-  { label: "Lunettes", status: true },
-  { label: "Maternité", status: true },
-  { label: "Transports", status: true },
-  { label: "Couverture monde", status: true },
-  { label: "Moyens auxiliaires", status: true },
-  { label: "Médicaments", status: true },
-  { label: "Prévention, check-up", status: false },
-  { label: "Fitness", status: false },
-  { label: "Traitements orthodontie", status: false },
-  { label: "Aide à domicile", status: false },
-  { label: "Traitements dentaire", status: false },
-];
-
-const prestationsEssentialsShort: Prestation[] = [
-  { label: "Chambre commune", status: true },
-  { label: "Lunettes", status: true },
-  { label: "Maternité", status: true },
-  { label: "Transports", status: true },
-  { label: "Couverture monde", status: true },
-  { label: "Moyens auxiliaires", status: true },
-  { label: "Médicaments", status: true },
+  { label: "STEP_PACK_PRESTATION_CHAMBRE_COMMUNE", status: true },
+  { label: "STEP_PACK_PRESTATION_LUNETTES", status: true },
+  { label: "STEP_PACK_PRESTATION_MATERNITE", status: true },
+  { label: "STEP_PACK_PRESTATION_TRANSPORTS", status: true },
+  { label: "STEP_PACK_PRESTATION_COUVERTURE_MONDE", status: true },
+  { label: "STEP_PACK_PRESTATION_MOYENS_AUXILIAIRES", status: true },
+  { label: "STEP_PACK_PRESTATION_MEDICAMENTS", status: true },
+  { label: "STEP_PACK_PRESTATION_PREVENTION_CHECKUP", status: false },
+  { label: "STEP_PACK_PRESTATION_FITNESS", status: false },
+  { label: "STEP_PACK_PRESTATION_TRAITEMENTS_ORTHODONTIE", status: false },
+  { label: "STEP_PACK_PRESTATION_AIDE_DOMICILE", status: false },
+  { label: "STEP_PACK_PRESTATION_TRAITEMENTS_DENTAIRE", status: false },
 ];
 
 const prestationsConfort: Prestation[] = [
-  { label: "Hospitalisation flexible", status: true },
-  { label: "Lunettes", status: true },
-  { label: "Maternité", status: true },
-  { label: "Transports", status: true },
-  { label: "Couverture monde", status: true },
-  { label: "Moyens auxiliaires", status: true },
-  { label: "Médicaments", status: true },
-  { label: "Prévention, check-up", status: true },
-  { label: "Fitness", status: true },
-  { label: "Traitements orthodontie", status: false },
-  { label: "Aide à domicile", status: false },
-  { label: "Traitements dentaire", status: false },
-];
-
-const prestationsConfortShort: Prestation[] = [
-  {
-    label: "Tout les avantages du pack essentiel",
-    status: true,
-    important: true,
-  },
-  { label: "Hospitalisation flexible", status: true },
-  { label: "Prévention, check-up", status: true },
-  { label: "Fitness", status: true },
+  { label: "STEP_PACK_PRESTATION_HOSPITALISATION_FLEXIBLE", status: true },
+  { label: "STEP_PACK_PRESTATION_LUNETTES", status: true },
+  { label: "STEP_PACK_PRESTATION_MATERNITE", status: true },
+  { label: "STEP_PACK_PRESTATION_TRANSPORTS", status: true },
+  { label: "STEP_PACK_PRESTATION_COUVERTURE_MONDE", status: true },
+  { label: "STEP_PACK_PRESTATION_MOYENS_AUXILIAIRES", status: true },
+  { label: "STEP_PACK_PRESTATION_MEDICAMENTS", status: true },
+  { label: "STEP_PACK_PRESTATION_PREVENTION_CHECKUP", status: true },
+  { label: "STEP_PACK_PRESTATION_FITNESS", status: true },
+  { label: "STEP_PACK_PRESTATION_TRAITEMENTS_ORTHODONTIE", status: false },
+  { label: "STEP_PACK_PRESTATION_AIDE_DOMICILE", status: false },
+  { label: "STEP_PACK_PRESTATION_TRAITEMENTS_DENTAIRE", status: false },
 ];
 
 const prestationsPremium: Prestation[] = [
-  { label: "Chambre semi-privée", status: true },
-  { label: "Lunettes", status: true },
-  { label: "Maternité", status: true },
-  { label: "Transports", status: true },
-  { label: "Couverture monde", status: true },
-  { label: "Moyens auxiliaires", status: true },
-  { label: "Médicaments", status: true },
-  { label: "Prévention, check-up", status: true },
-  { label: "Fitness", status: true },
-  { label: "Traitements orthodontie", status: true },
-  { label: "Aide à domicile", status: true },
-  { label: "Traitements dentaire", status: true },
+  { label: "STEP_PACK_PRESTATION_CHAMBRE_SEMI_PRIVEE", status: true },
+  { label: "STEP_PACK_PRESTATION_LUNETTES", status: true },
+  { label: "STEP_PACK_PRESTATION_MATERNITE", status: true },
+  { label: "STEP_PACK_PRESTATION_TRANSPORTS", status: true },
+  { label: "STEP_PACK_PRESTATION_COUVERTURE_MONDE", status: true },
+  { label: "STEP_PACK_PRESTATION_MOYENS_AUXILIAIRES", status: true },
+  { label: "STEP_PACK_PRESTATION_MEDICAMENTS", status: true },
+  { label: "STEP_PACK_PRESTATION_PREVENTION_CHECKUP", status: true },
+  { label: "STEP_PACK_PRESTATION_FITNESS", status: true },
+  { label: "STEP_PACK_PRESTATION_TRAITEMENTS_ORTHODONTIE", status: true },
+  { label: "STEP_PACK_PRESTATION_AIDE_DOMICILE", status: true },
+  { label: "STEP_PACK_PRESTATION_TRAITEMENTS_DENTAIRE", status: true },
 ];
 
-const prestationsPremiumShort: Prestation[] = [
-  {
-    label: "Tout les avantages du pack confort",
-    status: true,
-    important: true,
-  },
-  { label: "Chambre semi-privée", status: true },
-  { label: "Traitements orthodontie", status: true },
-  { label: "Aide à domicile", status: true },
-  { label: "Traitements dentaire", status: true },
-];
-
-export {
-  prestationsEssentials,
-  prestationsEssentialsShort,
-  prestationsConfort,
-  prestationsConfortShort,
-  prestationsPremium,
-  prestationsPremiumShort,
-};
+export { prestationsConfort, prestationsEssentials, prestationsPremium };

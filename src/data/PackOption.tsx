@@ -3,11 +3,11 @@ import { type Prestation } from "./Pack";
 const optionMedecineAlternative: Prestation[][] = [
   [
     {
-      label: "Liste étendue de thérapies médecines douces",
+      label: "STEP_PACK_OPTION_MEDECINE_ALTERNATIVE_LISTE_ETENDUE",
       status: true,
     },
     {
-      label: "Médicaments de la médecine complémentaire",
+      label: "STEP_PACK_OPTION_MEDECINE_ALTERNATIVE_MEDICAMENTS",
       status: true,
     },
   ],
@@ -16,52 +16,52 @@ const optionMedecineAlternative: Prestation[][] = [
 const optionTraitementsDentaires: Prestation[][] = [
   [
     {
-      label: "Traitements dentaires (préventions, pivots, prothèses)",
+      label:
+        "STEP_PACK_OPTION_TRAITEMENTS_DENTAIRES_PREVENTIONS_PIVOTS_PROTHESES",
       status: true,
     },
     {
-      label: "Traitements orthodontie",
-      status: true,
-    },
-  ],
-  [
-    {
-      label: "Traitements dentaires (préventions, pivots, prothèses)",
-      status: true,
-    },
-    {
-      label: "Traitements orthodontie",
+      label: "STEP_PACK_OPTION_TRAITEMENTS_DENTAIRES_TRAITEMENTS_ORTHODONTIE",
       status: true,
     },
   ],
   [
     {
-      label: "Traitements dentaires (préventions, pivots, prothèses)",
+      label:
+        "STEP_PACK_OPTION_TRAITEMENTS_DENTAIRES_PREVENTIONS_PIVOTS_PROTHESES",
       status: true,
     },
     {
-      label: "Traitements orthodontie",
+      label: "STEP_PACK_OPTION_TRAITEMENTS_DENTAIRES_TRAITEMENTS_ORTHODONTIE",
+      status: true,
+    },
+  ],
+  [
+    {
+      label:
+        "STEP_PACK_OPTION_TRAITEMENTS_DENTAIRES_PREVENTIONS_PIVOTS_PROTHESES",
+      status: true,
+    },
+    {
+      label: "STEP_PACK_OPTION_TRAITEMENTS_DENTAIRES_TRAITEMENTS_ORTHODONTIE",
       status: true,
     },
   ],
 ];
 
 const optionCapitalHospitalier: Prestation[][] = [
+  [{ label: "STEP_PACK_OPTION_CAPITAL_HOSPITALIER_VERSEMENT", status: true }],
   [
     {
-      label: "Versement d'un capital en cas d'hospitalisation",
+      label:
+        "STEP_PACK_OPTION_TRAITEMENTS_DENTAIRES_PREVENTIONS_PIVOTS_PROTHESES",
       status: true,
     },
   ],
   [
     {
-      label: "Traitements dentaires (préventions, pivots, prothèses)",
-      status: true,
-    },
-  ],
-  [
-    {
-      label: "Traitements dentaires (préventions, pivots, prothèses)",
+      label:
+        "STEP_PACK_OPTION_TRAITEMENTS_DENTAIRES_PREVENTIONS_PIVOTS_PROTHESES",
       status: true,
     },
   ],
@@ -70,33 +70,30 @@ const optionCapitalHospitalier: Prestation[][] = [
 const optionHospitalisation: Prestation[][] = [
   [
     {
-      label: "Privée avec partcipation",
+      label: "STEP_PACK_OPTION_HOSPITALISATION_PRIVEE_PARTICIPATION",
       status: true,
     },
   ],
   [
     {
-      label: "Libre choix du médecin",
+      label: "STEP_PACK_OPTION_HOSPITALISATION_LIBRE_CHOIX_MEDECIN",
       status: true,
     },
     {
-      label: "Chambre à deux lit",
+      label: "STEP_PACK_OPTION_HOSPITALISATION_CHAMBRE_DEUX_LIT",
       status: true,
     },
   ],
   [
     {
-      label: "Libre choix du médecin",
+      label: "STEP_PACK_OPTION_HOSPITALISATION_LIBRE_CHOIX_MEDECIN",
       status: true,
     },
     {
-      label: "Chambre à un lit dans le monde entier",
+      label: "STEP_PACK_OPTION_HOSPITALISATION_CHAMBRE_UN_LIT_MONDE_ENTIER",
       status: true,
     },
-    {
-      label: "Rooming-in",
-      status: true,
-    },
+    { label: "STEP_PACK_OPTION_HOSPITALISATION_ROOMING_IN", status: true },
   ],
 ];
 

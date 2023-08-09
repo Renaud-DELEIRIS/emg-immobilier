@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "next-i18next";
 import { Adherent } from "~/constants/lead.constant";
 import ResultCardLamal from "./ResultCardLamal";
 import { useResult } from "./ResultProvider";
@@ -11,6 +12,7 @@ const ResultLamal = ({
   adherent: Adherent;
 }) => {
   const { lamalItems } = useResult();
+  const { t } = useTranslation("result");
   return (
     <motion.div
       className="mt-8 flex w-full flex-col gap-4"
@@ -33,6 +35,11 @@ const ResultLamal = ({
           />
         </div>
       ))}
+      {lamalItems.length === 0 && (
+        <div className="text-center text-neutral-600">
+          {t("LAMAL_NORESULT")}
+        </div>
+      )}
     </motion.div>
   );
 };

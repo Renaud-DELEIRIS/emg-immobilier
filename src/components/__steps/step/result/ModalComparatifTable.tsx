@@ -4,18 +4,20 @@ import { Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import Button from "~/components/button/Button";
 import FlatModal from "~/components/modal/FlatModal";
+import { Adherent } from "~/constants/lead.constant";
+import { useFormStore } from "~/stores/form";
 import { type Lca } from "~/types/comparatif";
 import { recallResident } from "~/utils/api/recallResident";
 import ModalSouscrireLca from "./ModalSouscrireLca";
-import { useFormStore } from "~/stores/form";
 
 interface Props {
   open: boolean;
   onClose: () => void;
   offres: Lca[];
+  adherent: Adherent;
 }
 
-const ModalComparatifTable = ({ open, onClose, offres }: Props) => {
+const ModalComparatifTable = ({ open, onClose, offres, adherent }: Props) => {
   const [souscrireOpenIndex, setSouscrireOpenIndex] = useState<number | null>(
     null
   );
@@ -202,6 +204,7 @@ const ModalComparatifTable = ({ open, onClose, offres }: Props) => {
           open={souscrireOpenIndex !== null}
           onClose={() => setSouscrireOpenIndex(null)}
           lca={offres[souscrireOpenIndex] as Lca}
+          adherent={adherent}
         />
       )}
     </FlatModal>

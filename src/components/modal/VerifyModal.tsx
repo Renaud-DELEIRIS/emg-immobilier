@@ -45,15 +45,9 @@ const Info = ({ open }: { open: boolean }) => {
     if (!lead.phone) return;
     e.preventDefault();
     setStep("phone");
-    setLoading(true);
-    void sendCodeSms(lead.phone)
-      .then((res) => {
-        console.log(res);
-        setResponseCode(res.code);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    void sendCodeSms(lead.phone).then((res) => {
+      setResponseCode(res.code);
+    });
   };
 
   const verifyCode = async () => {
@@ -62,11 +56,13 @@ const Info = ({ open }: { open: boolean }) => {
       setError(t("STEP_VERIFY_ERROR"));
       return;
     }
+    setLoading(true);
+
     const gmtParams = getParamsUrl();
     // TODO Create lead frontaluer
     const idLead = await sendLeadComparea(lead, gmtParams);
-    console.log(idLead);
     changeLead({ ...lead, verified: true, idLead: idLead });
+    setLoading(false);
   };
 
   return (
@@ -246,7 +242,7 @@ const Info = ({ open }: { open: boolean }) => {
                       <form
                         onSubmit={(e) => {
                           e.preventDefault();
-                          verifyCode();
+                          void verifyCode();
                         }}
                       >
                         <CodeInput
@@ -259,6 +255,7 @@ const Info = ({ open }: { open: boolean }) => {
                         )}
                         <div className="mt-12 flex w-full flex-row items-center justify-between">
                           <Button
+                            loading={loading}
                             disabled={code.length !== 4}
                             intent={"primary"}
                             type="submit"
@@ -266,6 +263,7 @@ const Info = ({ open }: { open: boolean }) => {
                             <span>{t("VALIDATE")}</span>
                           </Button>
                           <Button
+                            loading={loading}
                             intent={"secondary"}
                             size={"small"}
                             iconLeft={<IconArrowLeft />}

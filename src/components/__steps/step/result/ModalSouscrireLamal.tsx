@@ -32,15 +32,17 @@ const ModalSouscrireLamal = ({ open, onClose, lamal, adherent }: Props) => {
         ? adherent.civility === "man"
           ? "conjoint"
           : "conjointe"
-        : `enfant né en ${adherent?.year}`
+        : `enfant né en ${adherent?.year || ""}`
     } : ${
       !!(affiliation === "non")
         ? `Non affilié pour Lamal.`
         : `Affilié Lamal chez ${affiliattionCaisse} depuis ${affiliationTime}.`
     }`;
     try {
-      fetch(
-        `${env.NEXT_PUBLIC_ADDCMT}?commentaire=${commentaire}&idlead=${lead.idLead}`
+      void fetch(
+        `${env.NEXT_PUBLIC_ADDCMT}?commentaire=${commentaire}&idlead=${
+          lead.idLead || ""
+        }`
       );
       toast.success("Vos informations ont bien été reçus.");
     } catch (error: any) {

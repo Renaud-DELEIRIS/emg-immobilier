@@ -1,12 +1,7 @@
 import { Dialog } from "@headlessui/react";
-import {
-  IconCheck,
-  IconCircleCheck,
-  IconCircleCheckFilled,
-  IconInfoCircle,
-} from "@tabler/icons-react";
+import { IconCircleCheckFilled, IconInfoCircle } from "@tabler/icons-react";
+import { Trans, useTranslation } from "next-i18next";
 import { useState } from "react";
-import { set } from "zod";
 import Button from "~/components/button/Button";
 import AvsInput from "~/components/inputs/Avs";
 import FileInput from "~/components/inputs/FileInput";
@@ -22,6 +17,7 @@ const Documents = () => {
   const [openCompleteLater, setOpenCompleteLater] = useState<boolean>(false);
   const [openComplete, setOpenComplete] = useState<boolean>(false);
   const lead = useFormStore((state) => state.data);
+  const { t } = useTranslation("frontalier");
 
   const onPressLater = () => {
     setOpenCompleteLater(true);
@@ -35,56 +31,53 @@ const Documents = () => {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-bold">Documents communs :</h3>
+        <h3 className="text-lg font-bold">{t("DOCUMENT_TITLE_COMMUN")}</h3>
         <div className="grid grid-cols-1 gap-4">
           <div className="rounded-lg border bg-white p-4 shadow">
             <TextInput
-              label="IBAN (Facultatif)"
+              label={t("DOCUMENT_IBAN_LABEL")}
               placeholder="P. ex. FR76XXXXXXXXXXXXXXXXXXXXXXX"
               value={iban}
               onChange={(value) => setIban(value)}
             />
             <p className="mt-2 text-sm text-gray-500">
               <IconInfoCircle size={16} className="mr-2 inline-block" />
-              Votre IBAN vous permettra de bénéficier des futurs remboursement
-              de frais de santé
+              {t("DOCUMENT_IBAN_INFO")}
             </p>
           </div>
           <FileInput
-            label="Justificatif de domicile"
-            placeholder="Justificatif de domicile"
+            label={t("DOCUMENT_DOMICILE_LABEL")}
+            placeholder={t("DOCUMENT_DOMICILE_LABEL")}
             value={justificatifDomicile}
-            onChange={(value) => setJustificatifDomicile(justificatifDomicile)}
+            onChange={(value) => setJustificatifDomicile(value)}
           />
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-bold">Vos documents :</h3>
+        <h3 className="text-lg font-bold">{t("DOCUMENT_TITLE_YOUR")}</h3>
         <div className="grid grid-cols-1 gap-4">
           <FileInput
-            label="Pièce d'identité"
-            placeholder="Pièce d'identité"
+            label={t("DOCUMENT_IDENTITE_LABEL")}
+            placeholder={t("DOCUMENT_IDENTITE_LABEL")}
             value={pieceDidendite}
             onChange={(value) => setPieceDidendite(value)}
           />
           <FileInput
-            label="Contrat de travail ou Permis G"
-            placeholder="Contrat de travail ou Permis G"
+            label={t("DOCUMENT_CONTRAT_TRAVAIL_LABEL")}
+            placeholder={t("DOCUMENT_CONTRAT_TRAVAIL_LABEL")}
             value={permisTravail}
             onChange={(value) => setPermisTravail(value)}
           />
           <div className="rounded-lg border bg-white p-4 shadow">
             <AvsInput
-              label="Numéro AVS (Facultatif)"
+              label={t("DOCUMENT_AVS_LABEL")}
               placeholder="P. ex. 756.XXXX.XXXX.XX"
               value={avs}
               onChange={(value) => setAvs(value)}
             />
             <p className="mt-2 text-sm text-gray-500">
               <IconInfoCircle size={16} className="mr-2 inline-block" />
-              Vous trouverez votre numéro AVS sur votre carte d&apos;assuré. Il
-              ne sera pas nécessaire dans le cas d&apos;une première
-              souscription.
+              {t("DOCUMENT_AVS_INFO")}
             </p>
           </div>
         </div>
@@ -96,7 +89,7 @@ const Documents = () => {
             onPressLater();
           }}
         >
-          Continuer plus tard
+          {t("DOCUMENT_LATER")}
         </Button>
         <Button
           onClick={() => {
@@ -104,7 +97,7 @@ const Documents = () => {
           }}
           disabled={!permisTravail || !pieceDidendite || !justificatifDomicile}
         >
-          Finaliser mon dossier
+          {t("DOCUMENT_COMPLETE")}
         </Button>
       </div>
       <Dialog
@@ -116,11 +109,16 @@ const Documents = () => {
           <div className="rounded-lg bg-white p-8 text-center">
             <IconCircleCheckFilled size={64} className="mx-auto text-primary" />
             <Dialog.Title className="mt-4 text-lg font-bold md:text-xl">
-              A plus tard !
+              {t("DOCUMENT_COMPLETE_LATER_TITLE")}
             </Dialog.Title>
             <p className="mt-2 max-w-sm text-sm text-dark md:max-w-lg md:text-base">
-              Un email vous a été envoyé à l&apos;adresse <b>{lead.email}</b>{" "}
-              avec un lien vous permettant de poursuivre votre souscription.
+              <Trans
+                i18nKey="DOCUMENT_COMPLETE_LATER_TEXT"
+                t={t}
+                values={{
+                  email: lead?.email || "",
+                }}
+              />
             </p>
             <Button
               onClick={() => {
@@ -128,7 +126,7 @@ const Documents = () => {
               }}
               className="mt-4"
             >
-              Remplir mon dossier
+              {t("DOCUMENT_COMPLETE_LATER_ACTION")}
             </Button>
           </div>
         </div>
@@ -142,11 +140,10 @@ const Documents = () => {
           <div className="rounded-lg bg-white p-8 text-center">
             <IconCircleCheckFilled size={64} className="mx-auto text-primary" />
             <Dialog.Title className="mt-4 text-lg font-bold md:text-xl">
-              Votre dossier est complet !
+              {t("DOCUMENT_COMPLETE_NOW_TITLE")}
             </Dialog.Title>
             <p className="mt-2 max-w-sm text-sm text-dark md:max-w-lg md:text-base">
-              Vous allez être recontacté par un de nos conseillers dans les
-              prochaines 48h.
+              {t("DOCUMENT_COMPLETE_NOW_TEXT")}
             </p>
           </div>
         </div>

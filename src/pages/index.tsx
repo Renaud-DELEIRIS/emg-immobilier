@@ -1,30 +1,33 @@
-import { IconChevronDown, IconPhone, IconPhoneCall } from "@tabler/icons-react";
+import { Dialog, Transition } from "@headlessui/react";
+import {
+  IconChevronDown,
+  IconMenu2,
+  IconPhone,
+  IconPhoneCall,
+} from "@tabler/icons-react";
+import dayjs from "dayjs";
 import { GetStaticProps, type NextPage } from "next";
+import { useTranslation } from "next-i18next";
+import nextI18nextConfig from "next-i18next.config.mjs";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
-import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { Fragment, useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import nextI18nextConfig from "next-i18next.config.mjs";
-import { useTranslation } from "next-i18next";
+import { STEPS } from "~/constants/step.constant";
 import { useFormStore } from "~/stores/form";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { useSessionStore } from "~/stores/session";
-import { STEPS, schemaStep } from "~/constants/step.constant";
 import getParamsUrl from "~/utils/client/getParamsUrl";
-import dayjs from "dayjs";
-import { z } from "zod";
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
     props: {
       ...(await serverSideTranslations(
         ctx.locale ?? "fr",
-        ["common", "footer", "sidebar"],
+        ["common", "footer", "sidebar", "frontalier", "result"],
         nextI18nextConfig
       )),
     },
@@ -50,6 +53,7 @@ const Home: NextPage = () => {
   const fetchSession = useSessionStore((state) => state.fetchSession);
   const setSessionId = useSessionStore((state) => state.setSessionId);
   const [loaded, setLoaded] = useState(false);
+  const [openSide, setOpenSide] = useState(false);
 
   useEffect(() => {
     initStep();
@@ -190,13 +194,62 @@ const Home: NextPage = () => {
               {getStepComponent()}
             </div>
             {activeStep.id !== "loader" && activeStep.id !== "result" && (
-              <div className="fixed right-0 top-1/3 z-10  hidden items-center xl:block 2xl:right-[5%]">
-                <Sidebar />
-              </div>
+              <>
+                <div className="fixed right-0 top-1/3 z-10  hidden items-center xl:block 2xl:right-[5%]">
+                  <Sidebar />
+                </div>
+                <button
+                  className="fixed bottom-16 right-4 z-20 gap-1 rounded-2xl bg-primary p-2 font-bold text-white xl:hidden"
+                  onClick={() => setOpenSide(!openSide)}
+                >
+                  <IconMenu2 size={20} className="mx-auto md:mx-0" />
+                </button>
+              </>
             )}
             <Footer />
           </>
         )}
+        <Transition appear show={openSide} as={Fragment}>
+          <Dialog
+            as="div"
+            className="relative z-40"
+            onClose={() => setOpenSide(false)}
+          >
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black/30 backdrop-blur-[5px]" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex min-h-full items-center justify-center p-4  text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+                    <Sidebar
+                      onClose={() => {
+                        setOpenSide(false);
+                      }}
+                    />
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
       </main>
     </>
   );

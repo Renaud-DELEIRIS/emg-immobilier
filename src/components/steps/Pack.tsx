@@ -1,6 +1,8 @@
 import { IconCheck, IconCircleCaretDown } from "@tabler/icons-react";
 import dayjs from "dayjs";
+import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
+import { Adherent, Pack } from "~/constants/lead.constant";
 import {
   packById,
   prestationsConfort,
@@ -14,7 +16,6 @@ import {
   optionTraitementsDentaires,
 } from "~/data/PackOption";
 import PackShowOption from "./PackShowOption";
-import { Adherent, Pack } from "~/constants/lead.constant";
 
 const Pack = ({
   adherent,
@@ -66,6 +67,7 @@ const Pack = ({
           },
         ]
   );
+  const { t } = useTranslation("common");
 
   useEffect(() => {
     // If adherent age is under or equal at 3 make premium selected
@@ -95,14 +97,14 @@ const Pack = ({
         <PackShowOption
           prestation={[prestationsEssentials]}
           defaultLevel={1}
-          pack="Essentiel"
+          pack={t("STEP_PACK_ESSENTIEL")}
           recommended={false}
           selected={selected === 1}
           onClick={() => setSelected(1)}
         />
         <PackShowOption
           prestation={[prestationsConfort]}
-          pack="Confort"
+          pack={t("STEP_PACK_CONFORT")}
           defaultLevel={1}
           recommended={dayjs().diff(dayjs(adherent.year, "YYYY"), "year") > 3}
           selected={selected === 2}
@@ -111,7 +113,7 @@ const Pack = ({
         <PackShowOption
           defaultLevel={1}
           prestation={[prestationsPremium]}
-          pack="Premium"
+          pack={t("STEP_PACK_PREMIUM")}
           recommended={dayjs().diff(dayjs(adherent.year, "YYYY"), "year") <= 3}
           selected={selected === 3}
           onClick={() => setSelected(3)}
@@ -122,7 +124,7 @@ const Pack = ({
           className="flex w-full items-center justify-between text-left"
           onClick={() => setOptionExpanded(!optionExpanded)}
         >
-          <span className="text-lg ">Options supplémentaires</span>
+          <span className="text-lg ">{t("STEP_PACK_OPTIONS")}</span>
           <IconCircleCaretDown
             size={24}
             className={`transition-transform ${
@@ -142,7 +144,7 @@ const Pack = ({
           >
             <PackShowOption
               prestation={optionMedecineAlternative}
-              pack="Médecine alternative"
+              pack={t("STEP_PACK_OPTIONS_MED_ALTERNATIVE")}
               defaultLevel={
                 options?.find(
                   (option) => option.label === "Médecine alternative"
@@ -198,7 +200,7 @@ const Pack = ({
             />{" "}
             <PackShowOption
               prestation={optionTraitementsDentaires}
-              pack="Traitements dentaires"
+              pack={t("STEP_PACK_OPTIONS_TRAITEMENTS_DENTAIRE")}
               recommended={false}
               selected={
                 !!options?.find(
@@ -258,7 +260,7 @@ const Pack = ({
             />{" "}
             <PackShowOption
               prestation={optionCapitalHospitalier}
-              pack="Capital hospitalier"
+              pack={t("STEP_PACK_OPTIONS_CAPITAL_HOSPITALIER")}
               recommended={false}
               selected={
                 !!options?.find(
@@ -314,7 +316,7 @@ const Pack = ({
             />{" "}
             <PackShowOption
               prestation={optionHospitalisation}
-              pack="Hospitalisation"
+              pack={t("STEP_PACK_OPTIONS_HOSPITALISATION")}
               customLevel={["Flexible", "Semi-privée", "Privée"]}
               recommended={true}
               selected={
@@ -372,7 +374,7 @@ const Pack = ({
           setSelected(undefined);
         }}
       >
-        Je ne veux que la base
+        {t("STEP_PACK_BASE")}
         {!selected && <IconCheck size={24} />}
       </button>
     </div>

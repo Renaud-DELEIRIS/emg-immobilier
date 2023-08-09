@@ -1,12 +1,13 @@
-import { IconCheck, IconMan, IconWoman } from "@tabler/icons-react";
+import { IconCheck } from "@tabler/icons-react";
 import dayjs from "dayjs";
+import { useTranslation } from "next-i18next";
 import { useEffect } from "react";
-import Button from "~/components/button/Button";
-import formatAmount from "~/utils/formatAmount";
 import { FaChild } from "react-icons/fa";
 import { IoIosMan, IoIosWoman } from "react-icons/io";
+import Button from "~/components/button/Button";
 import { PackFrontalier } from "~/constants/frontalier.constant";
 import { useFormStore } from "~/stores/form";
+import formatAmount from "~/utils/formatAmount";
 const Profils = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
@@ -15,6 +16,8 @@ const Profils = () => {
     (p) => p.name === lead.selectedOfferFrontalier
   );
   const price = pack ? pack.price : () => 0;
+  const { t } = useTranslation("frontalier");
+  const { t: tCommon } = useTranslation("common");
 
   useEffect(() => {
     if (
@@ -35,7 +38,7 @@ const Profils = () => {
 
   return (
     <div className="flex max-w-xl flex-col gap-2">
-      <label className="font-bold">Les offres qui vous intéressent :</label>
+      <label className="font-bold">{t("FRONTALIER_TITLE")}</label>
       {lead.adherent.map((p, index) => {
         if (!dayjs(p.year, "YYYY").isBefore(dayjs().subtract(18, "year")))
           return null;
@@ -72,12 +75,14 @@ const Profils = () => {
               )}
               <span className="font-bold">
                 {p.type === "main"
-                  ? "Pour vous"
+                  ? t("FRONTALIER_TITLE_MAIN")
                   : p.type === "partner"
                   ? p.civility === "female"
-                    ? "Pour votre conjointe"
-                    : "Pour votre coinjoint"
-                  : "Pour votre enfant né en " + (p.year || "")}
+                    ? t("FRONTALIER_TITLE_SPOUSE_FEMALE")
+                    : t("FRONTALIER_TITLE_SPOUSE_MALE")
+                  : t("FRONTALIER_TITLE_CHILD", {
+                      year: p.year || "",
+                    })}
                 :
                 <span className="text-primary">
                   {" "}
@@ -95,10 +100,10 @@ const Profils = () => {
                 </span>
                 /{" "}
                 {lead.paymentFrequency === "month"
-                  ? "mois"
+                  ? t("BY_MONTH")
                   : lead.paymentFrequency === "semester"
-                  ? "semestre"
-                  : "année"}
+                  ? t("BY_SEMESTER")
+                  : t("BY_YEAR")}
               </span>
             </div>
             <div
@@ -119,7 +124,7 @@ const Profils = () => {
         }}
         className="mt-6 w-52"
       >
-        Continuer
+        {tCommon("CONTINUE")}
       </Button>
     </div>
   );

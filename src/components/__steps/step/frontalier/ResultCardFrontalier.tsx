@@ -1,13 +1,14 @@
+import { IconChevronDown, IconCircleCheckFilled } from "@tabler/icons-react";
 import Image from "next/image";
 import { useState } from "react";
 import Button from "~/components/button/Button";
-import { IconChevronDown, IconCircleCheckFilled } from "@tabler/icons-react";
 
-import { recallResident } from "~/utils/api/recallResident";
-import { toast } from "react-toastify";
 import dayjs from "dayjs";
+import { useTranslation } from "next-i18next";
+import { toast } from "react-toastify";
 import { Adherent } from "~/constants/lead.constant";
 import { useFormStore } from "~/stores/form";
+import { recallResident } from "~/utils/api/recallResident";
 
 interface Props {
   adhrerent: Adherent;
@@ -36,75 +37,68 @@ const ResultCardFrontalier = ({
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
+  const { t: tCommon } = useTranslation("common");
+  const { t } = useTranslation("frontalier");
 
   const age = dayjs().diff(dayjs(adhrerent.year, "YYYY"), "year");
   const couverture = adhrerent.couverture;
 
   const prestation = [
     {
-      label: "Séjours hospitaliers en Suisse",
-      value:
-        "Les coûts du séjour, des soins et du traitement en division commune (chambre à plusieurs lits) sont remboursés.",
+      label: "PRESTATION_SEJOURS_HOSPITALIERS_EN_SUISSE_LABEL",
+      value: "PRESTATION_SEJOURS_HOSPITALIERS_EN_SUISSE_VALUE",
       status: true,
     },
     {
-      label: "Protection à l'étranger",
-      value:
-        "En cas d’urgence, vous bénéficiez dans les pays membres de l’UE/AELE du tarif social correspondant. Dans tous les autres pays, Helsana rembourse au maximum le double du montant assuré en Suisse.",
+      label: "PRESTATION_PROTECTION_A_L_ETRANGER_LABEL",
+      value: "PRESTATION_PROTECTION_A_L_ETRANGER_VALUE",
       status: true,
     },
     {
-      label: "Transport et sauvetage en Suisse",
-      value:
-        "Helsana rembourse 50% des coûts de transport, mais au max. 500 francs par année civile. Pour les opérations de sauvetage, Helsana rembourse 50% des coûts, mais au max. 5000 francs par année civile.",
+      label: "PRESTATION_TRANSPORT_ET_SAUVETAGE_EN_SUISSE_LABEL",
+      value: "PRESTATION_TRANSPORT_ET_SAUVETAGE_EN_SUISSE_VALUE",
       status: true,
     },
     {
-      label: "Médicaments",
-      value:
-        "Helsana rembourse le coût des médicaments prescrits par un médecin figurant sur la liste des spécialités. Si plusieurs médicaments sont répertoriés avec les mêmes substances actives, la quote-part peut s’élever à 20%. La participation aux coûts s’applique uniquement si vous achetez les médicaments en Suisse.",
+      label: "PRESTATION_MEDICAMENTS_LABEL",
+      value: "PRESTATION_MEDICAMENTS_VALUE",
       status: true,
     },
     {
-      label: "Traitements ambulatoires - médecine académique",
-      value:
-        "Les coûts sont remboursés dans toute la Suisse sur la base du tarif spécialiste reconnu.",
+      label: "PRESTATION_TRAITEMENTS_AMBULATOIRES_MEDECINE_ACADEMIQUE_LABEL",
+      value: "PRESTATION_TRAITEMENTS_AMBULATOIRES_MEDECINE_ACADEMIQUE_VALUE",
       status: true,
     },
     {
-      label: "Traitements ambulatoires - médecine complémentaire",
+      label:
+        "PRESTATION_TRAITEMENTS_AMBULATOIRES_MEDECINE_COMPLEMENTAIRE_LABEL",
       value:
-        "Les coûts sont remboursés dans toute la Suisse sur la base du tarif spécialiste reconnu.",
+        "PRESTATION_TRAITEMENTS_AMBULATOIRES_MEDECINE_COMPLEMENTAIRE_VALUE",
       status: true,
     },
     {
-      label: "Prévention (prévention médicale)",
-      value:
-        "Helsana rembourse les coûts de certains examens et mesures de prévention.",
+      label: "PRESTATION_PREVENTION_PREVENTION_MEDICALE_LABEL",
+      value: "PRESTATION_PREVENTION_PREVENTION_MEDICALE_VALUE",
       status: true,
     },
     {
-      label: "Moyens et appareils",
-      value:
-        "Helsana rembourse à concurrence du montant maximal fixé par la loi pour les moyens et appareils prescrits par un médecin.",
+      label: "PRESTATION_MOYENS_ET_APPAREILS_LABEL",
+      value: "PRESTATION_MOYENS_ET_APPAREILS_VALUE",
       status: true,
     },
     {
-      label: "Grossesse",
-      value:
-        "Helsana rembourse les coûts pour des examens et mesures de préparation à l’accouchement. ",
+      label: "PRESTATION_GROSSESSE_LABEL",
+      value: "PRESTATION_GROSSESSE_VALUE",
       status: true,
     },
     {
-      label: "Soins",
-      value:
-        "Vous recevez une contribution aux coûts des soins prodigués à domicile (Spitex) et dans un établissement médico-social.",
+      label: "PRESTATION_SOINS_LABEL",
+      value: "PRESTATION_SOINS_VALUE",
       status: true,
     },
     {
-      label: "Cures balnéaires",
-      value:
-        "Helsana rembourse 10 francs par jour pour des cures balnéaires dans un établissement balnéaire reconnu en Suisse.",
+      label: "PRESTATION_CURES_BALNEAIRES_LABEL",
+      value: "PRESTATION_CURES_BALNEAIRES_VALUE",
       status: true,
     },
   ];
@@ -112,10 +106,10 @@ const ResultCardFrontalier = ({
   const beCalled = () => {
     void recallResident(lead.phone || "")
       .then(() => {
-        toast.success("Nous vous rappellerons dans les plus brefs délais");
+        toast.success(tCommon("CALLED_SUCCESS"));
       })
       .catch(() => {
-        toast.error("Une erreur est survenue, veuillez réessayer plus tard");
+        toast.error(tCommon("CALLED_ERROR"));
       });
   };
 
@@ -134,7 +128,7 @@ const ResultCardFrontalier = ({
       {recommended && (
         <div className="flex items-center gap-2 rounded-t-lg border border-primary bg-primary-700/20 px-2 py-2 pb-1 text-sm font-semibold text-primary-600">
           <IconCircleCheckFilled size={24} />
-          <span>Meilleur rapport qualité prix</span>
+          <span>{t("RECOMMENDED")}</span>
         </div>
       )}
       <div
@@ -166,12 +160,12 @@ const ResultCardFrontalier = ({
                 )}
               </h2>
               <span className="text-[24px] ">
-                /{monthPrice ? "mois" : "an"}
+                /{monthPrice ? t("MONTH") : t("ANNUAL")}
               </span>
             </div>
             {withDetails && (
               <span className="text-lg font-semibold text-neutral-500">
-                {name}
+                {t(name)}
               </span>
             )}
             {withDetails && (
@@ -179,7 +173,7 @@ const ResultCardFrontalier = ({
                 onClick={() => setShow(!show)}
                 className="mt-2 flex items-center gap-2 rounded-lg border-2 p-2 text-sm font-semibold text-neutral-400"
               >
-                {show ? "Masquer" : "Afficher"} les détails
+                {show ? t("HIDE") : t("SHOW")} {t("DETAILS")}
                 <IconChevronDown
                   className={`transform ${show ? "rotate-180" : ""}`}
                 />
@@ -188,10 +182,10 @@ const ResultCardFrontalier = ({
           </div>
           <div className="mt-4 flex min-w-[12rem] flex-col gap-4 md:mt-0">
             <Button widthFull onClick={onSubscribe}>
-              Souscrire
+              {tCommon("CARD_SUBSCRIBE")}
             </Button>
             <Button widthFull intent={"outline"} onClick={beCalled}>
-              Être rappelé
+              {tCommon("CARD_BECALLED")}
             </Button>
           </div>
         </div>
@@ -204,10 +198,10 @@ const ResultCardFrontalier = ({
             <div className={`overflow-hidden ${show ? "" : ""}`}>
               <div className="grid grid-cols-[repeat(2,1fr)] gap-5 p-4">
                 <span className="px-1 text-xl font-bold text-[#2F3946]">
-                  Prestations
+                  {tCommon("CARD_PRESTATION")}
                 </span>
                 <span className="px-1 text-xl font-bold text-[#2F3946]">
-                  Détails
+                  {tCommon("CARD_DETAILS")}
                 </span>
               </div>
               <div className="">
@@ -219,12 +213,12 @@ const ResultCardFrontalier = ({
                     key={i}
                   >
                     <div className="py-2 text-[#2f3946]">
-                      <span className="px-1 text-base">{p.label}</span>
+                      <span className="px-1 text-base">{t(p.label)}</span>
                     </div>
                     <div className="px-2 text-[#2f3946]">
                       <div className="relative flex items-center gap-4">
                         <span className="w-full " key={i}>
-                          {p.value}{" "}
+                          {t(p.value)}
                         </span>
                       </div>
                     </div>

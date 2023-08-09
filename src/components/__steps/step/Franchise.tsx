@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
-import StepContainer from "../StepContainer";
-import TileInput from "~/components/inputs/Tile";
-import dayjs from "dayjs";
-import Button from "~/components/button/Button";
 import {
   IconCheck,
   IconEdit,
   IconInfoCircle,
   IconX,
 } from "@tabler/icons-react";
-import Select from "~/components/inputs/Select";
+import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import { Trans, useTranslation } from "next-i18next";
-import { useFormStore } from "~/stores/form";
+import { useEffect, useState } from "react";
+import Button from "~/components/button/Button";
+import Select from "~/components/inputs/Select";
+import TileInput from "~/components/inputs/Tile";
 import { Adherent } from "~/constants/lead.constant";
+import { useFormStore } from "~/stores/form";
+import StepContainer from "../StepContainer";
 
 const Franchise = () => {
   const lead = useFormStore((state) => state.data);
@@ -415,8 +415,8 @@ const Franchise = () => {
                 key={index}
               >
                 <p className="mb-4 text-base font-bold">
-                  {t("STEP_FRANCHISE_CHILD_TITLE", {
-                    year: adherent.year,
+                  {t("STEP_FRANCHISE_TITLE_CHILD", {
+                    year: adherent.year || "",
                   })}
                 </p>
                 <Select

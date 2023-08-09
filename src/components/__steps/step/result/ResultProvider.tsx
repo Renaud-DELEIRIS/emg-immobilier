@@ -2,8 +2,8 @@ import dayjs from "dayjs";
 import { createContext, useContext, useEffect, useState } from "react";
 import { Adherent } from "~/constants/lead.constant";
 import {
-  optionHospitalisation,
   optionCapitalHospitalier,
+  optionHospitalisation,
   optionMedecineAlternative,
   optionTraitementsDentaires,
 } from "~/data/PackOption";
@@ -40,7 +40,10 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
     const p = new URLSearchParams({
-      location: lead.npa?.key.toString() || "",
+      location:
+        lead.situation === "future resident"
+          ? "12013066035420"
+          : lead.npa?.key.toString() || "",
       yob: profil.year || "",
       franchise: profil.franchise?.replaceAll("'", "") || "",
       coverage: profil.couvertureAccident === "non" ? "0" : "1",

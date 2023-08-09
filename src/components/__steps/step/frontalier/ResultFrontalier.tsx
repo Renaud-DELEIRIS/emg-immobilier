@@ -2,23 +2,19 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import ReactSwitch from "react-switch";
 
-import StepContainer from "../../StepContainer";
-import ResultCardFrontalier from "./ResultCardFrontalier";
+import { Trans, useTranslation } from "next-i18next";
 import { PackFrontalier } from "~/constants/frontalier.constant";
 import { useFormStore } from "~/stores/form";
+import StepContainer from "../../StepContainer";
+import ResultCardFrontalier from "./ResultCardFrontalier";
 
 const ResultFrontalier = () => {
   const lead = useFormStore((state) => state.data);
   const [monthlyPrice, setMonthlyPrice] = useState<boolean>(true);
+  const { t } = useTranslation("frontalier");
   return (
     <StepContainer
-      description={
-        <span>
-          Merci !<br />
-          Grâce à ces informations, je suis parvenu à trouver à trouver la
-          meilleur offre pour vous et votre famille.
-        </span>
-      }
+      description={<Trans i18nKey="RESULT_TITLE" t={t} />}
       title="Sélectionnez l'offre à laquelle souscrire :"
       stepId="result-frontalier"
     >
@@ -33,9 +29,7 @@ const ResultFrontalier = () => {
           width={48}
           handleDiameter={24}
         />
-        <p className="block text-base text-dark">
-          Afficher le prix à l&apos;année (1% de rabais)
-        </p>
+        <p className="block text-base text-dark">{t("RESULT_YEAR_SWITCH")}</p>
       </div>
       <div className="mt-8 flex flex-col gap-8">
         {lead.adherent.map((data, index) => {
@@ -46,12 +40,14 @@ const ResultFrontalier = () => {
             <div key={index}>
               <h1 className="mb-4 text-base font-extrabold leading-[1.6] text-dark md:leading-[1.4]">
                 {data.type === "main"
-                  ? "Pour vous"
+                  ? t("RESULT_TITLE_MAIN")
                   : data.type === "partner"
                   ? data.civility === "female"
-                    ? "Pour votre conjointe"
-                    : "Pour votre conjoint"
-                  : "Pour votre enfant née en " + (data.year || "")}
+                    ? t("RESULT_TITLE_SPOUSE_FEMALE")
+                    : t("RESULT_TITLE_SPOUSE_MALE")
+                  : t("RESULT_TITLE_CHILD", {
+                      year: data.year,
+                    })}
                 :
               </h1>
               <div className="flex flex-col gap-4">

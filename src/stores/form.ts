@@ -157,18 +157,19 @@ export const useFormStore = create<FormState>()(
             }));
 
             const queryParams = getParamsUrl();
-            void Router.push(
-              {
-                query: {
-                  ...queryParams,
-                  step: selectedStep.id || "",
+            if (selectedStep.id !== "loader")
+              void Router.push(
+                {
+                  query: {
+                    ...queryParams,
+                    step: selectedStep.id || "",
+                  },
                 },
-              },
-              undefined,
-              {
-                shallow: true,
-              }
-            );
+                undefined,
+                {
+                  shallow: true,
+                }
+              );
           } else if (errors) {
             set((state) => ({
               ...state,

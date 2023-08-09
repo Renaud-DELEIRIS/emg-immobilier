@@ -24,7 +24,7 @@ const ModalSouscrireLca = ({ open, onClose, lca, adherent }: Props) => {
   const [affiliationTime, setAffiliationTime] = useState("");
   const lead = useFormStore((state) => state.data);
 
-  const sendInfo = () => {
+  const sendInfo = async () => {
     const commentaire = `Pour ${
       adherent.type === "main"
         ? "personne principal"
@@ -32,15 +32,17 @@ const ModalSouscrireLca = ({ open, onClose, lca, adherent }: Props) => {
         ? adherent.civility === "man"
           ? "conjoint"
           : "conjointe"
-        : `enfant né en ${adherent?.year}`
+        : `enfant né en ${adherent?.year || ""}`
     } : ${
       !!(affiliation === "non")
         ? `Non affilié pour LCA.`
         : `Affilié Lamal chez ${affiliattionCaisse} depuis ${affiliationTime}.`
     }`;
     try {
-      fetch(
-        `${env.NEXT_PUBLIC_ADDCMT}?commentaire=${commentaire}&idlead=${lead.idLead}`
+      await fetch(
+        `${env.NEXT_PUBLIC_ADDCMT}?commentaire=${commentaire}&idlead=${
+          lead.idLead || ""
+        }`
       );
       toast.success("Vos informations ont bien été reçus.");
     } catch (error: any) {
@@ -88,7 +90,9 @@ const ModalSouscrireLca = ({ open, onClose, lca, adherent }: Props) => {
             </Tile>
           </div>
           {affiliation === "non" && (
-            <Button onClick={sendInfo}>Envoyé mes informations</Button>
+            <Button onClick={() => void sendInfo()}>
+              Envoyé mes informations
+            </Button>
           )}
           {affiliation === "oui" && (
             <>
@@ -119,7 +123,7 @@ const ModalSouscrireLca = ({ open, onClose, lca, adherent }: Props) => {
                 placeholder="Sélectionner"
               />
               {affiliationTime && affiliattionCaisse && (
-                <Button onClick={sendInfo} className="mt-4">
+                <Button onClick={() => void sendInfo()} className="mt-4">
                   Envoyé mes informations
                 </Button>
               )}

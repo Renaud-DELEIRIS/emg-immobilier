@@ -1,13 +1,13 @@
 import { IconInfoCircle } from "@tabler/icons-react";
 import dayjs from "dayjs";
+import { motion } from "framer-motion";
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import Button from "~/components/button/Button";
 import Tile from "~/components/button/Tile";
+import CompleteAddress from "~/components/inputs/AddressInput";
 import InputDate from "~/components/inputs/DatePicker";
 import Select from "~/components/inputs/Select";
-import TextInput from "~/components/inputs/TextInput";
-import { motion } from "framer-motion";
-import CompleteAddress from "~/components/inputs/AddressInput";
 import { useFormStore } from "~/stores/form";
 
 const Souscrire = () => {
@@ -23,12 +23,13 @@ const Souscrire = () => {
     dayjs(lead.startInsurance, "DD.MM.YYYY").isValid() &&
     preDate !== undefined;
 
+  const { t } = useTranslation("frontalier");
+  const { t: tCommon } = useTranslation("common");
+
   return (
     <div className="flex max-w-xl flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <label className="font-bold">
-          Début de votre contrat d&apos;assurance :
-        </label>
+        <label className="font-bold">{t("SOUSCRIRE_LABEL_START")}</label>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Tile
             onClick={() => {
@@ -38,7 +39,7 @@ const Souscrire = () => {
             selected={preDate === "ajd"}
           >
             <div className="flex flex-col">
-              <span>Aujourd&apos;hui</span>
+              <span>{t("SOUSCRIRE_START_A1")}</span>
               <span
                 className={
                   "text-xs capitalize " +
@@ -59,7 +60,7 @@ const Souscrire = () => {
             selected={preDate === "demain"}
           >
             <div className="flex flex-col">
-              <span>Demain</span>
+              <span>{t("SOUSCRIRE_START_A2")}</span>
               <span
                 className={
                   "text-xs capitalize " +
@@ -83,7 +84,7 @@ const Souscrire = () => {
             selected={preDate === "mois"}
           >
             <div className="flex flex-col">
-              <span>Le mois prochain</span>
+              <span>{t("SOUSCRIRE_START_A3")}</span>
               <span
                 className={
                   "text-xs capitalize " +
@@ -99,7 +100,7 @@ const Souscrire = () => {
             selected={preDate === "autre"}
           >
             <div className="flex flex-col">
-              <span>Une autre date...</span>
+              <span>{t("SOUSCRIRE_START_A4")}</span>
             </div>
           </Tile>
         </div>
@@ -115,8 +116,7 @@ const Souscrire = () => {
         </motion.div>
         <p className="text-sm text-neutral-500">
           <IconInfoCircle className="mr-1 inline-block" size={16} />
-          La date de début de contrat ne peut pas être antérieur à la date de
-          début de votre emploi en Suisse
+          {t("SOUSCRIRE_START_INFO")}
         </p>
       </div>
       <Select
@@ -126,18 +126,18 @@ const Souscrire = () => {
             paymentFrequency: value as "month" | "year" | "semester",
           })
         }
-        label="Fréquence de paiement"
+        label={t("SOUSCRIRE_FREQUENCY_LABEL")}
         options={[
-          { value: "month", label: "Mensuelle" },
-          { value: "semester", label: "Semestrielle (0.5% de rabais)" },
-          { value: "year", label: "Annuelle (1% de rabais)" },
+          { value: "month", label: t("SOUSCRIRE_FREQUENCY_MENSUELLE") },
+          { value: "semester", label: t("SOUSCRIRE_FREQUENCY_SEMESTER") },
+          { value: "year", label: t("SOUSCRIRE_FREQUENCY_ANNUAL") },
         ]}
         boldLabel
       />
       <CompleteAddress
         value={lead.address || ""}
         onChange={(value) => changeLead({ address: value })}
-        label="Votre adresse de résidence :"
+        label={t("SOUSCRIRE_ADDRESS_LABEL")}
         placeholder="p. ex. Rue du parc 12, 01210 Ferney-Voltaire France"
         autocomplete="street-address"
         boldLabel
@@ -150,7 +150,7 @@ const Souscrire = () => {
         className="mt-4 w-52"
         disabled={!isValid}
       >
-        Continuer
+        {tCommon("CONTINUE")}
       </Button>
     </div>
   );
