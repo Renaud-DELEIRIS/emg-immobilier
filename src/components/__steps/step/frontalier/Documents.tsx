@@ -7,6 +7,7 @@ import AvsInput from "~/components/inputs/Avs";
 import FileInput from "~/components/inputs/FileInput";
 import TextInput from "~/components/inputs/TextInput";
 import { useFormStore } from "~/stores/form";
+import { api } from "~/utils/api";
 
 const Documents = () => {
   const [iban, setIban] = useState<string>("");
@@ -19,13 +20,38 @@ const Documents = () => {
   const lead = useFormStore((state) => state.data);
   const { t } = useTranslation("frontalier");
 
+  const { mutateAsync: createPresignedUrl } =
+    api.createPresignedUrl.useMutation();
+
   const onPressLater = () => {
     setOpenCompleteLater(true);
+    void uploadDocuments();
     // TODO
   };
 
   const onPressContinue = () => {
     // TODO
+  };
+
+  const uploadDocuments = async () => {
+    if (!lead.idLead) {
+      return;
+    }
+    const files: { type: string; name: string; url: string }[] = [];
+    const { key, url } = await createPresignedUrl({
+      token: lead.idLead,
+      filename: "Justificatif de domicile",
+    });
+    console.log(justificatifDomicile);
+    await fetch(url, {
+      method: "PUT",
+      body: Buffer.from(justificatifDomicile.split(",")[1]!, "base64"),
+    });
+    files.push({
+      type: "justificatif-domicile",
+      name: "Justificatif de domicile",
+      url,
+    });
   };
 
   return (

@@ -23,7 +23,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const s3 = new S3({
-  region: "eu-west-3",
+  region: "eu-central-2",
   credentials: {
     accessKeyId: env.AWS_PUBLIC,
     secretAccessKey: env.AWS_SECRET,

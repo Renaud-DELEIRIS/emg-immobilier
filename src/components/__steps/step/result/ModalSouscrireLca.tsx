@@ -6,7 +6,7 @@ import Tile from "~/components/button/Tile";
 import Select from "~/components/inputs/Select";
 import TextInput from "~/components/inputs/TextInput";
 import FlatModal from "~/components/modal/FlatModal";
-import { Adherent } from "~/constants/lead.constant";
+import { type Adherent } from "~/constants/lead.constant";
 import { env } from "~/env.mjs";
 import { useFormStore } from "~/stores/form";
 import { type Lca } from "~/types/comparatif";
@@ -40,7 +40,9 @@ const ModalSouscrireLca = ({ open, onClose, lca, adherent }: Props) => {
     }`;
     try {
       await fetch(
-        `${env.NEXT_PUBLIC_ADDCMT}?commentaire=${commentaire}&idlead=${
+        `${
+          env.NEXT_PUBLIC_APIV2_ROOT
+        }/addcmtleadcomparea?commentaire=${commentaire}&idlead=${
           lead.idLead || ""
         }`
       );

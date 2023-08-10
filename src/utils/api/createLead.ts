@@ -1,4 +1,4 @@
-import { Adherent, schemaData } from "~/constants/lead.constant";
+import { type Adherent, type schemaData } from "~/constants/lead.constant";
 import { packOptionById } from "~/data/PackOption";
 import { env } from "~/env.mjs";
 
@@ -84,13 +84,16 @@ export const sendLeadComparea = async (
     gtmparams: gtmParams,
     verified: true,
   };
-  const response = await fetch(`${env.NEXT_PUBLIC_APIV2}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  const response = await fetch(
+    `${env.NEXT_PUBLIC_APIV2_ROOT}/createleadcomparea`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
   if (!response.ok) {
     const result = (await response.json()) as { message: string };
     return Promise.reject(result.message);

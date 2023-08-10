@@ -33,46 +33,6 @@ const Souscrire = () => {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Tile
             onClick={() => {
-              setPreDate("ajd");
-              changeLead({ startInsurance: dayjs().format("DD.MM.YYYY") });
-            }}
-            selected={preDate === "ajd"}
-          >
-            <div className="flex flex-col">
-              <span>{t("SOUSCRIRE_START_A1")}</span>
-              <span
-                className={
-                  "text-xs capitalize " +
-                  (preDate !== "ajd" ? "text-neutral-400" : "")
-                }
-              >
-                {dayjs().format("dddd DD MMMM")}
-              </span>
-            </div>
-          </Tile>{" "}
-          <Tile
-            onClick={() => {
-              setPreDate("demain");
-              changeLead({
-                startInsurance: dayjs().add(1, "day").format("DD.MM.YYYY"),
-              });
-            }}
-            selected={preDate === "demain"}
-          >
-            <div className="flex flex-col">
-              <span>{t("SOUSCRIRE_START_A2")}</span>
-              <span
-                className={
-                  "text-xs capitalize " +
-                  (preDate !== "demain" ? "text-neutral-400" : "")
-                }
-              >
-                {dayjs().add(1, "day").format("dddd DD MMMM")}
-              </span>
-            </div>
-          </Tile>{" "}
-          <Tile
-            onClick={() => {
               setPreDate("mois");
               changeLead({
                 startInsurance: dayjs()

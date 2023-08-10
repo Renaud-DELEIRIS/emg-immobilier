@@ -101,6 +101,7 @@ const PersonalData = () => {
                   });
                 }}
                 format="DD.MM.YYYY"
+                className="!p-1.5"
               />
               <Select
                 value={p.nationality || ""}
