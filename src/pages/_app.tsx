@@ -1,18 +1,19 @@
+import { GTMProvider } from "@elgorditosalsero/react-gtm-hook";
 import { type AppType } from "next/dist/shared/lib/utils";
 import "react-phone-input-2/lib/style.css";
-import { GTMProvider } from "@elgorditosalsero/react-gtm-hook";
 
-import "~/styles/globals.css";
-import "~/styles/loader.scss";
-import { ToastContainer } from "react-toastify";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import fr from "dayjs/locale/fr";
 import dayjs from "dayjs";
-import { api } from "~/utils/api";
+import fr from "dayjs/locale/fr";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import { appWithTranslation } from "next-i18next";
 import nexti18nConfig from "next-i18next.config.mjs";
 import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { env } from "~/env.mjs";
+import "~/styles/globals.css";
+import "~/styles/loader.scss";
+import { api } from "~/utils/api";
 
 dayjs.extend(customParseFormat);
 dayjs.locale(fr);
@@ -23,7 +24,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       sessionStorage.setItem("createdAt", new Date().toISOString());
   }, []);
   return (
-    <GTMProvider state={{ id: "GTM-W6DFR53", dataLayerName: "dataLayer" }}>
+    <GTMProvider
+      state={{ id: env.NEXT_PUBLIC_GTMID, dataLayerName: "dataLayer" }}
+    >
       <Component {...pageProps} />
       <ToastContainer
         position="top-right"

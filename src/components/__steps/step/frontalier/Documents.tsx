@@ -42,7 +42,6 @@ const Documents = () => {
       token: lead.idLead,
       filename: "Justificatif de domicile",
     });
-    console.log(justificatifDomicile);
     await fetch(url, {
       method: "PUT",
       body: Buffer.from(justificatifDomicile.split(",")[1]!, "base64"),
