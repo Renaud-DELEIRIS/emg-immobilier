@@ -53,7 +53,7 @@
   "SOUSCRIRE_FREQUENCY_MENSUELLE": "Mensuelle",
   "SOUSCRIRE_FREQUENCY_SEMESTER": "Semestrielle (0.5% de rabais)",
   "SOUSCRIRE_FREQUENCY_ANNUAL": "Annuelle (1% de rabais)",
-  "SOUSCRIRE_ADRESSE_LABEL": "La fréquence de paiement ne peut pas être inférieur à la fréquence de paiement de votre salaire",
+  "SOUSCRIRE_ADDRESS_LABEL": "Votre adresse :",
 
   "DATA_TITLE_MAIN": "Vous",
   "DATA_TITLE_SPOUSE_FEMALE": "Votre conjointe",

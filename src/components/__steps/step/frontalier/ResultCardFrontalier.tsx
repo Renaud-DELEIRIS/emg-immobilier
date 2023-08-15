@@ -138,13 +138,14 @@ const ResultCardFrontalier = ({
       >
         <div className="flex w-full flex-col items-center justify-center p-4 md:flex-row md:justify-between">
           <div className="flex flex-col items-center gap-2">
-            <Image
-              src={`/images/${hash}.png`}
-              alt={"Icon de l'assurance Helsana"}
-              width={96}
-              height={96}
-              className="h-24 w-24 rounded-xl border border-neutral-100 object-contain"
-            ></Image>
+            <div className="grid h-24 w-24 place-items-center rounded-xl border border-neutral-100 p-1">
+              <Image
+                src={`/images/${hash}.png`}
+                alt={"Icon de l'assurance Helsana"}
+                width={75}
+                height={96}
+              ></Image>
+            </div>
           </div>
           <div className="flex flex-col items-center gap-px">
             <div className="flex items-end text-[#2A3775]">

@@ -1,9 +1,9 @@
-import type DefaultProps from "~/types/DefaultProps";
-import { type ReactNode } from "react";
-import { cva } from "class-variance-authority";
-import type { VariantProps } from "class-variance-authority";
 import { IconLoader } from "@tabler/icons-react";
+import type { VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import Link from "next/link";
+import { type ReactNode } from "react";
+import type DefaultProps from "~/types/DefaultProps";
 
 interface ButtonProps extends DefaultProps {
   onClick?: () => void;
@@ -22,14 +22,14 @@ const ButtonClass = cva(
       intent: {
         primary: [
           "bg-primary ",
-          "hover:bg-primary-600 border-[#E0E2E4]",
+          "hover:bg-primary-600 border-primary-500/80",
           "text-white",
         ],
         secondary: ["text-neutral-500 border-transparent"],
         outline: [
           "bg-transparent",
           "hover:bg-primary border-[#E0E2E4] bg-white",
-          "text-primary hover:text-white",
+          "text-primary hover:text-white hover:border-primary-500/80",
         ],
 
         none: [""],
