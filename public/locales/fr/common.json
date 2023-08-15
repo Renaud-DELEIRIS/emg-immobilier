@@ -30,15 +30,15 @@
   "STEP_ADHERENT_LIST_ADD": "Ajouter un enfant",
 
   "STEP_ADHERENT_PROFIL_MAIN": "Nous allons maintenant établir votre profil.",
-  "STEP_ADHERENT_DOB_MAIN": "Quelle est votre date de naissance ?",
+  "STEP_ADHERENT_DOB_MAIN": "Quelle est votre année de naissance ?",
   "STEP_ADHERENT_CIVILITY_MAIN": "Quelle est votre civilité ?",
 
   "STEP_ADHERENT_PROFIL_SPOUSE": "Nous allons maintenant établir le profil de votre conjoint(e).",
-  "STEP_ADHERENT_DOB_SPOUSE": "Quelle est la date de naissance de votre conjoint(e) ?",
+  "STEP_ADHERENT_DOB_SPOUSE": "Quelle est l'année de naissance de votre conjoint(e) ?",
   "STEP_ADHERENT_CIVILITY_SPOUSE": "Quelle est la civilité de votre conjoint(e) ?",
 
   "STEP_ADHERENT_PROFIL_CHILD": "Nous allons maintenant établir le profil de votre enfant.",
-  "STEP_ADHERENT_DOB_CHILD": "Quelle est la date de naissance de votre enfant ?",
+  "STEP_ADHERENT_DOB_CHILD": "Quelle est l'année de naissance de votre enfant ?",
   "STEP_ADHERENT_CIVILITY_CHILD": "Quelle est la civilité de votre enfant ?",
 
   "STEP_ADHERENT_PERFECT": "Parfait !",
