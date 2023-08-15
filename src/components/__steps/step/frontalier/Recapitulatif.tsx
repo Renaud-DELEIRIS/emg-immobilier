@@ -162,7 +162,7 @@ const Recapitulatif = () => {
                   } transition-[grid-template-rows,padding]`}
                 >
                   <div className={`overflow-hidden ${isOpen ? "" : ""}`}>
-                    <p className="text-sm text-neutral-500 md:text-base">
+                    <p className="text-left text-sm text-neutral-500 md:text-base">
                       <Trans t={t} i18nKey={presta.description} />
                     </p>
                   </div>
