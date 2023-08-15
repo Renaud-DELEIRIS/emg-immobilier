@@ -78,6 +78,9 @@
 
   "DOCUMENT_DOMICILE_LABEL": "Justificatif de domicile",
   "DOCUMENT_TITLE_YOUR": "Vos documents :",
+  "DOCUMENT_TITLE_SPOUSE_FEMALE": "Les documents de votre conjointe :",
+  "DOCUMENT_TITLE_SPOUSE_MALE": "Les documents de votre conjoint :",
+  "DOCUMENT_TITLE_CHILD": "Les documents de votre enfant née en {{year}} :",
   "DOCUMENT_IDENTITE_LABEL": "Pièce d'identité",
   "DOCUMENT_CONTRAT_TRAVAIL_LABEL": "Contrat de travail ou Permis G",
   "DOCUMENT_AVS_LABEL": "Numéro AVS (Facultatif)",
@@ -85,7 +88,7 @@
   "DOCUMENT_LATER": "Continuer plus tard",
   "DOCUMENT_COMPLETE": "Finaliser mon dossier",
   "DOCUMENT_COMPLETE_LATER_TITLE": "A plus tard !",
-  "DOCUMENT_COMPLETE_LATER_TEXT": "Un email vous a été envoyé à l'adresse  <b>{{email}}</b> avec un lien vous permettant de poursuivre votre souscription.",
+  "DOCUMENT_COMPLETE_LATER_TEXT": "Un email vous a été envoyé à l'adresse  <strong>{{email}}</strong> avec un lien vous permettant de poursuivre votre souscription.",
   "DOCUMENT_COMPLETE_LATER_ACTION": "Remplir mon dossier",
   "DOCUMENT_COMPLETE_NOW_TITLE": "Votre dossier est complet !",
   "DOCUMENT_COMPLETE_NOW_TEXT": "Vous allez être recontacté par un de nos conseillers dans les prochaines 48h."

@@ -1,4 +1,5 @@
 import { IconCircleCheck, IconCircleX, IconHelp } from "@tabler/icons-react";
+import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { Fragment, useState } from "react";
 import { toast } from "react-toastify";
@@ -21,26 +22,30 @@ const ModalComparatifTable = ({ open, onClose, offres, adherent }: Props) => {
   const [souscrireOpenIndex, setSouscrireOpenIndex] = useState<number | null>(
     null
   );
+  const { t } = useTranslation("result");
 
   const groupPrestations: Record<string, string[]> = {
     Ambulatoire: [
-      "Médicaments",
-      "Lunettes et verre de contact",
-      "Moyens auxiliaires",
-      "Prévention, check-up",
-      "Frais de transport et sauvetage",
-      "Fitness",
-      "Étranger",
+      "PRESTATION_MEDICAMENTS_LABEL",
+      "PRESTATION_LUNETTES_ET_VERRE_DE_CONTACT_LABEL",
+      "PRESTATION_MOYENS_AUXILIAIRES_LABEL",
+      "PRESTATION_PREVENTION_CHECKUP_LABEL",
+      "PRESTATION_FRAIS_DE_TRANSPORT_ET_SAUVETAGE_LABEL",
+      "PRESTATION_FITNESS_LABEL",
+      "PRESTATION_ETRANGER_LABEL",
     ],
     Hospitalisation: [
-      "Hospitalisation",
-      "Libre choix du médecin",
-      "Aide-ménagère et soins à domicile",
-      "Rooming-in",
-      "Capital hospitalier",
+      "PRESTATION_HOSPITALISATION_LABEL",
+      "PRESTATION_LIBRE_CHOIX_DU_MEDECIN_LABEL",
+      "PRESTATION_AIDE_MENAGERE_ET_SOINS_A_DOMICILE_LABEL",
+      "PRESTATION_ROOMING_IN_LABEL",
+      "PRESTATION_CAPITAL_HOSPITALIER_LABEL",
     ],
-    "Médecines complémentaires": ["Médecine complémentaire"],
-    Dentaires: ["Traitements orthodontiques", "Soins dentaire"],
+    "Médecines complémentaires": ["PRESTATION_MEDECINE_COMPLEMENTAIRE_LABEL"],
+    Dentaires: [
+      "PRESTATION_TRAITEMENTS_ORTHODONTIQUES_LABEL",
+      "PRESTATION_SOINS_DENTAIRE_LABEL",
+    ],
   };
 
   const tooltipsPrestations: Record<string, string> = {
@@ -79,10 +84,10 @@ const ModalComparatifTable = ({ open, onClose, offres, adherent }: Props) => {
   const beCalled = () => {
     void recallResident(lead.phone || "")
       .then(() => {
-        toast.success("Nous vous rappellerons dans les plus brefs délais");
+        toast.success(t("BECALLED_SUCCESS"));
       })
       .catch(() => {
-        toast.error("Une erreur est survenue, veuillez réessayer plus tard");
+        toast.error(t("BECALLED_ERROR"));
       });
   };
 
@@ -118,7 +123,7 @@ const ModalComparatifTable = ({ open, onClose, offres, adherent }: Props) => {
                   </div>
                   <div className="flex flex-col items-center justify-between gap-1">
                     <Button onClick={beCalled} size="small" widthFull>
-                      Être rappelé
+                      {t("BE_CALLED_BACK")}
                     </Button>
                     <Button
                       onClick={() => setSouscrireOpenIndex(i)}
@@ -126,7 +131,7 @@ const ModalComparatifTable = ({ open, onClose, offres, adherent }: Props) => {
                       widthFull
                       intent={"outline"}
                     >
-                      Souscrire
+                      {t("COMPARATIF_SUBSCRIBE")}
                     </Button>
                   </div>
                 </div>
@@ -138,13 +143,13 @@ const ModalComparatifTable = ({ open, onClose, offres, adherent }: Props) => {
           {Object.entries(groupPrestations).map(([group, prestations], z) => (
             <Fragment key={z}>
               <tr>
-                <td className="px-4 py-5 text-lg font-extrabold">{group}</td>
+                <td className="px-4 py-5 text-lg font-extrabold">{t(group)}</td>
               </tr>
               {prestations.map((prestation, i) => (
                 <tr className="even:bg-[#2bffd311]" key={i}>
                   <td className="px-6 py-2 text-[#2f3946]">
                     <div className="relative flex w-full items-center justify-between gap-5">
-                      {prestation}
+                      {t(prestation)}
                       <span
                         className="text-blue-600"
                         data-tooltip={tooltipsPrestations[prestation]}
@@ -181,9 +186,9 @@ const ModalComparatifTable = ({ open, onClose, offres, adherent }: Props) => {
                                       data-tooltip={`Franchise: ${detail.franchise}`}
                                       key={w}
                                     >
-                                      {detail.value}
+                                      {t(detail.value)}
                                       <span className="font-normal">
-                                        ({detail.produit})
+                                        ({t(detail.produit)})
                                       </span>
                                     </span>
                                   );

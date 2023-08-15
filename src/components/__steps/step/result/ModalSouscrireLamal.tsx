@@ -1,4 +1,5 @@
 import { IconCircleCheck } from "@tabler/icons-react";
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Button from "~/components/button/Button";
@@ -23,6 +24,8 @@ const ModalSouscrireLamal = ({ open, onClose, lamal, adherent }: Props) => {
   const [affiliattionCaisse, setAffiliationCaisse] = useState("");
   const [affiliationTime, setAffiliationTime] = useState("");
   const lead = useFormStore((state) => state.data);
+  const { t } = useTranslation("result");
+  const { t: tCommon } = useTranslation("common");
 
   const sendInfo = () => {
     const commentaire = `Pour ${
@@ -58,20 +61,26 @@ const ModalSouscrireLamal = ({ open, onClose, lamal, adherent }: Props) => {
       <div className="mx-auto flex max-w-2xl flex-col items-center justify-center text-center">
         <IconCircleCheck className="text-primary-600" size={64} />
         <h1 className="mt-4 text-xl font-bold text-neutral-700">
-          Votre demande a bien été enregistrée
+          {t("SOUSCRIRE_TITLE")}
         </h1>
         <h3 className="mt-2 text-lg font-semibold text-neutral-700">
           {lamal.caisse} - {lamal.modele}
         </h3>
         <p className="mt-1 text-lg text-neutral-600">
-          <strong>CHF {lamal.mois}</strong> / mois
+          <p className="mt-1 text-lg text-neutral-600">
+            <strong>
+              {new Intl.NumberFormat("de-CH", {
+                style: "currency",
+                currency: "CHF",
+                maximumFractionDigits: 0,
+              }).format(parseInt(lamal.mois))}
+            </strong>{" "}
+            / {t("MONTH")}
+          </p>
         </p>
-        <p className="mt-4 text-sm">
-          Vous pouvez gagner du temps sur votre souscription en répondant aux
-          questions suivantes
-        </p>
+        <p className="mt-4 text-sm">{t("SOUSCRIRE_DESCRIPTION")}</p>
         <p className="mt-4 text-sm font-bold">
-          Possedez-vous une caisse d‘assurance pour votre assurance de base ?
+          {t("SOUSCRIRE_QUESTION_LAMAL")}
         </p>
         <div className="mt-4 flex w-full flex-col gap-4">
           <div className="flex w-full flex-row items-center gap-2">
@@ -80,50 +89,50 @@ const ModalSouscrireLamal = ({ open, onClose, lamal, adherent }: Props) => {
               onClick={() => setAffiliation("oui")}
               widthFull
             >
-              Oui
+              {tCommon("YES")}
             </Tile>
             <Tile
               selected={affiliation === "non"}
               onClick={() => setAffiliation("non")}
               widthFull
             >
-              Non
+              {tCommon("NO")}
             </Tile>
           </div>
           {affiliation === "non" && (
-            <Button onClick={sendInfo}>Envoyé mes informations</Button>
+            <Button onClick={sendInfo}>{t("SOUSCRIRE_SEND_INFO")}</Button>
           )}
           {affiliation === "oui" && (
             <>
               <TextInput
-                label="À quelle caisse êtes-vous affilié ?"
-                placeholder="Caisse"
+                label={t("SOUSCRIRE_CAISSE_LABEL")}
+                placeholder={t("SOUSCRIRE_CAISSE_PLACEHOLDER")}
                 value={affiliattionCaisse}
                 onChange={(e) => setAffiliationCaisse(e)}
               />
               <Select
                 options={[
                   {
-                    label: "Moins d'un an",
+                    label: t("SOUSCRIRE_SINCE_LESS"),
                     value: "moins_d_un_an",
                   },
                   {
-                    label: "Entre 1 et 3 ans",
+                    label: t("SOUSCRIRE_SINCE_BETWEEN"),
                     value: "entre_1_et_3_ans",
                   },
                   {
-                    label: "Plus de 3 ans",
+                    label: t("SOUSCRIRE_SINCE_MORE"),
                     value: "plus_de_3_ans",
                   },
                 ]}
-                label="Depuis combien de temps êtes-vous affilié ?"
+                label={t("SOUSCRIRE_SINCE_LABEL")}
                 value={affiliationTime}
                 onChange={(e) => setAffiliationTime(e)}
-                placeholder="Sélectionner"
+                placeholder={tCommon("SELECT")}
               />
               {affiliationTime && affiliattionCaisse && (
                 <Button onClick={sendInfo} className="mt-4">
-                  Envoyé mes informations
+                  {t("SOUSCRIRE_SEND_INFO")}
                 </Button>
               )}
             </>

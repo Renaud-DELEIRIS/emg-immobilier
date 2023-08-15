@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import Button from "~/components/button/Button";
 import { Adherent } from "~/constants/lead.constant";
@@ -17,6 +18,7 @@ const ResultLca = ({
   const [compare, setCompare] = useState<string[]>([]);
 
   const [open, setOpen] = useState<boolean>(false);
+  const { t } = useTranslation("result");
 
   return (
     <motion.div
@@ -56,7 +58,9 @@ const ResultLca = ({
       {compare.length > 1 && (
         <div className="fixed bottom-12 left-0 right-0 flex justify-center">
           <Button onClick={() => setOpen(true)} intent="outline" rounded={"xl"}>
-            Comparer les {compare.length} offres
+            {t("LCA_COMPARE", {
+              count: compare.length,
+            })}
           </Button>
         </div>
       )}

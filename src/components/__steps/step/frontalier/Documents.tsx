@@ -13,8 +13,18 @@ const Documents = () => {
   const [iban, setIban] = useState<string>("");
   const [avs, setAvs] = useState<string>("");
   const [justificatifDomicile, setJustificatifDomicile] = useState<string>("");
-  const [permisTravail, setPermisTravail] = useState<string>("");
-  const [pieceDidendite, setPieceDidendite] = useState<string>("");
+  const [permisTravail, setPermisTravail] = useState<
+    {
+      base64: string;
+      profilIndex: number;
+    }[]
+  >([]);
+  const [pieceDidendite, setPieceDidendite] = useState<
+    {
+      base64: string;
+      profilIndex: number;
+    }[]
+  >([]);
   const [openCompleteLater, setOpenCompleteLater] = useState<boolean>(false);
   const [openComplete, setOpenComplete] = useState<boolean>(false);
   const lead = useFormStore((state) => state.data);
@@ -51,6 +61,56 @@ const Documents = () => {
       name: "Justificatif de domicile",
       url,
     });
+
+    for (const permisTravailFile of permisTravail) {
+      const adherent = lead.adherent[permisTravailFile.profilIndex]!;
+      const fileName =
+        adherent.type === "main"
+          ? "Permis de travail"
+          : adherent.type === "partner"
+          ? "Permis de travail conjoint"
+          : "Permis de travail enfant né en " + (adherent.year || "");
+
+      const { key, url } = await createPresignedUrl({
+        token: lead.idLead,
+        filename: fileName,
+      });
+      await fetch(url, {
+        method: "PUT",
+        body: Buffer.from(permisTravailFile.base64.split(",")[1]!, "base64"),
+      });
+      files.push({
+        type: "permis-travail",
+        name: fileName,
+        url,
+      });
+    }
+
+    for (const pieceDidenditeFile of pieceDidendite) {
+      const adherent = lead.adherent[pieceDidenditeFile.profilIndex]!;
+
+      const fileName =
+        adherent.type === "main"
+          ? "Pièce d'identité"
+          : adherent.type === "partner"
+          ? "Pièce d'identité conjoint"
+          : "Pièce d'identité enfant né en " + (adherent.year || "");
+
+      const { key, url } = await createPresignedUrl({
+        token: lead.idLead,
+        filename: fileName,
+      });
+      await fetch(url, {
+        method: "PUT",
+        body: Buffer.from(pieceDidenditeFile.base64.split(",")[1]!, "base64"),
+      });
+      files.push({
+        type: "piece-didendite",
+        name: fileName,
+        url,
+      });
+    }
+    console.log(files);
   };
 
   return (
@@ -73,40 +133,80 @@ const Documents = () => {
           <FileInput
             label={t("DOCUMENT_DOMICILE_LABEL")}
             placeholder={t("DOCUMENT_DOMICILE_LABEL")}
-            value={justificatifDomicile}
             onChange={(value) => setJustificatifDomicile(value)}
           />
         </div>
       </div>
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-bold">{t("DOCUMENT_TITLE_YOUR")}</h3>
-        <div className="grid grid-cols-1 gap-4">
-          <FileInput
-            label={t("DOCUMENT_IDENTITE_LABEL")}
-            placeholder={t("DOCUMENT_IDENTITE_LABEL")}
-            value={pieceDidendite}
-            onChange={(value) => setPieceDidendite(value)}
-          />
-          <FileInput
-            label={t("DOCUMENT_CONTRAT_TRAVAIL_LABEL")}
-            placeholder={t("DOCUMENT_CONTRAT_TRAVAIL_LABEL")}
-            value={permisTravail}
-            onChange={(value) => setPermisTravail(value)}
-          />
-          <div className="rounded-lg border bg-white p-4 shadow">
-            <AvsInput
-              label={t("DOCUMENT_AVS_LABEL")}
-              placeholder="P. ex. 756.XXXX.XXXX.XX"
-              value={avs}
-              onChange={(value) => setAvs(value)}
-            />
-            <p className="mt-2 text-sm text-gray-500">
-              <IconInfoCircle size={16} className="mr-2 inline-block" />
-              {t("DOCUMENT_AVS_INFO")}
-            </p>
+      {lead.selectedAdherent.map((adherentIndex) => {
+        const adherent = lead.adherent[adherentIndex]!;
+        return (
+          <div className="flex flex-col gap-4" key={adherentIndex}>
+            <h3 className="text-lg font-bold">
+              {adherent.type === "main"
+                ? t("DOCUMENT_TITLE_YOUR")
+                : adherent.type === "partner"
+                ? adherent.civility === "female"
+                  ? t("DOCUMENT_TITLE_SPOUSE_FEMALE")
+                  : t("DOCUMENT_TITLE_SPOUSE_MALE")
+                : t("DOCUMENT_TITLE_CHILD", {
+                    year: adherent.year || "",
+                  })}
+            </h3>
+            <div className="grid grid-cols-1 gap-4">
+              <FileInput
+                label={t("DOCUMENT_IDENTITE_LABEL")}
+                placeholder={t("DOCUMENT_IDENTITE_LABEL")}
+                onChange={(value) =>
+                  setPieceDidendite((prev) => {
+                    // Remove old adherent
+                    const pieceDidendite = prev.filter(
+                      (permisTravail) =>
+                        permisTravail.profilIndex !== adherentIndex
+                    );
+                    // Add new adherent
+                    pieceDidendite.push({
+                      base64: value,
+                      profilIndex: adherentIndex,
+                    });
+                    return pieceDidendite;
+                  })
+                }
+              />
+              <FileInput
+                label={t("DOCUMENT_CONTRAT_TRAVAIL_LABEL")}
+                placeholder={t("DOCUMENT_CONTRAT_TRAVAIL_LABEL")}
+                onChange={(value) =>
+                  setPermisTravail((prev) => {
+                    // Remove old adherent
+                    const newPermisTravail = prev.filter(
+                      (permisTravail) =>
+                        permisTravail.profilIndex !== adherentIndex
+                    );
+                    // Add new adherent
+                    newPermisTravail.push({
+                      base64: value,
+                      profilIndex: adherentIndex,
+                    });
+                    return newPermisTravail;
+                  })
+                }
+              />
+              <div className="rounded-lg border bg-white p-4 shadow">
+                <AvsInput
+                  label={t("DOCUMENT_AVS_LABEL")}
+                  placeholder="P. ex. 756.XXXX.XXXX.XX"
+                  value={avs}
+                  onChange={(value) => setAvs(value)}
+                />
+                <p className="mt-2 text-sm text-gray-500">
+                  <IconInfoCircle size={16} className="mr-2 inline-block" />
+                  {t("DOCUMENT_AVS_INFO")}
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        );
+      })}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Button
           intent={"outline"}
@@ -120,7 +220,11 @@ const Documents = () => {
           onClick={() => {
             onPressContinue();
           }}
-          disabled={!permisTravail || !pieceDidendite || !justificatifDomicile}
+          disabled={
+            !justificatifDomicile ||
+            pieceDidendite.length !== lead.selectedAdherent.length ||
+            permisTravail.length !== lead.selectedAdherent.length
+          }
         >
           {t("DOCUMENT_COMPLETE")}
         </Button>

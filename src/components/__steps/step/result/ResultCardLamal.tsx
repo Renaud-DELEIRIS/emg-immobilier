@@ -1,4 +1,5 @@
 import { IconChevronDown, IconCircleCheckFilled } from "@tabler/icons-react";
+import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -28,6 +29,7 @@ const ResultCardLamal = ({
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
   const lead = useFormStore((state) => state.data);
+  const { t } = useTranslation("result");
 
   const comparaison = parseFloat(info.comparaison);
 
@@ -39,10 +41,10 @@ const ResultCardLamal = ({
   const beCalled = () => {
     void recallFrontalier(lead.phone || "")
       .then(() => {
-        toast.success("Nous vous rappelons dans quelques minutes.");
+        toast.success(t("BECALLED_SUCCESS"));
       })
       .catch(() => {
-        toast.error("Une erreur est survenue, veuillez réessayer.");
+        toast.error(t("BECALLED_ERROR"));
       });
   };
 
@@ -56,7 +58,7 @@ const ResultCardLamal = ({
       {recommended && (
         <div className="flex items-center gap-2 rounded-t-lg border border-primary bg-primary-700/20 px-2 py-2 pb-1 text-sm font-semibold text-primary-600">
           <IconCircleCheckFilled size={24} />
-          <span>Meilleur rapport qualité prix</span>
+          <span>{t("CARD_RECOMMENDED")}</span>
         </div>
       )}
       <div
@@ -84,7 +86,7 @@ const ResultCardLamal = ({
                 )}
               </h2>
               <span className="text-[24px] ">
-                /{monthPrice ? "mois" : "an"}
+                /{monthPrice ? t("MONTH") : t("YEAR")}
               </span>
             </div>
             <span className="text-lg font-semibold text-neutral-500">
@@ -95,7 +97,7 @@ const ResultCardLamal = ({
                 onClick={() => setShow(!show)}
                 className="mt-2 flex items-center gap-2 rounded-lg border-2 p-2 text-sm font-semibold text-neutral-400"
               >
-                {show ? "Masquer" : "Afficher"} les détails
+                {show ? t("HIDE_DETAILS") : t("SHOW_DETAILS")}
                 <IconChevronDown
                   className={`transform ${show ? "rotate-180" : ""}`}
                 />
@@ -104,10 +106,10 @@ const ResultCardLamal = ({
           </div>
           <div className="mt-4 flex flex-col gap-4 md:mt-0">
             <Button widthFull onClick={beCalled}>
-              Être rappelé
+              {t("BE_CALLED_BACK")}
             </Button>
             <Button widthFull intent={"outline"} onClick={onSubscribe}>
-              Souscrire en ligne
+              {t("SUBSCRIBE")}
             </Button>
           </div>
         </div>
@@ -120,14 +122,17 @@ const ResultCardLamal = ({
             <span className="text-sm font-semibold text-neutral-600">
               {comparaison > 0 ? (
                 <span>
-                  Soit un surcout de{" "}
-                  <span className="text-red-600">{comparaison}/mois</span>.
+                  {t("SURCOUT")}{" "}
+                  <span className="text-red-600">
+                    {comparaison}/{t("MONTH")}
+                  </span>
+                  .
                 </span>
               ) : (
                 <span>
-                  Soit une économie de{" "}
+                  {t("ECONOMIES")}{" "}
                   <span className="text-green-600">
-                    {comparaison * -1}/mois
+                    {comparaison * -1}/{t("MONTH")}
                   </span>
                   .
                 </span>

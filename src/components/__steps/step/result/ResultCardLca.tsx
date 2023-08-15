@@ -5,6 +5,7 @@ import {
   IconCircleX,
   IconHelp,
 } from "@tabler/icons-react";
+import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -44,6 +45,7 @@ const ResultCardLca = ({
 
   const month = info.prix.toFixed(2);
   const year = (info.prix * 12).toFixed(2);
+  const { t } = useTranslation("result");
 
   const hash = Object.keys(insurance_hash).find((key) => {
     const index = key as "57";
@@ -52,23 +54,26 @@ const ResultCardLca = ({
 
   const groupPrestations: Record<string, string[]> = {
     Ambulatoire: [
-      "Médicaments",
-      "Lunettes et verre de contact",
-      "Moyens auxiliaires",
-      "Prévention, check-up",
-      "Frais de transport et sauvetage",
-      "Fitness",
-      "Étranger",
+      "PRESTATION_MEDICAMENTS_LABEL",
+      "PRESTATION_LUNETTES_ET_VERRE_DE_CONTACT_LABEL",
+      "PRESTATION_MOYENS_AUXILIAIRES_LABEL",
+      "PRESTATION_PREVENTION_CHECKUP_LABEL",
+      "PRESTATION_FRAIS_DE_TRANSPORT_ET_SAUVETAGE_LABEL",
+      "PRESTATION_FITNESS_LABEL",
+      "PRESTATION_ETRANGER_LABEL",
     ],
     Hospitalisation: [
-      "Hospitalisation",
-      "Libre choix du médecin",
-      "Aide-ménagère et soins à domicile",
-      "Rooming-in",
-      "Capital hospitalier",
+      "PRESTATION_HOSPITALISATION_LABEL",
+      "PRESTATION_LIBRE_CHOIX_DU_MEDECIN_LABEL",
+      "PRESTATION_AIDE_MENAGERE_ET_SOINS_A_DOMICILE_LABEL",
+      "PRESTATION_ROOMING_IN_LABEL",
+      "PRESTATION_CAPITAL_HOSPITALIER_LABEL",
     ],
-    "Médecines complémentaires": ["Médecine complémentaire"],
-    Dentaires: ["Traitements orthodontiques", "Soins dentaire"],
+    "Médecines complémentaires": ["PRESTATION_MEDECINE_COMPLEMENTAIRE_LABEL"],
+    Dentaires: [
+      "PRESTATION_TRAITEMENTS_ORTHODONTIQUES_LABEL",
+      "PRESTATION_SOINS_DENTAIRE_LABEL",
+    ],
   };
 
   const tooltipsPrestations: Record<string, string> = {
@@ -105,10 +110,10 @@ const ResultCardLca = ({
   const beCalled = () => {
     void recallResident(lead.phone || "")
       .then(() => {
-        toast.success("Nous vous rappellerons dans les plus brefs délais");
+        toast.success(t("BECALLED_SUCCESS"));
       })
       .catch(() => {
-        toast.error("Une erreur est survenue, veuillez réessayer plus tard");
+        toast.error(t("BECALLED_ERROR"));
       });
   };
 
@@ -122,7 +127,7 @@ const ResultCardLca = ({
       {recommended && (
         <div className="flex items-center gap-2 rounded-t-lg border border-primary bg-primary-700/20 px-2 py-2 pb-1 text-sm font-semibold text-primary-600">
           <IconCircleCheckFilled size={24} />
-          <span>Meilleur rapport qualité prix</span>
+          <span>{t("CARD_RECOMMENDED")}</span>
         </div>
       )}
       <div
@@ -156,7 +161,7 @@ const ResultCardLca = ({
                 }).format(monthPrice ? parseInt(month) : parseInt(year))}
               </h2>
               <span className="text-[24px] ">
-                /{monthPrice ? "mois" : "an"}
+                /{monthPrice ? t("MONTH") : t("YEAR")}
               </span>
             </div>
             <span className="text-lg font-semibold text-neutral-500">
@@ -166,7 +171,7 @@ const ResultCardLca = ({
               onClick={() => setShow(!show)}
               className="mt-2 flex items-center gap-2 rounded-lg border-2 p-2 text-sm font-semibold text-neutral-400"
             >
-              {show ? "Masquer" : "Afficher"} les détails
+              {show ? t("HIDE_DETAILS") : t("SHOW_DETAILS")}
               <IconChevronDown
                 className={`transform ${show ? "rotate-180" : ""}`}
               />
@@ -174,10 +179,10 @@ const ResultCardLca = ({
           </div>
           <div className="mt-4 flex flex-col gap-4 md:mt-0">
             <Button widthFull onClick={beCalled}>
-              Être rappelé
+              {t("BE_CALLED_BACK")}
             </Button>
             <Button widthFull intent={"outline"} onClick={onSubscribe}>
-              Souscrire en ligne
+              {t("SUBSCRIBE")}
             </Button>
           </div>
         </div>
@@ -188,7 +193,7 @@ const ResultCardLca = ({
             disabled={!canCompare}
             onChange={() => onCompare(info.id.toString())}
           >
-            Comparer
+            {t("COMPARE")}
           </Checkbox>
         </div>
         <div
@@ -199,10 +204,10 @@ const ResultCardLca = ({
           <div className={`overflow-hidden ${show ? "" : ""}`}>
             <div className="grid grid-cols-[repeat(2,1fr)] gap-5 p-4">
               <span className="px-1 text-xl font-bold text-[#2F3946]">
-                Prestations
+                {t("PRESTATIONS")}
               </span>
               <span className="px-1 text-xl font-bold text-[#2F3946]">
-                Détails
+                {t("DETAILS")}
               </span>
             </div>
             <div className="px-4">
@@ -210,7 +215,7 @@ const ResultCardLca = ({
                 ([group, prestations], z) => (
                   <div key={z}>
                     <span className="py-3 text-lg font-bold text-[#2F3946]">
-                      {group}
+                      {t(group)}
                     </span>
                     {info.prestations
                       .filter((p) => prestations.includes(p.label))
@@ -234,7 +239,9 @@ const ResultCardLca = ({
                                   className="text-red-600"
                                 />
                               )}
-                              <span className="px-1 text-base">{p.label}</span>
+                              <span className="px-1 text-base">
+                                {t(p.label)}
+                              </span>
                             </div>
                           </div>
                           <div className="px-2 text-[#2f3946]">
@@ -250,9 +257,9 @@ const ResultCardLca = ({
                                     data-tooltip={`Franchise: ${d.franchise}`}
                                     key={y}
                                   >
-                                    {d.value}{" "}
+                                    {t(d.value)}{" "}
                                     <span className="text-sm font-normal text-neutral-500">
-                                      ({d.produit})
+                                      ({t(d.produit)})
                                     </span>
                                   </span>
                                 );

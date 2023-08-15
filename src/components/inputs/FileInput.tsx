@@ -1,8 +1,7 @@
-import { IconCircleCheck, IconDownload, IconUpload } from "@tabler/icons-react";
+import { IconCircleCheck, IconUpload } from "@tabler/icons-react";
 import { useId, useState } from "react";
 
 interface Props {
-  value: string;
   onChange: (value: string) => void;
   className?: string;
   label?: string;
@@ -11,7 +10,6 @@ interface Props {
 }
 
 const FileInput = ({
-  value,
   onChange,
   className = "",
   label,
@@ -41,11 +39,14 @@ const FileInput = ({
           className
         }
       >
-        <div className={`mr-4 grid aspect-square h-full place-items-center ${fileName ? "bg-green-500 group-hover:bg-green-600 text-white" : "bg-primary group-hover:bg-primary-600 text-white"}`}>
-          {
-            fileName ? <IconCircleCheck size={20} /> :
-            <IconUpload size={20} />
-          }
+        <div
+          className={`mr-4 grid aspect-square h-full place-items-center ${
+            fileName
+              ? "bg-green-500 text-white group-hover:bg-green-600"
+              : "bg-primary text-white group-hover:bg-primary-600"
+          }`}
+        >
+          {fileName ? <IconCircleCheck size={20} /> : <IconUpload size={20} />}
         </div>
         <span className="flex  h-full items-center text-sm">
           {fileName || placeholder}
