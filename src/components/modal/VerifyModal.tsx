@@ -12,6 +12,7 @@ import TextInput from "../inputs/TextInput";
 
 import { parsePhoneNumber } from "libphonenumber-js";
 import { Trans, useTranslation } from "next-i18next";
+import { env } from "~/env.mjs";
 import { useFormStore } from "~/stores/form";
 import { sendLeadComparea } from "~/utils/api/createLead";
 import getParamsUrl from "~/utils/client/getParamsUrl";
@@ -52,6 +53,11 @@ const Info = ({ open }: { open: boolean }) => {
 
   const verifyCode = async () => {
     if (!responseCode) return;
+    if (env.NODE_ENV === "development" && code.trim() === "6121") {
+      changeLead({ ...lead, verified: true });
+      setLoading(false);
+      return;
+    }
     if (code.trim() !== responseCode.toString()) {
       setError(t("STEP_VERIFY_ERROR"));
       return;
