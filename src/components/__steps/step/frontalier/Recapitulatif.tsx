@@ -1,6 +1,6 @@
 import { IconCheck, IconChevronDown } from "@tabler/icons-react";
 import dayjs from "dayjs";
-import { useTranslation } from "next-i18next";
+import { Trans, useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useState } from "react";
 import { BiSolidLeaf } from "react-icons/bi";
@@ -28,54 +28,54 @@ const Recapitulatif = () => {
 
   const prestations = [
     {
-      label: t("RECAP_PRESTA_HOSPITALISATION"),
+      label: "RECAP_PRESTA_HOSPITALISATION",
       icon: <FaHospital />,
-      description: t("RECAP_PRESTA_HOSPITALISATION_DESCRIPTION"),
+      description: "RECAP_PRESTA_HOSPITALISATION_DESCRIPTION",
     },
     {
-      label: t("RECAP_PRESTA_PROTECTION"),
+      label: "RECAP_PRESTA_PROTECTION",
       icon: <TbWorld />,
-      description: t("RECAP_PRESTA_PROTECTION_DESCRIPTION"),
+      description: "RECAP_PRESTA_PROTECTION_DESCRIPTION",
     },
     {
-      label: t("RECAP_PRESTA_TRANSPORT"),
+      label: "RECAP_PRESTA_TRANSPORT",
       icon: <FaAmbulance />,
-      description: t("RECAP_PRESTA_TRANSPORT_DESCRIPTION"),
+      description: "RECAP_PRESTA_TRANSPORT_DESCRIPTION",
     },
     {
-      label: t("RECAP_PRESTA_MEDICAMENTS"),
+      label: "RECAP_PRESTA_MEDICAMENTS",
       icon: <CiPill />,
-      description: t("RECAP_PRESTA_MEDICAMENTS_DESCRIPTION"),
+      description: "RECAP_PRESTA_MEDICAMENTS_DESCRIPTION",
     },
     {
-      label: t("RECAP_PRESTA_TRAITEMENTS"),
+      label: "RECAP_PRESTA_TRAITEMENTS",
       icon: <TbStethoscope />,
-      description: t("RECAP_PRESTA_TRAITEMENTS_DESCRIPTION"),
+      description: "RECAP_PRESTA_TRAITEMENTS_DESCRIPTION",
     },
     {
-      label: t("RECAP_PRESTA_TRAITEMENTS_2"),
+      label: "RECAP_PRESTA_TRAITEMENTS_2",
       icon: <BiSolidLeaf />,
-      description: t("RECAP_PRESTA_TRAITEMENTS_2_DESCRIPTION"),
+      description: "RECAP_PRESTA_TRAITEMENTS_2_DESCRIPTION",
     },
     {
-      label: t("RECAP_PRESTA_PREVENTION"),
+      label: "RECAP_PRESTA_PREVENTION",
       icon: <BsFillHeartPulseFill />,
-      description: t("RECAP_PRESTA_PREVENTION_DESCRIPTION"),
+      description: "RECAP_PRESTA_PREVENTION_DESCRIPTION",
     },
     {
-      label: t("RECAP_PRESTA_MOYENS"),
+      label: "RECAP_PRESTA_MOYENS",
       icon: <MdHearing />,
-      description: t("RECAP_PRESTA_MOYENS_DESCRIPTION"),
+      description: "RECAP_PRESTA_MOYENS_DESCRIPTION",
     },
     {
-      label: t("RECAP_PRESTA_GROSSESSE"),
+      label: "RECAP_PRESTA_GROSSESSE",
       icon: <MdPregnantWoman />,
-      description: t("RECAP_PRESTA_GROSSESSE_DESCRIPTION"),
+      description: "RECAP_PRESTA_GROSSESSE_DESCRIPTION",
     },
     {
-      label: t("RECAP_PRESTA_CURES"),
+      label: "RECAP_PRESTA_CURES",
       icon: <FaHotTub />,
-      description: t("RECAP_PRESTA_CURES_DESCRIPTION"),
+      description: "RECAP_PRESTA_CURES_DESCRIPTION",
     },
   ];
   const [faqOpen, setFaqOpen] = useState<number[]>([]);
@@ -147,7 +147,9 @@ const Recapitulatif = () => {
                 <div className="flex w-full items-center gap-4 px-2 py-2 text-left">
                   <div className="flex-shrink-0 text-xl">{presta.icon}</div>
 
-                  <span className="text-base md:text-lg">{presta.label}</span>
+                  <span className="text-base md:text-lg">
+                    {t(presta.label)}
+                  </span>
                   <IconChevronDown
                     className={`ml-auto flex-shrink-0 text-neutral-500 transition-transform ${
                       isOpen ? "rotate-180 transform" : ""
@@ -161,7 +163,7 @@ const Recapitulatif = () => {
                 >
                   <div className={`overflow-hidden ${isOpen ? "" : ""}`}>
                     <p className="text-sm text-neutral-500 md:text-base">
-                      {presta.description}
+                      <Trans t={t} i18nKey={presta.description} />
                     </p>
                   </div>
                 </div>
