@@ -71,6 +71,7 @@
   "STEP_FRANCHISE_LIST_SPOUSE_FEMALE": "Votre conjointe souhaite une franchise de <strong>{{value}} CHF</strong>",
   "STEP_FRANCHISE_LIST_CHILD": "Votre enfant né en {{year}} a besoin d‘une franchise de <strong>{{value}} CHF</strong>",
   "STEP_FRANCHISE_LIST_COUVERTURE": "ainsi que d‘une <strong>couverture accident</strong>",
+  "STEP_FRANCHISE_LIST_NOCOUVERTURE": "sans <strong>couverture accident</strong>",
   "STEP_FRANCHISE_TITLE_MAIN": "Quelle franchise souhaitez-vous ?",
   "STEP_FRANCHISE_TITLE_SPOUSE_FEMALE": "Quelle franchise souhaitez-vous pour votre elle ?",
   "STEP_FRANCHISE_TITLE_SPOUSE_MALE": "Quelle franchise souhaitez-vous pour votre lui ?",

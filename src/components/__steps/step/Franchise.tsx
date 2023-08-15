@@ -106,11 +106,19 @@ const Franchise = () => {
                               value: adherent.franchise,
                             }}
                           />
-                          {adherent.couvertureAccident === "oui" && (
+                          {adherent.couvertureAccident === "oui" ? (
                             <span>
                               {" "}
                               <Trans
                                 i18nKey={"STEP_FRANCHISE_LIST_COUVERTURE"}
+                                t={t}
+                              />
+                            </span>
+                          ) : (
+                            <span>
+                              {" "}
+                              <Trans
+                                i18nKey={"STEP_FRANCHISE_LIST_NOCOUVERTURE"}
                                 t={t}
                               />
                             </span>
@@ -129,11 +137,19 @@ const Franchise = () => {
                                 value: adherent.franchise,
                               }}
                             />
-                            {adherent.couvertureAccident === "oui" && (
+                            {adherent.couvertureAccident === "oui" ? (
                               <span>
                                 {" "}
                                 <Trans
                                   i18nKey={"STEP_FRANCHISE_LIST_COUVERTURE"}
+                                  t={t}
+                                />
+                              </span>
+                            ) : (
+                              <span>
+                                {" "}
+                                <Trans
+                                  i18nKey={"STEP_FRANCHISE_LIST_NOCOUVERTURE"}
                                   t={t}
                                 />
                               </span>
@@ -149,11 +165,19 @@ const Franchise = () => {
                                 value: adherent.franchise,
                               }}
                             />
-                            {adherent.couvertureAccident === "oui" && (
+                            {adherent.couvertureAccident === "oui" ? (
                               <span>
                                 {" "}
                                 <Trans
                                   i18nKey={"STEP_FRANCHISE_LIST_COUVERTURE"}
+                                  t={t}
+                                />
+                              </span>
+                            ) : (
+                              <span>
+                                {" "}
+                                <Trans
+                                  i18nKey={"STEP_FRANCHISE_LIST_NOCOUVERTURE"}
                                   t={t}
                                 />
                               </span>
@@ -343,6 +367,7 @@ const Franchise = () => {
                 <TileInput
                   value={adherant.couvertureAccident ?? "non"}
                   onChange={(value) => {
+                    setStep("franchise");
                     changeLead({
                       adherent: [
                         ...lead.adherent.slice(0, isEditing),
