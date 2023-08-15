@@ -37,7 +37,7 @@ const Profils = () => {
   const isValid = lead.selectedAdherent.length > 0;
 
   return (
-    <div className="flex max-w-xl flex-col gap-2">
+    <div className="mx-auto flex max-w-xl flex-col gap-2">
       <label className="font-bold">{t("FRONTALIER_TITLE")}</label>
       {lead.adherent.map((p, index) => {
         if (!dayjs(p.year, "YYYY").isBefore(dayjs().subtract(18, "year")))

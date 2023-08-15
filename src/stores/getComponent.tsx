@@ -1,26 +1,26 @@
-import { StepId } from "~/constants/step.constant";
-import { type ReactNode } from "react";
 import { IconArrowLeft } from "@tabler/icons-react";
+import { type ReactNode } from "react";
+import Adherant from "~/components/__steps/step/Adherant";
+import Assurance from "~/components/__steps/step/Assurance";
+import ChoosePack from "~/components/__steps/step/ChoosePack";
+import For from "~/components/__steps/step/For";
+import Franchise from "~/components/__steps/step/Franchise";
+import Hours from "~/components/__steps/step/Hours";
+import BigLoader2 from "~/components/__steps/step/Loader";
+import Name from "~/components/__steps/step/Name";
+import Npa from "~/components/__steps/step/Npa";
+import Situation from "~/components/__steps/step/Situation";
+import Verification from "~/components/__steps/step/Verification";
 import Documents from "~/components/__steps/step/frontalier/Documents";
 import PersonalData from "~/components/__steps/step/frontalier/PersonalData";
 import Profils from "~/components/__steps/step/frontalier/Profils";
-import Souscrire from "~/components/__steps/step/frontalier/Souscire";
-import Situation from "~/components/__steps/step/Situation";
-import Assurance from "~/components/__steps/step/Assurance";
-import Npa from "~/components/__steps/step/Npa";
-import Adherant from "~/components/__steps/step/Adherant";
-import For from "~/components/__steps/step/For";
-import Franchise from "~/components/__steps/step/Franchise";
-import ChoosePack from "~/components/__steps/step/ChoosePack";
-import Verification from "~/components/__steps/step/Verification";
-import { ResultProvider } from "~/components/__steps/step/result/ResultProvider";
-import Result from "~/components/__steps/step/result/Result";
-import BigLoader2 from "~/components/__steps/step/Loader";
+import Recapitulatif from "~/components/__steps/step/frontalier/Recapitulatif";
 import ResultFrontalier from "~/components/__steps/step/frontalier/ResultFrontalier";
-import Hours from "~/components/__steps/step/Hours";
-import Name from "~/components/__steps/step/Name";
-import { useFormStore } from "./form";
+import Souscrire from "~/components/__steps/step/frontalier/Souscire";
+import Result from "~/components/__steps/step/result/Result";
+import { ResultProvider } from "~/components/__steps/step/result/ResultProvider";
 import { schemaData } from "~/constants/lead.constant";
+import { StepId } from "~/constants/step.constant";
 
 export const getStepComponent = (
   stepId: StepId,
@@ -102,6 +102,25 @@ export const getStepComponent = (
           </button>
           <div className="relative mb-6 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block">
             Souscrire
+          </div>
+        </div>
+      );
+      break;
+    case "recap-frontalier":
+      childs.push(<Recapitulatif key={"recap"} />);
+      childs.push(
+        <div className=" mt-8" key={"title"}>
+          <button
+            className="mb-4 flex items-center gap-1 text-primary hover:underline"
+            onClick={() => {
+              decreaseStep();
+            }}
+          >
+            <IconArrowLeft size={20} />
+            <span>Retour</span>
+          </button>
+          <div className="relative mb-6 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block">
+            Récapitulatif
           </div>
         </div>
       );

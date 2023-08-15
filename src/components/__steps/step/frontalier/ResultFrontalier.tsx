@@ -51,10 +51,10 @@ const ResultFrontalier = () => {
                 :
               </h1>
               <div className="flex flex-col gap-4">
-                {PackFrontalier.map((pack, index) => {
+                {PackFrontalier.map((pack, indexPack) => {
                   return (
                     <ResultCardFrontalier
-                      key={index}
+                      key={indexPack}
                       adhrerent={data}
                       monthPrice={monthlyPrice}
                       profilId={index}
