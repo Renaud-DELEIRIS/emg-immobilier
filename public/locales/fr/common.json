@@ -96,8 +96,8 @@
   "STEP_NAME_PLACEHOLDER_LASTNAME": "Nom",
 
   "STEP_VERIFY_ERROR": "Le code est incorrect",
-  "STEP_VERIFY_TITLE_FRONTALIER": "Nous avons identifié pour <strong>vous</strong> les <span>7</span> meilleures offres <strong>frontalier</strong> adaptées à votre <strong>profil</strong><br/>. Ces tarifs seront bloqués pour vous jusqu’au <span>{{date}}</span>",
-  "STEP_VERIFY_TITLE_SUISSE": "Nous avons identifié pour <strong>vous</strong> les <span>12</span> meilleures offres <strong>conforts</strong> adaptées à votre <strong>profil</strong><br/>. Ces tarifs seront bloqués pour vous jusqu’au <span>{{date}}</span>",
+  "STEP_VERIFY_TITLE_FRONTALIER": "Nous avons identifié pour <strong>vous</strong> les <span>7</span> meilleures offres <strong>frontalier</strong> adaptées à votre <strong>profil</strong>.<br/>Ces tarifs seront bloqués pour vous jusqu’au <span>{{date}}</span>",
+  "STEP_VERIFY_TITLE_SUISSE": "Nous avons identifié pour <strong>vous</strong> les <span>12</span> meilleures offres <strong>conforts</strong> adaptées à votre <strong>profil</strong>.<br/>Ces tarifs seront bloqués pour vous jusqu’au <span>{{date}}</span>",
   "STEP_VERIFY_LABEL_EMAIL": "Votre adresse email",
   "STEP_VERIFY_LABEL_PHONE": "Votre numéro de téléphone",
   "STEP_VERIFY_INFO": "Ces <strong>informations protégées</strong> seront utilisées uniquement dans le cadre de votre dossier",
