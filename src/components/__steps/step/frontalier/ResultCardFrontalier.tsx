@@ -145,8 +145,8 @@ const ResultCardFrontalier = ({
             </div>
           </div>
           <div className="flex flex-col items-center gap-px">
-            <div className="flex items-end text-[#2A3775]">
-              <h2 className="text-[40px] font-bold ">
+            <span className=" text-[#2A3775]">
+              <h2 className="inline text-[40px] font-bold ">
                 {new Intl.NumberFormat("de-CH", {
                   style: "currency",
                   currency: "CHF",
@@ -156,11 +156,11 @@ const ResultCardFrontalier = ({
                     ? price(age, !!couverture)
                     : price(age, !!couverture) * 12 * 0.99
                 )}
-              </h2>
+              </h2>{" "}
               <span className="text-[24px] ">
-                /{monthPrice ? t("MONTH") : t("ANNUAL")}
+                / {monthPrice ? t("MONTH") : t("ANNUAL")}
               </span>
-            </div>
+            </span>
             {withDetails && (
               <span className="text-lg font-semibold text-neutral-500">
                 {t(name)}
@@ -178,7 +178,7 @@ const ResultCardFrontalier = ({
               </button>
             )}
           </div>
-          <div className="mt-4 flex min-w-[12rem] flex-col gap-4 md:mt-0">
+          <div className="mt-4 flex w-full max-w-[340px] flex-col gap-4 md:mt-0">
             <Button widthFull onClick={onSubscribe}>
               {tCommon("CARD_SUBSCRIBE")}
             </Button>

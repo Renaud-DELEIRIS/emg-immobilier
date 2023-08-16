@@ -147,18 +147,18 @@ const ResultCardLca = ({
             </div>
           </div>
           <div className="flex flex-col items-center gap-px">
-            <div className="flex items-end text-[#2A3775]">
-              <h2 className="text-[40px] font-bold ">
+            <span className="text-[#2A3775]">
+              <h2 className="inline text-[40px] font-bold">
                 {new Intl.NumberFormat("de-CH", {
                   style: "currency",
                   currency: "CHF",
                   maximumFractionDigits: 0,
                 }).format(monthPrice ? parseInt(month) : parseInt(year))}
-              </h2>
-              <span className="text-[24px] ">
-                /{monthPrice ? t("MONTH") : t("YEAR")}
+              </h2>{" "}
+              <span className="text-[24px]">
+                / {monthPrice ? t("MONTH") : t("YEAR")}
               </span>
-            </div>
+            </span>
             <span className="text-lg font-semibold text-neutral-500">
               {info.produit}
             </span>
@@ -172,7 +172,7 @@ const ResultCardLca = ({
               />
             </button>
           </div>
-          <div className="mt-4 flex flex-col gap-4 md:mt-0">
+          <div className="mt-4 flex w-full max-w-[340px] flex-col gap-4 md:mt-0">
             <Button widthFull onClick={beCalled}>
               {t("BE_CALLED_BACK")}
             </Button>

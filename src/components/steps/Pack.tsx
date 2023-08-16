@@ -394,6 +394,7 @@ const Pack = ({
         </button>
         {showNext && (
           <Button
+            className="w-40"
             onClick={() => {
               if (lead.adherent.length === adherentIndex + 1) {
                 nextStep("package");

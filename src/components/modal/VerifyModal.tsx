@@ -283,7 +283,7 @@ const Info = ({ open }: { open: boolean }) => {
                       )}
                     </div>
 
-                    <div className="hidden w-96 flex-col items-center justify-center bg-neutral-300 lg:flex">
+                    <div className="hidden w-96 flex-col items-center justify-center bg-[#eaebec] lg:flex">
                       <Image
                         src="/comparea-file.png"
                         alt="Comparea"

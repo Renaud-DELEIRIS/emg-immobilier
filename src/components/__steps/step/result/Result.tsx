@@ -42,11 +42,11 @@ const Result = () => {
       className="flex flex-col items-center justify-center gap-4 px-[5%]"
     >
       <div className="flex w-full max-w-6xl flex-row items-center justify-between">
-        <h2 className="hidden text-[20px] font-bold text-[#2F3946] md:block">
+        <h2 className="hidden text-[20px] font-bold text-dark md:block">
           {t("RESULT_TITLE")}
           {lead.adherent[0]?.civility === "female" ? "e" : ""}
         </h2>
-        <h2 className="block text-[20px] font-bold text-[#2F3946] md:hidden">
+        <h2 className="block text-[20px] font-bold text-dark md:hidden">
           {t("RESULT_MY_COMPARATIF")}
         </h2>
         <button
@@ -55,7 +55,7 @@ const Result = () => {
             nextStep(lead.npa?.key === -1 ? "situation" : "assurance-actuelle")
           }
         >
-          <span className="hidden md:block">{t("RESULT_MY_COMPARATIF")}</span>
+          <span className="hidden md:block">{t("RESULT_MODIFY_PROFILE")}</span>
           <span className="md:hidden">{t("RESULT_MODIFY_PROFILE_MOBILE")}</span>
           <IconEdit />
         </button>
@@ -74,7 +74,7 @@ const Result = () => {
           />
         )}
         <div className="hidden flex-col sm:flex">
-          <p className="mb-1 block text-sm font-normal text-neutral-800">
+          <p className="mb-1 block text-sm font-normal text-dark">
             {t("PRICE_SWITCH_LABEL")}
           </p>
           <div className="grid h-[46px] place-items-center">
@@ -93,7 +93,9 @@ const Result = () => {
         <div className="mx-auto mt-auto flex w-full max-w-[584px] flex-row items-center justify-center rounded-lg bg-neutral-200 p-px">
           <button
             className={`flex-1 rounded-lg py-4 font-bold ${
-              show === "lamal" ? "bg-primary text-white" : "bg-neutral-200"
+              show === "lamal"
+                ? "bg-primary text-white"
+                : "bg-neutral-200 text-dark"
             }`}
             onClick={() => setShow("lamal")}
           >
@@ -101,7 +103,9 @@ const Result = () => {
           </button>
           <button
             className={`flex-1 rounded-lg py-4 font-bold ${
-              show === "lca" ? "bg-primary text-white" : "bg-neutral-200 "
+              show === "lca"
+                ? "bg-primary text-white"
+                : "bg-neutral-200 text-dark "
             }`}
             onClick={() => setShow("lca")}
           >
