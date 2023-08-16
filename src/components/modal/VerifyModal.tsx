@@ -88,7 +88,7 @@ const Info = ({ open }: { open: boolean }) => {
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4  text-center">
+            <div className="flex min-h-full items-start justify-center p-4 pt-16 text-center  md:pt-24">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -297,7 +297,7 @@ const Info = ({ open }: { open: boolean }) => {
                         width={200}
                         height={200}
                       />
-                      <span className="mt-4 text-center text-base font-semibold text-primary-500">
+                      <span className="mt-4 text-center text-base font-semibold text-[#2a3775]">
                         <Trans
                           i18nKey="STEP_VERIFY_EXPERT"
                           t={t}

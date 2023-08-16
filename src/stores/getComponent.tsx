@@ -180,7 +180,7 @@ export const getStepComponent = (
           className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
           key={"title"}
         >
-          Besoins
+          Vos besoins
         </div>
       );
       break;

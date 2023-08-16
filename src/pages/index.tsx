@@ -2,8 +2,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import {
   IconChevronDown,
   IconMenu2,
-  IconPhone,
   IconPhoneCall,
+  IconPhoneFilled,
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { GetStaticProps, type NextPage } from "next";
@@ -127,8 +127,10 @@ const Home: NextPage = () => {
             <Header />
             <div
               className={
-                "becalled-btn fixed bottom-4 right-4 z-20 gap-1 rounded-2xl bg-primary p-2 font-bold text-white " +
-                (beCalled ? "open p-4" : "w-10 md:w-auto")
+                "becalled-btn container-shadow fixed bottom-4 right-4 z-20 gap-1  bg-primary p-2 font-bold text-white " +
+                (beCalled
+                  ? "open rounded-2xl p-4"
+                  : "w-10 rounded-[50px] md:w-auto")
               }
             >
               <button
@@ -136,7 +138,7 @@ const Home: NextPage = () => {
                 className="flex items-center gap-1"
               >
                 {!beCalled ? (
-                  <IconPhone size={20} className="mx-auto md:mx-0" />
+                  <IconPhoneFilled size={20} className="mx-auto md:mx-0" />
                 ) : (
                   <div className="w-5" />
                 )}

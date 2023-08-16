@@ -40,14 +40,14 @@ const Select = ({
   boldLabel?: boolean;
 }) => {
   const computedClass = cva(
-    "text-base rounded-lg block w-full focus:outline-none text-left bg-white " +
+    "text-base rounded-lg block w-full focus:outline-none text-left " +
       className,
     {
       variants: {
         error: {
           true: "bg-red-600/10 border border-red-500 text-red-500 placeholder-red-300 focus:border-red-500 ",
           false:
-            "bg-dark-900 border border-dark-600 text-neutral-800 focus:border-primary-500 placeholder:text-neutral-400 ",
+            "bg-[#EAEBEC] border-2 border-[#EAEBEC] text-dark focus:border-primary-500 focus:shadow-lg placeholder:text-neutral-400 ",
         },
         disabled: {
           true: "opacity-50 cursor-not-allowed",
@@ -113,7 +113,7 @@ const Select = ({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute top-full z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute top-full z-20 mt-1 max-h-60 w-full overflow-auto rounded-md border-2 border-primary bg-[#EAEBEC] py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {options.map((option, optionIdx) => (
                   <Listbox.Option
                     key={optionIdx}

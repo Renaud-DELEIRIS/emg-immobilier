@@ -65,7 +65,7 @@ const Franchise = () => {
       if (isEditing !== next) setStep("franchise");
     } else {
       setShowContinue(true);
-
+      nextStep("franchise");
       setIsEditing(undefined);
     }
   }, [lead, activeStep]);

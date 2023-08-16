@@ -73,6 +73,14 @@ export const useFormStore = create<FormState>()(
                   top: offsetTop - 100,
                   behavior: "smooth",
                 });
+
+                // Focus on first focusable element
+                const focusableElement = element.querySelector(
+                  "input, select, textarea, button"
+                ) as HTMLElement;
+                if (focusableElement) {
+                  focusableElement.focus();
+                }
               }
             }, 100);
 

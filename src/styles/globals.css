@@ -128,7 +128,7 @@ body {
 }
 
 .becalled-btn {
-  animation: becalled 10s infinite;
+  animation: becalled 7s infinite;
   transition: all 0.3s ease-in-out;
 }
 .becalled-btn.open {
@@ -165,7 +165,4 @@ input[type="number"]::-webkit-inner-spin-button {
 .react-tel-input .selected-flag:hover,
 .react-tel-input .selected-flag:focus {
   background-color: inherit !important;
-}
-
-.flag {
 }

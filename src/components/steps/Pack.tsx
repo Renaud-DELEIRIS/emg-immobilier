@@ -1,4 +1,8 @@
-import { IconCheck, IconCircleCaretDown } from "@tabler/icons-react";
+import {
+  IconArrowRight,
+  IconCheck,
+  IconCircleCaretDown,
+} from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
@@ -15,18 +19,28 @@ import {
   optionMedecineAlternative,
   optionTraitementsDentaires,
 } from "~/data/PackOption";
+import { useFormStore } from "~/stores/form";
+import Button from "../button/Button";
 import PackShowOption from "./PackShowOption";
 
 const Pack = ({
   adherent,
   setPack,
+  setAdherent,
+  adherentIndex,
+  showNext,
 }: {
   adherent: Adherent;
   setPack: (pack: Pack) => void;
+  setAdherent: (adherent: number) => void;
+  adherentIndex: number;
+  showNext?: boolean;
 }) => {
   const [selected, setSelected] = useState<number | undefined>(
     adherent.pack?.id
   );
+  const lead = useFormStore((state) => state.data);
+  const nextStep = useFormStore((state) => state.nextStep);
   const age = dayjs().diff(dayjs(adherent.year, "YYYY"), "year");
   const [optionExpanded, setOptionExpanded] = useState<boolean>(false);
   const [options, setOptions] = useState<Pack["options"]>(
@@ -367,16 +381,47 @@ const Pack = ({
           </div>
         </div>
       </div>
-      <button
-        className="mt-8 flex w-fit items-center gap-2 rounded-lg border border-red-500 bg-white p-2 text-lg font-bold text-red-500 hover:bg-red-100"
-        onClick={() => {
-          setOptions([]);
-          setSelected(undefined);
-        }}
-      >
-        {t("STEP_PACK_BASE")}
-        {!selected && <IconCheck size={24} />}
-      </button>
+      <div className="mt-8 flex gap-8">
+        <button
+          className="flex w-fit items-center gap-2 rounded-lg border border-red-500 bg-white p-2 text-lg font-bold text-red-500 hover:bg-red-100"
+          onClick={() => {
+            setOptions([]);
+            setSelected(undefined);
+          }}
+        >
+          {t("STEP_PACK_BASE")}
+          {!selected && <IconCheck size={24} />}
+        </button>
+        {showNext && (
+          <Button
+            onClick={() => {
+              if (lead.adherent.length === adherentIndex + 1) {
+                nextStep("package");
+                return;
+              }
+              setAdherent(adherentIndex + 1);
+              // Scroll smooth to top
+
+              setTimeout(() => {
+                const elem = document.getElementById(
+                  (adherentIndex + 1).toString()
+                );
+                if (elem) {
+                  const offsetTop =
+                    elem.getBoundingClientRect().top + window.scrollY;
+                  window.scrollTo({
+                    top: offsetTop - 100,
+                    behavior: "smooth",
+                  });
+                }
+              }, 100);
+            }}
+            iconRight={<IconArrowRight />}
+          >
+            {t("VALIDATE")}
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import { getActualStep, getTotalStep } from "~/constants/step.constant";
-import Image from "next/image";
-import ProgressBar from "./ProgressBar";
-import { IconPhone } from "@tabler/icons-react";
+import { IconPhoneFilled } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
+import Image from "next/image";
+import { getActualStep, getTotalStep } from "~/constants/step.constant";
 import { useFormStore } from "~/stores/form";
+import ProgressBar from "./ProgressBar";
 
 const Header = () => {
   const lead = useFormStore((state) => state.data);
@@ -48,7 +48,7 @@ const Header = () => {
               href="tel:0225661647"
               className="ml-auto flex items-center justify-end gap-2 text-primary"
             >
-              <IconPhone size={22} />
+              <IconPhoneFilled size={22} />
               022 566 16 47
             </a>
           </div>

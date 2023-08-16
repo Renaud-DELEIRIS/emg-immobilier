@@ -31,11 +31,11 @@ const PackShowOption = ({
   return (
     <div
       className={`container-shadow relative flex w-full flex-col items-center rounded-lg ${
-        selected ? "border-2 border-primary-400" : "border-0"
+        selected ? "border-2 border-primary" : "border-0"
       }`}
     >
       {recommended && (
-        <div className="absolute left-0 top-0 rounded-br-md rounded-tl-md bg-primary-400 text-white">
+        <div className="absolute left-0 top-0 rounded-br-md rounded-tl-md bg-primary text-white">
           <span className="px-1 text-[10px] font-bold leading-3">
             {t("STEP_PACK_RECOMMENDATION")}
           </span>
@@ -86,7 +86,7 @@ const PackShowOption = ({
             {presta.status ? (
               <IconCheck className="h-5 w-5 text-primary-400" />
             ) : (
-              <IconX className="h-5 w-5 text-neutral-400" />
+              <IconX className="h-5 w-5 text-red-400" />
             )}
             <span
               className={`text-base ${

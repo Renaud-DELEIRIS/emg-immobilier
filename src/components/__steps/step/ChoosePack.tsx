@@ -1,11 +1,8 @@
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
-import dayjs from "dayjs";
-import { useState } from "react";
-import Button from "~/components/button/Button";
-import Pack from "~/components/steps/Pack";
-import StepContainer from "../StepContainer";
 import { Trans, useTranslation } from "next-i18next";
+import { useState } from "react";
+import Pack from "~/components/steps/Pack";
 import { useFormStore } from "~/stores/form";
+import StepContainer from "../StepContainer";
 
 const ChoosePack = () => {
   const lead = useFormStore((state) => state.data);
@@ -52,38 +49,13 @@ const ChoosePack = () => {
                     ],
                   });
                 }}
+                adherentIndex={index}
+                setAdherent={setAdherent}
+                showNext={index === adherent}
               />
             </StepContainer>
           );
         })}
-      </div>
-      <div className="mt-4 flex w-full justify-between">
-        <div></div>
-        <Button
-          onClick={() => {
-            if (lead.adherent.length === adherent + 1) {
-              nextStep("package");
-              return;
-            }
-            setAdherent(adherent + 1);
-            // Scroll smooth to top
-
-            setTimeout(() => {
-              const elem = document.getElementById((adherent + 1).toString());
-              if (elem) {
-                const offsetTop =
-                  elem.getBoundingClientRect().top + window.scrollY;
-                window.scrollTo({
-                  top: offsetTop - 100,
-                  behavior: "smooth",
-                });
-              }
-            }, 100);
-          }}
-          iconRight={<IconArrowRight />}
-        >
-          {t("VALIDATE")}
-        </Button>
       </div>
     </>
   );
