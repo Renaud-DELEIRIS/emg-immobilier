@@ -90,15 +90,7 @@ const Result = () => {
             />
           </div>
         </div>
-        <div className="mt-auto flex flex-1 flex-row items-center rounded-lg bg-neutral-200 p-px">
-          <button
-            className={`flex-1 rounded-lg py-4 font-bold ${
-              show === "lca" ? "bg-primary text-white" : "bg-neutral-200 "
-            }`}
-            onClick={() => setShow("lca")}
-          >
-            {t("LCA")}
-          </button>
+        <div className="mx-auto mt-auto flex w-full max-w-[584px] flex-row items-center justify-center rounded-lg bg-neutral-200 p-px">
           <button
             className={`flex-1 rounded-lg py-4 font-bold ${
               show === "lamal" ? "bg-primary text-white" : "bg-neutral-200"
@@ -106,6 +98,14 @@ const Result = () => {
             onClick={() => setShow("lamal")}
           >
             {t("LAMAL")}
+          </button>
+          <button
+            className={`flex-1 rounded-lg py-4 font-bold ${
+              show === "lca" ? "bg-primary text-white" : "bg-neutral-200 "
+            }`}
+            onClick={() => setShow("lca")}
+          >
+            {t("LCA")}
           </button>
         </div>
       </div>

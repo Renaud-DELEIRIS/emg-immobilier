@@ -26,26 +26,23 @@ const ModalComparatifTable = ({ open, onClose, offres, adherent }: Props) => {
 
   const groupPrestations: Record<string, string[]> = {
     Ambulatoire: [
-      "PRESTATION_MEDICAMENTS_LABEL",
-      "PRESTATION_LUNETTES_ET_VERRE_DE_CONTACT_LABEL",
-      "PRESTATION_MOYENS_AUXILIAIRES_LABEL",
-      "PRESTATION_PREVENTION_CHECKUP_LABEL",
-      "PRESTATION_FRAIS_DE_TRANSPORT_ET_SAUVETAGE_LABEL",
-      "PRESTATION_FITNESS_LABEL",
-      "PRESTATION_ETRANGER_LABEL",
+      "Médicaments",
+      "Lunettes et verre de contact",
+      "Moyens auxiliaires",
+      "Prévention, check-up",
+      "Frais de transport et sauvetage",
+      "Fitness",
+      "Étranger",
     ],
     Hospitalisation: [
-      "PRESTATION_HOSPITALISATION_LABEL",
-      "PRESTATION_LIBRE_CHOIX_DU_MEDECIN_LABEL",
-      "PRESTATION_AIDE_MENAGERE_ET_SOINS_A_DOMICILE_LABEL",
-      "PRESTATION_ROOMING_IN_LABEL",
-      "PRESTATION_CAPITAL_HOSPITALIER_LABEL",
+      "Hospitalisation",
+      "Libre choix du médecin",
+      "Aide-ménagère et soins à domicile",
+      "Rooming-in",
+      "Capital hospitalier",
     ],
-    "Médecines complémentaires": ["PRESTATION_MEDECINE_COMPLEMENTAIRE_LABEL"],
-    Dentaires: [
-      "PRESTATION_TRAITEMENTS_ORTHODONTIQUES_LABEL",
-      "PRESTATION_SOINS_DENTAIRE_LABEL",
-    ],
+    "Médecines complémentaires": ["Médecine complémentaire"],
+    Dentaires: ["Traitements orthodontiques", "Soins dentaire"],
   };
 
   const tooltipsPrestations: Record<string, string> = {
@@ -93,16 +90,12 @@ const ModalComparatifTable = ({ open, onClose, offres, adherent }: Props) => {
 
   return (
     <FlatModal open={open} onClose={onClose}>
-      <table>
+      <table className="bg-white">
         <thead>
           <tr>
-            <th className="w-[15%] px-2 py-4 text-xl font-extrabold" />
+            <th className="px-2 py-4 text-xl font-extrabold" />
             {offres.map((lca, i) => (
-              <th
-                className="px-2 py-4 text-xl font-extrabold"
-                key={i}
-                style={{ width: `${85 / offres.length}%` }}
-              >
+              <th className="px-2 py-4 text-xl font-extrabold" key={i}>
                 <div className="flex max-w-xs flex-col justify-between gap-4 rounded-lg p-4 shadow">
                   <div className="flex items-center justify-around gap-2">
                     <Image

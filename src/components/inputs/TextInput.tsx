@@ -43,20 +43,20 @@ const TextInput = ({
   boldLabel?: boolean;
 }) => {
   const computedClass = cva(
-    "text-nase rounded-lg block w-full focus:outline-none " + className,
+    "text-base rounded-xl block w-full focus:outline-none " + className,
     {
       variants: {
         error: {
           true: "bg-red-600/10 border border-red-500 text-red-500 placeholder-red-300 focus:border-red-500 ",
           false:
-            "bg-dark-900 border border-dark-600 text-neutral-800 focus:border-primary-500 placeholder:text-neutral-400 ",
+            "bg-[#EAEBEC] border-2 border-[#EAEBEC] text-dark focus:border-primary-500 focus:shadow-lg placeholder:text-neutral-400 ",
         },
         disabled: {
           true: "opacity-50 cursor-not-allowed",
         },
         icon: {
-          true: "pl-10 p-2.5",
-          false: "p-2.5",
+          true: "pl-10 py-2.5 px-5",
+          false: "py-2.5 px-5",
         },
         rightPart: {
           true: "border-r-0 rounded-r-none ",

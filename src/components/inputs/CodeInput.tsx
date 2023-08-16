@@ -32,8 +32,8 @@ const CodeInput2: React.FC<ICodeInput> = ({
         allowedCharacters={allowedCharacters}
         length={length}
         ariaLabel={ariaLabel}
-        containerClassName={containerClassName + " flex justify-around"}
-        inputClassName="w-9 border-0 border-b-[3px] border-grey/60 px-0 pb-2 pt-0 text-center text-2xl text-neutral-800 focus:border-0 focus:border-b-[3px] focus:border-primary focus:outline-none focus:outline-0 focus:ring-0 focus:ring-primary/20 focus:ring-offset-0"
+        containerClassName={containerClassName + " flex gap-4 justify-center"}
+        inputClassName="w-10  border border-grey/60 rounded-xl text-lg px-2.5 py-2 text-center text-neutral-800  focus:border-primary focus:outline-none focus:outline-0 focus:ring-0 focus:ring-primary/20 focus:ring-offset-0"
         disabled={disabled}
         placeholder={placeholder}
       />

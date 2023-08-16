@@ -157,3 +157,15 @@ input[type="number"]::-webkit-inner-spin-button {
     scale: 1;
   }
 }
+
+.flag-dropdown {
+  background-color: inherit !important;
+  border: none !important;
+}
+.react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag:focus {
+  background-color: inherit !important;
+}
+
+.flag {
+}

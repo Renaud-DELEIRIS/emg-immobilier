@@ -96,8 +96,8 @@
   "STEP_NAME_PLACEHOLDER_LASTNAME": "Nom",
 
   "STEP_VERIFY_ERROR": "Le code est incorrect",
-  "STEP_VERIFY_TITLE_FRONTALIER": "Nous avons identifié pour <strong>vous</strong> les <span>7</span> meilleures offres <strong>frontalier</strong> adaptées à votre <strong>profil</strong>. Ces tarifs seront bloqués pour vous jusqu’au <span>{{date}}</span>",
-  "STEP_VERIFY_TITLE_SUISSE": "Nous avons identifié pour <strong>vous</strong> les <span>12</span> meilleures offres <strong>conforts</strong> adaptées à votre <strong>profil</strong>. Ces tarifs seront bloqués pour vous jusqu’au <span>{{date}}</span>",
+  "STEP_VERIFY_TITLE_FRONTALIER": "Nous avons identifié pour <strong>vous</strong> les <span>7</span> meilleures offres <strong>frontalier</strong> adaptées à votre <strong>profil</strong><br/>. Ces tarifs seront bloqués pour vous jusqu’au <span>{{date}}</span>",
+  "STEP_VERIFY_TITLE_SUISSE": "Nous avons identifié pour <strong>vous</strong> les <span>12</span> meilleures offres <strong>conforts</strong> adaptées à votre <strong>profil</strong><br/>. Ces tarifs seront bloqués pour vous jusqu’au <span>{{date}}</span>",
   "STEP_VERIFY_LABEL_EMAIL": "Votre adresse email",
   "STEP_VERIFY_LABEL_PHONE": "Votre numéro de téléphone",
   "STEP_VERIFY_INFO": "Ces <strong>informations protégées</strong> seront utilisées uniquement dans le cadre de votre dossier",
@@ -105,6 +105,7 @@
   "STEP_VERIFY_CODE_TITLE": "Afin de vérifier votre identité, nous vous avons envoyé un code de vérification par SMS au numéro : <span>{{phone}}</span>",
   "STEP_VERIFY_DESCRIPTION": "Veuillez saisir le code à 4 chiffres :",
   "STEP_VERIFY_EXPERT": "Une équipe d‘expert pour vous conseiller <u>gratuitement</u>",
+  "STEP_VERIFY_RESEND": "Renvoyer le code",
 
   "STEP_HOURS_SUISSE": "Parfait!<br />Nous allons préciser votre profil.",
   "STEP_HOURS_SUISSE_SPOUSE_FEMALE": "Votre conjointe travaille-t-elle sur le territoire Suisse ?",

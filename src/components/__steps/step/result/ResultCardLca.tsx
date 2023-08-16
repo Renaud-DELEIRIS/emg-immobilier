@@ -54,26 +54,23 @@ const ResultCardLca = ({
 
   const groupPrestations: Record<string, string[]> = {
     Ambulatoire: [
-      "PRESTATION_MEDICAMENTS_LABEL",
-      "PRESTATION_LUNETTES_ET_VERRE_DE_CONTACT_LABEL",
-      "PRESTATION_MOYENS_AUXILIAIRES_LABEL",
-      "PRESTATION_PREVENTION_CHECKUP_LABEL",
-      "PRESTATION_FRAIS_DE_TRANSPORT_ET_SAUVETAGE_LABEL",
-      "PRESTATION_FITNESS_LABEL",
-      "PRESTATION_ETRANGER_LABEL",
+      "Médicaments",
+      "Lunettes et verre de contact",
+      "Moyens auxiliaires",
+      "Prévention, check-up",
+      "Frais de transport et sauvetage",
+      "Fitness",
+      "Étranger",
     ],
     Hospitalisation: [
-      "PRESTATION_HOSPITALISATION_LABEL",
-      "PRESTATION_LIBRE_CHOIX_DU_MEDECIN_LABEL",
-      "PRESTATION_AIDE_MENAGERE_ET_SOINS_A_DOMICILE_LABEL",
-      "PRESTATION_ROOMING_IN_LABEL",
-      "PRESTATION_CAPITAL_HOSPITALIER_LABEL",
+      "Hospitalisation",
+      "Libre choix du médecin",
+      "Aide-ménagère et soins à domicile",
+      "Rooming-in",
+      "Capital hospitalier",
     ],
-    "Médecines complémentaires": ["PRESTATION_MEDECINE_COMPLEMENTAIRE_LABEL"],
-    Dentaires: [
-      "PRESTATION_TRAITEMENTS_ORTHODONTIQUES_LABEL",
-      "PRESTATION_SOINS_DENTAIRE_LABEL",
-    ],
+    "Médecines complémentaires": ["Médecine complémentaire"],
+    Dentaires: ["Traitements orthodontiques", "Soins dentaire"],
   };
 
   const tooltipsPrestations: Record<string, string> = {

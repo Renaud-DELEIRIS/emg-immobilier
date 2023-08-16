@@ -1,9 +1,3 @@
-import { useEffect, useState } from "react";
-import StepContainer from "../StepContainer";
-import TileInput from "~/components/inputs/Tile";
-import TextInput from "~/components/inputs/TextInput";
-import dayjs from "dayjs";
-import Button from "~/components/button/Button";
 import {
   IconEdit,
   IconGenderFemale,
@@ -11,11 +5,17 @@ import {
   IconPlus,
   IconX,
 } from "@tabler/icons-react";
-``;
+import dayjs from "dayjs";
 import { motion } from "framer-motion";
-import { useTranslation, Trans } from "next-i18next";
-import { useFormStore } from "~/stores/form";
+import { Trans, useTranslation } from "next-i18next";
+import { useEffect, useState } from "react";
+import Button from "~/components/button/Button";
+import TextInput from "~/components/inputs/TextInput";
+import TileInput from "~/components/inputs/Tile";
 import { Adherent } from "~/constants/lead.constant";
+import { useFormStore } from "~/stores/form";
+import StepContainer from "../StepContainer";
+``;
 
 const Adherant = () => {
   const lead = useFormStore((state) => state.data);
@@ -230,7 +230,7 @@ const Adherant = () => {
               stepId="adherent"
             >
               <form
-                className="flex flex-row items-start gap-4"
+                className="flex flex-row items-center gap-4"
                 onSubmit={(e) => {
                   e.preventDefault();
                   setStep("civilite");
@@ -253,15 +253,16 @@ const Adherant = () => {
                   onChange={(value) => {
                     setAdherent({ ...adherent, year: value });
                   }}
-                  wrapperClassName="mt-1.5 w-80"
+                  wrapperClassName="mt-0.5 w-80"
                   widthFull={false}
                   type="number"
-                  placeholder="1985"
+                  placeholder="p. ex. 1985"
                 />
 
                 <Button
                   type="submit"
-                  className="w-52"
+                  className="w-28"
+                  size={"small"}
                   disabled={
                     !(
                       !isValidDob(adherent?.year || "") &&
