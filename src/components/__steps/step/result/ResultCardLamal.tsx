@@ -102,7 +102,7 @@ const ResultCardLamal = ({
               </button>
             )}
           </div>
-          <div className="mt-4 flex w-full max-w-[340px] flex-col gap-4 md:mt-0">
+          <div className="mt-4 flex w-full flex-col gap-4 md:mt-0 md:max-w-[340px]">
             <Button widthFull onClick={beCalled}>
               {t("BE_CALLED_BACK")}
             </Button>

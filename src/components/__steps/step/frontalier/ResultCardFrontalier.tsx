@@ -178,7 +178,7 @@ const ResultCardFrontalier = ({
               </button>
             )}
           </div>
-          <div className="mt-4 flex w-full max-w-[340px] flex-col gap-4 md:mt-0">
+          <div className="mt-4 flex w-full flex-col gap-4 md:mt-0 md:max-w-[240px]">
             <Button widthFull onClick={onSubscribe}>
               {tCommon("CARD_SUBSCRIBE")}
             </Button>

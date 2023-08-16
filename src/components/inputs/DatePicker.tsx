@@ -126,7 +126,7 @@ const InputDate: FC<IProps> = ({
       )}
       <div
         className={
-          "bg-dark-900 border-dark-600 flex rounded-md border bg-white  p-2.5 text-neutral-800 focus:border-primary-500 " +
+          " flex rounded-md  border-2 border-[#EAEBEC] bg-[#EAEBEC]  p-2.5 text-dark focus-within:border-primary-500 " +
           className
         }
       >
@@ -141,7 +141,7 @@ const InputDate: FC<IProps> = ({
                 maxLength={2}
                 size={2}
                 id={id}
-                className="w-0 flex-1 text-center placeholder:text-neutral-400 focus:outline-none focus:outline-0"
+                className="w-0 flex-1 bg-[#EAEBEC] text-center placeholder:text-neutral-400 focus:outline-none focus:outline-0"
                 pattern="[0-9]*"
                 type="number"
                 inputMode="numeric"
@@ -157,7 +157,7 @@ const InputDate: FC<IProps> = ({
                 onChange={onChangeMonth}
                 maxLength={2}
                 size={2}
-                className="w-0 flex-1 text-center placeholder:text-neutral-400 focus:outline-none focus:outline-0"
+                className="w-0 flex-1 bg-[#EAEBEC] text-center placeholder:text-neutral-400 focus:outline-none focus:outline-0"
                 pattern="[0-9]*"
                 type="number"
                 inputMode="numeric"
@@ -173,7 +173,7 @@ const InputDate: FC<IProps> = ({
                 onChange={onChangeYear}
                 maxLength={4}
                 size={4}
-                className="w-0 flex-1 text-center placeholder:text-neutral-400 focus:outline-none focus:outline-0"
+                className="w-0 flex-1 bg-[#EAEBEC] text-center placeholder:text-neutral-400 focus:outline-none focus:outline-0"
                 pattern="[0-9]*"
                 type="number"
                 inputMode="numeric"

@@ -172,7 +172,7 @@ const ResultCardLca = ({
               />
             </button>
           </div>
-          <div className="mt-4 flex w-full max-w-[340px] flex-col gap-4 md:mt-0">
+          <div className="mt-4 flex w-full flex-col gap-4 md:mt-0 md:max-w-[340px]">
             <Button widthFull onClick={beCalled}>
               {t("BE_CALLED_BACK")}
             </Button>
@@ -216,7 +216,7 @@ const ResultCardLca = ({
                       .filter((p) => prestations.includes(p.label))
                       .map((p, i) => (
                         <div
-                          className={`grid grid-cols-[repeat(2,1fr)] gap-5 ${
+                          className={`grid grid-cols-[repeat(2,1fr)] items-center gap-5 ${
                             i === 0 ? "pt-2" : ""
                           } ${i % 2 === 0 ? "bg-[#f7fcff]" : ""}`}
                           key={i}
@@ -226,12 +226,12 @@ const ResultCardLca = ({
                               {p.status ? (
                                 <IconCircleCheck
                                   size={24}
-                                  className="text-primary-600"
+                                  className="flex-shrink-0 text-primary-600"
                                 />
                               ) : (
                                 <IconCircleX
                                   size={24}
-                                  className="text-red-600"
+                                  className="flex-shrink-0 text-red-600"
                                 />
                               )}
                               <span className="px-1 text-base">
@@ -239,10 +239,13 @@ const ResultCardLca = ({
                               </span>
                             </div>
                           </div>
-                          <div className="px-2 text-[#2f3946]">
-                            <div className="relative flex items-center gap-4">
+                          <div className="py-2 text-[#2f3946]">
+                            <div className="relative flex flex-shrink-0 items-center gap-4">
                               <span data-tooltip={tooltipsPrestations[p.label]}>
-                                <IconHelp size={24} className="text-blue-600" />
+                                <IconHelp
+                                  size={24}
+                                  className="flex-shrink-0 text-blue-600"
+                                />
                               </span>
                               {p.details.map((d, y) => {
                                 if (!d.status) return null;
