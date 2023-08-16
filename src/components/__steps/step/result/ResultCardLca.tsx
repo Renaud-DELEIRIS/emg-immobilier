@@ -6,7 +6,6 @@ import {
   IconHelp,
 } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
-import Image from "next/image";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Button from "~/components/button/Button";
@@ -132,15 +131,14 @@ const ResultCardLca = ({
           " rounded-b-lg border bg-white " + (recommended ? "" : "rounded-t-lg")
         }
       >
-        <div className="flex w-full flex-col items-center justify-center p-4 md:flex-row md:justify-between">
+        <div className="flex w-full flex-col items-center justify-center px-6 py-6 md:flex-row md:justify-between">
           <div className="flex flex-col items-center gap-2">
-            <Image
-              src={`/images/${hash}.png`}
-              alt={"Icon de l'assurance " + info.nom}
-              width={96}
-              height={96}
-              className="h-24 w-24 rounded-xl border border-neutral-100 object-contain"
-            ></Image>
+            <div className="grid aspect-square max-w-[126px] place-items-center rounded-xl border border-neutral-100 p-1">
+              <img
+                src={`/images/${hash}.png`}
+                alt={"Icon de l'assurance Helsana"}
+              ></img>
+            </div>
             <div className="flex items-center gap-1">
               <span className="text-base font-semibold text-neutral-500">
                 {info.note} / 6
@@ -183,7 +181,7 @@ const ResultCardLca = ({
             </Button>
           </div>
         </div>
-        <div className="mb-3 px-4">
+        <div className="mb-6 px-6">
           <Checkbox
             id={info.id.toString()}
             checked={compare}

@@ -1,5 +1,4 @@
 import { IconChevronDown, IconCircleCheckFilled } from "@tabler/icons-react";
-import Image from "next/image";
 import { useState } from "react";
 import Button from "~/components/button/Button";
 
@@ -138,13 +137,11 @@ const ResultCardFrontalier = ({
       >
         <div className="flex w-full flex-col items-center justify-center p-4 md:flex-row md:justify-between">
           <div className="flex flex-col items-center gap-2">
-            <div className="grid h-24 w-24 place-items-center rounded-xl border border-neutral-100 p-1">
-              <Image
+            <div className="grid aspect-square max-w-[126px] place-items-center rounded-xl border border-neutral-100 p-1">
+              <img
                 src={`/images/${hash}.png`}
                 alt={"Icon de l'assurance Helsana"}
-                width={75}
-                height={96}
-              ></Image>
+              ></img>
             </div>
           </div>
           <div className="flex flex-col items-center gap-px">

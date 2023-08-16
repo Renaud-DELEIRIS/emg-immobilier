@@ -1,6 +1,5 @@
 import { IconChevronDown, IconCircleCheckFilled } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
-import Image from "next/image";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Button from "~/components/button/Button";
@@ -66,14 +65,13 @@ const ResultCardLamal = ({
           " rounded-b-lg border bg-white " + (recommended ? "" : "rounded-t-lg")
         }
       >
-        <div className="flex w-full flex-col items-center justify-center p-4 md:flex-row md:justify-between">
-          <Image
-            src={`/images/${hash}.png`}
-            alt={"Icon de l'assurance " + info.caisse}
-            width={96}
-            height={96}
-            className="h-24 w-24 rounded-xl border border-neutral-100 object-contain"
-          ></Image>
+        <div className="flex w-full flex-col items-center justify-center p-6 md:flex-row md:justify-between">
+          <div className="grid aspect-square max-w-[126px] place-items-center rounded-xl border border-neutral-100 p-1">
+            <img
+              src={`/images/${hash}.png`}
+              alt={"Icon de l'assurance Helsana"}
+            ></img>
+          </div>
           <div className="flex flex-col items-center gap-px">
             <div className="flex items-end text-[#2A3775]">
               <h2 className="text-[40px] font-bold ">
