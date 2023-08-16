@@ -72,7 +72,6 @@ const Info = ({ open }: { open: boolean }) => {
 
   return (
     <>
-      <div className="fixed inset-0 z-[40] bg-black/30 backdrop-blur-[5px]" />
       <Transition appear show={open} as={Fragment}>
         <Dialog as="div" className="relative z-[70]" onClose={() => null}>
           <Transition.Child
@@ -84,7 +83,7 @@ const Info = ({ open }: { open: boolean }) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0  bg-black/30 backdrop-blur-[5px]" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
