@@ -153,7 +153,7 @@ export const getStepComponent = (
       return (
         <>
           <div className="mx-auto max-w-7xl md:py-8" key={"result"}>
-            {lead.verified && <Verification />}
+            {!lead.verified && <Verification />}
             <ResultProvider>
               <Result />
             </ResultProvider>
