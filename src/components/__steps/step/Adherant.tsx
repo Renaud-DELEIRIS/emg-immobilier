@@ -251,7 +251,11 @@ const Adherant = () => {
                 <TextInput
                   value={adherent?.year || ""}
                   onChange={(value) => {
-                    setAdherent({ ...adherent, year: value });
+                    setAdherent({
+                      ...adherent,
+                      year: value,
+                      dob: value + "--",
+                    });
                   }}
                   wrapperClassName="mt-0.5 w-80"
                   widthFull={false}

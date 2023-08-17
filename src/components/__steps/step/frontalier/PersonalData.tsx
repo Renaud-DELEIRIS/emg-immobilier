@@ -85,6 +85,7 @@ const PersonalData = () => {
               />
               <InputDate
                 value={p.dob || ""}
+                defaultYear={p.year}
                 label={t("DATA_BIRTH_LABEL")}
                 onChange={(value) => {
                   changeLead({

@@ -19,6 +19,7 @@ interface IProps {
   label?: string;
   boldLabel?: boolean;
   className?: string;
+  defaultYear?: string;
 }
 const InputDate: FC<IProps> = ({
   value,
@@ -27,6 +28,7 @@ const InputDate: FC<IProps> = ({
   label,
   boldLabel,
   className = "",
+  defaultYear = "",
 }) => {
   const separator =
     format.replace("DD", "").replace("MM", "").replace("YYYY", "").charAt(0) ||
@@ -41,7 +43,7 @@ const InputDate: FC<IProps> = ({
   const [month, setMonth] = useState(
     asDate ? (asDate.month() + 1).toString() : ""
   );
-  const [year, setYear] = useState(asDate?.year().toString() ?? "");
+  const [year, setYear] = useState(asDate?.year().toString() ?? defaultYear);
   const objectRef: Record<string, MutableRefObject<HTMLInputElement | null>> = {
     DD: useRef<HTMLInputElement | null>(null),
     MM: useRef<HTMLInputElement | null>(null),

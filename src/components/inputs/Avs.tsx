@@ -16,7 +16,7 @@ const AvsInput = ({
       {label && (
         <label
           htmlFor="avs"
-          className="block text-sm font-medium text-gray-700"
+          className="mb-1 block text-sm font-medium  text-gray-700"
         >
           {label}
         </label>
@@ -29,7 +29,7 @@ const AvsInput = ({
         id="avs"
         placeholder={placeholder}
         autoComplete="avs"
-        className={`bg-dark-900 border-dark-600 text-nase block w-full  rounded-lg border p-2.5 text-neutral-800 placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none`}
+        className={`block w-full rounded-xl border-2 border-[#EAEBEC] bg-[#EAEBEC] px-5 py-2.5 text-base text-dark placeholder:text-neutral-400 focus:border-primary-500 focus:shadow-lg focus:outline-none`}
         onChange={(e) => onChange(e.target.value)}
       ></InputMask>
     </div>

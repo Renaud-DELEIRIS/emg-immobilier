@@ -2,19 +2,18 @@ import { Dialog, Transition } from "@headlessui/react";
 import { IconMail } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
+import { parsePhoneNumber } from "libphonenumber-js";
+import { Trans, useTranslation } from "next-i18next";
 import Image from "next/image";
 import { Fragment, useState } from "react";
 import PhoneInput from "react-phone-input-2";
+import { useFormStore } from "~/stores/form";
+import { sendLeadComparea } from "~/utils/api/createLead";
 import { sendCodeSms } from "~/utils/api/sendSms";
+import getParamsUrl from "~/utils/client/getParamsUrl";
 import Button from "../button/Button";
 import CodeInput from "../inputs/CodeInput";
 import TextInput from "../inputs/TextInput";
-
-import { parsePhoneNumber } from "libphonenumber-js";
-import { Trans, useTranslation } from "next-i18next";
-import { useFormStore } from "~/stores/form";
-import { sendLeadComparea } from "~/utils/api/createLead";
-import getParamsUrl from "~/utils/client/getParamsUrl";
 
 export const formatTelephone = (p: string) => {
   try {
