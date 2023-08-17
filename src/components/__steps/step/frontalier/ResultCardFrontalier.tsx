@@ -120,6 +120,8 @@ const ResultCardFrontalier = ({
       selectedOfferFrontalier: name,
     });
     nextStep("result-frontalier");
+    // Window scroll to top
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -140,7 +142,9 @@ const ResultCardFrontalier = ({
             <div className="grid aspect-square max-w-[126px] place-items-center rounded-xl border border-neutral-100 p-1">
               <img
                 src={`/images/${hash}.png`}
-                alt={"Icon de l'assurance Helsana"}
+                alt={"Icon de l'assurance"}
+                width={128}
+                height={128}
               ></img>
             </div>
           </div>

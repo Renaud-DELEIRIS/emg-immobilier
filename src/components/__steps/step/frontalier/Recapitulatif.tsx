@@ -1,7 +1,6 @@
 import { IconCheck, IconChevronDown } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { Trans, useTranslation } from "next-i18next";
-import Image from "next/image";
 import { useState } from "react";
 import { BiSolidLeaf } from "react-icons/bi";
 import { BsFillHeartPulseFill } from "react-icons/bs";
@@ -83,7 +82,7 @@ const Recapitulatif = () => {
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-2">
       <div className="mx-auto mb-6 flex w-fit flex-col items-center justify-center gap-4 border-b border-dark px-8 pb-6">
-        <Image
+        <img
           src={"/images/" + pack.hash + ".png"}
           width={128}
           height={128}
