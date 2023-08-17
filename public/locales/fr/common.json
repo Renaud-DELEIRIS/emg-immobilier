@@ -165,6 +165,7 @@
   "CALLED_SUCCESS": "Nous vous rappellerons dans les plus brefs délais",
   "CALLED_ERROR": "Une erreur est survenue, veuillez réessayer plus tard",
   "CARD_SUBSCRIBE": "Souscrire",
+  "CARD_SUBSCRIBE_ONLINE": "Souscrire en ligne",
   "CARD_BECALLED": "Être rappelé",
   "CARD_PRESTATION": "Prestations",
   "CARD_DETAILS": "Détails"
