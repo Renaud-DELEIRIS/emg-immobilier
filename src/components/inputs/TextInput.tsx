@@ -92,6 +92,7 @@ const TextInput = ({
           </div>
         )}
         <div className={`flex items-center ${widthFull ? "w-full" : ""}`}>
+          {/* Keyboard numeric if typez number */}
           <input
             type={type}
             autoFocus={autofocus}
@@ -113,6 +114,9 @@ const TextInput = ({
               if (onChange) onChange(e.target.value);
             }}
             readOnly={readonly}
+            inputMode={
+              type === "number" || type === "tel" ? "numeric" : undefined
+            }
           />
           {rightPart && (
             <div

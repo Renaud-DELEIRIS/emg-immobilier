@@ -40,10 +40,24 @@ const Info = ({ open }: { open: boolean }) => {
     return res;
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
     if (!lead.phone) return;
-    e.preventDefault();
+    if (e) e.preventDefault();
     setStep("phone");
+    // Scroll to input code with id #code
+    setTimeout(() => {
+      const elem = document.getElementById("code");
+      const modal = document.getElementById("modal");
+      // scroll to center the element on the page
+      if (!modal || !elem) return;
+      // scroll to have elem 200 px above the bottom of the modal
+      const offsetTop = elem.getBoundingClientRect().top;
+      modal.scrollTo({
+        top: offsetTop - modal.offsetHeight + 400,
+        behavior: "smooth",
+      });
+    }, 50);
+
     void sendCodeSms(lead.phone).then((res) => {
       setResponseCode(res.code);
     });
@@ -85,8 +99,11 @@ const Info = ({ open }: { open: boolean }) => {
             <div className="fixed inset-0  bg-black/30 backdrop-blur-[5px]" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex  items-start justify-center p-4 pt-16 text-center  md:pt-24">
+          <div
+            className="fixed inset-0 overflow-y-auto pb-36 md:pb-0"
+            id="modal"
+          >
+            <div className="flex  items-start justify-center p-4 pt-16  text-center  md:pt-24">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -96,7 +113,7 @@ const Info = ({ open }: { open: boolean }) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className=" w-full max-w-5xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className=" w-full max-w-5xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl  transition-all">
                   <div className="flex h-full w-full">
                     <div className="flex w-full flex-col">
                       <form
@@ -163,7 +180,7 @@ const Info = ({ open }: { open: boolean }) => {
                               type: "tel",
                               name: "phone",
                               id: "phone",
-                              autoComplete: "phone",
+                              autoComplete: "tel",
                             }}
                             inputClass="block !w-full !bg-[#EAEBEC] !border-2 !border-[#EAEBEC] focus:!border-primary-500 focus:!ring-primary-500 !sm:text-sm !h-[48px] !rounded-md focus:shadow-lg"
                             preferredCountries={["ch", "fr"]}
@@ -191,6 +208,7 @@ const Info = ({ open }: { open: boolean }) => {
                               type="email"
                               name="email"
                               placeholder="you@example.com"
+                              autocomplete="email"
                               value={lead.email || ""}
                               icon={<IconMail size={18} />}
                               onChange={(e) =>
@@ -245,7 +263,10 @@ const Info = ({ open }: { open: boolean }) => {
                               }}
                             />
                           </p>
-                          <button className="mb-4 mt-2 text-sm font-semibold text-primary">
+                          <button
+                            className="mb-4 mt-2 text-sm font-semibold text-primary"
+                            onClick={() => onSubmit()}
+                          >
                             {t("STEP_VERIFY_RESEND")}
                           </button>
                           <p className="mb-4 mt-2 text-sm text-gray-500">
@@ -256,6 +277,7 @@ const Info = ({ open }: { open: boolean }) => {
                               e.preventDefault();
                               void verifyCode();
                             }}
+                            id="code"
                           >
                             <CodeInput
                               onChange={(e) => setCode(e)}
