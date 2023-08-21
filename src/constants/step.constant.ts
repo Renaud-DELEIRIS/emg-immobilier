@@ -115,7 +115,7 @@ export const STEPS: Step[] = [
       return false;
     },
     stepInfo: (lead) => {
-      return [5, 12];
+      return [5, 11];
     },
   },
   {
@@ -229,7 +229,7 @@ export const STEPS: Step[] = [
     },
     stepInfo: (lead) => {
       if (lead.situation === "frontalier") {
-        return [6, 12];
+        return [6, 11];
       }
       return [8, 8];
     },
@@ -261,7 +261,7 @@ export const STEPS: Step[] = [
       return "work-hours";
     },
     stepInfo: (lead) => {
-      return [7, 12];
+      return [7, 11];
     },
   },
   {
@@ -276,7 +276,7 @@ export const STEPS: Step[] = [
       return "result-frontalier";
     },
     stepInfo: (lead) => {
-      return [8, 12];
+      return [8, 11];
     },
   },
   {
@@ -291,7 +291,7 @@ export const STEPS: Step[] = [
       return "recap-frontalier";
     },
     stepInfo: (lead) => {
-      return [8, 12];
+      return [8, 11];
     },
   },
   {
@@ -312,7 +312,7 @@ export const STEPS: Step[] = [
         : "profils";
     },
     stepInfo: (lead) => {
-      return [9, 12];
+      return [9, 11];
     },
   },
   {
@@ -327,7 +327,7 @@ export const STEPS: Step[] = [
       return "souscrire";
     },
     stepInfo: (lead) => {
-      return [10, 12];
+      return [10, 11];
     },
   },
   {
@@ -342,7 +342,7 @@ export const STEPS: Step[] = [
       return "donnee-personnelle";
     },
     stepInfo: (lead) => {
-      return [11, 12];
+      return [11, 11];
     },
   },
 ];
