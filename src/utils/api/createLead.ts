@@ -17,12 +17,12 @@ export const sendLeadComparea = async (
 
   if (!main) return Promise.reject("Erreur principal manquant");
 
-  const createProfile = (p: Adherent) => ({
+  const createProfile = (p: Adherent, index = 0) => ({
     ddn: p.year,
-    id: 1,
+    id: p.type === "main" ? 1 : p.type === "partner" ? 2 : 3 + p.index,
     civilite: {
       key: p.civility === "female" ? 1 : 2,
-      value: p.civility,
+      value: p.civility === "female" ? "Femme" : "Homme",
     },
     franchise: p.franchise
       ? {
@@ -72,7 +72,8 @@ export const sendLeadComparea = async (
   const body = {
     profilprincipal: createProfile(main),
     ...(partner ? createProfile(partner) : {}),
-    profilsenfants: children.map((p) => createProfile(p)),
+    profilsenfants: children.map((p, index) => createProfile(p, index)),
+
     npa: restdata.npa,
     assuranceactuelle: restdata.actualInsurance,
     nouveauresident: {
