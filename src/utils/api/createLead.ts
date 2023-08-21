@@ -1,6 +1,7 @@
 import { type Adherent, type schemaData } from "~/constants/lead.constant";
 import { packOptionById } from "~/data/PackOption";
 import { env } from "~/env.mjs";
+import { getProfilId } from "../getProfilId";
 
 export const sendLeadComparea = async (
   data: schemaData,
@@ -13,13 +14,12 @@ export const sendLeadComparea = async (
 
   const main = adherent.find((p) => p.type === "main");
   const partner = adherent.find((p) => p.type === "partner");
-  const children = adherent.filter((p) => p.type === "child");
 
   if (!main) return Promise.reject("Erreur principal manquant");
 
   const createProfile = (p: Adherent, index = 0) => ({
     ddn: p.year,
-    id: p.type === "main" ? 1 : p.type === "partner" ? 2 : 3 + index,
+    id: getProfilId(p, index),
     civilite: {
       key: p.civility === "female" ? 1 : 2,
       value: p.civility === "female" ? "Femme" : "Homme",
@@ -72,8 +72,11 @@ export const sendLeadComparea = async (
   const body = {
     profilprincipal: createProfile(main),
     ...(partner ? createProfile(partner) : {}),
-    profilsenfants: children.map((p, index) => createProfile(p, index)),
-
+    profilsenfants: adherent
+      .map((p, index) => {
+        if (p.type === "child") return createProfile(p, index);
+      })
+      .filter((p) => !!p),
     npa: restdata.npa,
     assuranceactuelle: restdata.actualInsurance,
     nouveauresident: {
