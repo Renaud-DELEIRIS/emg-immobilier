@@ -4,7 +4,7 @@ import {
   IconPhoneFilled,
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
-import { GetStaticProps, type NextPage } from "next";
+import { type GetStaticProps, type NextPage } from "next";
 import { useTranslation } from "next-i18next";
 import nextI18nextConfig from "next-i18next.config.mjs";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -12,9 +12,9 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
-import Documents from "~/components/__steps/step/frontalier/Documents";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
+import Documents from "~/components/__steps/step/frontalier/Documents";
 import { useFormStore } from "~/stores/form";
 import { useSessionStore } from "~/stores/session";
 import getParamsUrl from "~/utils/client/getParamsUrl";
@@ -53,7 +53,7 @@ const Home: NextPage = () => {
     // Const get leadId from url params
     const { leadId } = getParamsUrl();
     if (!leadId) {
-      router.push("/");
+      void router.push("/");
     }
 
     fetchSession()

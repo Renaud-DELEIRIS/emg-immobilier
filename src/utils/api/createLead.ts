@@ -19,7 +19,7 @@ export const sendLeadComparea = async (
 
   const createProfile = (p: Adherent, index = 0) => ({
     ddn: p.year,
-    id: p.type === "main" ? 1 : p.type === "partner" ? 2 : 3 + p.index,
+    id: p.type === "main" ? 1 : p.type === "partner" ? 2 : 3 + index,
     civilite: {
       key: p.civility === "female" ? 1 : 2,
       value: p.civility === "female" ? "Femme" : "Homme",
