@@ -15,7 +15,12 @@ import { getProfilId } from "~/utils/getProfilId";
 
 const Documents = () => {
   const [iban, setIban] = useState<string>("");
-  const [avs, setAvs] = useState<string>("");
+  const [avs, setAvs] = useState<
+    {
+      avs: string;
+      profilIndex: number;
+    }[]
+  >([]);
   const [justificatifDomicile, setJustificatifDomicile] = useState<string>("");
   const [permisTravail, setPermisTravail] = useState<
     {
@@ -228,8 +233,24 @@ const Documents = () => {
                   <AvsInput
                     label={t("DOCUMENT_AVS_LABEL")}
                     placeholder="P. ex. 756.XXXX.XXXX.XX"
-                    value={avs}
-                    onChange={(value) => setAvs(value)}
+                    value={
+                      avs.find((avs) => avs.profilIndex === adherentIndex)
+                        ?.avs || ""
+                    }
+                    onChange={(value) => {
+                      setAvs((prev) => {
+                        // Remove old adherent
+                        const newAvs = prev.filter(
+                          (avs) => avs.profilIndex !== adherentIndex
+                        );
+                        // Add new adherent
+                        newAvs.push({
+                          avs: value,
+                          profilIndex: adherentIndex,
+                        });
+                        return newAvs;
+                      });
+                    }}
                   />
                   <p className="mt-2 text-sm text-gray-500">
                     <IconInfoCircle size={16} className="mr-2 inline-block" />
