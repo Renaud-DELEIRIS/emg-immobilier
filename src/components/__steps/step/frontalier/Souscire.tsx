@@ -20,7 +20,7 @@ const Souscrire = () => {
     lead.selectedAdherent.length > 0 &&
     lead.address &&
     lead.address.length > 6 &&
-    dayjs(lead.startInsurance, "DD.MM.YYYY").isValid() &&
+    dayjs(lead.startInsurance, "YYYY-MM-DD").isValid() &&
     preDate !== undefined;
 
   const { t } = useTranslation("frontalier");
@@ -38,7 +38,7 @@ const Souscrire = () => {
                 startInsurance: dayjs()
                   .add(1, "month")
                   .set("date", 1)
-                  .format("DD.MM.YYYY"),
+                  .format("YYYY-MM-DD"),
               });
             }}
             selected={preDate === "mois"}

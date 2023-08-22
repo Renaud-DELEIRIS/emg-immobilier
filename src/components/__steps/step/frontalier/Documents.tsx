@@ -1,5 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { IconCircleCheckFilled, IconInfoCircle } from "@tabler/icons-react";
+import dayjs from "dayjs";
 import { Trans, useTranslation } from "next-i18next";
 import { useState } from "react";
 import Button from "~/components/button/Button";
@@ -9,6 +10,8 @@ import TextInput from "~/components/inputs/TextInput";
 import { formatTelephone } from "~/components/modal/VerifyModal";
 import { useFormStore } from "~/stores/form";
 import { api } from "~/utils/api";
+import sendDocuments from "~/utils/api/sendDocuments";
+import { getProfilId } from "~/utils/getProfilId";
 
 const Documents = () => {
   const [iban, setIban] = useState<string>("");
@@ -36,36 +39,46 @@ const Documents = () => {
 
   const onPressLater = () => {
     setOpenCompleteLater(true);
-    void uploadDocuments();
+    void uploadDocuments(false);
     // TODO
   };
 
   const onPressContinue = () => {
     setOpenComplete(true);
+    void uploadDocuments(true);
     // TODO
   };
 
-  const uploadDocuments = async () => {
+  const uploadDocuments = async (completed: boolean) => {
     if (!lead.idLead) {
       return;
     }
-    const files: { type: string; name: string; url: string }[] = [];
-    const { key, url } = await createPresignedUrl({
-      token: lead.idLead,
-      filename: "Justificatif de domicile",
-    });
-    await fetch(url, {
-      method: "PUT",
-      body: Buffer.from(justificatifDomicile.split(",")[1]!, "base64"),
-    });
-    files.push({
-      type: "justificatif-domicile",
-      name: "Justificatif de domicile",
-      url,
-    });
+    const files: {
+      profilId: number;
+      type: string;
+      name: string;
+      url: string;
+    }[] = [];
+    if (justificatifDomicile) {
+      const { key, url } = await createPresignedUrl({
+        token: lead.idLead,
+        filename: "Justificatif de domicile",
+      });
+      await fetch(url, {
+        method: "PUT",
+        body: Buffer.from(justificatifDomicile.split(",")[1]!, "base64"),
+      });
+      files.push({
+        profilId: 1,
+        type: "justificatif-domicile",
+        name: "Justificatif de domicile",
+        url,
+      });
+    }
 
     for (const permisTravailFile of permisTravail) {
       const adherent = lead.adherent[permisTravailFile.profilIndex]!;
+      const profilId = getProfilId(adherent, permisTravailFile.profilIndex);
       const fileName =
         adherent.type === "main"
           ? "Permis de travail"
@@ -82,6 +95,7 @@ const Documents = () => {
         body: Buffer.from(permisTravailFile.base64.split(",")[1]!, "base64"),
       });
       files.push({
+        profilId,
         type: "permis-travail",
         name: fileName,
         url,
@@ -90,6 +104,7 @@ const Documents = () => {
 
     for (const pieceDidenditeFile of pieceDidendite) {
       const adherent = lead.adherent[pieceDidenditeFile.profilIndex]!;
+      const profilId = getProfilId(adherent, pieceDidenditeFile.profilIndex);
 
       const fileName =
         adherent.type === "main"
@@ -107,12 +122,22 @@ const Documents = () => {
         body: Buffer.from(pieceDidenditeFile.base64.split(",")[1]!, "base64"),
       });
       files.push({
-        type: "piece-didendite",
+        profilId,
+        type: "piece-idendite",
         name: fileName,
         url,
       });
     }
-    console.log(files);
+    await sendDocuments({
+      leadId: lead.idLead,
+      startInsurance: lead.startInsurance,
+      paymentFrequency: lead.paymentFrequency,
+      address: lead.address,
+      adherents: lead.adherent,
+      documents: files,
+      completed,
+      iban,
+    });
   };
 
   return (
@@ -175,25 +200,30 @@ const Documents = () => {
                     })
                   }
                 />
-                <FileInput
-                  label={t("DOCUMENT_CONTRAT_TRAVAIL_LABEL")}
-                  placeholder={t("DOCUMENT_CONTRAT_TRAVAIL_LABEL")}
-                  onChange={(value) =>
-                    setPermisTravail((prev) => {
-                      // Remove old adherent
-                      const newPermisTravail = prev.filter(
-                        (permisTravail) =>
-                          permisTravail.profilIndex !== adherentIndex
-                      );
-                      // Add new adherent
-                      newPermisTravail.push({
-                        base64: value,
-                        profilIndex: adherentIndex,
-                      });
-                      return newPermisTravail;
-                    })
-                  }
-                />
+                {!(
+                  adherent.type === "child" &&
+                  dayjs(adherent.dob).year() > dayjs().year() - 18
+                ) && (
+                  <FileInput
+                    label={t("DOCUMENT_CONTRAT_TRAVAIL_LABEL")}
+                    placeholder={t("DOCUMENT_CONTRAT_TRAVAIL_LABEL")}
+                    onChange={(value) =>
+                      setPermisTravail((prev) => {
+                        // Remove old adherent
+                        const newPermisTravail = prev.filter(
+                          (permisTravail) =>
+                            permisTravail.profilIndex !== adherentIndex
+                        );
+                        // Add new adherent
+                        newPermisTravail.push({
+                          base64: value,
+                          profilIndex: adherentIndex,
+                        });
+                        return newPermisTravail;
+                      })
+                    }
+                  />
+                )}
                 <div className="rounded-lg border bg-white p-4 shadow">
                   <AvsInput
                     label={t("DOCUMENT_AVS_LABEL")}
