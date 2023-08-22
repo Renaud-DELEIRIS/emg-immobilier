@@ -71,7 +71,7 @@ export const sendLeadComparea = async (
   });
   const body = {
     profilprincipal: createProfile(main),
-    ...(partner ? createProfile(partner) : {}),
+    ...(partner ? { profilconjoint: createProfile(partner) } : {}),
     profilsenfants: adherent
       .map((p, index) => {
         if (p.type === "child") return createProfile(p, index);
