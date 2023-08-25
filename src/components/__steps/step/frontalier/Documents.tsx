@@ -7,10 +7,11 @@ import Button from "~/components/button/Button";
 import AvsInput from "~/components/inputs/Avs";
 import FileInput from "~/components/inputs/FileInput";
 import TextInput from "~/components/inputs/TextInput";
-import { formatTelephone } from "~/components/modal/VerifyModal";
 import { useFormStore } from "~/stores/form";
 import { api } from "~/utils/api";
 import sendDocuments from "~/utils/api/sendDocuments";
+import base64MimeType from "~/utils/base64Mime";
+import { formatTelephone } from "~/utils/formatTelephone";
 import { getProfilId } from "~/utils/getProfilId";
 
 const Documents = () => {
@@ -65,19 +66,21 @@ const Documents = () => {
       url: string;
     }[] = [];
     if (justificatifDomicile) {
-      const { key, url } = await createPresignedUrl({
+      const { headers, url } = await createPresignedUrl({
         token: lead.idLead,
         filename: "Justificatif de domicile",
+        contentType: base64MimeType(justificatifDomicile),
       });
       await fetch(url, {
         method: "PUT",
+        headers,
         body: Buffer.from(justificatifDomicile.split(",")[1]!, "base64"),
       });
       files.push({
         profilId: 1,
         type: "justificatif-domicile",
         name: "Justificatif de domicile",
-        url,
+        url: url.split("?")[0]!,
       });
     }
 
@@ -91,19 +94,21 @@ const Documents = () => {
           ? "Permis de travail conjoint"
           : "Permis de travail enfant né en " + (adherent.year || "");
 
-      const { key, url } = await createPresignedUrl({
+      const { headers, url } = await createPresignedUrl({
         token: lead.idLead,
         filename: fileName,
+        contentType: base64MimeType(permisTravailFile.base64),
       });
       await fetch(url, {
         method: "PUT",
+        headers,
         body: Buffer.from(permisTravailFile.base64.split(",")[1]!, "base64"),
       });
       files.push({
         profilId,
         type: "permis-travail",
         name: fileName,
-        url,
+        url: url.split("?")[0]!,
       });
     }
 
@@ -118,19 +123,21 @@ const Documents = () => {
           ? "Pièce d'identité conjoint"
           : "Pièce d'identité enfant né en " + (adherent.year || "");
 
-      const { key, url } = await createPresignedUrl({
+      const { headers, url } = await createPresignedUrl({
         token: lead.idLead,
         filename: fileName,
+        contentType: base64MimeType(pieceDidenditeFile.base64),
       });
       await fetch(url, {
         method: "PUT",
+        headers,
         body: Buffer.from(pieceDidenditeFile.base64.split(",")[1]!, "base64"),
       });
       files.push({
         profilId,
         type: "piece-idendite",
         name: fileName,
-        url,
+        url: url.split("?")[0]!,
       });
     }
     await sendDocuments({

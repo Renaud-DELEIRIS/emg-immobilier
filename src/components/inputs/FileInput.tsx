@@ -7,6 +7,7 @@ interface Props {
   label?: string;
   boldLabel?: boolean;
   placeholder?: string;
+  existing?: boolean;
 }
 
 const FileInput = ({
@@ -15,6 +16,7 @@ const FileInput = ({
   label,
   boldLabel = false,
   placeholder = "",
+  existing = false,
 }: Props) => {
   const id = useId();
   const [fileName, setFileName] = useState<string>("");
@@ -41,12 +43,16 @@ const FileInput = ({
       >
         <div
           className={`mr-4 grid aspect-square h-full place-items-center ${
-            fileName
+            fileName || existing
               ? "bg-green-500 text-white group-hover:bg-green-600"
               : "bg-primary text-white group-hover:bg-primary-600"
           }`}
         >
-          {fileName ? <IconCircleCheck size={20} /> : <IconUpload size={20} />}
+          {fileName || existing ? (
+            <IconCircleCheck size={20} />
+          ) : (
+            <IconUpload size={20} />
+          )}
         </div>
         <span className="flex  h-full items-center text-sm">
           {fileName || placeholder}
@@ -65,6 +71,7 @@ const FileInput = ({
               onChange(e.target?.result as string);
             };
             reader.readAsDataURL((e.target.files as FileList)[0] as File);
+            e.target.files = null;
           }}
         />
       </label>

@@ -2,7 +2,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { IconMail } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
-import { parsePhoneNumber } from "libphonenumber-js";
 import { Trans, useTranslation } from "next-i18next";
 import Image from "next/image";
 import { Fragment, useState } from "react";
@@ -11,18 +10,10 @@ import { useFormStore } from "~/stores/form";
 import { sendLeadComparea } from "~/utils/api/createLead";
 import { sendCodeSms } from "~/utils/api/sendSms";
 import getParamsUrl from "~/utils/client/getParamsUrl";
+import { formatTelephone } from "~/utils/formatTelephone";
 import Button from "../button/Button";
 import CodeInput from "../inputs/CodeInput";
 import TextInput from "../inputs/TextInput";
-
-export const formatTelephone = (p: string) => {
-  try {
-    const parsedPhoneNumber = parsePhoneNumber("+" + p);
-    return parsedPhoneNumber.formatInternational();
-  } catch (error) {
-    return p;
-  }
-};
 
 const Info = ({ open }: { open: boolean }) => {
   const lead = useFormStore((state) => state.data);
@@ -40,9 +31,9 @@ const Info = ({ open }: { open: boolean }) => {
     return res;
   };
 
-  const onSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
     if (!lead.phone) return;
-    if (e) e.preventDefault();
     setStep("phone");
     // Scroll to input code with id #code
     setTimeout(() => {
@@ -58,17 +49,19 @@ const Info = ({ open }: { open: boolean }) => {
       });
     }, 50);
 
-    void sendCodeSms(lead.phone).then((res) => {
-      setResponseCode(res.code);
-    });
+    const gmtParams = getParamsUrl();
+    const idLead = await sendLeadComparea(lead, gmtParams);
+    changeLead({ ...lead, idLead: idLead });
+    const res = await sendCodeSms(lead.phone);
+    setResponseCode(res.code);
   };
 
   const verifyCode = async () => {
-    if (code.trim() === "6121") {
-      changeLead({ ...lead, verified: true });
-      setLoading(false);
-      return;
-    }
+    // if (code.trim() === "6121") {
+    //   changeLead({ ...lead, verified: true });
+    //   setLoading(false);
+    //   return;
+    // }
     if (!responseCode) return;
     if (code.trim() !== responseCode.toString()) {
       setError(t("STEP_VERIFY_ERROR"));
@@ -78,8 +71,8 @@ const Info = ({ open }: { open: boolean }) => {
 
     const gmtParams = getParamsUrl();
     // TODO Create lead frontaluer
-    const idLead = await sendLeadComparea(lead, gmtParams);
-    changeLead({ ...lead, verified: true, idLead: idLead });
+    await sendLeadComparea(lead, gmtParams, lead.idLead, true);
+    changeLead({ ...lead, verified: true });
     setLoading(false);
   };
 
@@ -117,7 +110,7 @@ const Info = ({ open }: { open: boolean }) => {
                   <div className="flex h-full w-full">
                     <div className="flex w-full flex-col">
                       <form
-                        onSubmit={onSubmit}
+                        onSubmit={(e) => void onSubmit(e)}
                         className="flex h-full flex-1 grid-cols-6 flex-col gap-4 p-6"
                       >
                         <div className="flex items-center gap-2">
@@ -265,7 +258,7 @@ const Info = ({ open }: { open: boolean }) => {
                           </p>
                           <button
                             className="mb-4 mt-2 text-sm font-semibold text-primary"
-                            onClick={() => onSubmit()}
+                            onClick={() => void onSubmit()}
                           >
                             {t("STEP_VERIFY_RESEND")}
                           </button>

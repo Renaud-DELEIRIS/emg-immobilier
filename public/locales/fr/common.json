@@ -119,8 +119,8 @@
 
   "STEP_PACK_DESCRIPTION": "Parfait, en matière de prestations complémentaires.<br />Choissisez ce qui convient le mieux.",
   "STEP_PACK_MAIN": "Pour vous",
-  "STEP_PACK_SPOUSE_FEMALE": "Pour votre coinjointe",
-  "STEP_PACK_SPOUSE_MALE": "Pour votre coinjoint",
+  "STEP_PACK_SPOUSE_FEMALE": "Pour votre conjointe",
+  "STEP_PACK_SPOUSE_MALE": "Pour votre conjoint",
   "STEP_PACK_CHILD": "Pour votre enfant né en {{year}}",
 
   "STEP_PACK_ESSENTIEL": "Essentiel",

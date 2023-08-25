@@ -4,6 +4,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import mime from "mime-types";
 import { z } from "zod";
 import { schemaData } from "~/constants/lead.constant";
 import { schemaStep } from "~/constants/step.constant";
@@ -91,17 +92,40 @@ export const appRouter = createTRPCRouter({
       z.object({
         token: z.string(),
         filename: z.string(),
+        contentType: z.string().nullable(),
       })
     )
     .mutation(async ({ input }) => {
-      const { token, filename } = input;
-      const key = `dashboard/${token}/${filename}`;
+      const { token, filename, contentType } = input;
+      const ext = contentType ? mime.extension(contentType) : null;
+      const key = `dashboard/${token}/${filename}${ext ? `.${ext}` : ""}`;
       const command = new PutObjectCommand({
         Bucket: "emg-sa",
         Key: key,
+        ...(contentType ? { ContentType: contentType } : undefined),
+        ...(contentType
+          ? {
+              ContentDisposition: `inline; filename=${filename}${
+                ext ? `.${ext}` : ""
+              }`,
+            }
+          : undefined),
       });
       const url = await getSignedUrl(s3, command, { expiresIn: 30 });
-      return { key, url };
+      return {
+        key,
+        url,
+        headers: {
+          ...(contentType ? { "Content-Type": contentType } : undefined),
+          ...(contentType
+            ? {
+                "Content-Disposition": `inline; filename=${filename}${
+                  ext ? `.${ext}` : ""
+                }`,
+              }
+            : undefined),
+        },
+      };
     }),
 });
 

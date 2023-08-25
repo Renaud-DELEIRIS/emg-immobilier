@@ -70,6 +70,7 @@ export const sendLeadComparea = async (
       : {}),
   });
   const body = {
+    _id: id,
     profilprincipal: createProfile(main),
     ...(partner ? { profilconjoint: createProfile(partner) } : {}),
     profilsenfants: adherent
@@ -86,7 +87,7 @@ export const sendLeadComparea = async (
     ...restdata,
     telephone: "+" + data.phone,
     gtmparams: gtmParams,
-    verified: true,
+    verified: verified,
   };
   const response = await fetch(
     `${env.NEXT_PUBLIC_APIV2_ROOT}/createleadcomparea`,
