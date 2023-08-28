@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { useTranslation } from "next-i18next";
+import { useEffect } from "react";
 import Button from "~/components/button/Button";
 import InputDate from "~/components/inputs/DatePicker";
 import Select from "~/components/inputs/Select";
@@ -25,6 +26,11 @@ const PersonalData = () => {
 
   const { t: tCommon } = useTranslation("common");
   const { t } = useTranslation("frontalier");
+
+  useEffect(() => {
+    //Scroll top
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex flex-col gap-8">
@@ -63,6 +69,7 @@ const PersonalData = () => {
                     }),
                   });
                 }}
+                autocomplete="given-name"
               />
               <TextInput
                 label={t("DATA_NOM_LABEL")}
@@ -82,6 +89,7 @@ const PersonalData = () => {
                     }),
                   });
                 }}
+                autocomplete="family-name"
               />
               <InputDate
                 value={p.dob || ""}

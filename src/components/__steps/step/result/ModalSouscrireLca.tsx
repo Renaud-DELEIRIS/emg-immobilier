@@ -51,6 +51,7 @@ const ModalSouscrireLca = ({ open, onClose, lca, adherent }: Props) => {
       );
       toast.success("Vos informations ont bien été reçus.");
     } catch (error: any) {
+      toast.error("Une erreur est survenue.");
     } finally {
       onClose();
     }

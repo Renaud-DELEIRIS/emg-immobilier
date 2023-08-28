@@ -1,7 +1,7 @@
 import { IconCheck, IconChevronDown } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { Trans, useTranslation } from "next-i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSolidLeaf } from "react-icons/bi";
 import { BsFillHeartPulseFill } from "react-icons/bs";
 import { CiPill } from "react-icons/ci";
@@ -15,15 +15,17 @@ import formatAmount from "~/utils/formatAmount";
 
 const Recapitulatif = () => {
   const lead = useFormStore((state) => state.data);
-  const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
   const pack = PackFrontalier.find(
     (p) => p.name === lead.selectedOfferFrontalier
   ) as (typeof PackFrontalier)[0];
   const price = pack ? pack.price : () => 0;
   const { t } = useTranslation("frontalier");
-  const { t: tCommon } = useTranslation("common");
   const adherent = lead.adherent[lead.selectedAdherent[0]!];
+  useEffect(() => {
+    //Scroll top
+    window.scrollTo(0, 0);
+  }, []);
 
   const prestations = [
     {

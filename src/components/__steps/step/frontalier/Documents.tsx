@@ -2,7 +2,7 @@ import { Dialog } from "@headlessui/react";
 import { IconCircleCheckFilled, IconInfoCircle } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { Trans, useTranslation } from "next-i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "~/components/button/Button";
 import AvsInput from "~/components/inputs/Avs";
 import FileInput from "~/components/inputs/FileInput";
@@ -42,6 +42,11 @@ const Documents = () => {
 
   const { mutateAsync: createPresignedUrl } =
     api.createPresignedUrl.useMutation();
+
+  useEffect(() => {
+    //Scroll top
+    window.scrollTo(0, 0);
+  }, []);
 
   const onPressLater = () => {
     setOpenCompleteLater(true);
@@ -164,6 +169,7 @@ const Documents = () => {
                 placeholder="P. ex. FR76XXXXXXXXXXXXXXXXXXXXXXX"
                 value={iban}
                 onChange={(value) => setIban(value)}
+                autocomplete="iban"
               />
               <p className="mt-2 text-sm text-gray-500">
                 <IconInfoCircle size={16} className="mr-2 inline-block" />

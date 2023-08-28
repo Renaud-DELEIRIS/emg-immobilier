@@ -90,9 +90,9 @@ const Result = () => {
             />
           </div>
         </div>
-        <div className="mx-auto mt-auto flex w-full max-w-[584px] flex-row items-center justify-center rounded-lg bg-neutral-200 p-px">
+        <div className="mx-auto mt-auto grid w-full max-w-[584px] grid-cols-2 rounded-lg bg-neutral-200 p-px">
           <button
-            className={`flex-1 rounded-lg py-4 font-bold ${
+            className={`h-full rounded-lg py-4 font-bold ${
               show === "lamal"
                 ? "bg-primary text-white"
                 : "bg-neutral-200 text-dark"
@@ -102,7 +102,7 @@ const Result = () => {
             {t("LAMAL")}
           </button>
           <button
-            className={`flex-1 rounded-lg py-4 font-bold ${
+            className={`h-full rounded-lg py-4 font-bold ${
               show === "lca"
                 ? "bg-primary text-white"
                 : "bg-neutral-200 text-dark "

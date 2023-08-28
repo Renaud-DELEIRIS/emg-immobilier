@@ -133,10 +133,10 @@ const ResultCardLca = ({
       >
         <div className="flex w-full flex-col items-center justify-center px-6 py-6 md:flex-row md:justify-between">
           <div className="flex flex-col items-center gap-2">
-            <div className="grid aspect-square max-w-[126px] place-items-center rounded-xl border border-neutral-100 p-1">
+            <div className="grid aspect-square h-full max-w-[126px] place-items-center rounded-xl border border-neutral-100 p-1">
               <img
                 src={`/images/${hash}.png`}
-                alt={"Icon de l'assurance Helsana"}
+                alt={"Icon de l'assurance " + info.nom}
               ></img>
             </div>
             <div className="flex items-center gap-1">

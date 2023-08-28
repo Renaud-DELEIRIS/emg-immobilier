@@ -20,8 +20,8 @@ const ResultFrontalier = () => {
     >
       <div className="flex flex-row items-center gap-2">
         <ReactSwitch
-          checked={monthlyPrice}
-          onChange={setMonthlyPrice}
+          checked={!monthlyPrice}
+          onChange={(e) => setMonthlyPrice(!e)}
           onColor="#00C49B"
           checkedIcon={false}
           uncheckedIcon={false}

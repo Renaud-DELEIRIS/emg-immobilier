@@ -25,6 +25,7 @@ const Info = ({ open }: { open: boolean }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>();
   const { t } = useTranslation("common");
+  const versionId = useFormStore((state) => state.versionId);
 
   const isValidEmail = (email: string) => {
     const res = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
@@ -50,7 +51,7 @@ const Info = ({ open }: { open: boolean }) => {
     }, 50);
 
     const gmtParams = getParamsUrl();
-    const idLead = await sendLeadComparea(lead, gmtParams);
+    const idLead = await sendLeadComparea(lead, gmtParams, versionId || "");
     changeLead({ ...lead, idLead: idLead });
     const res = await sendCodeSms(lead.phone);
     setResponseCode(res.code);
@@ -71,7 +72,7 @@ const Info = ({ open }: { open: boolean }) => {
 
     const gmtParams = getParamsUrl();
     // TODO Create lead frontaluer
-    await sendLeadComparea(lead, gmtParams, lead.idLead, true);
+    await sendLeadComparea(lead, gmtParams, versionId || "", lead.idLead, true);
     changeLead({ ...lead, verified: true });
     setLoading(false);
   };

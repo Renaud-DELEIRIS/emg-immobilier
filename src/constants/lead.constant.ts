@@ -69,6 +69,7 @@ export const schemaData = z.object({
   selectedOfferFrontalier: z.string().optional(),
   situation: z.enum(["frontalier", "future resident"]).optional(),
   verified: z.boolean(),
+  economieimpots: z.boolean().optional(),
   idLead: z.string().optional(),
 });
 

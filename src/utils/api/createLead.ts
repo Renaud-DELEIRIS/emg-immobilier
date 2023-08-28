@@ -6,6 +6,7 @@ import { getProfilId } from "../getProfilId";
 export const sendLeadComparea = async (
   data: schemaData,
   gtmParams: Record<string, string>,
+  versionId: string,
   id?: string,
   verified?: boolean
 ): Promise<string> => {
@@ -34,9 +35,11 @@ export const sendLeadComparea = async (
           value: "300",
         },
     couverture: {
-      key: p.couvertureAccident === "oui" ? 1 : 2,
+      key: p.couverture ? 1 : p.couvertureAccident === "oui" ? 1 : 2,
       value:
-        p.couvertureAccident === "oui"
+        p.couverture === true
+          ? "Avec couverture"
+          : p.couvertureAccident === "oui"
           ? "Avec couverture accident"
           : "Sans couverture accident",
     },
@@ -55,12 +58,12 @@ export const sendLeadComparea = async (
                       id: option.id,
                       label: option.label,
                       niveau: option.level,
-                      prestations: packOptionById(option.id)[option.level]!.map(
-                        (prestation) => ({
-                          label: prestation.label,
-                          status: prestation.status,
-                        })
-                      ),
+                      prestations: packOptionById(option.id)[
+                        option.level - 1
+                      ]!.map((prestation) => ({
+                        label: prestation.label,
+                        status: prestation.status,
+                      })),
                     })),
                   ],
                 }
@@ -78,13 +81,35 @@ export const sendLeadComparea = async (
         if (p.type === "child") return createProfile(p, index);
       })
       .filter((p) => !!p),
+    adherents: {
+      key:
+        restdata.for === "you"
+          ? 1
+          : restdata.for === "you and your partner"
+          ? 2
+          : restdata.for === "you and your kids"
+          ? 3
+          : 4,
+      value: restdata.for,
+    },
+    idtracking: versionId,
+    economieimpots: {
+      key: restdata.economieimpots ? 1 : 2,
+      value: restdata.economieimpots ? "Oui" : "Non",
+    },
     npa: restdata.npa,
     assuranceactuelle: restdata.actualInsurance,
-    nouveauresident: {
-      key: restdata.situation === "frontalier" ? 1 : 2,
-      value: restdata.situation,
-    },
-    ...restdata,
+    ...(restdata.situation
+      ? {
+          nouveauresident: {
+            key: restdata.situation === "frontalier" ? 1 : 2,
+            value: restdata.situation,
+          },
+        }
+      : {}),
+    email: restdata.email,
+    nom: restdata.nom,
+    prenom: restdata.prenom,
     telephone: "+" + data.phone,
     gtmparams: gtmParams,
     verified: verified,

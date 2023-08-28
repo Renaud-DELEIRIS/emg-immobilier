@@ -1,11 +1,11 @@
-import StepContainer from "../StepContainer";
-import TileInput from "~/components/inputs/Tile";
 import { IconThumbDown, IconThumbUp } from "@tabler/icons-react";
-import Button from "~/components/button/Button";
-import { motion } from "framer-motion";
 import dayjs from "dayjs";
+import { motion } from "framer-motion";
 import { Trans, useTranslation } from "next-i18next";
+import Button from "~/components/button/Button";
+import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
+import StepContainer from "../StepContainer";
 
 const Hours = () => {
   const lead = useFormStore((state) => state.data);

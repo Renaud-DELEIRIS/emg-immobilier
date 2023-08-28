@@ -39,6 +39,9 @@
 
   "STEP_ADHERENT_PROFIL_CHILD": "Nous allons maintenant établir le profil de votre enfant.",
   "STEP_ADHERENT_DOB_CHILD": "Quelle est l'année de naissance de votre enfant ?",
+  "STEP_ADHERENT_DOB_ERR_INVALID": "La date de naissance n'est pas valide.",
+  "STEP_ADHERENT_DOB_ERR_TOO_OLD": "Vous devez avoir moins de 100 ans.",
+  "STEP_ADHERENT_DOB_ERR_IN_FUTURE": "Cette date de naissance est dans le futur.",
   "STEP_ADHERENT_CIVILITY_CHILD": "Quelle est la civilité de votre enfant ?",
 
   "STEP_ADHERENT_PERFECT": "Parfait !",
@@ -94,6 +97,11 @@
   "STEP_NAME_TITLE": "Comment vous appelez-vous ?",
   "STEP_NAME_PLACEHOLDER_FIRSTNAME": "Prénom",
   "STEP_NAME_PLACEHOLDER_LASTNAME": "Nom",
+
+  "STEP_ECONOMIE_DESCRIPTION": "Je m’aperçois que dans votre situation, des économies d’impôts sont possibles.",
+  "STEP_ECONOMIE_TITLE": "Souhaitez vous bénéficier de conseils supplémentaires concernant vos impôts ?",
+  "STEP_ECONOMIE_YES": "Oui, je veux économiser !",
+  "STEP_ECONOMIE_NO": "Non merci",
 
   "STEP_VERIFY_ERROR": "Le code est incorrect",
   "STEP_VERIFY_TITLE_FRONTALIER": "Nous avons identifié pour <strong>vous</strong> les <span>7</span> meilleures offres <strong>frontalier</strong> adaptées à votre <strong>profil</strong>.<br/>Ces tarifs seront bloqués pour vous jusqu’au <span>{{date}}</span>",

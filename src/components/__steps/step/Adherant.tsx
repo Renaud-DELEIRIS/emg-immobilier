@@ -39,13 +39,22 @@ const Adherant = () => {
   const isValidDob = (dob: string) => {
     // Is valid date*
     if (!dayjs(dob, "YYYY").isValid()) {
-      return "La date de naissance n'est pas valide.";
+      return t("STEP_ADHERENT_DOB_ERR_INVALID");
     }
-    if (dayjs().diff(dayjs(dob, "YYYY"), "year") > 100) {
-      return "Vous devez avoir moins de 100 ans.";
+    const year = parseInt(dob);
+    if (isNaN(year)) {
+      return t("STEP_ADHERENT_DOB_ERR_INVALID");
     }
-    if (dob.length !== 4) {
-      return "La date de naissance n'est pas valide.";
+    const thisYear = dayjs().year();
+    if (thisYear - year > 100) {
+      return t("STEP_ADHERENT_DOB_ERR_TOO_OLD");
+    }
+
+    if (year > thisYear) {
+      return t("STEP_ADHERENT_DOB_ERR_IN_FUTURE");
+    }
+    if (dob.length > 4) {
+      return t("STEP_ADHERENT_DOB_ERR_INVALID");
     }
   };
 
@@ -230,7 +239,7 @@ const Adherant = () => {
               stepId="adherent"
             >
               <form
-                className="flex flex-row items-center gap-4"
+                className="flex flex-row items-start gap-4"
                 onSubmit={(e) => {
                   e.preventDefault();
                   setStep("civilite");
@@ -259,13 +268,19 @@ const Adherant = () => {
                   }}
                   wrapperClassName="mt-0.5 w-80"
                   widthFull={false}
+                  // Ifd more than 100 years old error
+                  error={
+                    adherent?.year === undefined || adherent.year.length <= 3
+                      ? undefined
+                      : isValidDob(adherent?.year || "")
+                  }
                   type="number"
                   placeholder="p. ex. 1985"
                 />
 
                 <Button
                   type="submit"
-                  className="w-28"
+                  className="mt-1.5 w-28"
                   size={"small"}
                   disabled={
                     !(

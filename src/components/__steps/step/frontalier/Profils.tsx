@@ -20,6 +20,11 @@ const Profils = () => {
   const { t: tCommon } = useTranslation("common");
 
   useEffect(() => {
+    //Scroll top
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (
       lead.adherent
         .filter((p) =>
@@ -48,7 +53,7 @@ const Profils = () => {
           <button
             key={index}
             className={
-              "group mt-2 flex flex-row items-center justify-between rounded-md bg-white px-8 py-4 transition-colors hover:border-primary hover:text-primary " +
+              "group mt-2 flex flex-row items-center justify-between rounded-md bg-white px-4 py-4 transition-colors hover:border-primary hover:text-primary md:px-8 " +
               (isSelected ? "border border-primary text-primary" : "border")
             }
             onClick={() => {
@@ -65,13 +70,13 @@ const Profils = () => {
               }
             }}
           >
-            <div className="flex flex-row items-center gap-2">
+            <div className="flex flex-row items-center gap-2 text-left">
               {p.type === "child" ? (
-                <FaChild size={28} className="mr-1" />
+                <FaChild size={28} className="mr-1 flex-shrink-0" />
               ) : p.civility === "man" ? (
-                <IoIosMan size={32} />
+                <IoIosMan size={32} className="mr-1 flex-shrink-0" />
               ) : (
-                <IoIosWoman size={32} />
+                <IoIosWoman size={32} className="mr-1 flex-shrink-0" />
               )}
               <span className="font-bold">
                 {p.type === "main"
@@ -108,7 +113,7 @@ const Profils = () => {
             </div>
             <div
               className={
-                "grid aspect-square w-6 place-items-center rounded-sm border transition-colors group-hover:border-primary " +
+                "ml-1 grid aspect-square w-6 place-items-center rounded-sm border transition-colors group-hover:border-primary " +
                 (isSelected ? "bg-primary text-white" : "")
               }
             >

@@ -14,12 +14,14 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
+import { toast } from "react-toastify";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
 import { STEPS } from "~/constants/step.constant";
 import { useFormStore } from "~/stores/form";
 import { useSessionStore } from "~/stores/session";
+import { recallResident } from "~/utils/api/recallResident";
 import getParamsUrl from "~/utils/client/getParamsUrl";
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
@@ -186,7 +188,15 @@ const Home: NextPage = () => {
                     value={lead.phone || ""}
                   />
                   <button
-                    onClick={() => changeLead({ phone: lead.phone })}
+                    onClick={() =>
+                      recallResident(
+                        lead.phone,
+                        "Recall ask at step " + activeStep.id
+                      ).then(() => {
+                        toast.success(t("BECALLED_SUCCESS"));
+                        setBeCalled(false);
+                      })
+                    }
                     className="flex items-center gap-1 text-base text-white"
                   >
                     <IconPhoneCall size={20} />

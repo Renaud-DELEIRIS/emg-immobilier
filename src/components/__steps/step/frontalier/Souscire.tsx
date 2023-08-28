@@ -2,7 +2,7 @@ import { IconInfoCircle } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import { useTranslation } from "next-i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "~/components/button/Button";
 import Tile from "~/components/button/Tile";
 import CompleteAddress from "~/components/inputs/AddressInput";
@@ -25,6 +25,10 @@ const Souscrire = () => {
 
   const { t } = useTranslation("frontalier");
   const { t: tCommon } = useTranslation("common");
+  useEffect(() => {
+    //Scroll top
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="mx-auto flex max-w-xl flex-col gap-6">

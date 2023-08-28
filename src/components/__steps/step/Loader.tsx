@@ -1,10 +1,5 @@
 import { useTranslation } from "next-i18next";
-import React, {
-  type CSSProperties,
-  type FC,
-  type ReactNode,
-  useEffect,
-} from "react";
+import { useEffect, type CSSProperties, type FC, type ReactNode } from "react";
 import Vivus from "vivus";
 import { useFormStore } from "~/stores/form";
 
@@ -19,6 +14,9 @@ const BigLoader2: FC<Props> = ({ children }) => {
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("common");
   useEffect(() => {
+    // Scroll top
+    window.scrollTo(0, 0);
+
     const myAnim = new Vivus("mySVG", {
       duration: drawDuration,
       start: "autostart",

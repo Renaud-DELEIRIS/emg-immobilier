@@ -142,7 +142,7 @@ const ResultCardFrontalier = ({
             <div className="grid aspect-square max-w-[126px] place-items-center rounded-xl border border-neutral-100 p-1">
               <img
                 src={`/images/${hash}.png`}
-                alt={"Icon de l'assurance"}
+                alt={"Icon de l'assurance " + name}
                 width={128}
                 height={128}
               ></img>

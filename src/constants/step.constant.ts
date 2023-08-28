@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { z } from "zod";
-import { schemaData } from "./lead.constant";
+import { Adherent, schemaData } from "./lead.constant";
 
 export interface Step {
   id: StepId;
@@ -21,6 +21,7 @@ export type StepId =
   | "work-hours"
   | "package"
   | "name"
+  | "economies"
   | "loader"
   | "result-frontalier"
   | "recap-frontalier"
@@ -199,6 +200,12 @@ export const STEPS: Step[] = [
   {
     id: "name",
     next: (lead) => {
+      const main = lead.adherent.find((a) => a.type === "main") as Adherent;
+      const age = dayjs(main.year || "", "YYYY").diff(dayjs(), "year") * -1;
+      console.log(age);
+      if (age >= 25 && age <= 50) {
+        return "economies";
+      }
       return "loader";
     },
     disabled: (lead) => {
@@ -211,6 +218,21 @@ export const STEPS: Step[] = [
     },
     previous: (lead) => {
       return "package";
+    },
+    stepInfo: (lead) => {
+      return [7, 8];
+    },
+  },
+  {
+    id: "economies",
+    next: (lead) => {
+      return "loader";
+    },
+    disabled: (lead) => {
+      return false;
+    },
+    previous: (lead) => {
+      return "name";
     },
     stepInfo: (lead) => {
       return [7, 8];

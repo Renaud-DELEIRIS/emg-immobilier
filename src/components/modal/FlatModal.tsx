@@ -26,7 +26,7 @@ const FlatModal = ({
           <div className="fixed inset-0 bg-black bg-opacity-25" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
+        <div className="fixed inset-0 overflow-y-auto bg-white">
           <div className="flex w-full items-center justify-center text-center">
             <Transition.Child
               as={Fragment}
@@ -37,7 +37,7 @@ const FlatModal = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative min-h-screen w-full transform bg-white p-1 text-left align-middle shadow-xl transition-all md:p-6">
+              <Dialog.Panel className="relative min-h-screen w-full transform bg-white p-1 text-left align-middle transition-all md:p-6">
                 <div className="mb-8 mt-4">
                   <button onClick={onClose}>
                     <IconX size={24} />

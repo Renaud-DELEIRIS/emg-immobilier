@@ -24,6 +24,11 @@ const Franchise = () => {
   const [step, setStep] = useState<"franchise" | "couverture">("franchise");
   const [showContinue, setShowContinue] = useState<boolean>(false);
   const { t } = useTranslation("common");
+  const [hasNeedCompleteChild] = useState<boolean>(
+    lead.adherent
+      .filter((data) => data.type === "child")
+      .filter((data) => data.franchise === undefined).length > 0
+  );
 
   const nextToEdit = () => {
     for (const adherent of lead.adherent) {
@@ -57,15 +62,18 @@ const Franchise = () => {
             ...lead.adherent.slice(next + 1),
           ],
         });
-        setIsEditing(next);
         setShowContinue(true);
+        setIsEditing(next);
         return;
       }
       setIsEditing(nextToEdit());
       if (isEditing !== next) setStep("franchise");
     } else {
       setShowContinue(true);
-      nextStep("franchise");
+      if (!hasNeedCompleteChild) {
+        console.log("nextStep");
+        nextStep("franchise");
+      }
       setIsEditing(undefined);
     }
   }, [lead, activeStep]);
@@ -368,6 +376,7 @@ const Franchise = () => {
                   value={adherant.couvertureAccident ?? "non"}
                   onChange={(value) => {
                     setStep("franchise");
+                    setIsEditing(undefined);
                     changeLead({
                       adherent: [
                         ...lead.adherent.slice(0, isEditing),

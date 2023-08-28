@@ -3,6 +3,7 @@ import { type ReactNode } from "react";
 import Adherant from "~/components/__steps/step/Adherant";
 import Assurance from "~/components/__steps/step/Assurance";
 import ChoosePack from "~/components/__steps/step/ChoosePack";
+import Economie from "~/components/__steps/step/Economie";
 import For from "~/components/__steps/step/For";
 import Franchise from "~/components/__steps/step/Franchise";
 import Hours from "~/components/__steps/step/Hours";
@@ -160,6 +161,17 @@ export const getStepComponent = (
           </div>
         </>
       );
+    case "economies":
+      childs.push(<Economie key={"economies"} />);
+      childs.push(
+        <div
+          className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
+          key={"title"}
+        >
+          Finalisation
+        </div>
+      );
+      break;
     case "name":
       childs.push(<Name key={"name"} />);
       childs.push(

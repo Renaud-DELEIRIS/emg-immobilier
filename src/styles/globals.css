@@ -133,7 +133,8 @@ body {
 }
 .becalled-btn.open {
   animation-play-state: paused;
-  transform: translate(-30px, -30px);
+  translate: -30px -30px;
+  scale: 1;
 }
 
 /* Remove arrow on input number */
