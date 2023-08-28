@@ -189,7 +189,7 @@ const Home: NextPage = () => {
                   />
                   <button
                     onClick={() =>
-                      recallResident(
+                      void recallResident(
                         lead.phone,
                         "Recall ask at step " + activeStep.id
                       ).then(() => {

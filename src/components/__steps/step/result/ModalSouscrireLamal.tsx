@@ -49,9 +49,9 @@ const ModalSouscrireLamal = ({ open, onClose, lamal, adherent }: Props) => {
           lead.idLead || ""
         }`
       );
-      toast.success("Vos informations ont bien été reçus.");
+      void toast.success("Vos informations ont bien été reçus.");
     } catch (error: any) {
-      toast.error("Une erreur est survenue.");
+      void toast.error("Une erreur est survenue.");
     } finally {
       onClose();
     }
