@@ -1,8 +1,8 @@
-import StepContainer from "../StepContainer";
+import { useTranslation } from "next-i18next";
 import AutoComplete from "~/components/inputs/Autocomplete";
 import localtion from "~/data/ch-locations.json";
-import { useTranslation } from "next-i18next";
 import { useFormStore } from "~/stores/form";
+import StepContainer from "../StepContainer";
 
 const Npa = () => {
   const lead = useFormStore((state) => state.data);
@@ -24,7 +24,7 @@ const Npa = () => {
           }
         }
         onChange={(value) => {
-          changeLead({ npa: value });
+          changeLead({ npa: value, situation: undefined });
           nextStep("npa", {
             ...lead,
             npa: value,

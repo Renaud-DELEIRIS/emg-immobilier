@@ -51,7 +51,12 @@ const Info = ({ open }: { open: boolean }) => {
     }, 50);
 
     const gmtParams = getParamsUrl();
-    const idLead = await sendLeadComparea(lead, gmtParams, versionId || "");
+    const idLead = await sendLeadComparea(
+      lead,
+      gmtParams,
+      versionId || "",
+      lead.idLead
+    );
     changeLead({ ...lead, idLead: idLead });
     const res = await sendCodeSms(lead.phone);
     setResponseCode(res.code);
