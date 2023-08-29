@@ -4,7 +4,7 @@ import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import ReactSwitch from "react-switch";
 import Select from "~/components/inputs/Select";
-import { Adherent } from "~/constants/lead.constant";
+import { type Adherent } from "~/constants/lead.constant";
 import { useFormStore } from "~/stores/form";
 import ResultLamal from "./ResultLamal";
 import ResultLca from "./ResultLca";
@@ -92,7 +92,7 @@ const Result = () => {
         </div>
         <div className="mx-auto mt-auto grid w-full max-w-[584px] grid-cols-2 rounded-lg bg-neutral-200 p-px">
           <button
-            className={`h-full rounded-lg py-4 font-bold ${
+            className={`h-full rounded-lg py-2 text-sm font-bold md:py-4 md:text-base ${
               show === "lamal"
                 ? "bg-primary text-white"
                 : "bg-neutral-200 text-dark"
@@ -102,7 +102,7 @@ const Result = () => {
             {t("LAMAL")}
           </button>
           <button
-            className={`h-full rounded-lg py-4 font-bold ${
+            className={`h-full rounded-lg py-2 text-sm font-bold md:py-4 md:text-base ${
               show === "lca"
                 ? "bg-primary text-white"
                 : "bg-neutral-200 text-dark "
@@ -113,6 +113,18 @@ const Result = () => {
           </button>
         </div>
       </div>
+      {lead.adherent.length > 1 && (
+        <Select
+          label={t("PROFIL_SELECT_LABEL")}
+          options={lead.adherent.map((adherent, index) => ({
+            label: textByIndex(adherent),
+            value: index.toString(),
+          }))}
+          value={profil.toString()}
+          onChange={(e) => setProfile(parseInt(e))}
+          wrapperClassName="sm:hidden w-full"
+        />
+      )}
       <div className="flex w-full max-w-6xl flex-col items-center justify-center gap-4">
         {loading ? (
           <div className="mt-12 grid w-full place-items-center">

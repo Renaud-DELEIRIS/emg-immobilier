@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { z } from "zod";
-import { Adherent, schemaData } from "./lead.constant";
+import { type Adherent, type schemaData } from "./lead.constant";
 
 export interface Step {
   id: StepId;
@@ -185,6 +185,9 @@ export const STEPS: Step[] = [
   {
     id: "package",
     next: (lead) => {
+      if (lead.verified && lead.nom && lead.prenom) {
+        return "loader";
+      }
       return "name";
     },
     disabled: (lead) => {
@@ -241,7 +244,9 @@ export const STEPS: Step[] = [
   {
     id: "loader",
     next: (lead) => {
-      return lead.situation == "frontalier" ? "result-frontalier" : "result";
+      return lead.situation == "frontalier" && lead.npa && lead.npa.key === -1
+        ? "result-frontalier"
+        : "result";
     },
     disabled: (lead) => {
       return false;

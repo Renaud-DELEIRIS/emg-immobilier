@@ -5,7 +5,7 @@ import { Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import Button from "~/components/button/Button";
 import FlatModal from "~/components/modal/FlatModal";
-import { Adherent } from "~/constants/lead.constant";
+import { type Adherent } from "~/constants/lead.constant";
 import { useFormStore } from "~/stores/form";
 import { type Lca } from "~/types/comparatif";
 import { recallResident } from "~/utils/api/recallResident";
@@ -107,7 +107,7 @@ const ModalComparatifTable = ({ open, onClose, offres, adherent }: Props) => {
                     />
                     <div className="flex flex-col items-center justify-between">
                       <span className="text-xl text-primary">
-                        <strong>{lca.prix} CHF</strong>
+                        <strong>{Math.round(lca.prix)} CHF</strong>
                       </span>
                       <span className="text-base font-extrabold">
                         {lca.nom}
