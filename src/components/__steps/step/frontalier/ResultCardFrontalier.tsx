@@ -5,9 +5,9 @@ import Button from "~/components/button/Button";
 import dayjs from "dayjs";
 import { useTranslation } from "next-i18next";
 import { toast } from "react-toastify";
-import { Adherent } from "~/constants/lead.constant";
+import { type Adherent } from "~/constants/lead.constant";
 import { useFormStore } from "~/stores/form";
-import { recallResident } from "~/utils/api/recallResident";
+import affectRappel from "~/utils/api/affectRappel";
 
 interface Props {
   adhrerent: Adherent;
@@ -103,7 +103,7 @@ const ResultCardFrontalier = ({
   ];
 
   const beCalled = () => {
-    void recallResident(lead.phone || "")
+    void affectRappel(lead.idLead || "")
       .then(() => {
         toast.success(tCommon("CALLED_SUCCESS"));
       })

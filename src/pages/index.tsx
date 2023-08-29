@@ -6,7 +6,7 @@ import {
   IconPhoneFilled,
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
-import { GetStaticProps, type NextPage } from "next";
+import { type GetStaticProps, type NextPage } from "next";
 import { useTranslation } from "next-i18next";
 import nextI18nextConfig from "next-i18next.config.mjs";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -191,7 +191,7 @@ const Home: NextPage = () => {
                     onClick={() =>
                       void recallResident(
                         lead.phone,
-                        "Recall ask at step " + activeStep.id
+                        "Recall asked at step " + activeStep.id
                       ).then(() => {
                         toast.success(t("BECALLED_SUCCESS"));
                         setBeCalled(false);

@@ -10,11 +10,11 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import Button from "~/components/button/Button";
 import Checkbox from "~/components/checkbox/Checkbox";
-import { Adherent } from "~/constants/lead.constant";
+import { type Adherent } from "~/constants/lead.constant";
 import insurance_hash from "~/data/ch-insurances-hash.json";
 import { useFormStore } from "~/stores/form";
 import { type Lca } from "~/types/comparatif";
-import { recallResident } from "~/utils/api/recallResident";
+import affectRappel from "~/utils/api/affectRappel";
 import ModalSouscrireLca from "./ModalSouscrireLca";
 
 interface Props {
@@ -104,7 +104,7 @@ const ResultCardLca = ({
   };
 
   const beCalled = () => {
-    void recallResident(lead.phone || "")
+    void affectRappel(lead.idLead || "")
       .then(() => {
         toast.success(t("BECALLED_SUCCESS"));
       })

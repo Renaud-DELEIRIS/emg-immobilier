@@ -5,10 +5,10 @@ import { Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import Button from "~/components/button/Button";
 import FlatModal from "~/components/modal/FlatModal";
-import { Adherent } from "~/constants/lead.constant";
+import { type Adherent } from "~/constants/lead.constant";
 import { useFormStore } from "~/stores/form";
 import { type Lca } from "~/types/comparatif";
-import { recallResident } from "~/utils/api/recallResident";
+import affectRappel from "~/utils/api/affectRappel";
 import ModalSouscrireLca from "./ModalSouscrireLca";
 
 interface Props {
@@ -79,7 +79,7 @@ const ModalComparatifTable = ({ open, onClose, offres, adherent }: Props) => {
   const lead = useFormStore((state) => state.data);
 
   const beCalled = () => {
-    void recallResident(lead.phone || "")
+    void affectRappel(lead.idLead || "")
       .then(() => {
         toast.success(t("BECALLED_SUCCESS"));
       })
