@@ -22,7 +22,8 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
       ? "besoins"
       : "finalisation";
 
-  const isFrontalier = lead.situation === "frontalier";
+  const isFrontalier =
+    lead.situation === "frontalier" && lead.npa && lead.npa.key === -1;
   const { t } = useTranslation("sidebar");
 
   return (
