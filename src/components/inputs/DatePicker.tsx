@@ -50,6 +50,19 @@ const InputDate: FC<IProps> = ({
     YYYY: useRef<HTMLInputElement | null>(null),
   };
   const onChangeDay = (e: ChangeEvent<HTMLInputElement>) => {
+    // If e value is not a number cancel
+    const val = e.target.value;
+    const nbVal = parseInt(val);
+    if (val) {
+      if (isNaN(nbVal)) {
+        return;
+      }
+
+      if (parseInt(val) > 31) {
+        return;
+      }
+    }
+
     const value = e.target.value.slice(0, 2);
     setDay(value);
     if (value.length === 2) {
@@ -64,6 +77,17 @@ const InputDate: FC<IProps> = ({
     }
   };
   const onChangeMonth = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    const nbVal = parseInt(val);
+    if (val) {
+      if (isNaN(nbVal)) {
+        return;
+      }
+
+      if (parseInt(val) > 12) {
+        return;
+      }
+    }
     const value = e.target.value.slice(0, 2);
     setMonth(value);
     if (value.length === 2) {
@@ -78,6 +102,13 @@ const InputDate: FC<IProps> = ({
     }
   };
   const onChangeYear = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    const nbVal = parseInt(val);
+    if (val) {
+      if (isNaN(nbVal)) {
+        return;
+      }
+    }
     const value = e.target.value.slice(0, 4);
     setYear(value);
     if (value.length === 2) {
@@ -95,6 +126,13 @@ const InputDate: FC<IProps> = ({
     e: KeyboardEvent<HTMLInputElement>,
     format: "DD" | "MM" | "YYYY"
   ) => {
+    // If key = deciaml or negative cancel
+
+    if (e.key === "Dot" || e.key === "Minus") {
+      e.preventDefault();
+      return;
+    }
+
     if (e.key === "Backspace") {
       const indexInput = arrFormat.indexOf(format);
       if (indexInput > 0) {
@@ -151,6 +189,7 @@ const InputDate: FC<IProps> = ({
                 min={1}
                 max={31}
                 ref={objectRef["DD"]}
+                step={1}
               />
             ) : m === "MM" ? (
               <input
@@ -167,6 +206,7 @@ const InputDate: FC<IProps> = ({
                 min={1}
                 max={12}
                 ref={objectRef["MM"]}
+                step={1}
               />
             ) : (
               <input
@@ -181,6 +221,7 @@ const InputDate: FC<IProps> = ({
                 inputMode="numeric"
                 placeholder="YYYY"
                 ref={objectRef["YYYY"]}
+                step={1}
               />
             )}
           </Fragment>
