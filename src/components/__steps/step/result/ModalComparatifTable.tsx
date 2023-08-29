@@ -107,7 +107,15 @@ const ModalComparatifTable = ({ open, onClose, offres, adherent }: Props) => {
                     />
                     <div className="flex flex-col items-center justify-between">
                       <span className="text-xl text-primary">
-                        <strong>{lca.prix} CHF</strong>
+                        <strong>
+                          {" "}
+                          {new Intl.NumberFormat("de-CH", {
+                            style: "currency",
+                            currency: "CHF",
+                            maximumFractionDigits: 0,
+                          }).format(lca.prix)}{" "}
+                          CHF
+                        </strong>
                       </span>
                       <span className="text-base font-extrabold">
                         {lca.nom}

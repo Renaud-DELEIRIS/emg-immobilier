@@ -132,7 +132,7 @@ const Info = ({ open }: { open: boolean }) => {
                               values={{
                                 date: dayjs()
                                   .add(1, "day")
-                                  .format("DD/MM/YYYY"),
+                                  .format("DD.MM.YYYY"),
                               }}
                               components={{
                                 span: (
@@ -147,7 +147,7 @@ const Info = ({ open }: { open: boolean }) => {
                               values={{
                                 date: dayjs()
                                   .add(1, "day")
-                                  .format("DD/MM/YYYY"),
+                                  .format("DD.MM.YYYY"),
                               }}
                               components={{
                                 span: (
