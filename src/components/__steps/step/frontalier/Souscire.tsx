@@ -14,13 +14,26 @@ const Souscrire = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
-  const [preDate, setPreDate] = useState<"ajd" | "demain" | "mois" | "autre">();
+  const [preDate, setPreDate] = useState<"mois" | "autre" | undefined>(
+    dayjs(lead.startInsurance, "YYYY-MM-DD").isValid()
+      ? dayjs(lead.startInsurance, "YYYY-MM-DD").isSame(
+          dayjs().add(1, "month").set("date", 1),
+          "day"
+        )
+        ? "mois"
+        : "autre"
+      : undefined
+  );
 
   const isValid =
     lead.selectedAdherent.length > 0 &&
     lead.address &&
     lead.address.length > 6 &&
     dayjs(lead.startInsurance, "YYYY-MM-DD").isValid() &&
+    // Date is in future
+    dayjs(lead.startInsurance, "YYYY-MM-DD").isAfter(
+      dayjs().subtract(1, "day")
+    ) &&
     preDate !== undefined;
 
   const { t } = useTranslation("frontalier");
