@@ -207,11 +207,10 @@ const Home: NextPage = () => {
 
       const fileName =
         adherent.type === "main"
-          ? "Pièce d'identité"
+          ? "pi-main"
           : adherent.type === "partner"
-          ? "Pièce d'identité conjoint"
-          : "Pièce d'identité enfant né en " +
-            (dayjs(adherent.dob).year().toString() || "");
+          ? "pi-partner"
+          : "pi-child-" + (dayjs(adherent.dob).year().toString() || "");
 
       if (pieceDidenditeFile.base64.startsWith("https://")) {
         files.push({

@@ -123,10 +123,10 @@ const Documents = () => {
 
       const fileName =
         adherent.type === "main"
-          ? "Pièce d'identité"
+          ? "pi-main"
           : adherent.type === "partner"
-          ? "Pièce d'identité conjoint"
-          : "Pièce d'identité enfant né en " + (adherent.year || "");
+          ? "pi-partner"
+          : "pi-child-" + (adherent.year || "");
 
       const { headers, url } = await createPresignedUrl({
         token: lead.idLead,
