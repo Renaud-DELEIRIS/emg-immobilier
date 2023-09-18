@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import Button from "~/components/button/Button";
 import TextInput from "~/components/inputs/TextInput";
 import TileInput from "~/components/inputs/Tile";
-import { Adherent } from "~/constants/lead.constant";
+import { type Adherent } from "~/constants/lead.constant";
 import { useFormStore } from "~/stores/form";
 import StepContainer from "../StepContainer";
 ``;
