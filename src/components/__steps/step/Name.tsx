@@ -27,21 +27,6 @@ const Name = () => {
       >
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <TextInput
-            value={lead.nom || ""}
-            onChange={(value) => {
-              changeLead({
-                nom: value,
-                adherent: lead.adherent.map((adherant) => {
-                  if (adherant.type === "main")
-                    return { ...adherant, nom: value };
-                  return adherant;
-                }),
-              });
-            }}
-            placeholder={t("STEP_NAME_PLACEHOLDER_LASTNAME")}
-            autocomplete="family-name"
-          ></TextInput>
-          <TextInput
             value={lead.prenom || ""}
             onChange={(value) => {
               changeLead({
@@ -55,7 +40,22 @@ const Name = () => {
             }}
             placeholder={t("STEP_NAME_PLACEHOLDER_FIRSTNAME")}
             autocomplete="given-name"
-          ></TextInput>
+          />
+          <TextInput
+            value={lead.nom || ""}
+            onChange={(value) => {
+              changeLead({
+                nom: value,
+                adherent: lead.adherent.map((adherant) => {
+                  if (adherant.type === "main")
+                    return { ...adherant, nom: value };
+                  return adherant;
+                }),
+              });
+            }}
+            placeholder={t("STEP_NAME_PLACEHOLDER_LASTNAME")}
+            autocomplete="family-name"
+          />
         </div>
         <div className="mt-4 flex w-full">
           <Button
