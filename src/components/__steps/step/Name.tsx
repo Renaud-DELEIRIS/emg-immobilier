@@ -1,8 +1,8 @@
-import StepContainer from "../StepContainer";
+import { Trans, useTranslation } from "next-i18next";
 import Button from "~/components/button/Button";
 import TextInput from "~/components/inputs/TextInput";
-import { Trans, useTranslation } from "next-i18next";
 import { useFormStore } from "~/stores/form";
+import StepContainer from "../StepContainer";
 
 const Name = () => {
   const lead = useFormStore((state) => state.data);
@@ -29,7 +29,14 @@ const Name = () => {
           <TextInput
             value={lead.nom || ""}
             onChange={(value) => {
-              changeLead({ nom: value });
+              changeLead({
+                nom: value,
+                adherent: lead.adherent.map((adherant) => {
+                  if (adherant.type === "main")
+                    return { ...adherant, nom: value };
+                  return adherant;
+                }),
+              });
             }}
             placeholder={t("STEP_NAME_PLACEHOLDER_LASTNAME")}
             autocomplete="family-name"
@@ -37,7 +44,14 @@ const Name = () => {
           <TextInput
             value={lead.prenom || ""}
             onChange={(value) => {
-              changeLead({ prenom: value });
+              changeLead({
+                prenom: value,
+                adherent: lead.adherent.map((adherant) => {
+                  if (adherant.type === "main")
+                    return { ...adherant, prenom: value };
+                  return adherant;
+                }),
+              });
             }}
             placeholder={t("STEP_NAME_PLACEHOLDER_FIRSTNAME")}
             autocomplete="given-name"
