@@ -24,9 +24,10 @@ const BigLoader2: FC<Props> = ({ children }) => {
     });
     myAnim.play();
 
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       nextStep("loader");
     }, 3000);
+    return () => clearTimeout(timer);
   }, []);
 
   return (

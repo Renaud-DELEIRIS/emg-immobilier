@@ -107,7 +107,7 @@ export const STEPS: Step[] = [
   {
     id: "work-hours",
     next: (lead) => {
-      return "loader";
+      return "name";
     },
     previous: (lead) => {
       return "situation";
@@ -203,9 +203,10 @@ export const STEPS: Step[] = [
   {
     id: "name",
     next: (lead) => {
+      if (lead.situation == "frontalier" && lead.npa && lead.npa.key === -1)
+        return "loader";
       const main = lead.adherent.find((a) => a.type === "main") as Adherent;
       const age = dayjs(main.year || "", "YYYY").diff(dayjs(), "year") * -1;
-      console.log(age);
       if (age >= 25 && age <= 50) {
         return "economies";
       }
@@ -220,7 +221,9 @@ export const STEPS: Step[] = [
       );
     },
     previous: (lead) => {
-      return "package";
+      return lead.situation == "frontalier" && lead.npa && lead.npa.key === -1
+        ? "work-hours"
+        : "package";
     },
     stepInfo: (lead) => {
       return [7, 8];
@@ -285,7 +288,7 @@ export const STEPS: Step[] = [
       return false;
     },
     previous: (lead) => {
-      return "work-hours";
+      return "name";
     },
     stepInfo: (lead) => {
       return [7, 11];
