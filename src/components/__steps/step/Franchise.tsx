@@ -71,12 +71,11 @@ const Franchise = () => {
     } else {
       setShowContinue(true);
       if (!hasNeedCompleteChild) {
-        console.log("nextStep");
         nextStep("franchise");
       }
       setIsEditing(undefined);
     }
-  }, [lead, activeStep]);
+  }, [lead]);
 
   const adherant =
     isEditing !== undefined ? lead.adherent[isEditing] : undefined;
