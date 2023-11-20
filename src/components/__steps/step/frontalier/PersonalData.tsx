@@ -21,7 +21,8 @@ const PersonalData = () => {
           p.prenom &&
           p.prenom.length > 1 &&
           p.dob &&
-          dayjs(p.dob).isValid()
+          dayjs(p.dob, "YYYY-MM-DD").isValid() &&
+          p.nationality
       ).length === lead.selectedAdherent.length;
 
   const { t: tCommon } = useTranslation("common");
