@@ -71,7 +71,7 @@ const Documents = () => {
       url: string;
     }[] = [];
     if (justificatifDomicile) {
-      const { headers, url } = await createPresignedUrl({
+      const { headers, url, key } = await createPresignedUrl({
         token: lead.idLead,
         filename: "Justificatif de domicile",
         contentType: base64MimeType(justificatifDomicile),
@@ -85,7 +85,7 @@ const Documents = () => {
         profilId: 1,
         type: "justificatif-domicile",
         name: "Justificatif de domicile",
-        url: url.split("?")[0]!,
+        url: key,
       });
     }
 
@@ -99,7 +99,7 @@ const Documents = () => {
           ? "Permis de travail conjoint"
           : "Permis de travail enfant né en " + (adherent.year || "");
 
-      const { headers, url } = await createPresignedUrl({
+      const { headers, url, key } = await createPresignedUrl({
         token: lead.idLead,
         filename: fileName,
         contentType: base64MimeType(permisTravailFile.base64),
@@ -113,7 +113,7 @@ const Documents = () => {
         profilId,
         type: "permis-travail",
         name: fileName,
-        url: url.split("?")[0]!,
+        url: key,
       });
     }
 
@@ -128,7 +128,7 @@ const Documents = () => {
           ? "pi-partner"
           : "pi-child-" + (adherent.year || "");
 
-      const { headers, url } = await createPresignedUrl({
+      const { headers, url, key } = await createPresignedUrl({
         token: lead.idLead,
         filename: fileName,
         contentType: base64MimeType(pieceDidenditeFile.base64),
@@ -142,7 +142,7 @@ const Documents = () => {
         profilId,
         type: "piece-idendite",
         name: fileName,
-        url: url.split("?")[0]!,
+        url: key,
       });
     }
     await sendDocuments({
