@@ -93,7 +93,7 @@ const Home: NextPage = () => {
       .then((d: HTTPData) => {
         setIban(d.iban);
         const justif = d.files.find((f) => f.type === "justificatif-domicile");
-        if (justif) setJustificatifDomicile(justif.url);
+        if (justif) setJustificatifDomicile("COMPAREA_FILE:" + justif.url);
         setAdherents(
           d.memberProfils
             .filter((p) => p.subscriber)
@@ -108,12 +108,18 @@ const Home: NextPage = () => {
         setPermisTravail(
           d.files
             .filter((f) => f.type === "permis-travail")
-            .map((f) => ({ profilIndex: f.profilId, base64: f.url }))
+            .map((f) => ({
+              profilIndex: f.profilId,
+              base64: "COMPAREA_FILE:" + f.url,
+            }))
         );
         setPieceDidendite(
           d.files
             .filter((f) => f.type === "piece-idendite")
-            .map((f) => ({ profilIndex: f.profilId, base64: f.url }))
+            .map((f) => ({
+              profilIndex: f.profilId,
+              base64: "COMPAREA_FILE:" + f.url,
+            }))
         );
         setLoaded(true);
       })
@@ -132,15 +138,15 @@ const Home: NextPage = () => {
       url: string;
     }[] = [];
     if (justificatifDomicile) {
-      if (justificatifDomicile.startsWith("https://")) {
+      if (justificatifDomicile.startsWith("COMPAREA_FILE:")) {
         files.push({
           profilId: 1,
           type: "justificatif-domicile",
           name: "Justificatif de domicile",
-          url: justificatifDomicile,
+          url: justificatifDomicile.split(":")[1] || "",
         });
       } else {
-        const { url, headers } = await createPresignedUrl({
+        const { url, headers, key } = await createPresignedUrl({
           token: leadId,
           filename: "Justificatif de domicile",
           contentType: base64MimeType(justificatifDomicile),
@@ -154,7 +160,7 @@ const Home: NextPage = () => {
           profilId: 1,
           type: "justificatif-domicile",
           name: "Justificatif de domicile",
-          url: url.split("?")[0]!,
+          url: key,
         });
       }
     }
@@ -172,15 +178,15 @@ const Home: NextPage = () => {
           : "Permis de travail enfant né en " +
             (dayjs(adherent.dob).year().toString() || "");
 
-      if (permisTravailFile.base64.startsWith("https://")) {
+      if (permisTravailFile.base64.startsWith("COMPAREA_FILE:")) {
         files.push({
           profilId: adherent.id,
           type: "permis-travail",
           name: fileName,
-          url: permisTravailFile.base64,
+          url: permisTravailFile.base64.split(":")[1] || "",
         });
       } else {
-        const { url, headers } = await createPresignedUrl({
+        const { url, headers, key } = await createPresignedUrl({
           token: leadId,
           filename: fileName,
           contentType: base64MimeType(permisTravailFile.base64),
@@ -194,7 +200,7 @@ const Home: NextPage = () => {
           profilId: adherent.id,
           type: "permis-travail",
           name: fileName,
-          url: url.split("?")[0]!,
+          url: key,
         });
       }
     }
@@ -212,15 +218,15 @@ const Home: NextPage = () => {
           ? "pi-partner"
           : "pi-child-" + (dayjs(adherent.dob).year().toString() || "");
 
-      if (pieceDidenditeFile.base64.startsWith("https://")) {
+      if (pieceDidenditeFile.base64.startsWith("COMPAREA_FILE:")) {
         files.push({
           profilId: adherent.id,
           type: "piece-idendite",
           name: fileName,
-          url: pieceDidenditeFile.base64,
+          url: pieceDidenditeFile.base64.split(":")[1] || "",
         });
       } else {
-        const { url, headers } = await createPresignedUrl({
+        const { url, headers, key } = await createPresignedUrl({
           token: leadId,
           filename: fileName,
           contentType: base64MimeType(pieceDidenditeFile.base64),
@@ -234,7 +240,7 @@ const Home: NextPage = () => {
           profilId: adherent.id,
           type: "piece-idendite",
           name: fileName,
-          url: url.split("?")[0]!,
+          url: key,
         });
       }
       setDocumentsSent(true);
@@ -252,8 +258,6 @@ const Home: NextPage = () => {
       }),
     });
   };
-
-  console.log(justificatifDomicile);
 
   return (
     <>
