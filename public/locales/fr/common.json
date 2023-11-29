@@ -176,5 +176,11 @@
   "CARD_SUBSCRIBE_ONLINE": "Souscrire en ligne",
   "CARD_BECALLED": "Être rappelé",
   "CARD_PRESTATION": "Prestations",
-  "CARD_DETAILS": "Détails"
+  "CARD_DETAILS": "Détails",
+
+  "LOADING_TITLE": "Chargement de vos résultats...",
+  "LOADING_STEP_1": "Analyse de votre situation",
+  "LOADING_STEP_2": "Calcul des garanties nécessaires",
+  "LOADING_STEP_3": "Comparaison des couvertures",
+  "LOADING_STEP_4": "Préparation de votre proposition"
 }
