@@ -83,7 +83,7 @@ const Loading: FC = () => {
                 </motion.span>
                 <div className="flex items-center gap-1.5 md:gap-2.5">
                   <motion.div
-                    className="relative h-[3.5px] w-32 rounded-md bg-neutral-600 md:h-1.5 md:w-[212px]"
+                    className="relative h-[3.5px] w-32 rounded-md bg-grey-200 md:h-1.5 md:w-[212px]"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{
@@ -92,7 +92,7 @@ const Loading: FC = () => {
                     }}
                   >
                     <motion.div
-                      className="bg-green absolute h-full w-0 rounded-md"
+                      className="absolute h-full w-0 rounded-md bg-green"
                       initial={{ width: 0 }}
                       animate={{ width: "100%" }}
                       transition={{
