@@ -6,7 +6,7 @@ import {
 import dayjs from "dayjs";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
-import { Adherent, Pack } from "~/constants/lead.constant";
+import { Adherent, type Pack } from "~/constants/lead.constant";
 import {
   packById,
   prestationsConfort,
@@ -31,7 +31,7 @@ const Pack = ({
   showNext,
 }: {
   adherent: Adherent;
-  setPack: (pack: Pack) => void;
+  setPack: (pack?: Pack) => void;
   setAdherent: (adherent: number) => void;
   adherentIndex: number;
   showNext?: boolean;
@@ -98,16 +98,20 @@ const Pack = ({
   }, []);
 
   useEffect(() => {
-    setPack({
-      id: selected as number,
-      principal: packById(selected as number),
-      options,
-    });
+    setPack(
+      selected
+        ? {
+            id: selected,
+            principal: packById(selected),
+            options,
+          }
+        : undefined
+    );
   }, [options, selected]);
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col items-center gap-8 md:flex-row md:gap-8">
+      <div className="flex flex-col items-start gap-4 md:flex-row md:gap-8">
         <PackShowOption
           prestation={[prestationsEssentials]}
           defaultLevel={1}
@@ -153,7 +157,7 @@ const Pack = ({
         >
           <div
             className={`${
-              optionExpanded ? "mt-8" : ""
+              optionExpanded ? "mt-8 p-1" : ""
             } grid grid-cols-1 gap-8 overflow-hidden md:grid-cols-2`}
           >
             <PackShowOption
@@ -381,7 +385,7 @@ const Pack = ({
           </div>
         </div>
       </div>
-      <div className="mt-8 flex gap-8">
+      <div className="mt-8 flex justify-between gap-8">
         <button
           className="flex w-fit items-center gap-2 rounded-lg border border-red-500 bg-white p-2 text-lg font-bold text-red-500 hover:bg-red-100"
           onClick={() => {

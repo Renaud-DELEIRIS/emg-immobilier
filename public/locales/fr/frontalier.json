@@ -28,7 +28,8 @@
   "PRESTATION_CURES_BALNEAIRES_LABEL": "Cures balnéaires",
   "PRESTATION_CURES_BALNEAIRES_VALUE": "Helsana rembourse 10 francs par jour pour des cures balnéaires dans un établissement balnéaire reconnu en Suisse.",
 
-  "RESULT_TITLE": "Merci !<br />Grâce à ces informations, je suis parvenu à trouver à trouver la meilleur offre pour vous et votre famille.",
+  "RESULT_TITLE": "Merci {{name}} !<br />Grâce à ces informations, je suis parvenu à trouver à trouver la meilleur offre pour vous et votre famille.",
+  "RESULT_TITLE_SOLO": "Merci {{name}} !<br />Grâce à ces informations, je suis parvenu à trouver à trouver la meilleur offre pour vous.",
   "RESULT_YEAR_SWITCH": "Afficher le prix à l'année (1% de rabais)",
   "RESULT_TITLE_MAIN": "Pour vous",
   "RESULT_TITLE_SPOUSE_FEMALE": "Pour votre conjointe",

@@ -217,7 +217,11 @@ export const getStepComponent = (
   }
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-8 px-4 md:gap-12">
+    <div
+      className={`mx-auto flex ${
+        stepId === "result-frontalier" ? "max-w-4xl" : "max-w-[47rem]"
+      } flex-col gap-8 px-4 md:gap-12`}
+    >
       {childs.reverse()}
     </div>
   );

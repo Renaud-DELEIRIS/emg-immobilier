@@ -129,7 +129,7 @@ const Home: NextPage = () => {
             <Header />
             <div
               className={
-                "becalled-btn container-shadow fixed bottom-4 right-4 z-20 gap-1  bg-primary p-2 font-bold text-white " +
+                "becalled-btn container-shadow fixed bottom-4 right-4 z-20 gap-1  bg-primary p-2 font-normal text-white " +
                 (beCalled
                   ? "open rounded-2xl p-4"
                   : "w-10 rounded-[50px] md:w-auto")

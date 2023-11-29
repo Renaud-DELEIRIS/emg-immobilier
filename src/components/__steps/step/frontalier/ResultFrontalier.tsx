@@ -12,9 +12,20 @@ const ResultFrontalier = () => {
   const lead = useFormStore((state) => state.data);
   const [monthlyPrice, setMonthlyPrice] = useState<boolean>(true);
   const { t } = useTranslation("frontalier");
+
   return (
     <StepContainer
-      description={<Trans i18nKey="RESULT_TITLE" t={t} />}
+      description={
+        <Trans
+          i18nKey={
+            lead.adherent.length === 1 ? "RESULT_TITLE_SOLO" : "RESULT_TITLE"
+          }
+          t={t}
+          values={{
+            name: lead.adherent[0]!.prenom,
+          }}
+        />
+      }
       title="Sélectionnez l'offre à laquelle souscrire :"
       stepId="result-frontalier"
     >

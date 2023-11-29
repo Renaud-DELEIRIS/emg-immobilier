@@ -166,7 +166,7 @@ const ResultCardFrontalier = ({
               </span>
             </span>
             {withDetails && (
-              <span className="text-lg font-semibold text-neutral-500">
+              <span className="text-lg font-normal text-neutral-500">
                 {t(name)}
               </span>
             )}
