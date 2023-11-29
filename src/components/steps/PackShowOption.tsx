@@ -41,7 +41,11 @@ const PackShowOption = ({
           </span>
         </div>
       )}
-      <h3 className="flex w-full items-center justify-between rounded-t-md bg-[rgb(0,196,155)]/40 pb-4 pt-4 text-lg font-bold text-dark [&>*]:flex-1">
+      <h3
+        className={`flex w-full items-center justify-between rounded-t-md ${
+          selected ? "bg-[rgb(0,196,155)]/40" : "bg-[#8080804a]"
+        } pb-4 pt-4 text-lg font-bold text-dark [&>*]:flex-1`}
+      >
         <div />
         {t(pack)}
         <div className="mr-2 flex w-full justify-end">
