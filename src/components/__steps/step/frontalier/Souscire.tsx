@@ -44,7 +44,7 @@ const Souscrire = () => {
   }, []);
 
   return (
-    <div className="mx-auto flex max-w-xl flex-col gap-6">
+    <div className="mx-auto flex w-full flex-col gap-6">
       <div className="flex flex-col gap-2">
         <label className="font-bold">{t("SOUSCRIRE_LABEL_START")}</label>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

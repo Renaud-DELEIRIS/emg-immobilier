@@ -113,6 +113,9 @@ const Home: NextPage = () => {
     };
   }, []);
 
+  const isFrontalier =
+    lead.situation === "frontalier" && lead.npa && lead.npa.key === -1;
+
   return (
     <>
       <Head>
@@ -208,19 +211,21 @@ const Home: NextPage = () => {
             <div className="mx-auto w-full flex-1 pb-36 pt-12 md:pt-0">
               {getStepComponent()}
             </div>
-            {activeStep.id !== "loader" && activeStep.id !== "result" && (
-              <>
-                <div className="fixed right-0 top-1/3 z-10  hidden items-center xl:block 2xl:right-[5%]">
-                  <Sidebar />
-                </div>
-                <button
-                  className="fixed bottom-16 right-4 z-20 gap-1 rounded-2xl bg-primary p-2 font-bold text-white xl:hidden"
-                  onClick={() => setOpenSide(!openSide)}
-                >
-                  <IconMenu2 size={20} className="mx-auto md:mx-0" />
-                </button>
-              </>
-            )}
+            {activeStep.id !== "loader" &&
+              activeStep.id !== "result" &&
+              !isFrontalier && (
+                <>
+                  <div className="fixed right-0 top-1/3 z-10  hidden items-center xl:block 2xl:right-[5%]">
+                    <Sidebar />
+                  </div>
+                  <button
+                    className="fixed bottom-16 right-4 z-20 gap-1 rounded-2xl bg-primary p-2 font-bold text-white xl:hidden"
+                    onClick={() => setOpenSide(!openSide)}
+                  >
+                    <IconMenu2 size={20} className="mx-auto md:mx-0" />
+                  </button>
+                </>
+              )}
             <Footer />
           </>
         )}
