@@ -30,6 +30,10 @@ const Franchise = () => {
       .filter((data) => data.franchise === undefined).length > 0
   );
 
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
+
   const nextToEdit = () => {
     for (const adherent of lead.adherent) {
       if (

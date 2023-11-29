@@ -111,7 +111,7 @@ const Pack = ({
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col items-start gap-4 md:flex-row md:gap-8">
+      <div className="flex flex-col items-start gap-4 md:flex-row">
         <PackShowOption
           prestation={[prestationsEssentials]}
           defaultLevel={1}
