@@ -144,13 +144,7 @@ const Loading: FC = () => {
             }}
             className="mt-20 flex justify-center md:mt-40"
           >
-            <Image
-              width={216}
-              height={124}
-              src="/icons/trust.svg"
-              alt="image 1"
-              className="mx-auto"
-            />
+
           </motion.div>
         </motion.div>
       )}
