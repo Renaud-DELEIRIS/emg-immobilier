@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import { toast } from "react-toastify";
+import { useWindowSize } from "react-use";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
@@ -112,6 +113,48 @@ const Home: NextPage = () => {
       window.removeEventListener("beforeunload", beforeUnload);
     };
   }, []);
+
+  const { width } = useWindowSize();
+  const isMobile = width < 768;
+
+  const removeStyleStep = () => {
+    const steps = document.querySelector("#step-container");
+
+    // Clear style of all steps
+    const stepsChildren = steps?.children;
+    if (stepsChildren) {
+      for (let i = 0; i < stepsChildren.length; i++) {
+        const step = stepsChildren[i];
+        step!.removeAttribute("style");
+      }
+    }
+  };
+
+  const resizeLastStepMobile = () => {
+    const steps = document.querySelector("#step-container");
+    const stepsChildren = steps?.children;
+    if (stepsChildren) {
+      const lastStep = stepsChildren[stepsChildren.length - 1];
+
+      if (lastStep) {
+        const height =
+          window.innerHeight -
+          64 -
+          144 +
+          (currentVisibleStep.id === "adherent" ? 180 : 0);
+        (lastStep as HTMLElement).style.minHeight = height + "px";
+      }
+    }
+  };
+
+  useEffect(() => {
+    removeStyleStep();
+    if (isMobile) {
+      setTimeout(() => {
+        resizeLastStepMobile();
+      }, 50);
+    }
+  }, [isMobile, currentStep, currentVisibleStep, lead]);
 
   const isFrontalier =
     lead.situation === "frontalier" && lead.npa && lead.npa.key === -1;

@@ -109,7 +109,7 @@ const Adherant = () => {
   }, [lead, activeStep]);
 
   return (
-    <div>
+    <>
       {lead.adherent.length > 0 && (
         <div className="mb-8">
           <h3 className="text-xl text-dark">{t("STEP_ADHERENT_LIST_TITLE")}</h3>
@@ -371,7 +371,7 @@ const Adherant = () => {
           )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 
