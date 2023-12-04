@@ -126,7 +126,7 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.svg" />
       </Head>
-      <main className="relative flex min-h-screen flex-col pt-16">
+      <main className="min-h-screen-d relative flex flex-col pt-16">
         {currentVisibleStep && !!currentVisibleStep.stepInfo && loaded && (
           <>
             <Header />
@@ -226,7 +226,9 @@ const Home: NextPage = () => {
                   </button>
                 </>
               )}
-            <Footer />
+            <div className="hidden md:block">
+              <Footer />
+            </div>
           </>
         )}
         <Transition appear show={openSide} as={Fragment}>
@@ -271,6 +273,9 @@ const Home: NextPage = () => {
           </Dialog>
         </Transition>
       </main>
+      <div className="md:hidden">
+        <Footer />
+      </div>
     </>
   );
 };

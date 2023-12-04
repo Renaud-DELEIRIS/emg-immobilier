@@ -11,6 +11,10 @@ body {
     rgba(28, 109, 241, 0) 50vh
   );
 }
+.min-h-screen-d {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
 
 @tailwind base;
 @tailwind components;

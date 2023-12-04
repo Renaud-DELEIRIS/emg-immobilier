@@ -32,6 +32,7 @@ const Loading: FC = () => {
   const nextStep = useFormStore((state) => state.nextStep);
 
   useEffect(() => {
+    scrollTo(0, 0);
     const time = setTimeout(() => {
       nextStep("loader");
     }, TOTAL_TIME * 1000 * loadingSteps.length + REDIRECT_AFTER_TIMEOUT * 1000 + TEXT_INIT_DELAY * 1000);
