@@ -142,7 +142,7 @@ const Home: NextPage = () => {
           64 -
           144 +
           (currentVisibleStep.id === "adherent" ? 180 : 0);
-        (lastStep as HTMLElement).style.minHeight = height + "px";
+        (lastStep as HTMLElement).style.minHeight = height.toString() + "px";
       }
     }
   };
