@@ -167,6 +167,7 @@ const Home: NextPage = () => {
           name="description"
           content="Comparea.ch - Comparateur de Bases et de Complémentaires"
         />
+        <meta name="robots" content="noindex,nofollow" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
       <main className="min-h-screen-d relative flex flex-col pt-16">
