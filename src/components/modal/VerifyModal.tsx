@@ -1,3 +1,4 @@
+import { useGTMDispatch } from "@elgorditosalsero/react-gtm-hook";
 import { Dialog, Transition } from "@headlessui/react";
 import { IconMail } from "@tabler/icons-react";
 import dayjs from "dayjs";
@@ -26,7 +27,7 @@ const Info = ({ open }: { open: boolean }) => {
   const [error, setError] = useState<string>();
   const { t } = useTranslation("common");
   const versionId = useFormStore((state) => state.versionId);
-
+  const gtmDispatch = useGTMDispatch();
   const isValidEmail = (email: string) => {
     const res = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
     return res;
@@ -57,6 +58,7 @@ const Info = ({ open }: { open: boolean }) => {
       versionId || "",
       lead.idLead
     );
+    gtmDispatch({ event: "leadOk" });
     changeLead({ ...lead, idLead: idLead });
     const res = await sendCodeSms(lead.phone);
     setResponseCode(res.code);
