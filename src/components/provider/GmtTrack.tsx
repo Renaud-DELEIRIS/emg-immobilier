@@ -26,7 +26,7 @@ export function GtmTrackProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const data = sessionStorage.get();
     if (data) {
-      const parsedData = JSON.parse(data);
+      const parsedData = JSON.parse(data) as Record<string, string>;
       if (parsedData) setParams((p) => ({ ...p, ...parsedData }));
     }
     const query = getQueryFromUrl(router.asPath);
