@@ -1,12 +1,11 @@
-import { useState } from "react";
-import StepContainer from "../StepContainer";
+import { useTranslation } from "next-i18next";
+import { EmgAdulte } from "~/components/icon/EmgAdulte";
+import { EmgAdulteEnfant } from "~/components/icon/EmgAdulteEnfant";
+import { EmgCouple } from "~/components/icon/EmgCouple";
+import { EmgCoupleEnfant } from "~/components/icon/EmgCoupleEnfant";
 import TileInput from "~/components/inputs/Tile";
-import { EmgAdulte } from "~/icons/EmgAdulte";
-import { EmgCouple } from "~/icons/EmgCouple";
-import { EmgAdulteEnfant } from "~/icons/EmgAdulteEnfant";
-import { EmgCoupleEnfant } from "~/icons/EmgCoupleEnfant";
-import { useTranslation, Trans } from "next-i18next";
 import { useFormStore } from "~/stores/form";
+import StepContainer from "../StepContainer";
 
 const For = () => {
   const lead = useFormStore((state) => state.data);
@@ -14,15 +13,7 @@ const For = () => {
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("common");
   return (
-    <StepContainer
-      title={t("STEP_FOR_TITLE")}
-      description={
-        <span>
-          <Trans t={t} i18nKey="STEP_FOR_DESCRIPTION" />
-        </span>
-      }
-      stepId="for-who"
-    >
+    <StepContainer title={t("STEP_FOR_TITLE")} stepId="for-who">
       <TileInput
         value={lead.for}
         onChange={(value) => {
@@ -33,25 +24,24 @@ const For = () => {
           {
             value: "you",
             label: t("STEP_FOR_YOURSELF"),
-            icon: <EmgAdulte />,
+            icon: <EmgAdulte size={38} />,
           },
           {
             value: "you and your partner",
             label: t("STEP_FOR_SPOUSE"),
-            icon: <EmgCouple />,
+            icon: <EmgCouple size={38} />,
           },
           {
             value: "you and your kids",
             label: t("STEP_FOR_CHILD"),
-            icon: <EmgAdulteEnfant />,
+            icon: <EmgAdulteEnfant size={38} />,
           },
           {
             value: "you, your partner and your kids",
             label: t("STEP_FOR_FAMILY"),
-            icon: <EmgCoupleEnfant />,
+            icon: <EmgCoupleEnfant size={38} />,
           },
         ]}
-        className="grid grid-cols-2 gap-4"
       ></TileInput>
     </StepContainer>
   );

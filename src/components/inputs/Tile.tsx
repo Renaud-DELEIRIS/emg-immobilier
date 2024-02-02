@@ -1,63 +1,65 @@
-import { IconCircleCheckFilled } from "@tabler/icons-react";
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 interface Props {
-  value?: string;
-  onChange: (value: string) => void;
+  value: string | string[] | undefined | boolean;
+  onChange: (value: string | string[] | boolean) => void;
   options: {
-    value: string;
+    value: string | boolean;
     label: string;
     icon?: React.ReactElement;
-    rightIcon?: React.ReactElement;
   }[];
   className?: string;
+  multiple?: boolean;
 }
 
-const TileInput = ({ value, onChange, options, className = "" }: Props) => {
-  const hasIcon = options.some((option) => option.icon);
+const TileInput = ({
+  value,
+  onChange,
+  options,
+  className = "",
+  multiple,
+}: Props) => {
+  const handleChange = (value: string | boolean) => {
+    if (multiple && typeof value === "string") {
+      if (Array.isArray(value)) {
+        onChange(value);
+      } else {
+        onChange([...(value as unknown as string[])]);
+      }
+    } else {
+      onChange(value);
+    }
+  };
+
+  const isSelected = (option: string | boolean) => {
+    if (multiple && typeof option === "string") {
+      return (value as string[]).includes(option);
+    }
+    return value === option;
+  };
+
   return (
-    <div className={`flex items-center ${className}`}>
-      {options.map((option) =>
-        hasIcon ? (
-          <button
-            key={option.value}
-            className={`flex h-full w-full flex-col items-center justify-center gap-4 rounded-lg border-2 bg-white px-2 py-8 ${
-              value === option.value
-                ? "border-primary text-primary"
-                : "text-neutral-700 hover:border-primary hover:text-primary"
-            } hover:border-primary`}
-            onClick={() => onChange(option.value)}
-          >
-            {option.icon}
-            <span className="text-base ">{option.label}</span>
-            <div className="relative grid h-6 w-6 place-items-center rounded-full border-2">
-              {value === option.value && (
-                <IconCircleCheckFilled className="absolute h-7 w-7" />
-              )}
-            </div>
-          </button>
-        ) : (
-          <button
-            key={option.value}
-            className={`flex w-full items-center gap-4 rounded-md bg-white p-3 ${
-              value === option.value
-                ? "border-primary text-primary"
-                : "border-neutral-300 text-neutral-700"
-            } border hover:border-primary`}
-            onClick={() => onChange(option.value)}
-          >
-            <div className="relative grid h-4 w-4 place-items-center rounded-full border border-neutral-300">
-              {value === option.value && (
-                <IconCircleCheckFilled className="absolute h-5 w-5" />
-              )}
-            </div>
-            <span className="text-base">{option.label}</span>
-            {option.rightIcon && (
-              <div className="ml-auto">{option.rightIcon}</div>
+    <div className={twMerge(`flex w-full flex-col gap-[18px]`, className)}>
+      {options.map((option) => (
+        <button
+          key={option.value.toString()}
+          className={twMerge(
+            `group flex h-[68px] w-full items-center gap-[10px] rounded-xl border-[1.5px] border-[#8888941A] bg-white px-[20px] text-left shadow-[0px_0px_20px_0px_rgba(8,38,35,0.05)] transition-all duration-200 ease-in-out hover:border-primary hover:shadow-[0px_0px_20px_0px_rgba(8,38,35,0.1)]`,
+            isSelected(option.value) && "border-primary bg-[#0CBCB014]"
+          )}
+          onClick={() => handleChange(option.value)}
+        >
+          <div className="shrink-0">{option.icon}</div>
+          <div
+            className={twMerge(
+              "h-6 w-6 shrink-0 rounded-full border-2 border-[#8888944D] bg-white transition-all duration-200 ease-in-out group-hover:border-primary",
+              isSelected(option.value) && "border-[8px] border-primary"
             )}
-          </button>
-        )
-      )}
+          />
+          <span className="text-[16px] font-medium">{option.label}</span>
+        </button>
+      ))}
     </div>
   );
 };

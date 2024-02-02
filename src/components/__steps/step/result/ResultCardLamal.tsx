@@ -2,7 +2,7 @@ import { IconChevronDown, IconCircleCheckFilled } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import Button from "~/components/button/Button";
+import { Button } from "~/components/button/Button";
 import { Adherent } from "~/constants/lead.constant";
 import insurance_hash from "~/data/ch-insurances-hash.json";
 import { useFormStore } from "~/stores/form";
@@ -55,7 +55,7 @@ const ResultCardLamal = ({
   return (
     <div className={" compare-shadow flex flex-col  " + className}>
       {recommended && (
-        <div className="flex items-center gap-2 rounded-t-lg border border-primary bg-primary-700/20 px-2 py-2 pb-1 text-sm font-semibold text-primary-600">
+        <div className="bg-primary-700/20 text-primary-600 flex items-center gap-2 rounded-t-lg border border-primary px-2 py-2 pb-1 text-sm font-semibold">
           <IconCircleCheckFilled size={24} />
           <span>{t("CARD_RECOMMENDED")}</span>
         </div>
@@ -103,12 +103,8 @@ const ResultCardLamal = ({
             )}
           </div>
           <div className="mt-4 flex w-full flex-col gap-4 md:mt-0 md:max-w-[340px]">
-            <Button widthFull onClick={beCalled}>
-              {t("BE_CALLED_BACK")}
-            </Button>
-            <Button widthFull intent={"outline"} onClick={onSubscribe}>
-              {t("SUBSCRIBE")}
-            </Button>
+            <Button onClick={beCalled}>{t("BE_CALLED_BACK")}</Button>
+            <Button onClick={onSubscribe}>{t("SUBSCRIBE")}</Button>
           </div>
         </div>
         <div

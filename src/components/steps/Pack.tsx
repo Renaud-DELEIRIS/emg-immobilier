@@ -1,8 +1,4 @@
-import {
-  IconArrowRight,
-  IconCheck,
-  IconCircleCaretDown,
-} from "@tabler/icons-react";
+import { IconCheck, IconCircleCaretDown } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
@@ -20,7 +16,7 @@ import {
   optionTraitementsDentaires,
 } from "~/data/PackOption";
 import { useFormStore } from "~/stores/form";
-import Button from "../button/Button";
+import { Button } from "../button/Button";
 import PackShowOption from "./PackShowOption";
 
 const Pack = ({
@@ -421,7 +417,6 @@ const Pack = ({
                 }
               }, 100);
             }}
-            iconRight={<IconArrowRight />}
           >
             {t("VALIDATE")}
           </Button>

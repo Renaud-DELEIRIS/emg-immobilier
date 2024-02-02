@@ -2,8 +2,7 @@ import { IconCircleCheck } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import Button from "~/components/button/Button";
-import Tile from "~/components/button/Tile";
+import { Button } from "~/components/button/Button";
 import Select from "~/components/inputs/Select";
 import TextInput from "~/components/inputs/TextInput";
 import FlatModal from "~/components/modal/FlatModal";
@@ -80,7 +79,7 @@ const ModalSouscrireLca = ({ open, onClose, lca, adherent }: Props) => {
         <p className="mt-4 text-sm">{t("SOUSCRIRE_DESCRIPTION")}</p>
         <p className="mt-4 text-sm font-bold">{t("SOUSCRIRE_QUESTION_LCA")}</p>
         <div className="mt-4 flex w-full flex-col gap-4">
-          <div className="flex w-full flex-row items-center gap-2">
+          {/* <div className="flex w-full flex-row items-center gap-2">
             <Tile
               selected={affiliation === "oui"}
               onClick={() => setAffiliation("oui")}
@@ -95,7 +94,7 @@ const ModalSouscrireLca = ({ open, onClose, lca, adherent }: Props) => {
             >
               {tCommon("NO")}
             </Tile>
-          </div>
+          </div> */}
           {affiliation === "non" && (
             <Button onClick={() => void sendInfo()}>
               {t("SOUSCRIRE_SEND_INFO")}

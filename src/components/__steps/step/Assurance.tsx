@@ -1,8 +1,7 @@
-import StepContainer from "../StepContainer";
-import AutoComplete from "~/components/inputs/Autocomplete";
-import insurers from "~/data/insurers.json";
-import { useTranslation, Trans } from "next-i18next";
+import { useTranslation } from "next-i18next";
+import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
+import StepContainer from "../StepContainer";
 
 const Assurance = () => {
   const lead = useFormStore((state) => state.data);
@@ -12,10 +11,31 @@ const Assurance = () => {
   return (
     <StepContainer
       title={t("STEP_ASSURANCE_TITLE")}
-      description={<Trans t={t} i18nKey="STEP_ASSURANCE_DESCRIPTION" />}
       stepId="assurance-actuelle"
     >
-      <AutoComplete
+      <TileInput
+        value={lead.actualInsurance}
+        onChange={(value) => {
+          changeLead({ actualInsurance: value as boolean });
+          nextStep("assurance-actuelle", {
+            ...lead,
+            actualInsurance: value as boolean,
+          });
+        }}
+        className="w-full flex-row"
+        options={[
+          {
+            value: true,
+            label: t("YES"),
+          },
+          {
+            value: false,
+            label: t("NO"),
+          },
+        ]}
+      ></TileInput>
+
+      {/* <AutoComplete
         value={
           lead.actualInsurance || {
             key: 0 as number | string,
@@ -31,24 +51,7 @@ const Assurance = () => {
         }}
         options={insurers}
         placeholder={t("STEP_ASSURANCE_PLACEHOLDER")}
-      ></AutoComplete>
-      <p className="mt-2 text-sm text-gray-500">
-        <strong>{t("STEP_ASSURANCE_NO")} </strong>
-        <button
-          className="text-primary hover:underline"
-          onClick={() => {
-            changeLead({
-              actualInsurance: { key: -1, value: t("STEP_ASSURANCE_NO_SPAN") },
-            });
-            nextStep("assurance-actuelle", {
-              ...lead,
-              actualInsurance: { key: -1, value: t("STEP_ASSURANCE_NO_SPAN") },
-            });
-          }}
-        >
-          {t("STEP_ASSURANCE_NO_LINK")}
-        </button>
-      </p>
+      ></AutoComplete> */}
     </StepContainer>
   );
 };

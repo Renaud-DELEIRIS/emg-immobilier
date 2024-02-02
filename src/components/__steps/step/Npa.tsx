@@ -1,4 +1,4 @@
-import { useTranslation } from "next-i18next";
+import { Trans, useTranslation } from "next-i18next";
 import AutoComplete from "~/components/inputs/Autocomplete";
 import localtion from "~/data/ch-locations.json";
 import { useFormStore } from "~/stores/form";
@@ -13,13 +13,33 @@ const Npa = () => {
   return (
     <StepContainer
       title={t("STEP_NPA_TITLE")}
-      description={t("STEP_NPA_DESCRIPTION")}
+      description={
+        <Trans
+          i18nKey="STEP_NPA_DESCRIPTION"
+          components={{
+            notHere: (
+              <button
+                className="font-semibold text-primary hover:font-bold"
+                onClick={() => {
+                  changeLead({
+                    npa: { key: -1, value: t("STEP_NPA_NOTHERE_SPAN") },
+                  });
+                  nextStep("npa", {
+                    ...lead,
+                    npa: { key: -1, value: t("STEP_NPA_NOTHERE_SPAN") },
+                  });
+                }}
+              />
+            ),
+          }}
+        />
+      }
       stepId="npa"
     >
       <AutoComplete
         value={
-          lead.npa || {
-            key: 0,
+          lead.npa ?? {
+            key: -1,
             value: "",
           }
         }
@@ -30,24 +50,12 @@ const Npa = () => {
             npa: value,
           });
         }}
+        name="locality"
+        aria-label="Localité"
         options={localtion}
         placeholder={t("STEP_NPA_PLACEHOLDER")}
+        valid={!!lead.npa}
       ></AutoComplete>
-      <p className="mt-2 text-sm text-gray-500">
-        <strong>{t("STEP_NPA_NOTHERE")} </strong>
-        <button
-          className="text-primary hover:underline"
-          onClick={() => {
-            changeLead({ npa: { key: -1, value: t("STEP_NPA_NOTHERE_SPAN") } });
-            nextStep("npa", {
-              ...lead,
-              npa: { key: -1, value: t("STEP_NPA_NOTHERE_SPAN") },
-            });
-          }}
-        >
-          {t("STEP_NPA_NOTHERE_LINK")}
-        </button>
-      </p>
     </StepContainer>
   );
 };

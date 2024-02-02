@@ -1,23 +1,39 @@
-import Image from "next/image";
-import type DefaultProps from "~/types/DefaultProps";
 import { motion } from "framer-motion";
-import { type ReactElement } from "react";
+import { PropsWithChildren } from "react";
+import { twMerge } from "tailwind-merge";
 import { type StepId } from "~/constants/step.constant";
 import { useFormStore } from "~/stores/form";
+import type DefaultProps from "~/types/DefaultProps";
+
+export const StepTitle: React.FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <span className="text-[22px] font-semibold leading-[normal]">
+      {children}
+    </span>
+  );
+};
+
+export const StepDescription: React.FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <span className="text-[16px] font-normal leading-[22px] text-grey">
+      {children}
+    </span>
+  );
+};
 
 const StepContainer = ({
   title,
   children,
-  description,
   infoTitle,
   info,
   className = "",
+  description,
   stepId,
   id,
   forceActive = false,
 }: {
-  title: string;
-  description?: ReactElement | string;
+  title?: string;
+  description?: React.ReactNode | string;
   info?: string;
   infoTitle?: string;
   stepId: StepId;
@@ -30,39 +46,30 @@ const StepContainer = ({
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      className={"mx-auto flex w-full flex-col " + className}
+      className={twMerge(
+        "flex w-full flex-col",
+        active && "min-h-[calc(100dvh-210px)]",
+        className
+      )}
       id={id ?? stepId}
     >
-      {active && (
-        <>
-          <div className="relative mb-2 flex items-center">
-            <Image
-              src={"/portrait.png"}
-              alt="Assistance"
-              width={50}
-              height={50}
-              className="h-10 w-10 rounded-full border md:absolute md:-left-16 md:h-12 md:w-12"
-            ></Image>
-            <div className="absolute left-7 top-0.5 h-4 w-4 rounded-full border-2 border-white bg-primary md:-left-7 md:top-5"></div>
-            <p className="ml-2 font-extrabold text-dark md:ml-0">Emma</p>
-          </div>
-          <p className="mb-2 text-dark">{description}</p>
-        </>
+      {title && (
+        <div className="mb-[20px] flex flex-col gap-[10px]">
+          <StepTitle>{title}</StepTitle>
+          {description && <StepDescription>{description}</StepDescription>}
+        </div>
       )}
-      <h1 className="mb-4 text-base font-extrabold leading-[1.6] text-dark md:leading-[1.4]">
-        {title}
-      </h1>
 
-      <div className="w-full">{children}</div>
+      {children}
       {info && (
         <div className="mt-8 flex w-full flex-row items-center rounded-lg bg-[#00c49b14] p-3">
           <div className="ml-2">
             {infoTitle && (
-              <h2 className="text-sm font-semibold text-primary-800">
+              <h2 className="text-primary-800 text-sm font-semibold">
                 {infoTitle}
               </h2>
             )}
-            {info && <p className="text-sm text-primary-700">{info}</p>}
+            {info && <p className="text-primary-700 text-sm">{info}</p>}
           </div>
         </div>
       )}

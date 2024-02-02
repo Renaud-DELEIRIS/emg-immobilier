@@ -1,9 +1,4 @@
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  IconChevronDown,
-  IconPhoneCall,
-  IconPhoneFilled,
-} from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { type GetStaticProps, type NextPage } from "next";
 import { useTranslation } from "next-i18next";
@@ -12,15 +7,12 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
-import PhoneInput from "react-phone-input-2";
-import { toast } from "react-toastify";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
 import { STEPS } from "~/constants/step.constant";
 import { useFormStore } from "~/stores/form";
 import { useSessionStore } from "~/stores/session";
-import { recallResident } from "~/utils/api/recallResident";
 import getParamsUrl from "~/utils/client/getParamsUrl";
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
@@ -48,6 +40,7 @@ const Home: NextPage = () => {
   const versionId = useFormStore((state) => state.versionId);
   const setVersionId = useFormStore((state) => state.setVersionId);
   const setVisibleStep = useFormStore((state) => state.setVisibleStep);
+  const initScroll = useFormStore((state) => state.initScroll);
   const trackDurationStep = useFormStore((state) => state.trackDurationStep);
   const initStep = useFormStore((state) => state.initStep);
 
@@ -69,6 +62,8 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const stepLabelFromUrl = router.query.step;
+    console.log(stepLabelFromUrl);
+    console.log(currentVisibleStep);
     if (
       typeof stepLabelFromUrl === "string" &&
       stepLabelFromUrl !== currentVisibleStep.id
@@ -86,6 +81,7 @@ const Home: NextPage = () => {
         },
       });
     }
+    initScroll();
   }, [router.query.step]);
 
   useEffect(() => {
@@ -112,9 +108,6 @@ const Home: NextPage = () => {
     };
   }, []);
 
-  const isFrontalier =
-    lead.situation === "frontalier" && lead.npa && lead.npa.key === -1;
-
   return (
     <>
       <Head>
@@ -126,11 +119,11 @@ const Home: NextPage = () => {
         <meta name="robots" content="noindex,nofollow" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
-      <main className="min-h-screen-d relative flex flex-col pt-16">
+      <main className="relative flex min-h-[100dvh] flex-col pt-[106px]">
         {currentVisibleStep && !!currentVisibleStep.stepInfo && loaded && (
           <>
             <Header />
-            <div
+            {/* <div
               className={
                 "becalled-btn container-shadow fixed bottom-4 right-4 z-20 gap-1  bg-primary p-2 font-normal text-white " +
                 (beCalled
@@ -207,9 +200,10 @@ const Home: NextPage = () => {
                   </button>
                 </div>
               </div>
-            </div>
-            <div className="mx-auto w-full  max-w-5xl flex-1 pb-36 pt-12 md:pt-0">
+            </div> */}
+            <div className="relative mx-auto flex w-full max-w-[1070px] flex-1 gap-[60px] px-4">
               {getStepComponent()}
+              <Sidebar></Sidebar>
             </div>
             <div className="hidden md:block">
               <Footer />
@@ -258,9 +252,6 @@ const Home: NextPage = () => {
           </Dialog>
         </Transition>
       </main>
-      <div className="md:hidden">
-        <Footer />
-      </div>
     </>
   );
 };
