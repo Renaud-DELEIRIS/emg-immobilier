@@ -8,7 +8,7 @@ import { CiPill } from "react-icons/ci";
 import { FaAmbulance, FaHospital, FaHotTub } from "react-icons/fa";
 import { MdHearing, MdPregnantWoman } from "react-icons/md";
 import { TbStethoscope, TbWorld } from "react-icons/tb";
-import Button from "~/components/button/Button";
+import { Button } from "~/components/button/Button";
 import { PackFrontalier } from "~/constants/frontalier.constant";
 import { useFormStore } from "~/stores/form";
 import formatAmount from "~/utils/formatAmount";

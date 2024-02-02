@@ -4,7 +4,7 @@ import { useTranslation } from "next-i18next";
 import { useEffect } from "react";
 import { FaChild } from "react-icons/fa";
 import { IoIosMan, IoIosWoman } from "react-icons/io";
-import Button from "~/components/button/Button";
+import { Button } from "~/components/button/Button";
 import { PackFrontalier } from "~/constants/frontalier.constant";
 import { useFormStore } from "~/stores/form";
 import formatAmount from "~/utils/formatAmount";

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 interface Props extends React.SVGProps<SVGSVGElement> {
-  [x: string]: any;
+  size?: number;
 }
 
 export const EmgCouple: React.FC<Props> = (props) => (

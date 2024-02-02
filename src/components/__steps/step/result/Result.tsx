@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import ReactSwitch from "react-switch";
-import Select from "~/components/inputs/Select";
+import { SelectInput } from "~/components/inputs/Select";
 import { type Adherent } from "~/constants/lead.constant";
 import { useFormStore } from "~/stores/form";
 import ResultLamal from "./ResultLamal";
@@ -50,7 +50,7 @@ const Result = () => {
           {t("RESULT_MY_COMPARATIF")}
         </h2>
         <button
-          className="flex items-center gap-2 rounded-lg border border-primary bg-white p-1 font-bold text-primary hover:bg-primary-50"
+          className="hover:bg-primary-50 flex items-center gap-2 rounded-lg border border-primary bg-white p-1 font-bold text-primary"
           onClick={() =>
             nextStep(lead.npa?.key === -1 ? "situation" : "assurance-actuelle")
           }
@@ -62,7 +62,7 @@ const Result = () => {
       </div>
       <div className="flex w-full max-w-6xl flex-row items-center gap-6">
         {lead.adherent.length > 1 && (
-          <Select
+          <SelectInput
             label={t("PROFIL_SELECT_LABEL")}
             options={lead.adherent.map((adherent, index) => ({
               label: textByIndex(adherent),
@@ -70,7 +70,6 @@ const Result = () => {
             }))}
             value={profil.toString()}
             onChange={(e) => setProfile(parseInt(e))}
-            wrapperClassName="hidden sm:block w-[240px]"
           />
         )}
         <div className="hidden flex-col sm:flex">
@@ -114,7 +113,7 @@ const Result = () => {
         </div>
       </div>
       {lead.adherent.length > 1 && (
-        <Select
+        <SelectInput
           label={t("PROFIL_SELECT_LABEL")}
           options={lead.adherent.map((adherent, index) => ({
             label: textByIndex(adherent),
@@ -122,7 +121,6 @@ const Result = () => {
           }))}
           value={profil.toString()}
           onChange={(e) => setProfile(parseInt(e))}
-          wrapperClassName="sm:hidden w-full"
         />
       )}
       <div className="flex w-full max-w-6xl flex-col items-center justify-center gap-4">

@@ -3,7 +3,7 @@ import { IconCircleCheckFilled, IconInfoCircle } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { Trans, useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
-import Button from "~/components/button/Button";
+import { Button } from "~/components/button/Button";
 import AvsInput from "~/components/inputs/Avs";
 import FileInput from "~/components/inputs/FileInput";
 import TextInput from "~/components/inputs/TextInput";
@@ -276,7 +276,6 @@ const Documents = () => {
         })}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Button
-            intent={"outline"}
             onClick={() => {
               onPressLater();
             }}
@@ -326,9 +325,9 @@ const Documents = () => {
               >
                 {t("DOCUMENT_COMPLETE_LATER_ACTION")}
               </Button>
-              <Button href="https://www.comparea.ch" intent={"outline"}>
+              {/* <Button href="https://www.comparea.ch" intent={"outline"}>
                 {t("DOCUMENT_COMPLETE_LATER_ACTION_2")}
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>
@@ -376,9 +375,9 @@ const Documents = () => {
                 }}
               />
             </p>
-            <Button href="https://www.comparea.ch" className="mt-6">
+            {/* <Button href="https://www.comparea.ch" className="mt-6">
               {t("DOCUMENT_COMPLETE_LATER_ACTION_2")}
-            </Button>
+            </Button> */}
           </div>
         </div>
       </Dialog>

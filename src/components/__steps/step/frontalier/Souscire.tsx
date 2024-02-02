@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Button } from "~/components/button/Button";
 import CompleteAddress from "~/components/inputs/AddressInput";
 import InputDate from "~/components/inputs/DatePicker";
-import Select from "~/components/inputs/Select";
+import { SelectInput } from "~/components/inputs/Select";
 import { useFormStore } from "~/stores/form";
 
 const Souscrire = () => {
@@ -95,7 +95,7 @@ const Souscrire = () => {
           {t("SOUSCRIRE_START_INFO")}
         </p>
       </div>
-      <Select
+      <SelectInput
         value={lead.paymentFrequency}
         onChange={(value) =>
           changeLead({
@@ -108,7 +108,6 @@ const Souscrire = () => {
           { value: "semester", label: t("SOUSCRIRE_FREQUENCY_SEMESTER") },
           { value: "year", label: t("SOUSCRIRE_FREQUENCY_ANNUAL") },
         ]}
-        boldLabel
       />
       <CompleteAddress
         value={lead.address || ""}

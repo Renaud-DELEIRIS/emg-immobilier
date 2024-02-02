@@ -47,7 +47,7 @@ export const ResultProvider = ({ children }: { children: React.ReactNode }) => {
       yob: profil.year || "",
       franchise: profil.franchise?.replaceAll("'", "") || "",
       coverage: profil.couvertureAccident === "non" ? "0" : "1",
-      insurer: lead.actualInsurance?.key.toString() || "",
+      insurer: lead.actualInsurance?.toString() || "",
     });
     const r = await fetch(`${env.NEXT_PUBLIC_SCRAPPER}?${p.toString()}`);
     const d = (await r.json()) as { data: Lamal[] };

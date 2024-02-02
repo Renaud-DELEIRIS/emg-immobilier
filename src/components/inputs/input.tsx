@@ -1,5 +1,6 @@
 import { IconInfoCircle } from "@tabler/icons-react";
 import dayjs from "dayjs";
+import { E164Number } from "libphonenumber-js";
 import React, {
   ChangeEvent,
   Fragment,
@@ -95,14 +96,15 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
 
 export const PhoneNumberInput = React.forwardRef<
   React.ElementRef<typeof PhoneInput>,
-  IInput
+  Omit<IInput, "onChange" | "insideText"> & {
+    onChange?: (e?: E164Number) => void;
+  }
 >(
   (
     {
       label = "",
       className = "",
       tooltip,
-      insideText = "",
       error = "",
       wrapperClassName = "",
       onChange,
@@ -139,7 +141,6 @@ export const PhoneNumberInput = React.forwardRef<
             className={twMerge(
               `w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-sm font-medium opacity-80 placeholder:text-grey
               focus-within:ring-1 focus-within:ring-secondary`,
-              insideText ? "pr-10" : "pr-4",
               className
             )}
             defaultCountry="CH"
@@ -147,21 +148,8 @@ export const PhoneNumberInput = React.forwardRef<
               ...props,
               className: "focus-within:outline-none focus-within:ring-0",
             }}
-            onChange={(e) =>
-              onChange &&
-              onChange({
-                target: {
-                  value: e,
-                },
-              } as any)
-            }
+            onChange={(e) => onChange && onChange(e)}
           />
-
-          {insideText && (
-            <div className="absolute bottom-0 right-0 top-0 flex items-center px-4 text-sm font-medium text-grey opacity-80">
-              {insideText}
-            </div>
-          )}
         </div>
         {error && (
           <span className="mt-1 block text-sm text-red-500">{error}</span>

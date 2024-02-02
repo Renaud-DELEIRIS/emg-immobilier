@@ -42,7 +42,7 @@ const Alert = React.forwardRef<
       <div className="flex flex-col gap-0.5">
         {!noTitle && (
           <span className="text-lg font-bold tracking-[-0.36px]">
-            {t("alert." + variant)}
+            {t("alert." + (variant ?? ""))}
           </span>
         )}
         <span>{children}</span>
@@ -76,4 +76,4 @@ const AlertDescription = React.forwardRef<
 ));
 AlertDescription.displayName = "AlertDescription";
 
-export { Alert, AlertTitle, AlertDescription };
+export { Alert, AlertDescription, AlertTitle };

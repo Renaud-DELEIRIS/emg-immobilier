@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
 import { useTranslation } from "next-i18next";
 import { useEffect } from "react";
-import Button from "~/components/button/Button";
+import { Button } from "~/components/button/Button";
 import InputDate from "~/components/inputs/DatePicker";
-import Select from "~/components/inputs/Select";
+import { SelectInput } from "~/components/inputs/Select";
 import TextInput from "~/components/inputs/TextInput";
 import { useFormStore } from "~/stores/form";
 
@@ -113,7 +113,7 @@ const PersonalData = () => {
                 format="DD.MM.YYYY"
                 className="!p-1.5"
               />
-              <Select
+              <SelectInput
                 value={p.nationality || ""}
                 onChange={(value) => {
                   changeLead({

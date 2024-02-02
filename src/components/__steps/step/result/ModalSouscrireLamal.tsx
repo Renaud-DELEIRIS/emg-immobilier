@@ -3,7 +3,7 @@ import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "~/components/button/Button";
-import Select from "~/components/inputs/Select";
+import { SelectInput } from "~/components/inputs/Select";
 import TextInput from "~/components/inputs/TextInput";
 import FlatModal from "~/components/modal/FlatModal";
 import { type Adherent } from "~/constants/lead.constant";
@@ -110,7 +110,7 @@ const ModalSouscrireLamal = ({ open, onClose, lamal, adherent }: Props) => {
                 value={affiliattionCaisse}
                 onChange={(e) => setAffiliationCaisse(e)}
               />
-              <Select
+              <SelectInput
                 options={[
                   {
                     label: t("SOUSCRIRE_SINCE_LESS"),

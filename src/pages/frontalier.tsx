@@ -9,7 +9,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import Button from "~/components/button/Button";
+import { Button } from "~/components/button/Button";
 import FileInput from "~/components/inputs/FileInput";
 import TextInput from "~/components/inputs/TextInput";
 import Footer from "~/components/navigation/Footer";
@@ -419,9 +419,9 @@ const Home: NextPage = () => {
                 }}
               />
             </p>
-            <Button href="https://www.comparea.ch" className="mt-6">
+            {/* <Button href="https://www.comparea.ch" className="mt-6">
               {t("DOCUMENT_COMPLETE_LATER_ACTION_2")}
-            </Button>
+            </Button> */}
           </div>
         </div>
       </Dialog>

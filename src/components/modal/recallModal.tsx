@@ -17,7 +17,7 @@ const RecallModal = ({
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
 
-  const onRecall = async () => {};
+  const onRecall = () => null;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -57,7 +57,7 @@ const RecallModal = ({
           variant={"thirdy"}
           disabled={!isValidPhoneNumber(lead.phone)}
           className="mt-[14px]"
-          onClick={onRecall}
+          onClick={() => void onRecall()}
         >
           <IconPhoneCall size={24} className="mr-1" />
           Me faire appeler

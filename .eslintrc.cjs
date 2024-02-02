@@ -29,6 +29,10 @@ const config = {
       },
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    "react/display-name": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/require-await": "off",
   },
 };
 

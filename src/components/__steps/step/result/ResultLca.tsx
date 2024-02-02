@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
-import Button from "~/components/button/Button";
+import { Button } from "~/components/button/Button";
 import { Adherent } from "~/constants/lead.constant";
 import ModalComparatifTable from "./ModalComparatifTable";
 import ResultCardLca from "./ResultCardLca";
@@ -57,7 +57,7 @@ const ResultLca = ({
         ))}
       {compare.length > 1 && (
         <div className="fixed bottom-12 left-0 right-0 flex justify-center">
-          <Button onClick={() => setOpen(true)} intent="outline" rounded={"xl"}>
+          <Button onClick={() => setOpen(true)}>
             {t("LCA_COMPARE", {
               count: compare.length,
             })}
