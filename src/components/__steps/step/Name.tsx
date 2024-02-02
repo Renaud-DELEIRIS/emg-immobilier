@@ -1,5 +1,5 @@
 import { Trans, useTranslation } from "next-i18next";
-import Button from "~/components/button/Button";
+import { Button } from "~/components/button/Button";
 import TextInput from "~/components/inputs/TextInput";
 import { useFormStore } from "~/stores/form";
 import StepContainer from "../StepContainer";

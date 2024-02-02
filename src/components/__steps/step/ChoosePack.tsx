@@ -11,9 +11,9 @@ const ChoosePack = () => {
   const [adherent, setAdherent] = useState<number>(0);
   const { t } = useTranslation("common");
   return (
-    <>
+    <div>
+      <div id="package" />
       <div className="flex flex-col gap-8">
-        <div id="package" />
         {lead.adherent.map((data, index) => {
           if (index > adherent) return null;
           return (
@@ -57,7 +57,7 @@ const ChoosePack = () => {
           );
         })}
       </div>
-    </>
+    </div>
   );
 };
 

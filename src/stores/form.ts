@@ -21,6 +21,7 @@ interface FormState {
   initStep: () => void;
   restoreCurrentStep: (stepId: string) => void;
   setVisibleStep: (stepId: string) => void;
+  initScroll: () => void;
   isVisibleStepValid: () => {
     success: boolean;
     errors?: { path: string; error: string }[];
@@ -156,7 +157,27 @@ export const useFormStore = create<FormState>()(
         setVisibleStep: (stepId) => {
           const selectedStep = STEPS.find((s) => s.id === stepId)!;
           const { success, errors } = get().isVisibleStepValid();
+          console.log(success, errors);
           if (success || selectedStep.id < get().currentStep.id) {
+            setTimeout(() => {
+              const element = document.getElementById(selectedStep.id);
+              if (element) {
+                const offsetTop =
+                  element.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({
+                  top: offsetTop - 100,
+                  behavior: "smooth",
+                });
+
+                // Focus on first focusable element
+                const focusableElement = element.querySelector(
+                  "input, select, textarea, button"
+                ) as HTMLElement;
+                if (focusableElement) {
+                  focusableElement.focus();
+                }
+              }
+            }, 100);
             set((state) => ({
               ...state,
               errors: {},
@@ -190,6 +211,29 @@ export const useFormStore = create<FormState>()(
               },
             }));
           }
+        },
+        initScroll() {
+          setTimeout(() => {
+            const element = document.getElementById(
+              get().currentVisibleStep.id
+            );
+            if (element) {
+              const offsetTop =
+                element.getBoundingClientRect().top + window.scrollY;
+              window.scrollTo({
+                top: offsetTop - 100,
+                behavior: "smooth",
+              });
+
+              // Focus on first focusable element
+              const focusableElement = element.querySelector(
+                "input, select, textarea, button"
+              ) as HTMLElement;
+              if (focusableElement) {
+                focusableElement.focus();
+              }
+            }
+          }, 100);
         },
         restoreCurrentStep: (stepId) => {
           const selectedStep = STEPS.find((s) => s.id === stepId)!;

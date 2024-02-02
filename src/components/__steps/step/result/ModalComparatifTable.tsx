@@ -3,7 +3,7 @@ import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { Fragment, useState } from "react";
 import { toast } from "react-toastify";
-import Button from "~/components/button/Button";
+import { Button } from "~/components/button/Button";
 import FlatModal from "~/components/modal/FlatModal";
 import { type Adherent } from "~/constants/lead.constant";
 import { useFormStore } from "~/stores/form";
@@ -123,15 +123,8 @@ const ModalComparatifTable = ({ open, onClose, offres, adherent }: Props) => {
                     </div>
                   </div>
                   <div className="flex flex-col items-center justify-between gap-1">
-                    <Button onClick={beCalled} size="small" widthFull>
-                      {t("BE_CALLED_BACK")}
-                    </Button>
-                    <Button
-                      onClick={() => setSouscrireOpenIndex(i)}
-                      size="small"
-                      widthFull
-                      intent={"outline"}
-                    >
+                    <Button onClick={beCalled}>{t("BE_CALLED_BACK")}</Button>
+                    <Button onClick={() => setSouscrireOpenIndex(i)}>
                       {t("COMPARATIF_SUBSCRIBE")}
                     </Button>
                   </div>

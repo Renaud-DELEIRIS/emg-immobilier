@@ -3,11 +3,10 @@ import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
-import Button from "~/components/button/Button";
-import Tile from "~/components/button/Tile";
+import { Button } from "~/components/button/Button";
 import CompleteAddress from "~/components/inputs/AddressInput";
 import InputDate from "~/components/inputs/DatePicker";
-import Select from "~/components/inputs/Select";
+import { SelectInput } from "~/components/inputs/Select";
 import { useFormStore } from "~/stores/form";
 
 const Souscrire = () => {
@@ -48,7 +47,7 @@ const Souscrire = () => {
       <div className="flex flex-col gap-2">
         <label className="font-bold">{t("SOUSCRIRE_LABEL_START")}</label>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <Tile
+          {/* <Tile
             onClick={() => {
               setPreDate("mois");
               changeLead({
@@ -71,7 +70,7 @@ const Souscrire = () => {
                 {dayjs().add(1, "month").set("date", 1).format("dddd DD MMMM")}
               </span>
             </div>
-          </Tile>{" "}
+          </Tile>
           <Tile
             onClick={() => setPreDate("autre")}
             selected={preDate === "autre"}
@@ -79,7 +78,7 @@ const Souscrire = () => {
             <div className="flex flex-col">
               <span>{t("SOUSCRIRE_START_A4")}</span>
             </div>
-          </Tile>
+          </Tile> */}
         </div>
         <motion.div layout>
           {preDate === "autre" && (
@@ -96,7 +95,7 @@ const Souscrire = () => {
           {t("SOUSCRIRE_START_INFO")}
         </p>
       </div>
-      <Select
+      <SelectInput
         value={lead.paymentFrequency}
         onChange={(value) =>
           changeLead({
@@ -109,7 +108,6 @@ const Souscrire = () => {
           { value: "semester", label: t("SOUSCRIRE_FREQUENCY_SEMESTER") },
           { value: "year", label: t("SOUSCRIRE_FREQUENCY_ANNUAL") },
         ]}
-        boldLabel
       />
       <CompleteAddress
         value={lead.address || ""}

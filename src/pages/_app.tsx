@@ -7,7 +7,10 @@ import fr from "dayjs/locale/fr";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { appWithTranslation } from "next-i18next";
 import nexti18nConfig from "next-i18next.config.mjs";
+import { Inter } from "next/font/google";
+import Head from "next/head";
 import { useEffect } from "react";
+import "react-phone-number-input/style.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GtmTrackProvider } from "~/components/provider/GmtTrack";
@@ -19,32 +22,49 @@ import { api } from "~/utils/api";
 dayjs.extend(customParseFormat);
 dayjs.locale(fr);
 
+const inter = Inter({
+  subsets: ["latin-ext"],
+});
+
 const MyApp: AppType = ({ Component, pageProps }) => {
   useEffect(() => {
     if (!sessionStorage.getItem("createdAt"))
       sessionStorage.setItem("createdAt", new Date().toISOString());
   }, []);
   return (
-    <GtmTrackProvider>
-      <GTMProvider
-        state={{ id: env.NEXT_PUBLIC_GTMID, dataLayerName: "dataLayer" }}
-      >
-        <Component {...pageProps} />
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
-        <ToastContainer />
-      </GTMProvider>
-    </GtmTrackProvider>
+    <>
+      <Head>
+        <link rel="shortcut icon" href="/images/favicon.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <style jsx global>{`
+        html {
+          font-family: ${inter.style.fontFamily};
+        }
+      `}</style>
+      <GtmTrackProvider>
+        <GTMProvider
+          state={{ id: env.NEXT_PUBLIC_GTMID, dataLayerName: "dataLayer" }}
+        >
+          <div className="text-dark">
+            <Component {...pageProps} />
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+          </div>
+          <ToastContainer />
+        </GTMProvider>
+      </GtmTrackProvider>
+    </>
   );
 };
 

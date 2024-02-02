@@ -1,10 +1,10 @@
 import { IconChevronDown, IconCircleCheckFilled } from "@tabler/icons-react";
 import { useState } from "react";
-import Button from "~/components/button/Button";
 
 import dayjs from "dayjs";
 import { useTranslation } from "next-i18next";
 import { toast } from "react-toastify";
+import { Button } from "~/components/button/Button";
 import { type Adherent } from "~/constants/lead.constant";
 import { useFormStore } from "~/stores/form";
 import affectRappel from "~/utils/api/affectRappel";
@@ -127,7 +127,7 @@ const ResultCardFrontalier = ({
   return (
     <div className={" compare-shadow flex flex-col  " + className}>
       {recommended && (
-        <div className="flex items-center gap-2 rounded-t-lg border border-primary bg-primary-700/20 px-2 py-2 pb-1 text-sm font-semibold text-primary-600">
+        <div className="bg-primary-700/20 text-primary-600 flex items-center gap-2 rounded-t-lg border border-primary px-2 py-2 pb-1 text-sm font-semibold">
           <IconCircleCheckFilled size={24} />
           <span>{t("RECOMMENDED")}</span>
         </div>
@@ -183,12 +183,10 @@ const ResultCardFrontalier = ({
             )}
           </div>
           <div className="mt-4 flex w-full flex-col gap-4 md:mt-0 md:max-w-[240px]">
-            <Button widthFull onClick={onSubscribe}>
+            <Button onClick={onSubscribe}>
               {tCommon("CARD_SUBSCRIBE_ONLINE")}
             </Button>
-            <Button widthFull intent={"outline"} onClick={beCalled}>
-              {tCommon("CARD_BECALLED")}
-            </Button>
+            <Button onClick={beCalled}>{tCommon("CARD_BECALLED")}</Button>
           </div>
         </div>
         {withDetails && (

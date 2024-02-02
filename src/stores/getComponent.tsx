@@ -44,9 +44,6 @@ export const getStepComponent = (
             <IconArrowLeft size={20} />
             <span>Retour</span>
           </button>
-          <div className="relative mb-6 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block">
-            Documents
-          </div>
         </div>
       );
       break;
@@ -63,9 +60,6 @@ export const getStepComponent = (
             <IconArrowLeft size={20} />
             <span>Retour</span>
           </button>
-          <div className="relative mb-6 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block">
-            Preneur d&apos;assurance
-          </div>
         </div>
       );
       break;
@@ -82,9 +76,6 @@ export const getStepComponent = (
             <IconArrowLeft size={20} />
             <span>Retour</span>
           </button>
-          <div className="relative mb-6 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block">
-            Pour qui souhaitez vous souscrire ?
-          </div>
         </div>
       );
       break;
@@ -101,9 +92,6 @@ export const getStepComponent = (
             <IconArrowLeft size={20} />
             <span>Retour</span>
           </button>
-          <div className="relative mb-6 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block">
-            Souscription
-          </div>
         </div>
       );
       break;
@@ -120,22 +108,11 @@ export const getStepComponent = (
             <IconArrowLeft size={20} />
             <span>Retour</span>
           </button>
-          <div className="relative mb-6 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block">
-            Récapitulatif
-          </div>
         </div>
       );
       break;
     case "work-hours":
       childs.push(<Hours key={"hours"} />);
-      childs.push(
-        <div
-          className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
-          key={"title"}
-        >
-          Situation professionnelle
-        </div>
-      );
       break;
     case "result-frontalier":
       childs.push(
@@ -163,39 +140,14 @@ export const getStepComponent = (
       );
     case "economies":
       childs.push(<Economie key={"economies"} />);
-      childs.push(
-        <div
-          className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
-          key={"title"}
-        >
-          Finalisation
-        </div>
-      );
       break;
     case "name":
       childs.push(<Name key={"name"} />);
-      childs.push(
-        <div
-          className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
-          key={"title"}
-        >
-          Finalisation
-        </div>
-      );
       break;
     case "package":
       childs.push(<ChoosePack key={"package"} />);
     case "franchise":
       childs.push(<Franchise key={"franchise"} />);
-      childs.push(
-        <div
-          className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
-          key={"title"}
-        >
-          Vos besoins
-        </div>
-      );
-      break;
     case "situation":
     case "assurance-actuelle":
       if (stepId === "situation") childs.push(<Situation key={"situation"} />);
@@ -206,21 +158,11 @@ export const getStepComponent = (
       childs.push(<Adherant key={"adherant"} />);
     case "for-who":
       childs.push(<For key={"for-who"} />);
-      childs.push(
-        <div
-          className="relative mb-6 mt-12 hidden text-3xl font-extrabold text-dark after:absolute after:-bottom-8 after:left-0 after:h-1.5 after:w-28 after:rounded-3xl after:bg-primary md:block"
-          key={"title"}
-        >
-          Adhérent
-        </div>
-      );
   }
 
   return (
     <div
-      className={`mx-auto flex ${
-        stepId === "result-frontalier" ? "max-w-4xl" : "max-w-[47rem]"
-      } flex-col gap-8 px-4 md:gap-12`}
+      className={`flex w-full min-w-[670px] flex-col gap-[40px]`}
       id="step-container"
     >
       {childs.reverse()}

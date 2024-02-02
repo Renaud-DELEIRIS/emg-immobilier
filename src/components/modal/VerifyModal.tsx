@@ -12,7 +12,7 @@ import { sendLeadComparea } from "~/utils/api/createLead";
 import { sendCodeSms } from "~/utils/api/sendSms";
 import getParamsUrl from "~/utils/client/getParamsUrl";
 import { formatTelephone } from "~/utils/formatTelephone";
-import Button from "../button/Button";
+import { Button } from "../button/Button";
 import CodeInput from "../inputs/CodeInput";
 import TextInput from "../inputs/TextInput";
 
@@ -228,7 +228,6 @@ const Info = ({ open }: { open: boolean }) => {
                           <div className="col-span-6 flex justify-around">
                             <Button
                               loading={loading}
-                              size="large"
                               type="submit"
                               disabled={
                                 !(
@@ -294,7 +293,6 @@ const Info = ({ open }: { open: boolean }) => {
                               <Button
                                 loading={loading}
                                 disabled={code.length !== 4}
-                                intent={"primary"}
                                 type="submit"
                               >
                                 <span>{t("STEP_VERIFY_ACTION")}</span>

@@ -11,13 +11,30 @@
   "BACK": "Retour",
   "YES": "Oui",
   "NO": "Non",
+  "no_result": "Aucun résultat",
+
+  "header": {
+    "recall": "Rappelez-moi"
+  },
+
+  "item_1": {
+    "title": "91% de nos utilisateurs",
+    "subtitle": "nous recommandent"
+  },
+  "item_2": {
+    "title": "180 000+ utilisateurs",
+    "subtitle": "nous font confiance"
+  },
+  "item_3": {
+    "title": "100% Gratuit",
+    "subtitle": "et sans engagement"
+  },
 
   "STEP_FOR_TITLE": "Pour qui souhaitez-vous comparer ?",
-  "STEP_FOR_DESCRIPTION": "Bonjour ! Je suis Emma.<br />En quelques minutes, comparons ensemble plus de 40 compagnies.",
-  "STEP_FOR_YOURSELF": "Vous",
-  "STEP_FOR_SPOUSE": "Vous et votre conjoint",
-  "STEP_FOR_CHILD": "Vous et vos enfants",
-  "STEP_FOR_FAMILY": "Vous, votre conjoint et vos enfants",
+  "STEP_FOR_YOURSELF": "Un adulte",
+  "STEP_FOR_SPOUSE": "Un couple",
+  "STEP_FOR_CHILD": "Un adulte + enfant(s)",
+  "STEP_FOR_FAMILY": "Un couple + enfant(s)",
 
   "STEP_ADHERENT_LIST_TITLE": "Les adhérants",
 
@@ -29,31 +46,24 @@
   "STEP_ADHERENT_LIST_CIVILITY_CHILD_MALE": "Votre enfant est né en <strong>{{year}}</strong>",
   "STEP_ADHERENT_LIST_ADD": "Ajouter un enfant",
 
-  "STEP_ADHERENT_PROFIL_MAIN": "Nous allons maintenant établir votre profil.",
-  "STEP_ADHERENT_DOB_MAIN": "Quelle est votre année de naissance ?",
-  "STEP_ADHERENT_CIVILITY_MAIN": "Quelle est votre civilité ?",
+  "STEP_ADHERENT_DOB_MAIN": "Quelle est votre date de naissance ?",
+  "STEP_ADHERENT_CIVILITY_MAIN": "Commençons par votre profil, vous êtes ?",
 
-  "STEP_ADHERENT_PROFIL_SPOUSE": "Nous allons maintenant établir le profil de votre conjoint(e).",
   "STEP_ADHERENT_DOB_SPOUSE": "Quelle est l'année de naissance de votre conjoint(e) ?",
   "STEP_ADHERENT_CIVILITY_SPOUSE": "Quelle est la civilité de votre conjoint(e) ?",
 
-  "STEP_ADHERENT_PROFIL_CHILD": "Nous allons maintenant établir le profil de votre enfant.",
   "STEP_ADHERENT_DOB_CHILD": "Quelle est l'année de naissance de votre enfant ?",
   "STEP_ADHERENT_DOB_ERR_INVALID": "La date de naissance n'est pas valide.",
   "STEP_ADHERENT_DOB_ERR_TOO_OLD": "Vous devez avoir moins de 100 ans.",
   "STEP_ADHERENT_DOB_ERR_IN_FUTURE": "Cette date de naissance est dans le futur.",
   "STEP_ADHERENT_CIVILITY_CHILD": "Quelle est la civilité de votre enfant ?",
 
-  "STEP_ADHERENT_PERFECT": "Parfait !",
-  "STEP_ADHERENT_CONTINUE": "Continuons !",
   "STEP_ADHERENT_CIVILITY_MAN": "Homme",
   "STEP_ADHERENT_CIVILITY_FEMALE": "Femme",
 
   "STEP_NPA_TITLE": "Quel est votre code postal de résident (NPA) ?",
-  "STEP_NPA_DESCRIPTION": "Maintenant j‘ai besoin de savoir où vous résidez.",
+  "STEP_NPA_DESCRIPTION": "Pas sur le territoire Suisse ? <notHere>Cliquez ici</notHere>",
   "STEP_NPA_PLACEHOLDER": "Ville ou NPA",
-  "STEP_NPA_NOTHERE": "Pas sur le territoire Suisse ?",
-  "STEP_NPA_NOTHERE_LINK": "Cliquez ici",
   "STEP_NPA_NOTHERE_SPAN": "Pas sur le territoire",
 
   "STEP_SITUATION_TITLE": "Quelle est votre situation ?",
@@ -61,7 +71,7 @@
   "STEP_SITUATION_FRONTALIER": "Travailleur frontalier",
   "STEP_SITUATION_SUISSE": "Future résident suisse",
 
-  "STEP_ASSURANCE_TITLE": "Quelle est votre assurance actuelle ?",
+  "STEP_ASSURANCE_TITLE": "Possédez-vous déjà une assurance ?",
   "STEP_ASSURANCE_DESCRIPTION": "Très bien !<br />Possedez-vous une assurance santé ? Si oui,",
   "STEP_ASSURANCE_PLACEHOLDER": "p. ex. Helsana",
   "STEP_ASSURANCE_NO": "Pas encore d‘assurance ?",
@@ -76,12 +86,9 @@
   "STEP_FRANCHISE_LIST_COUVERTURE": "ainsi que d‘une <strong>couverture accident</strong>",
   "STEP_FRANCHISE_LIST_NOCOUVERTURE": "sans <strong>couverture accident</strong>",
   "STEP_FRANCHISE_TITLE_MAIN": "Quelle franchise souhaitez-vous ?",
-  "STEP_FRANCHISE_TITLE_SPOUSE_FEMALE": "Quelle franchise souhaitez-vous pour votre elle ?",
-  "STEP_FRANCHISE_TITLE_SPOUSE_MALE": "Quelle franchise souhaitez-vous pour votre lui ?",
-  "STEP_FRANCHISE_DESCRIPTION_MAIN": "Je vais maintenant m'interesser à vos besoins.",
-  "STEP_FRANCHISE_DESCRIPTION_SPOUSE_FEMALE": "Concernant votre conjointe,",
-  "STEP_FRANCHISE_DESCRIPTION_SPOUSE_MALE": "Concernant votre coinjoit,",
-  "STEP_FRANCHISE_INFO_FRANCHISE": "Si vos dépenses médicales sont <strong> inférieures à 1‘700 CHF</strong> par année, je vous conseille <strong>une franchise à 2‘500 CHF</strong>",
+  "STEP_FRANCHISE_TITLE_SPOUSE_FEMALE": "Quelle franchise souhaitez-vous pour elle ?",
+  "STEP_FRANCHISE_TITLE_SPOUSE_MALE": "Quelle franchise souhaitez-vous pour lui ?",
+  "STEP_FRANCHISE_INFO_FRANCHISE": "Si vos dépenses médicales sont inférieures à 1‘700 CHF par année, je vous conseilleune franchise à 2‘500 CHF",
   "STEP_FRANCHISE_INFO_COUVERTURE": "Si vous travaillez plus de 8h/semaine pour le même employeur, le risque accident est couvert par votre employeur",
   "STEP_FRANCHISE_COUVERTURE_TITLE": "Concernant le risque accident,",
   "STEP_FRANCHISE_COUVERTURE_OTHER": "Concernant son risque accident,",
@@ -90,6 +97,7 @@
   "STEP_FRANCHISE_COUVERTURE_TITLE_SPOUSE_MALE": "Souhaitez-vous une couverture accident pour votre conjoint ?",
   "STEP_FRANCHISE_INFO_CHILD": "La franchise 0 est recommandée pour les enfants de moins de 15 ans",
   "STEP_FRANCHISE_TITLE_CHILD": "Votre enfant né(e) en {{year}}",
+  "STEP_FRANCHISE_PLACEHOLDER": "Sélectionner une franchise",
 
   "STEP_LOADER_TITLE": "Nous préparons les éléments nécessaires. Veuillez patienter.",
 

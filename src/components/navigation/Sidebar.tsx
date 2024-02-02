@@ -1,3 +1,4 @@
+import { IconCheck } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
 import { getStepById, type StepId } from "~/constants/step.constant";
 import { useFormStore } from "~/stores/form";
@@ -28,10 +29,10 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
 
   return (
     <>
-      <aside className={`flex max-w-[250px] flex-col border-l py-7 pl-7`}>
-        <h3 className="text-xl font-bold text-dark">{t("SIDEBAR_TITLE")}</h3>
-        <p className="mt-4 text-dark">{t("SIDEBAR_DESCRIPTION")}</p>
-        <ul className="leading-4 [&>li]:my-1">
+      <aside
+        className={`sticky top-[106px] hidden h-fit w-full max-w-[340px]  rounded-lg border border-[#8888941A] bg-white p-6 md:block`}
+      >
+        <ul className="space-y-6 leading-[normal]">
           <li>
             <button
               className="flex  items-center gap-4"
@@ -46,12 +47,10 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
                 onClose();
               }}
             >
-              <div className="my-3 box-content h-2.5 w-2.5 rounded-full bg-primary" />
-              <span
-                className={`${
-                  active === "adherant" ? "ml-2 font-bold text-primary" : ""
-                }`}
-              >
+              <div className="grid h-6 w-6 place-items-center rounded-full bg-primary">
+                <IconCheck size={20} className="text-white" />
+              </div>
+              <span className={`text-sm font-medium text-secondary`}>
                 {t("STEP_ADHERENT")}
               </span>
             </button>
@@ -67,13 +66,20 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
                 className={"flex items-center  gap-4 disabled:opacity-50"}
               >
                 <div
-                  className={`my-3 box-content h-2.5 w-2.5 rounded-full ${
-                    passed === "adherant" ? "bg-dark" : "bg-primary"
+                  className={`grid h-6 w-6 place-items-center rounded-full ${
+                    passed === "adherant" ? "bg-[#0CBCB01A]" : "bg-primary"
                   }`}
-                />
+                >
+                  <IconCheck
+                    size={20}
+                    className={
+                      passed === "adherant" ? "text-primary" : "text-white"
+                    }
+                  />
+                </div>
                 <span
-                  className={`${
-                    active === "besoins" ? "ml-2 font-bold text-primary" : ""
+                  className={`text-sm font-medium ${
+                    passed === "adherant" ? "text-grey" : "text-secondary"
                   }`}
                 >
                   {t("STEP_FRONTALIER")}
@@ -99,13 +105,20 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
                   className={"flex items-center  gap-4 disabled:opacity-50"}
                 >
                   <div
-                    className={`my-3 box-content h-2.5 w-2.5 rounded-full ${
-                      passed === "adherant" ? "bg-dark" : "bg-primary"
+                    className={`grid h-6 w-6 place-items-center rounded-full ${
+                      passed === "adherant" ? "bg-[#0CBCB01A]" : "bg-primary"
                     }`}
-                  />
+                  >
+                    <IconCheck
+                      size={20}
+                      className={
+                        passed === "adherant" ? "text-primary" : "text-white"
+                      }
+                    />
+                  </div>
                   <span
-                    className={`${
-                      active === "besoins" ? "ml-2 font-bold text-primary" : ""
+                    className={`text-sm font-medium ${
+                      passed === "adherant" ? "text-grey" : "text-secondary"
                     }`}
                   >
                     {t("STEP_BESOINS")}
@@ -122,17 +135,26 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
                   }}
                 >
                   <div
-                    className={`my-3 box-content h-2.5 w-2.5 rounded-full ${
+                    className={`grid h-6 w-6 place-items-center rounded-full ${
                       passed === "adherant" || passed === "besoins"
-                        ? "bg-dark"
+                        ? "bg-[#0CBCB01A]"
                         : "bg-primary"
                     }`}
-                  />
+                  >
+                    <IconCheck
+                      size={20}
+                      className={
+                        passed === "adherant" || passed === "besoins"
+                          ? "text-primary"
+                          : "text-white"
+                      }
+                    />
+                  </div>
                   <span
-                    className={`${
-                      active === "finalisation"
-                        ? "ml-2 font-bold text-primary"
-                        : ""
+                    className={`text-sm font-medium ${
+                      passed === "adherant" || passed === "besoins"
+                        ? "text-grey"
+                        : "text-secondary"
                     }`}
                   >
                     {t("STEP_FINALISATION")}

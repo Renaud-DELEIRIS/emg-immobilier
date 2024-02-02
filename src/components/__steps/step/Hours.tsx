@@ -1,8 +1,7 @@
-import { IconThumbDown, IconThumbUp } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import { Trans, useTranslation } from "next-i18next";
-import Button from "~/components/button/Button";
+import { Button } from "~/components/button/Button";
 import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
 import StepContainer from "../StepContainer";
@@ -95,12 +94,10 @@ const Hours = () => {
                       {
                         label: t("YES"),
                         value: "yes",
-                        rightIcon: <IconThumbUp />,
                       },
                       {
                         label: t("NO"),
                         value: "no",
-                        rightIcon: <IconThumbDown />,
                       },
                     ]}
                     className="gap-4"
@@ -177,12 +174,10 @@ const Hours = () => {
                       {
                         label: t("YES"),
                         value: "oui",
-                        rightIcon: <IconThumbUp />,
                       },
                       {
                         label: t("NO"),
                         value: "non",
-                        rightIcon: <IconThumbDown />,
                       },
                     ]}
                     className="gap-4"

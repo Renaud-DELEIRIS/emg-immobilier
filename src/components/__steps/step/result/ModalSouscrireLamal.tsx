@@ -2,9 +2,8 @@ import { IconCircleCheck } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import Button from "~/components/button/Button";
-import Tile from "~/components/button/Tile";
-import Select from "~/components/inputs/Select";
+import { Button } from "~/components/button/Button";
+import { SelectInput } from "~/components/inputs/Select";
 import TextInput from "~/components/inputs/TextInput";
 import FlatModal from "~/components/modal/FlatModal";
 import { type Adherent } from "~/constants/lead.constant";
@@ -84,7 +83,7 @@ const ModalSouscrireLamal = ({ open, onClose, lamal, adherent }: Props) => {
           {t("SOUSCRIRE_QUESTION_LAMAL")}
         </p>
         <div className="mt-4 flex w-full flex-col gap-4">
-          <div className="flex w-full flex-row items-center gap-2">
+          {/* <div className="flex w-full flex-row items-center gap-2">
             <Tile
               selected={affiliation === "oui"}
               onClick={() => setAffiliation("oui")}
@@ -99,7 +98,7 @@ const ModalSouscrireLamal = ({ open, onClose, lamal, adherent }: Props) => {
             >
               {tCommon("NO")}
             </Tile>
-          </div>
+          </div> */}
           {affiliation === "non" && (
             <Button onClick={sendInfo}>{t("SOUSCRIRE_SEND_INFO")}</Button>
           )}
@@ -111,7 +110,7 @@ const ModalSouscrireLamal = ({ open, onClose, lamal, adherent }: Props) => {
                 value={affiliattionCaisse}
                 onChange={(e) => setAffiliationCaisse(e)}
               />
-              <Select
+              <SelectInput
                 options={[
                   {
                     label: t("SOUSCRIRE_SINCE_LESS"),

@@ -1,118 +1,83 @@
-import { IconLoader } from "@tabler/icons-react";
-import type { VariantProps } from "class-variance-authority";
-import { cva } from "class-variance-authority";
-import Link from "next/link";
-import { type ReactNode } from "react";
-import type DefaultProps from "~/types/DefaultProps";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
 
-interface ButtonProps extends DefaultProps {
-  onClick?: () => void;
-  disabled?: boolean;
-  loading?: boolean;
-  iconRight?: ReactNode;
-  iconLeft?: ReactNode;
-  href?: string;
-  type?: "button" | "submit" | "reset";
-}
+import { IconLoader2 } from "@tabler/icons-react";
+import { cn } from "~/lib/utils";
 
-const ButtonClass = cva(
-  "border-2 active:scale-105 scale-100 duration-150 disabled:opacity-50 disabled:pointer-events-none text-center font-semibold",
+const buttonVariants = cva(
+  "inline-flex items-center justify-center whitespace-nowrap rounded-[56px] text-base font-semibold ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-center",
   {
     variants: {
-      intent: {
-        primary: [
-          "bg-primary ",
-          "hover:bg-primary-600 border-primary-500/80",
-          "text-white",
-        ],
-        secondary: ["text-neutral-500 border-transparent"],
-        outline: [
-          "bg-transparent",
-          "hover:bg-primary border-[#E0E2E4] bg-white",
-          "text-primary hover:text-white hover:border-primary-500/80",
-        ],
-
-        none: [""],
-      },
-      rounded: {
-        xs: ["rounded-xs"],
-        sm: ["rounded-sm"],
-        md: ["rounded-md"],
-        lg: ["rounded-lg"],
-        xl: ["rounded-xl"],
+      variant: {
+        default: "bg-[#60dcd499] text-dark hover:bg-[#60DCD4]",
+        thirdy: "bg-thirdy text-white hover:bg-thirdy/90",
+        outline:
+          "border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50",
+        secondary: "bg-secondary text-white hover:bg-secondary/90",
+        ghost:
+          "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
+        link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50",
       },
       size: {
-        small: ["text-sm", "", "px-3 py-2"],
-        medium: ["text-base", "py-4", "px-4"],
-        large: ["text-lg", "py-2", "px-6", "h-16"],
-      },
-      widthFull: {
-        true: ["w-full"],
-        false: ["w-fit"],
+        default: "h-[56px] px-[26px]",
+        sm: "h-[50px] px-[21px]",
+        lg: "h-11 rounded-md px-8",
+        icon: "h-11 w-16",
       },
     },
     defaultVariants: {
-      intent: "primary",
-      size: "medium",
-      rounded: "md",
+      variant: "default",
+      size: "default",
     },
   }
 );
 
-const Button = ({
-  children,
-  className = "",
-  onClick,
-  disabled = false,
-  loading = false,
-  href,
-  iconRight,
-  iconLeft,
-  type = "button",
-  ...props
-}: VariantProps<typeof ButtonClass> & ButtonProps) => {
-  const Inside = () => (
-    <div className="relative flex w-full items-center justify-center">
-      {iconLeft && (
-        <div className={loading ? "pr-2 text-transparent" : "pr-2"}>
-          {iconLeft}
-        </div>
-      )}
-      <div className={loading ? "text-transparent" : ""}>{children}</div>
-      {loading && (
-        <div className="absolute">
-          <IconLoader className="animate-spin text-white" />
-        </div>
-      )}
-      {iconRight && (
-        <div className={loading ? "pl-2 text-transparent" : "pl-2"}>
-          {iconRight}
-        </div>
-      )}
-    </div>
-  );
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+  loading?: boolean;
+}
 
-  if (href) {
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    { className, variant, size, asChild = false, disabled, loading, ...props },
+    ref
+  ) => {
+    const Comp = asChild ? Slot : "button";
+
+    if (Comp !== "button") {
+      return (
+        <Comp
+          className={cn(buttonVariants({ variant, size, className }))}
+          ref={ref}
+          {...props}
+        ></Comp>
+      );
+    }
+
     return (
-      <Link
-        onClick={onClick}
-        href={href}
-        className={ButtonClass({ ...props }) + " " + className}
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        disabled={disabled || loading}
+        {...props}
       >
-        <Inside />
-      </Link>
+        <>
+          {props.children}
+          {loading && (
+            <IconLoader2
+              className="ml-2 animate-spin"
+              size={20}
+              strokeWidth={2}
+            />
+          )}
+        </>
+      </Comp>
     );
   }
-  return (
-    <button
-      className={ButtonClass({ ...props }) + " " + className}
-      onClick={onClick}
-      disabled={disabled || loading}
-      type={type}
-    >
-      <Inside />
-    </button>
-  );
-};
+);
+Button.displayName = "Button";
 
-export default Button;
+export { Button, buttonVariants };
