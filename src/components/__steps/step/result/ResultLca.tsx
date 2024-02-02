@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import Button from "~/components/button/Button";
-import { Adherent } from "~/constants/lead.constant";
+import { type Adherent } from "~/constants/lead.constant";
 import ModalComparatifTable from "./ModalComparatifTable";
 import ResultCardLca from "./ResultCardLca";
 import { useResult } from "./ResultProvider";
