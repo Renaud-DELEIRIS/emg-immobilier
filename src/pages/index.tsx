@@ -1,7 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import {
   IconChevronDown,
-  IconMenu2,
   IconPhoneCall,
   IconPhoneFilled,
 } from "@tabler/icons-react";
@@ -15,7 +14,6 @@ import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import { toast } from "react-toastify";
-import { useWindowSize } from "react-use";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
@@ -114,48 +112,6 @@ const Home: NextPage = () => {
     };
   }, []);
 
-  const { width } = useWindowSize();
-  const isMobile = width < 768;
-
-  const removeStyleStep = () => {
-    const steps = document.querySelector("#step-container");
-
-    // Clear style of all steps
-    const stepsChildren = steps?.children;
-    if (stepsChildren) {
-      for (let i = 0; i < stepsChildren.length; i++) {
-        const step = stepsChildren[i];
-        step!.removeAttribute("style");
-      }
-    }
-  };
-
-  const resizeLastStepMobile = () => {
-    const steps = document.querySelector("#step-container");
-    const stepsChildren = steps?.children;
-    if (stepsChildren) {
-      const lastStep = stepsChildren[stepsChildren.length - 1];
-
-      if (lastStep) {
-        const height =
-          window.innerHeight -
-          64 -
-          144 +
-          (currentVisibleStep.id === "adherent" ? 180 : 0);
-        (lastStep as HTMLElement).style.minHeight = height.toString() + "px";
-      }
-    }
-  };
-
-  useEffect(() => {
-    removeStyleStep();
-    if (isMobile) {
-      setTimeout(() => {
-        resizeLastStepMobile();
-      }, 50);
-    }
-  }, [isMobile, currentStep, currentVisibleStep, lead]);
-
   const isFrontalier =
     lead.situation === "frontalier" && lead.npa && lead.npa.key === -1;
 
@@ -252,24 +208,9 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
-            <div className="mx-auto w-full flex-1 pb-36 pt-12 md:pt-0">
+            <div className="mx-auto w-full  max-w-5xl flex-1 pb-36 pt-12 md:pt-0">
               {getStepComponent()}
             </div>
-            {activeStep.id !== "loader" &&
-              activeStep.id !== "result" &&
-              !isFrontalier && (
-                <>
-                  <div className="fixed right-0 top-1/3 z-10  hidden items-center xl:block 2xl:right-[5%]">
-                    <Sidebar />
-                  </div>
-                  <button
-                    className="fixed bottom-16 right-4 z-20 gap-1 rounded-2xl bg-primary p-2 font-bold text-white xl:hidden"
-                    onClick={() => setOpenSide(!openSide)}
-                  >
-                    <IconMenu2 size={20} className="mx-auto md:mx-0" />
-                  </button>
-                </>
-              )}
             <div className="hidden md:block">
               <Footer />
             </div>

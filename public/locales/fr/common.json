@@ -12,6 +12,23 @@
   "YES": "Oui",
   "NO": "Non",
 
+  "header": {
+    "recall": "Rappelez-moi"
+  },
+
+  "item_1": {
+    "title": "91% de nos utilisateurs",
+    "subtitle": "nous recommandent"
+  },
+  "item_2": {
+    "title": "180 000+ utilisateurs",
+    "subtitle": "nous font confiance"
+  },
+  "item_3": {
+    "title": "100% Gratuit",
+    "subtitle": "et sans engagement"
+  },
+
   "STEP_FOR_TITLE": "Pour qui souhaitez-vous comparer ?",
   "STEP_FOR_DESCRIPTION": "Bonjour ! Je suis Emma.<br />En quelques minutes, comparons ensemble plus de 40 compagnies.",
   "STEP_FOR_YOURSELF": "Vous",

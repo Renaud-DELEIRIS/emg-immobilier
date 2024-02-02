@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import { Trans, useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
-import Button from "~/components/button/Button";
+import { Button } from "~/components/button/Button";
 import TextInput from "~/components/inputs/TextInput";
 import TileInput from "~/components/inputs/Tile";
 import { type Adherent } from "~/constants/lead.constant";
@@ -211,10 +211,9 @@ const Adherant = () => {
                       civility: "man",
                     });
                   }}
-                  size="small"
                   className="w-fit"
-                  iconRight={<IconPlus />}
                 >
+                  <IconPlus />
                   {t("STEP_ADHERENT_LIST_ADD")}
                 </Button>
               )}
@@ -281,7 +280,6 @@ const Adherant = () => {
                 <Button
                   type="submit"
                   className="mt-1.5 w-28"
-                  size={"small"}
                   disabled={
                     !(
                       !isValidDob(adherent?.year || "") &&
@@ -363,8 +361,6 @@ const Adherant = () => {
                 setStep("dob");
               }}
               className="mt-4 w-fit"
-              size={"small"}
-              intent={"secondary"}
             >
               {t("CANCEL")}
             </Button>
