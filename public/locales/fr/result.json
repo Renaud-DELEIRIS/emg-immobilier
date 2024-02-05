@@ -1,5 +1,6 @@
 {
-  "RESULT_TITLE": "12 offres trouvées pour vous! Plus qu‘un clic pour être assuré",
+  "RESULT_TITLE": "{{name}}, voici les 20 meilleures offres pour votre santé",
+  "RESULT_INFO": "Résultats non exhaustifs et classés par prix annuels croissants",
   "RESULT_MY_COMPARATIF": "Mon comparatif",
   "RESULT_MODIFY_PROFILE": "Modifier mon profil",
   "RESULT_MODIFY_PROFILE_MOBILE": "Modifier",
@@ -23,6 +24,9 @@
   "SURCOUT": "Soit un surcoût de",
   "BECALLED_SUCCESS": "Nous vous rappelons dans les plus brefs délais",
   "BECALLED_ERROR": "Une erreur est survenue, veuillez réessayer plus tard",
+  "nb_ppl_choose": "+1000 personnes ont sélectionné cette offre sur les 7 derniers jours*",
+  "talk_agent": "Parler à un conseiller",
+  "free_devis": "Obtenir un devis gratuit",
 
   "SOUSCRIRE_TITLE": "Votre demande a bien été enregistrée",
   "SOUSCRIRE_DESCRIPTION": "Vous pouvez gagner du temps sur votre souscription en répondant aux questions suivantes",
@@ -35,5 +39,7 @@
   "SOUSCRIRE_SINCE_BETWEEN": "Entre 1 et 3 ans",
   "SOUSCRIRE_SINCE_MORE": "Plus de 3 ans",
   "SOUSCRIRE_SINCE_LABEL": "Depuis combien de temps êtes-vous affilié ?",
-  "COMPARATIF_SUBSCRIBE": "Souscrire"
+  "COMPARATIF_SUBSCRIBE": "Souscrire",
+  "EXPERT": "Une équipe d‘expert pour vous conseiller",
+  "FREE": "Gratuitement"
 }

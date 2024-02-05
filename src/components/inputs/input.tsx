@@ -150,7 +150,7 @@ export const PhoneNumberInput = React.forwardRef<
             ref={ref}
             value={val?.toString() ?? ""}
             className={twMerge(
-              `w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-base font-medium opacity-80 placeholder:text-grey
+              `w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-base font-medium placeholder:text-grey
               focus-within:ring-1 focus-within:ring-secondary`,
               valid &&
                 "border-primary bg-[#EAF6F8] focus-within:border-primary focus-within:ring-primary",

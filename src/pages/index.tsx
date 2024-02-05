@@ -6,6 +6,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { twMerge } from "tailwind-merge";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
@@ -117,11 +118,25 @@ const Home: NextPage = () => {
         <meta name="robots" content="noindex,nofollow" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
-      <main className="relative flex min-h-[100dvh] flex-col pt-[106px]">
-        {currentVisibleStep && !!currentVisibleStep.stepInfo && loaded && (
-          <>
-            <Header />
-            {/* <div
+      {loaded && (
+        <main
+          className={twMerge(
+            "relative flex min-h-[100dvh] flex-col",
+            !(
+              currentVisibleStep.id === "result" ||
+              currentVisibleStep.id === "loader"
+            )
+              ? "pt-[106px]"
+              : "pt-0"
+          )}
+        >
+          {currentVisibleStep && !!currentVisibleStep.stepInfo && (
+            <>
+              {currentVisibleStep.id === "result" ||
+              currentVisibleStep.id === "loader" ? null : (
+                <Header />
+              )}
+              {/* <div
               className={
                 "becalled-btn container-shadow fixed bottom-4 right-4 z-20 gap-1  bg-primary p-2 font-normal text-white " +
                 (beCalled
@@ -199,19 +214,28 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div> */}
-            <div className="relative mx-auto flex w-full max-w-[1070px] flex-1  scroll-m-0 gap-[60px] px-4">
-              {getStepComponent()}
-              {currentVisibleStep.id === "result" ||
-              currentVisibleStep.id === "loader" ? null : (
-                <Sidebar></Sidebar>
-              )}
-            </div>
-            <div className="hidden md:block">
-              <Footer />
-            </div>
-          </>
-        )}
-      </main>
+              <div
+                className={twMerge(
+                  "relative mx-auto flex w-full flex-1  scroll-m-0 gap-[60px] px-4",
+                  !(
+                    currentVisibleStep.id === "result" ||
+                    currentVisibleStep.id === "loader"
+                  ) && "max-w-[1070px]"
+                )}
+              >
+                {getStepComponent()}
+                {currentVisibleStep.id === "result" ||
+                currentVisibleStep.id === "loader" ? null : (
+                  <Sidebar></Sidebar>
+                )}
+              </div>
+              <div className="hidden md:block">
+                <Footer />
+              </div>
+            </>
+          )}
+        </main>
+      )}
     </>
   );
 };

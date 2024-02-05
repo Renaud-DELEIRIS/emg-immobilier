@@ -98,7 +98,7 @@ export const sendLeadComparea = async (
       value: restdata.economieimpots ? "Oui" : "Non",
     },
     npa: restdata.npa,
-    assuranceactuelle: restdata.actualInsurance,
+    assuranceactuelle: restdata.hasInsurance,
     ...(restdata.situation
       ? {
           nouveauresident: {

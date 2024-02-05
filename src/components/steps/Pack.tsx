@@ -383,7 +383,7 @@ const Pack = ({
           </div>
         </div>
       </div>
-      <div className="mt-8 flex justify-between gap-8">
+      <div className="mt-8 grid justify-between gap-8 md:flex md:grid-cols-2">
         <Button
           variant={"outline-thirdy"}
           onClick={() => {

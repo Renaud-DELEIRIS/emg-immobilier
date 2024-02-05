@@ -12,6 +12,7 @@
   "YES": "Oui",
   "NO": "Non",
   "no_result": "Aucun résultat",
+  "google_review": "600+ avis clients sur Google",
 
   "header": {
     "recall": "Rappelez-moi"
@@ -73,6 +74,7 @@
 
   "STEP_ASSURANCE_TITLE": "Possédez-vous déjà une assurance ?",
   "STEP_ASSURANCE_DESCRIPTION": "Très bien !<br />Possedez-vous une assurance santé ? Si oui,",
+  "STEP_ASSURANCE_LABEL": "Nom de l'assurance",
   "STEP_ASSURANCE_PLACEHOLDER": "p. ex. Helsana",
   "STEP_ASSURANCE_NO": "Pas encore d‘assurance ?",
   "STEP_ASSURANCE_NO_LINK": "Cliquez ici",
@@ -108,7 +110,7 @@
   "STEP_NAME_ALERT_TITLE": "Vos infos sont protégées !",
   "STEP_NAME_ALERT_TEXT": "Ces informations serviront à établir votre devis. Toutes vos données sont 100% sécurisées.",
   "STEP_NAME_LABEL_CONTACT": "Informations de contact",
-  "STEP_NAME_LABEL_CONTACT_DESC": "Vous recevrez le récapitulatif de votre comparatif sur votre adresse email. Le numéro de téléphone permettra à notre équipe de vous contacter si besoin.",
+  "STEP_NAME_LABEL_CONTACT_DESC": "Vous recevrez le récapitulatif de votre comparatif sur votre adresse email. Le numéro de téléphone nous permettra revenir à tout moment sur vos offres.",
   "STEP_NAME_LABEL_EMAIL": "Votre adresse email",
   "STEP_NAME_LABEL_PHONE": "Votre numéro de téléphone",
   "SETP_NAME_OFFER_ACTION": "Découvrir mes offres",
@@ -127,7 +129,6 @@
   "STEP_VERIFY_ACTION": "ACCÉDER AUX TARIFS NÉGOCIÉS",
   "STEP_VERIFY_CODE_TITLE": "Afin de vérifier votre identité, nous vous avons envoyé un code de vérification par SMS<br/>au numéro : <span>{{phone}}</span>",
   "STEP_VERIFY_DESCRIPTION": "Veuillez saisir le code à 4 chiffres :",
-  "STEP_VERIFY_EXPERT": "Une équipe d‘expert pour vous conseiller <u>gratuitement</u>",
   "STEP_VERIFY_RESEND": "Renvoyer le code",
 
   "STEP_HOURS_SUISSE": "Parfait!<br />Nous allons préciser votre profil.",

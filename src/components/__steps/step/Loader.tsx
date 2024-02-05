@@ -63,7 +63,7 @@ const Loading: FC = () => {
       </button> */}
       {show && (
         <motion.div
-          className="mx-auto flex w-full max-w-[350px] flex-1 flex-col items-center justify-center md:max-w-2xl"
+          className="mx-auto flex w-full max-w-[350px] flex-1 flex-col items-center justify-center text-center md:max-w-2xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
@@ -76,7 +76,7 @@ const Loading: FC = () => {
               transition={{ duration: appearAnimation / 1000 }}
             >
               <Image
-                src={"/mascotte/car_hand.png"}
+                src={"/mascotte/doctor.png"}
                 width={136}
                 height={136}
                 alt="mascotte"

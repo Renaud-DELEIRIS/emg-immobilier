@@ -128,7 +128,7 @@ export const STEPS: Step[] = [
       return "npa";
     },
     disabled: (lead) => {
-      return lead.actualInsurance === undefined;
+      return lead.hasInsurance === undefined;
     },
     stepInfo: (lead) => {
       return [4, 8];

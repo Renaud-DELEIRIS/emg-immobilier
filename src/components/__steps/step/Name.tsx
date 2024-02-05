@@ -52,7 +52,7 @@ const Name = () => {
         className="flex flex-row gap-2 md:pl-[160px]"
       >
         <Image
-          src="/mascotte/bras_croise.svg"
+          src="/mascotte/bras_croise.png"
           width={146}
           height={146}
           alt="mascotte"
