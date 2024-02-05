@@ -6,7 +6,7 @@ import { type Adherent } from "~/constants/lead.constant";
 import ModalComparatifTable from "./ModalComparatifTable";
 import ResultCardLca from "./ResultCardLca";
 import { useResult } from "./ResultProvider";
-
+//
 const ResultLca = ({
   monthlyPrice,
   adherent,
