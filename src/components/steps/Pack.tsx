@@ -161,6 +161,7 @@ const Pack = ({
             <PackShowOption
               prestation={optionMedecineAlternative}
               pack={t("STEP_PACK_OPTIONS_MED_ALTERNATIVE")}
+              withSwitch
               defaultLevel={
                 options?.find(
                   (option) => option.label === "Médecine alternative"
@@ -217,6 +218,7 @@ const Pack = ({
             <PackShowOption
               prestation={optionTraitementsDentaires}
               pack={t("STEP_PACK_OPTIONS_TRAITEMENTS_DENTAIRE")}
+              withSwitch
               recommended={false}
               selected={
                 !!options?.find(
@@ -277,6 +279,7 @@ const Pack = ({
             <PackShowOption
               prestation={optionCapitalHospitalier}
               pack={t("STEP_PACK_OPTIONS_CAPITAL_HOSPITALIER")}
+              withSwitch
               recommended={false}
               selected={
                 !!options?.find(
@@ -332,6 +335,7 @@ const Pack = ({
             />{" "}
             <PackShowOption
               prestation={optionHospitalisation}
+              withSwitch
               pack={t("STEP_PACK_OPTIONS_HOSPITALISATION")}
               customLevel={["Flexible", "Semi-privée", "Privée"]}
               recommended={true}

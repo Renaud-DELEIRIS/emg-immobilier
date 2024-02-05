@@ -15,6 +15,7 @@ const Name = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
+  const setVisibleStep = useFormStore((state) => state.setVisibleStep);
   const currentVisibleStep = useFormStore((state) => state.currentVisibleStep);
   const { t } = useTranslation("common");
 
@@ -41,7 +42,10 @@ const Name = () => {
 
   return (
     <div className="w-full flex-col pb-12">
-      <button className="mb-8 flex h-11 items-center gap-2.5 rounded-full border border-[#88889440] bg-[#8888941A] px-5 text-base font-semibold text-[#082623CC] transition-colors hover:bg-[#082623CC] hover:text-white md:mb-[52px]">
+      <button
+        className="mb-8 flex h-11 items-center gap-2.5 rounded-full border border-[#88889440] bg-[#8888941A] px-5 text-base font-semibold text-[#082623CC] transition-colors hover:bg-[#082623CC] hover:text-white md:mb-[52px]"
+        onClick={() => setVisibleStep("package")}
+      >
         <IconChevronLeft size={20} />
         {t`BACK`}
       </button>

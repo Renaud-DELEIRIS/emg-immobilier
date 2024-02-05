@@ -214,7 +214,6 @@ const Adherant = () => {
                       const element =
                         document.getElementById("adherant-editing");
                       if (element) {
-                        console.log(element, element.getBoundingClientRect());
                         const offsetTop =
                           element.getBoundingClientRect().top + window.scrollY;
                         window.scrollTo({

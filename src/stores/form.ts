@@ -225,10 +225,11 @@ export const useFormStore = create<FormState>()(
                 behavior: "smooth",
               });
 
-              // Focus on first focusable element
+              // Focus on first focusable element that don't have the attribute data-nofocus
               const focusableElement = element.querySelector(
-                "input, select, textarea, button"
+                "input:not([data-nofocus]), select:not([data-nofocus]), textarea:not([data-nofocus]), button:not([data-nofocus])"
               ) as HTMLElement;
+              console.log(focusableElement);
               if (focusableElement) {
                 focusableElement.focus();
               }

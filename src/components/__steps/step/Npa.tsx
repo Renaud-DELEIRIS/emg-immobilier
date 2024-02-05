@@ -19,6 +19,7 @@ const Npa = () => {
           components={{
             notHere: (
               <button
+                data-nofocus
                 className="font-semibold text-primary hover:font-bold"
                 onClick={() => {
                   changeLead({

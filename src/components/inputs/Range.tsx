@@ -1,4 +1,4 @@
-import React, { type CSSProperties, type FC } from "react";
+import { type CSSProperties, type FC } from "react";
 import { Range } from "react-range";
 
 interface Props {
@@ -46,7 +46,7 @@ const RangeSlider: FC<Props> = ({
               height: "16px",
               width: "5px",
             }}
-            className="bg-green-500"
+            className="bg-secondary"
           />
         )}
         renderTrack={({ props, children }) => (
@@ -68,7 +68,7 @@ const RangeSlider: FC<Props> = ({
                 borderRadius: "4px",
                 alignSelf: "center",
               }}
-              className="bg-green-200"
+              className="bg-secondary/60"
             >
               {children}
             </div>
@@ -94,7 +94,7 @@ const RangeSlider: FC<Props> = ({
                 height: "16px",
                 width: "5px",
               }}
-              className={isDragged ? "bg-primary-500" : "bg-primary-400"}
+              className={isDragged ? "bg-primary" : "bg-primary"}
             />
           </div>
         )}

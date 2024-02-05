@@ -72,9 +72,9 @@
   "STEP_SITUATION_FRONTALIER": "Travailleur frontalier",
   "STEP_SITUATION_SUISSE": "Future résident suisse",
 
-  "STEP_ASSURANCE_TITLE": "Possédez-vous déjà une assurance ?",
+  "STEP_ASSURANCE_TITLE": "Possédez-vous déjà une assurance maladie ?",
   "STEP_ASSURANCE_DESCRIPTION": "Très bien !<br />Possedez-vous une assurance santé ? Si oui,",
-  "STEP_ASSURANCE_LABEL": "Nom de l'assurance",
+  "STEP_ASSURANCE_LABEL": "Quel est votre assurance actuel ?",
   "STEP_ASSURANCE_PLACEHOLDER": "p. ex. Helsana",
   "STEP_ASSURANCE_NO": "Pas encore d‘assurance ?",
   "STEP_ASSURANCE_NO_LINK": "Cliquez ici",
@@ -167,7 +167,7 @@
   "STEP_PACK_PRESTATION_FITNESS": "Fitness",
   "STEP_PACK_PRESTATION_TRAITEMENTS_ORTHODONTIE": "Traitements orthodontie",
   "STEP_PACK_PRESTATION_AIDE_DOMICILE": "Aide à domicile",
-  "STEP_PACK_PRESTATION_TRAITEMENTS_DENTAIRE": "Traitements dentaire",
+  "STEP_PACK_PRESTATION_TRAITEMENTS_DENTAIRE": "Traitements dentaires",
   "STEP_PACK_PRESTATION_HOSPITALISATION_FLEXIBLE": "Hospitalisation flexible",
   "STEP_PACK_PRESTATION_CHAMBRE_SEMI_PRIVEE": "Chambre semi-privée",
 

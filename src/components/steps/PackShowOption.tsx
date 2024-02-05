@@ -1,5 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
+import ReactSwitch from "react-switch";
 import { twMerge } from "tailwind-merge";
 import { type Prestation } from "~/data/Pack";
 import RangeSlider from "../inputs/Range";
@@ -80,6 +81,7 @@ const PackShowOption = ({
   customLevel,
   defaultLevel,
   onChangeLevel = () => null,
+  withSwitch = false,
 }: {
   pack: string;
   prestation: Prestation[][];
@@ -89,6 +91,7 @@ const PackShowOption = ({
   customLevel?: string[];
   defaultLevel: number;
   onChangeLevel?: (level: number) => void;
+  withSwitch?: boolean;
 }) => {
   const [options, setOptions] = useState<number>(defaultLevel || 1);
   const maxLevel = prestation.length;
@@ -110,11 +113,26 @@ const PackShowOption = ({
           </span>
         </div>
       )}
-      <span className={`mb-5 text-[18px] font-bold leading-[normal]`}>
-        {t(pack)}
-      </span>
+      <div className="mb-5 flex w-full items-center justify-between">
+        <span className={`text-[18px] font-bold leading-[normal]`}>
+          {t(pack)}
+        </span>
+        {withSwitch && (
+          <ReactSwitch
+            checked={selected}
+            onChange={() => onClick(options)}
+            className="md:hidden"
+            onColor="#006D73"
+            height={18}
+            width={40}
+            handleDiameter={6}
+            onHandleColor="#f5f5f5"
+            offHandleColor="#f5f5f5"
+          />
+        )}
+      </div>
       {maxLevel > 1 && (
-        <div className="mb-2 w-full px-8">
+        <div className="mb-2 w-full px-8" onClick={(e) => e.stopPropagation()}>
           <span className="text-sm font-bold text-neutral-600">
             {t("STEP_PACK_LEVEL")}{" "}
             {customLevel ? customLevel[options - 1] : options}

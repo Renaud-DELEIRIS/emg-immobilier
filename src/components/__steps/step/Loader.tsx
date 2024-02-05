@@ -6,11 +6,11 @@ import { useFormStore } from "~/stores/form";
 import { StepTitle } from "../StepContainer";
 
 const partnaire = [
-  "/logo/allianz_grey.svg",
-  "/logo/baloise_grey.svg",
-  "/logo/helvetia_grey.svg",
-  "/logo/vaudoise_grey.svg",
-  "/logo/zurich_grey.svg",
+  "/logo/LOGO_PARTENAIRE-10.png",
+  "/logo/LOGO_PARTENAIRE-22.png",
+  "/logo/LOGO_PARTENAIRE-40.png",
+  "/logo/LOGO_PARTENAIRE-41.png",
+  "/logo/LOGO_PARTENAIRE-46.png",
 ];
 
 const appearAnimation = 400;
@@ -136,7 +136,7 @@ const Loading: FC = () => {
                 key={partnaireToShow}
                 src={partnaire[partnaireToShow]}
                 alt="partnaire"
-                className="absolute left-0 right-0 top-0 mx-auto h-10 w-40 opacity-40"
+                className="absolute left-0 right-0 top-0 mx-auto h-10 w-40 object-contain"
                 initial={{ opacity: 0, scale: 0.5, x: 100 }}
                 animate={{ opacity: 1, scale: 1, x: 0 }}
                 exit={{ opacity: 0, scale: 0.5, x: -100 }}
