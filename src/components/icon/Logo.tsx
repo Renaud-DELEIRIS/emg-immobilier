@@ -57,7 +57,7 @@ export const LogoNoMascotte = () => (
 
 const Logo = () => (
   <div className="flex items-center">
-    <Image src="/mascotte/bras_croise.png" alt="Logo" width={48} height={48} />
+    <Image src="/mascotte/bras_croise.svg" alt="Logo" width={48} height={48} />
     <LogoNoMascotte />
   </div>
 );
