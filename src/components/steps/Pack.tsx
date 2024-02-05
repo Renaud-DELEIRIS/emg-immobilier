@@ -1,4 +1,4 @@
-import { IconCheck, IconCircleCaretDown } from "@tabler/icons-react";
+import { IconCheck, IconChevronDown } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
@@ -107,7 +107,7 @@ const Pack = ({
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col items-start gap-4 md:flex-row">
+      <div className="flex flex-col items-end gap-4 md:flex-row">
         <PackShowOption
           prestation={[prestationsEssentials]}
           defaultLevel={1}
@@ -133,15 +133,17 @@ const Pack = ({
           onClick={() => setSelected(3)}
         />
       </div>
-      <div className="container-shadow mt-8 rounded-lg border p-4">
+      <div className="container-shadow mt-5 rounded-xl border-[1.5px] border-[#8888941A] bg-white px-5 py-4">
         <button
           className="flex w-full items-center justify-between text-left"
           onClick={() => setOptionExpanded(!optionExpanded)}
         >
-          <span className="text-lg ">{t("STEP_PACK_OPTIONS")}</span>
-          <IconCircleCaretDown
+          <span className="text-[16px] font-medium leading-[normal]">
+            {t("STEP_PACK_OPTIONS")}
+          </span>
+          <IconChevronDown
             size={24}
-            className={`transition-transform ${
+            className={`text-grey transition-transform ${
               !optionExpanded ? "rotate-180" : ""
             }`}
           />
@@ -382,16 +384,20 @@ const Pack = ({
         </div>
       </div>
       <div className="mt-8 flex justify-between gap-8">
-        <button
-          className="flex w-fit items-center gap-2 rounded-lg border border-red-500 bg-white p-2 text-lg font-bold text-red-500 hover:bg-red-100"
+        <Button
+          variant={"outline-thirdy"}
           onClick={() => {
+            if (lead.adherent.length === adherentIndex + 1) {
+              nextStep("package");
+              return;
+            }
             setOptions([]);
             setSelected(undefined);
           }}
         >
           {t("STEP_PACK_BASE")}
           {!selected && <IconCheck size={24} />}
-        </button>
+        </Button>
         {showNext && (
           <Button
             className="w-40"

@@ -88,7 +88,7 @@
   "STEP_FRANCHISE_TITLE_MAIN": "Quelle franchise souhaitez-vous ?",
   "STEP_FRANCHISE_TITLE_SPOUSE_FEMALE": "Quelle franchise souhaitez-vous pour elle ?",
   "STEP_FRANCHISE_TITLE_SPOUSE_MALE": "Quelle franchise souhaitez-vous pour lui ?",
-  "STEP_FRANCHISE_INFO_FRANCHISE": "Si vos dépenses médicales sont inférieures à 1‘700 CHF par année, je vous conseilleune franchise à 2‘500 CHF",
+  "STEP_FRANCHISE_INFO_FRANCHISE": "Si vos dépenses médicales sont inférieures à 1‘700 CHF par année, je vous conseille une franchise à 2‘500 CHF",
   "STEP_FRANCHISE_INFO_COUVERTURE": "Si vous travaillez plus de 8h/semaine pour le même employeur, le risque accident est couvert par votre employeur",
   "STEP_FRANCHISE_COUVERTURE_TITLE": "Concernant le risque accident,",
   "STEP_FRANCHISE_COUVERTURE_OTHER": "Concernant son risque accident,",
@@ -99,12 +99,19 @@
   "STEP_FRANCHISE_TITLE_CHILD": "Votre enfant né(e) en {{year}}",
   "STEP_FRANCHISE_PLACEHOLDER": "Sélectionner une franchise",
 
-  "STEP_LOADER_TITLE": "Nous préparons les éléments nécessaires. Veuillez patienter.",
+  "STEP_LOADER_TITLE": "Nous comparons pour vous parmi plus de 35 partenaires",
+  "STEP_LOADER_DESCRIPTION": "Vos données personnelles garanties 100% sécurisées.",
 
-  "STEP_NAME_DESCRIPTION": "Nous sommes sur la fin !<br />J‘ai besoin d‘informations supplémentaires pour établir votre offre.",
-  "STEP_NAME_TITLE": "Comment vous appelez-vous ?",
+  "STEP_NAME_LABEL": "Votre prénom et nom",
   "STEP_NAME_PLACEHOLDER_FIRSTNAME": "Prénom",
   "STEP_NAME_PLACEHOLDER_LASTNAME": "Nom",
+  "STEP_NAME_ALERT_TITLE": "Vos infos sont protégées !",
+  "STEP_NAME_ALERT_TEXT": "Ces informations serviront à établir votre devis. Toutes vos données sont 100% sécurisées.",
+  "STEP_NAME_LABEL_CONTACT": "Informations de contact",
+  "STEP_NAME_LABEL_CONTACT_DESC": "Vous recevrez le récapitulatif de votre comparatif sur votre adresse email. Le numéro de téléphone permettra à notre équipe de vous contacter si besoin.",
+  "STEP_NAME_LABEL_EMAIL": "Votre adresse email",
+  "STEP_NAME_LABEL_PHONE": "Votre numéro de téléphone",
+  "SETP_NAME_OFFER_ACTION": "Découvrir mes offres",
 
   "STEP_ECONOMIE_DESCRIPTION": "Je m’aperçois que dans votre situation, des économies d’impôts sont possibles.",
   "STEP_ECONOMIE_TITLE": "Souhaitez vous bénéficier de conseils supplémentaires concernant vos impôts ?",
@@ -133,11 +140,10 @@
   "STEP_HOURS_SPOUSE_MALE": "Votre conjoint travaille-t-il plus de 8h par semaine pour le même employeur ?",
   "STEP_HOURS_SPOUSE_CHILD": "Votre enfant né en {{year}} travaille-t-il plus de 8h par semaine pour le même employeur ?",
 
-  "STEP_PACK_DESCRIPTION": "Parfait, en matière de prestations complémentaires.<br />Choissisez ce qui convient le mieux.",
-  "STEP_PACK_MAIN": "Pour vous",
-  "STEP_PACK_SPOUSE_FEMALE": "Pour votre conjointe",
-  "STEP_PACK_SPOUSE_MALE": "Pour votre conjoint",
-  "STEP_PACK_CHILD": "Pour votre enfant né en {{year}}",
+  "STEP_PACK_MAIN": "Vos prestations complémentaires",
+  "STEP_PACK_SPOUSE_FEMALE": "La prestations complémentaires de votre conjointe",
+  "STEP_PACK_SPOUSE_MALE": "La prestations complémentaires de votre conjoint",
+  "STEP_PACK_CHILD": "La prestations complémentaires de votre enfant né en {{year}}",
 
   "STEP_PACK_ESSENTIEL": "Essentiel",
   "STEP_PACK_CONFORT": "Confort",
@@ -184,11 +190,5 @@
   "CARD_SUBSCRIBE_ONLINE": "Souscrire en ligne",
   "CARD_BECALLED": "Être rappelé",
   "CARD_PRESTATION": "Prestations",
-  "CARD_DETAILS": "Détails",
-
-  "LOADING_TITLE": "Chargement de vos résultats...",
-  "LOADING_STEP_1": "Analyse de votre situation",
-  "LOADING_STEP_2": "Calcul des garanties nécessaires",
-  "LOADING_STEP_3": "Comparaison des couvertures",
-  "LOADING_STEP_4": "Préparation de votre proposition"
+  "CARD_DETAILS": "Détails"
 }

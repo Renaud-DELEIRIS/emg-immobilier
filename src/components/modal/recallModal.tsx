@@ -55,7 +55,7 @@ const RecallModal = ({
         </Alert>
         <Button
           variant={"thirdy"}
-          disabled={!isValidPhoneNumber(lead.phone)}
+          disabled={!isValidPhoneNumber(lead.phone ?? "")}
           className="mt-[14px]"
           onClick={() => void onRecall()}
         >

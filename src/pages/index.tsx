@@ -1,4 +1,3 @@
-import { Dialog, Transition } from "@headlessui/react";
 import dayjs from "dayjs";
 import { type GetStaticProps, type NextPage } from "next";
 import { useTranslation } from "next-i18next";
@@ -6,7 +5,7 @@ import nextI18nextConfig from "next-i18next.config.mjs";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
@@ -47,7 +46,6 @@ const Home: NextPage = () => {
   const fetchSession = useSessionStore((state) => state.fetchSession);
   const setSessionId = useSessionStore((state) => state.setSessionId);
   const [loaded, setLoaded] = useState(false);
-  const [openSide, setOpenSide] = useState(false);
 
   useEffect(() => {
     initStep();
@@ -201,56 +199,18 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div> */}
-            <div className="relative mx-auto flex w-full max-w-[1070px] flex-1 gap-[60px] px-4">
+            <div className="relative mx-auto flex w-full max-w-[1070px] flex-1  scroll-m-0 gap-[60px] px-4">
               {getStepComponent()}
-              <Sidebar></Sidebar>
+              {currentVisibleStep.id === "result" ||
+              currentVisibleStep.id === "loader" ? null : (
+                <Sidebar></Sidebar>
+              )}
             </div>
             <div className="hidden md:block">
               <Footer />
             </div>
           </>
         )}
-        <Transition appear show={openSide} as={Fragment}>
-          <Dialog
-            as="div"
-            className="relative z-40"
-            onClose={() => setOpenSide(false)}
-          >
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-black/30 backdrop-blur-[5px]" />
-            </Transition.Child>
-
-            <div className="fixed inset-0 overflow-y-auto">
-              <div className="flex min-h-full items-center justify-center p-4  text-center">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <Dialog.Panel className="transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
-                    <Sidebar
-                      onClose={() => {
-                        setOpenSide(false);
-                      }}
-                    />
-                  </Dialog.Panel>
-                </Transition.Child>
-              </div>
-            </div>
-          </Dialog>
-        </Transition>
       </main>
     </>
   );

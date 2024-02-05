@@ -11,6 +11,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-[#60dcd499] text-dark hover:bg-[#60DCD4]",
+        "outline-thirdy": "border-2 border-thirdy text-dark hover:bg-thirdy/5",
         thirdy: "bg-thirdy text-white hover:bg-thirdy/90",
         outline:
           "border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50",

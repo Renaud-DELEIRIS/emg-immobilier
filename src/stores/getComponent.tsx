@@ -131,19 +131,18 @@ export const getStepComponent = (
       return (
         <>
           <div className="mx-auto max-w-7xl md:py-8" key={"result"}>
-            {!lead.verified && <Verification />}
+            {/* {!lead.verified && <Verification />} */}
             <ResultProvider>
               <Result />
             </ResultProvider>
           </div>
         </>
       );
-    case "economies":
-      childs.push(<Economie key={"economies"} />);
-      break;
     case "name":
       childs.push(<Name key={"name"} />);
       break;
+    case "economies":
+      childs.push(<Economie key={"economies"} />);
     case "package":
       childs.push(<ChoosePack key={"package"} />);
     case "franchise":
@@ -162,7 +161,7 @@ export const getStepComponent = (
 
   return (
     <div
-      className={`flex w-full min-w-[670px] flex-col gap-[40px]`}
+      className={`flex w-full flex-col gap-[40px] md:min-w-[670px]`}
       id="step-container"
     >
       {childs.reverse()}

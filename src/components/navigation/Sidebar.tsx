@@ -9,13 +9,6 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
   const currentStep = useFormStore((state) => state.currentStep);
   const setVisibleStep = useFormStore((state) => state.setVisibleStep);
 
-  const active =
-    activeStep.stepInfo(lead)[0] >= 0 && activeStep.stepInfo(lead)[0] <= 4
-      ? "adherant"
-      : activeStep.stepInfo(lead)[0] >= 5 && activeStep.stepInfo(lead)[0] <= 6
-      ? "besoins"
-      : "finalisation";
-
   const passed =
     currentStep.stepInfo(lead)[0] >= 0 && currentStep.stepInfo(lead)[0] <= 4
       ? "adherant"

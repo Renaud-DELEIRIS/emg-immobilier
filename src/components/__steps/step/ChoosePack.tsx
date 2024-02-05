@@ -1,4 +1,4 @@
-import { Trans, useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import Pack from "~/components/steps/Pack";
 import { useFormStore } from "~/stores/form";
@@ -18,7 +18,6 @@ const ChoosePack = () => {
           if (index > adherent) return null;
           return (
             <StepContainer
-              description={<Trans i18nKey={"STEP_PACK_DESCRIPTION"} t={t} />}
               title={
                 data.type === "main"
                   ? t("STEP_PACK_MAIN")

@@ -185,8 +185,10 @@ export const STEPS: Step[] = [
   {
     id: "package",
     next: (lead) => {
-      if (lead.verified && lead.nom && lead.prenom) {
-        return "loader";
+      const main = lead.adherent.find((a) => a.type === "main") as Adherent;
+      const age = dayjs(main.year || "", "YYYY").diff(dayjs(), "year") * -1;
+      if (age >= 25 && age <= 50) {
+        return "economies";
       }
       return "name";
     },
@@ -201,15 +203,25 @@ export const STEPS: Step[] = [
     },
   },
   {
+    id: "economies",
+    next: (lead) => {
+      return "name";
+    },
+    disabled: (lead) => {
+      return false;
+    },
+    previous: (lead) => {
+      return "name";
+    },
+    stepInfo: (lead) => {
+      return [7, 8];
+    },
+  },
+  {
     id: "name",
     next: (lead) => {
       if (lead.situation == "frontalier" && lead.npa && lead.npa.key === -1)
         return "loader";
-      const main = lead.adherent.find((a) => a.type === "main") as Adherent;
-      const age = dayjs(main.year || "", "YYYY").diff(dayjs(), "year") * -1;
-      if (age >= 25 && age <= 50) {
-        return "economies";
-      }
       return "loader";
     },
     disabled: (lead) => {
@@ -224,21 +236,6 @@ export const STEPS: Step[] = [
       return lead.situation == "frontalier" && lead.npa && lead.npa.key === -1
         ? "work-hours"
         : "package";
-    },
-    stepInfo: (lead) => {
-      return [7, 8];
-    },
-  },
-  {
-    id: "economies",
-    next: (lead) => {
-      return "loader";
-    },
-    disabled: (lead) => {
-      return false;
-    },
-    previous: (lead) => {
-      return "name";
     },
     stepInfo: (lead) => {
       return [7, 8];

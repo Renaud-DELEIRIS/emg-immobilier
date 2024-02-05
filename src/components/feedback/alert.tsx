@@ -39,14 +39,8 @@ const Alert = React.forwardRef<
       className={cn(alertVariants({ variant }), className)}
       {...props}
     >
-      <div className="flex flex-col gap-0.5">
-        {!noTitle && (
-          <span className="text-lg font-bold tracking-[-0.36px]">
-            {t("alert." + (variant ?? ""))}
-          </span>
-        )}
-        <span>{children}</span>
-      </div>
+      {!noTitle && <AlertTitle>{t("alert." + (variant ?? ""))}</AlertTitle>}
+      {children}
     </div>
   );
 });
@@ -58,7 +52,7 @@ const AlertTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h5
     ref={ref}
-    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+    className={cn("text-lg font-bold tracking-[-0.36px]", className)}
     {...props}
   />
 ));

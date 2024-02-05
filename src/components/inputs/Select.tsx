@@ -176,6 +176,17 @@ const SelectInput = React.forwardRef<
     ref
   ) => {
     const id = React.useId();
+    const [open, setOpen] = React.useState(false);
+
+    React.useEffect(() => {
+      if (open) {
+        document.body.style.setProperty("overflow-y", "auto", "important");
+        document.body.style.setProperty("margin-right", "0px", "important");
+      } else {
+        document.body.style.removeProperty("margin-right");
+        document.body.style.removeProperty("overflow-y");
+      }
+    }, [open]);
     return (
       <div className={twMerge("w-full", className)}>
         {label && (
@@ -192,13 +203,12 @@ const SelectInput = React.forwardRef<
             onValueChange && onValueChange(e);
             onChange && onChange(e);
           }}
+          open={open}
+          onOpenChange={setOpen}
           {...props}
         >
-          <SelectTrigger ref={ref}>
-            <SelectValue
-              placeholder={placeholder}
-              className="data-[placeholder]:text-red-500"
-            />
+          <SelectTrigger ref={ref} onClick={() => setOpen(!open)}>
+            <SelectValue placeholder={placeholder} />
           </SelectTrigger>
           <SelectContent>
             {props.options.map((option) => (

@@ -28,6 +28,7 @@ export interface IInput extends React.HTMLProps<HTMLInputElement> {
   placeholder?: string;
   wrapperClassName?: string;
   valid?: boolean;
+  icon?: React.ReactNode;
 }
 
 const Input = React.forwardRef<HTMLInputElement, IInput>(
@@ -40,6 +41,7 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
       insideText = "",
       error = "",
       valid = false,
+      icon,
       ...props
     },
     ref
@@ -72,6 +74,7 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
             className={twMerge(
               `w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-base font-medium outline-8 placeholder:text-grey focus-within:border-secondary  focus-within:outline-secondary`,
               insideText ? "pr-10" : "pr-4",
+              icon && "pl-12",
               valid &&
                 "border-primary bg-[#0CBCB014] focus-within:border-primary focus-within:outline-primary",
               className
@@ -83,6 +86,11 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
           {insideText && (
             <div className="absolute bottom-0 right-0 top-0 flex items-center px-4 text-sm font-medium text-grey opacity-80">
               {insideText}
+            </div>
+          )}
+          {icon && (
+            <div className="absolute bottom-0 left-0 top-0 flex items-center pl-4 text-grey opacity-80">
+              {icon}
             </div>
           )}
         </div>
@@ -107,6 +115,8 @@ export const PhoneNumberInput = React.forwardRef<
       tooltip,
       error = "",
       wrapperClassName = "",
+      value: val,
+      valid,
       onChange,
       ...props
     },
@@ -134,19 +144,23 @@ export const PhoneNumberInput = React.forwardRef<
             )}
           </label>
         )}
-        <div className={"full-width relative"}>
+        <div className={"full-width relative bg-white"}>
           <PhoneInput
             id={id}
             ref={ref}
+            value={val?.toString() ?? ""}
             className={twMerge(
-              `w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-sm font-medium opacity-80 placeholder:text-grey
+              `w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-base font-medium opacity-80 placeholder:text-grey
               focus-within:ring-1 focus-within:ring-secondary`,
+              valid &&
+                "border-primary bg-[#EAF6F8] focus-within:border-primary focus-within:ring-primary",
               className
             )}
             defaultCountry="CH"
             numberInputProps={{
               ...props,
-              className: "focus-within:outline-none focus-within:ring-0",
+              className:
+                "focus-within:outline-none focus-within:ring-0 bg-inherit",
             }}
             onChange={(e) => onChange && onChange(e)}
           />
