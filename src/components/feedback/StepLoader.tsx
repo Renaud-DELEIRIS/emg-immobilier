@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useEffect, useId, useState } from "react";
 
 interface StepLoaderProps {

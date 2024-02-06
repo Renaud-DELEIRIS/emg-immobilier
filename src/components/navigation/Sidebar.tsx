@@ -10,11 +10,17 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
   const setVisibleStep = useFormStore((state) => state.setVisibleStep);
 
   const passed =
-    currentStep.stepInfo(lead)[0] >= 0 && currentStep.stepInfo(lead)[0] <= 4
-      ? "adherant"
-      : currentStep.stepInfo(lead)[0] >= 5 && currentStep.stepInfo(lead)[0] <= 6
-      ? "besoins"
-      : "finalisation";
+    currentStep.stepInfo(lead)[0] >= 0 && currentStep.stepInfo(lead)[0] <= 5
+      ? 1
+      : currentStep.stepInfo(lead)[0] >= 6 && currentStep.stepInfo(lead)[0] <= 9
+      ? 2
+      : currentStep.stepInfo(lead)[0] >= 10 &&
+        currentStep.stepInfo(lead)[0] <= 11
+      ? 3
+      : currentStep.stepInfo(lead)[0] >= 12 &&
+        currentStep.stepInfo(lead)[0] <= 13
+      ? 4
+      : 5;
 
   const isFrontalier =
     lead.situation === "frontalier" && lead.npa && lead.npa.key === -1;
@@ -28,10 +34,9 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
         <ul className="space-y-6 leading-[normal]">
           <li>
             <button
-              className="flex  items-center gap-4"
+              className="flex items-center gap-4"
               onClick={() => {
-                let toStep: StepId =
-                  lead.npa?.key === -1 ? "situation" : "assurance-actuelle";
+                let toStep: StepId = "car-brand";
                 const activeStepInfo = currentStep.stepInfo(lead)[0];
                 while (getStepById(toStep).stepInfo(lead)[0] > activeStepInfo) {
                   toStep = getStepById(toStep).previous(lead) as StepId;
@@ -44,118 +49,142 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
                 <IconCheck size={20} className="text-white" />
               </div>
               <span className={`text-sm font-medium text-secondary`}>
-                {t("STEP_ADHERENT")}
+                {t("STEP_CAR_POSSESION")}
               </span>
             </button>
           </li>
-          {isFrontalier ? (
-            <li>
-              <button
-                onClick={() => {
-                  setVisibleStep("work-hours");
-                  onClose();
-                }}
-                disabled={passed === "adherant"}
-                className={"flex items-center  gap-4 disabled:opacity-50"}
+          <li>
+            <button
+              onClick={() => {
+                let toStep: StepId = "package";
+                const activeStepInfo = currentStep.stepInfo(lead)[0];
+                while (getStepById(toStep).stepInfo(lead)[0] > activeStepInfo) {
+                  toStep = getStepById(toStep).previous(lead) as StepId;
+                }
+                setVisibleStep(toStep);
+                onClose();
+              }}
+              disabled={passed <= 1}
+              className={"flex items-center  gap-4 disabled:opacity-50"}
+            >
+              <div
+                className={`grid h-6 w-6 place-items-center rounded-full ${
+                  passed <= 1 ? "bg-[#0CBCB01A]" : "bg-primary"
+                }`}
               >
-                <div
-                  className={`grid h-6 w-6 place-items-center rounded-full ${
-                    passed === "adherant" ? "bg-[#0CBCB01A]" : "bg-primary"
-                  }`}
-                >
-                  <IconCheck
-                    size={20}
-                    className={
-                      passed === "adherant" ? "text-primary" : "text-white"
-                    }
-                  />
-                </div>
-                <span
-                  className={`text-sm font-medium ${
-                    passed === "adherant" ? "text-grey" : "text-secondary"
-                  }`}
-                >
-                  {t("STEP_FRONTALIER")}
-                </span>
-              </button>
-            </li>
-          ) : (
-            <>
-              <li>
-                <button
-                  onClick={() => {
-                    let toStep: StepId = "package";
-                    const activeStepInfo = currentStep.stepInfo(lead)[0];
-                    while (
-                      getStepById(toStep).stepInfo(lead)[0] > activeStepInfo
-                    ) {
-                      toStep = getStepById(toStep).previous(lead) as StepId;
-                    }
-                    setVisibleStep(toStep);
-                    onClose();
-                  }}
-                  disabled={passed === "adherant"}
-                  className={"flex items-center  gap-4 disabled:opacity-50"}
-                >
-                  <div
-                    className={`grid h-6 w-6 place-items-center rounded-full ${
-                      passed === "adherant" ? "bg-[#0CBCB01A]" : "bg-primary"
-                    }`}
-                  >
-                    <IconCheck
-                      size={20}
-                      className={
-                        passed === "adherant" ? "text-primary" : "text-white"
-                      }
-                    />
-                  </div>
-                  <span
-                    className={`text-sm font-medium ${
-                      passed === "adherant" ? "text-grey" : "text-secondary"
-                    }`}
-                  >
-                    {t("STEP_BESOINS")}
-                  </span>
-                </button>
-              </li>
-              <li>
-                <button
-                  className="flex  items-center gap-4 disabled:opacity-50"
-                  disabled={passed === "adherant" || passed === "besoins"}
-                  onClick={() => {
-                    setVisibleStep("name");
-                    onClose();
-                  }}
-                >
-                  <div
-                    className={`grid h-6 w-6 place-items-center rounded-full ${
-                      passed === "adherant" || passed === "besoins"
-                        ? "bg-[#0CBCB01A]"
-                        : "bg-primary"
-                    }`}
-                  >
-                    <IconCheck
-                      size={20}
-                      className={
-                        passed === "adherant" || passed === "besoins"
-                          ? "text-primary"
-                          : "text-white"
-                      }
-                    />
-                  </div>
-                  <span
-                    className={`text-sm font-medium ${
-                      passed === "adherant" || passed === "besoins"
-                        ? "text-grey"
-                        : "text-secondary"
-                    }`}
-                  >
-                    {t("STEP_FINALISATION")}
-                  </span>
-                </button>
-              </li>
-            </>
-          )}
+                <IconCheck
+                  size={20}
+                  className={passed <= 1 ? "text-primary" : "text-white"}
+                />
+              </div>
+              <span
+                className={`text-sm font-medium ${
+                  passed <= 1 ? "text-grey" : "text-secondary"
+                }`}
+              >
+                {t("STEP_CAR_USAGE")}
+              </span>
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => {
+                let toStep: StepId = "package";
+                const activeStepInfo = currentStep.stepInfo(lead)[0];
+                while (getStepById(toStep).stepInfo(lead)[0] > activeStepInfo) {
+                  toStep = getStepById(toStep).previous(lead) as StepId;
+                }
+                setVisibleStep(toStep);
+                onClose();
+              }}
+              disabled={passed <= 2}
+              className={"flex items-center  gap-4 disabled:opacity-50"}
+            >
+              <div
+                className={`grid h-6 w-6 place-items-center rounded-full ${
+                  passed <= 2 ? "bg-[#0CBCB01A]" : "bg-primary"
+                }`}
+              >
+                <IconCheck
+                  size={20}
+                  className={passed <= 2 ? "text-primary" : "text-white"}
+                />
+              </div>
+              <span
+                className={`text-sm font-medium ${
+                  passed <= 2 ? "text-grey" : "text-secondary"
+                }`}
+              >
+                {t("STEP_CAR_INFORMATIONS")}
+              </span>
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => {
+                let toStep: StepId = "package";
+                const activeStepInfo = currentStep.stepInfo(lead)[0];
+                while (getStepById(toStep).stepInfo(lead)[0] > activeStepInfo) {
+                  toStep = getStepById(toStep).previous(lead) as StepId;
+                }
+                setVisibleStep(toStep);
+                onClose();
+              }}
+              disabled={passed <= 3}
+              className={"flex items-center  gap-4 disabled:opacity-50"}
+            >
+              <div
+                className={`grid h-6 w-6 place-items-center rounded-full ${
+                  passed <= 3 ? "bg-[#0CBCB01A]" : "bg-primary"
+                }`}
+              >
+                <IconCheck
+                  size={20}
+                  className={passed <= 3 ? "text-primary" : "text-white"}
+                />
+              </div>
+              <span
+                className={`text-sm font-medium ${
+                  passed <= 3 ? "text-grey" : "text-secondary"
+                }`}
+              >
+                {t("STEP_CAR_COVERAGE")}
+              </span>
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => {
+                let toStep: StepId = "package";
+                const activeStepInfo = currentStep.stepInfo(lead)[0];
+                while (getStepById(toStep).stepInfo(lead)[0] > activeStepInfo) {
+                  toStep = getStepById(toStep).previous(lead) as StepId;
+                }
+                setVisibleStep(toStep);
+                onClose();
+              }}
+              disabled={passed <= 4}
+              className={"flex items-center  gap-4 disabled:opacity-50"}
+            >
+              <div
+                className={`grid h-6 w-6 place-items-center rounded-full ${
+                  passed <= 4 ? "bg-[#0CBCB01A]" : "bg-primary"
+                }`}
+              >
+                <IconCheck
+                  size={20}
+                  className={passed <= 4 ? "text-primary" : "text-white"}
+                />
+              </div>
+              <span
+                className={`text-sm font-medium ${
+                  passed <= 4 ? "text-grey" : "text-secondary"
+                }`}
+              >
+                {t("STEP_CAR_INFOS")}
+              </span>
+            </button>
+          </li>
         </ul>
       </aside>
     </>

@@ -31,6 +31,16 @@
     "subtitle": "et sans engagement"
   },
 
+  "STEP_CAR_POSSESION_TITLE": "Quelle voiture souhaitez-vous assurer ?",
+  "STEP_CAR_POSSESION_CURRENT": "Ma voiture actuelle",
+  "STEP_CAR_POSSESION_NEXT": "Une voiture que je souhaite acheter",
+
+  "STEP_BRAND_TITLE": "Quel est la marque de votre véhicule ?",
+  "STEP_BRAND_PLACEHOLDER": "Tapez la marque de votre véhicule",
+
+  "STEP_MODEL_TITLE": "Quel est la modèle de votre véhicule ?",
+  "STEP_MODEL_PLACEHOLDER": "Tapez la marque de votre véhicule",
+
   "STEP_FOR_TITLE": "Pour qui souhaitez-vous comparer ?",
   "STEP_FOR_YOURSELF": "Un adulte",
   "STEP_FOR_SPOUSE": "Un couple",

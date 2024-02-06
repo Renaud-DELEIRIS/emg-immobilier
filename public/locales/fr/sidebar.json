@@ -2,5 +2,10 @@
   "STEP_ADHERENT": "Adhérent",
   "STEP_FRONTALIER": "Frontalier",
   "STEP_BESOINS": "Besoins",
-  "STEP_FINALISATION": "Finalisation"
+  "STEP_FINALISATION": "Finalisation",
+  "STEP_CAR_POSSESION": "Votre voiture",
+  "STEP_CAR_USAGE": "Utilisation de votre voiture",
+  "STEP_CAR_INFORMATIONS": "Vos informations",
+  "STEP_CAR_COVERAGE": "Votre couverture",
+  "STEP_CAR_INFOS": "Vos coordonnées"
 }

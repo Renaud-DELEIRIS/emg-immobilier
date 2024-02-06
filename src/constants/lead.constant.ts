@@ -2,6 +2,8 @@ import dayjs from "dayjs";
 import { z } from "zod";
 
 export const initialData: schemaData = {
+  carPossesion: "",
+  carBrand: "",
   startInsurance: dayjs().add(1, "month").set("date", 1).format("DD.MM.YYYY"),
   paymentFrequency: "month",
   adherent: [],
@@ -54,6 +56,8 @@ export const schemaKeyValue = z.object({
 });
 
 export const schemaData = z.object({
+  carPossesion: z.string(),
+  carBrand: z.string(),
   startInsurance: z.string(),
   paymentFrequency: z.string(),
   adherent: z.array(shemaAdherent),

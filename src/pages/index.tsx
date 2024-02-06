@@ -63,12 +63,17 @@ const Home: NextPage = () => {
     const stepLabelFromUrl = router.query.step;
     console.log(stepLabelFromUrl);
     console.log(currentVisibleStep);
+    console.log(currentStep);
+
     if (
       typeof stepLabelFromUrl === "string" &&
       stepLabelFromUrl !== currentVisibleStep.id
     ) {
       const stepFromUrl = STEPS.find((s) => s.id === stepLabelFromUrl);
+      console.log(stepFromUrl);
       if (stepFromUrl) {
+        console.log("update visibleStep");
+        console.log(stepFromUrl.id);
         setVisibleStep(stepFromUrl.id);
       }
     } else if (!stepLabelFromUrl) {
