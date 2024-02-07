@@ -7,10 +7,12 @@ interface Props {
   options: {
     value: string | boolean;
     label: string;
+    info?: string;
     icon?: React.ReactElement;
   }[];
   className?: string;
   multiple?: boolean;
+  withoutDot?: boolean;
 }
 
 const TileInput = ({
@@ -18,6 +20,7 @@ const TileInput = ({
   onChange,
   options,
   className = "",
+  withoutDot = false,
   multiple,
 }: Props) => {
   const handleChange = (value: string | boolean) => {
@@ -45,19 +48,30 @@ const TileInput = ({
         <button
           key={option.value.toString()}
           className={twMerge(
-            `group flex h-[68px] w-full items-center gap-[10px] rounded-xl border-[1.5px] border-[#8888941A] bg-white px-[20px] text-left shadow-[0px_0px_20px_0px_rgba(8,38,35,0.05)] transition-all duration-200 ease-in-out hover:border-primary hover:shadow-[0px_0px_20px_0px_rgba(8,38,35,0.1)]`,
+            `group flex min-h-[68px] w-full items-center gap-[10px] rounded-xl border-[1.5px] border-[#8888941A] bg-white px-[20px] py-[14px] text-left shadow-[0px_0px_20px_0px_rgba(8,38,35,0.05)] transition-all duration-200 ease-in-out hover:border-primary hover:shadow-[0px_0px_20px_0px_rgba(8,38,35,0.1)]`,
             isSelected(option.value) && "border-primary bg-[#0CBCB014]"
           )}
           onClick={() => handleChange(option.value)}
         >
           <div className="shrink-0">{option.icon}</div>
-          <div
-            className={twMerge(
-              "h-6 w-6 shrink-0 rounded-full border-2 border-[#8888944D] bg-white transition-all duration-200 ease-in-out group-hover:border-primary",
-              isSelected(option.value) && "border-[8px] border-primary"
+          {!withoutDot && (
+            <div
+              className={twMerge(
+                "h-6 w-6 shrink-0 rounded-full border-2 border-[#8888944D] bg-white transition-all duration-200 ease-in-out group-hover:border-primary",
+                isSelected(option.value) && "border-[8px] border-primary"
+              )}
+            />
+          )}
+          <div className="flex flex-col">
+            <span className="text-[16px] font-medium leading-[normal]">
+              {option.label}
+            </span>
+            {option.info && (
+              <span className="text-[14px] leading-5 text-grey">
+                {option.info}
+              </span>
             )}
-          />
-          <span className="text-[16px] font-medium">{option.label}</span>
+          </div>
         </button>
       ))}
     </div>
