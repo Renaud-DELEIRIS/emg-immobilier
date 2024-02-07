@@ -1,10 +1,10 @@
 import { IconPhoneCall, IconX } from "@tabler/icons-react";
-import PhoneInputWithCountrySelect, {
-  isValidPhoneNumber,
-} from "react-phone-number-input";
+import { useTranslation } from "next-i18next";
 import { useFormStore } from "~/stores/form";
+import { isValidPhone } from "~/utils/validation/phone.validation";
 import { Button } from "../button/Button";
 import { Alert, AlertDescription } from "../feedback/alert";
+import { PhoneNumberInput } from "../inputs/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./dialog";
 
 const RecallModal = ({
@@ -16,6 +16,7 @@ const RecallModal = ({
 }) => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
+  const { t } = useTranslation("header");
 
   const onRecall = () => null;
 
@@ -23,7 +24,7 @@ const RecallModal = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Un conseiller vous appelle gratuitement</DialogTitle>
+          <DialogTitle>{t("recall.title")}</DialogTitle>
           <button
             className="rounded-full p-0.5 text-primary hover:bg-primary/10"
             onClick={() => setOpen(false)}
@@ -31,36 +32,28 @@ const RecallModal = ({
             <IconX size={24} />
           </button>
         </DialogHeader>
-        <span className="text-base leading-5">
-          Indiquez nous votre numéro de téléphone, un conseiller va vous appeler
-          dans quelques minutes.
-        </span>
-        <PhoneInputWithCountrySelect
+        <span className="text-base leading-5">{t("recall.description")}</span>
+        <PhoneNumberInput
           value={lead.phone || ""}
           onChange={(val) => {
             if (!val) return;
             changeLead({ phone: val });
           }}
-          defaultCountry="CH"
-          countryOptionsOrder={["CH", "FR", "DE", "IT"]}
-          className="my-[14px] h-[56px] rounded-lg border-[1.5px] border-[#88889459] bg-white px-[14px] focus-within:border-2 focus-within:border-primary [&>input[type=tel]]:focus-within:outline-none"
-          placeholder="Numéro de téléphone"
           required
+          className="my-4"
+          valid={isValidPhone(lead.phone)}
         />
         <Alert variant="info" noTitle>
-          <AlertDescription>
-            Nous ne communiquerons jamais votre numéro de téléphone à un tiers
-            sans votre accord.
-          </AlertDescription>
+          <AlertDescription>{t("recall.alert")}</AlertDescription>
         </Alert>
         <Button
           variant={"thirdy"}
-          disabled={!isValidPhoneNumber(lead.phone ?? "")}
+          disabled={!isValidPhone(lead.phone)}
           className="mt-[14px]"
           onClick={() => void onRecall()}
         >
           <IconPhoneCall size={24} className="mr-1" />
-          Me faire appeler
+          {t("recall.modalAction")}
         </Button>
       </DialogContent>
     </Dialog>

@@ -4,20 +4,22 @@ import { isValidPhoneNumber } from "libphonenumber-js";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { z } from "zod";
 import { Button } from "~/components/button/Button";
 import { Alert, AlertTitle } from "~/components/feedback/alert";
 import Input, { PhoneNumberInput } from "~/components/inputs/input";
 import { useFormStore } from "~/stores/form";
-import { StepDescription, StepTitle } from "../StepContainer";
+import { isValidEmail } from "~/utils/validation/email.validation";
+import { StepDescription, StepTitle } from "./StepContainer";
 
 const Name = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
+  const backStep = useFormStore((state) => state.backStep);
   const setVisibleStep = useFormStore((state) => state.setVisibleStep);
   const currentVisibleStep = useFormStore((state) => state.currentVisibleStep);
-  const { t } = useTranslation("common");
+  const { t: tCommon } = useTranslation("common");
+  const { t } = useTranslation("step");
 
   const [toShowContact, setToShowContact] = useState(false);
 
@@ -31,9 +33,6 @@ const Name = () => {
     window.scrollTo(0, 0);
   }, [currentVisibleStep]);
 
-  const isValidEmail = (email: string) =>
-    z.string().email().safeParse(email).success ? true : false;
-
   const isAllValid =
     lead.prenom.length > 0 &&
     lead.nom.length > 0 &&
@@ -44,10 +43,10 @@ const Name = () => {
     <div className="w-full flex-col pb-12">
       <button
         className="mb-8 flex h-11 items-center gap-2.5 rounded-full border border-[#88889440] bg-[#8888941A] px-5 text-base font-semibold text-[#082623CC] transition-colors hover:bg-[#082623CC] hover:text-white md:mb-[52px]"
-        onClick={() => setVisibleStep("package")}
+        onClick={() => backStep()}
       >
         <IconChevronLeft size={20} />
-        {t`BACK`}
+        {tCommon`BACK`}
       </button>
 
       <Alert
@@ -63,13 +62,13 @@ const Name = () => {
           className="absolute bottom-0 left-[1rem] hidden shrink-0 md:block"
         />
         <div className="flex flex-col gap-2">
-          <AlertTitle>{t`STEP_NAME_ALERT_TITLE`}</AlertTitle>
-          <span>{t`STEP_NAME_ALERT_TEXT`}</span>
+          <AlertTitle>{t`name.alert.title`}</AlertTitle>
+          <span>{t`name.alert.message`}</span>
         </div>
       </Alert>
       <div className="my-10 flex flex-col gap-5">
         <label htmlFor="name" className="text-[22px] font-semibold">
-          {t`STEP_NAME_LABEL`}
+          {t`name.label`}
         </label>
         <div className="grid grid-cols-1 gap-[18px] md:grid-cols-2">
           <Input
@@ -79,10 +78,10 @@ const Name = () => {
             value={lead.prenom}
             onChange={(e) =>
               changeLead({
-                prenom: e.currentTarget.value,
+                prenom: e,
               })
             }
-            placeholder={t`STEP_NAME_PLACEHOLDER_FIRSTNAME`}
+            placeholder={t`name.placeholder_first`}
             valid={lead.prenom.length > 0}
           />
           <Input
@@ -92,10 +91,10 @@ const Name = () => {
             value={lead.nom}
             onChange={(e) =>
               changeLead({
-                nom: e.currentTarget.value,
+                nom: e,
               })
             }
-            placeholder={t`STEP_NAME_PLACEHOLDER_LASTNAME`}
+            placeholder={t`name.placeholder_last`}
             valid={lead.nom.length > 0}
           />
         </div>
@@ -109,8 +108,8 @@ const Name = () => {
           className="flex flex-col gap-5"
         >
           <div className="flex flex-col gap-2.5">
-            <StepTitle>{t`STEP_NAME_LABEL_CONTACT`}</StepTitle>
-            <StepDescription>{t`STEP_NAME_LABEL_CONTACT_DESC`}</StepDescription>
+            <StepTitle>{t`name.label_contact`}</StepTitle>
+            <StepDescription>{t`name.contact_description`}</StepDescription>
           </div>
           <div className="grid grid-cols-1 gap-[18px]">
             <Input
@@ -120,11 +119,11 @@ const Name = () => {
               value={lead.email}
               onChange={(e) =>
                 changeLead({
-                  email: e.currentTarget.value,
+                  email: e,
                 })
               }
               icon={<IconMail size={24} />}
-              placeholder={t`STEP_NAME_LABEL_EMAIL`}
+              placeholder={t`name.placehodlder_email`}
               valid={isValidEmail(lead.email)}
             />
             <PhoneNumberInput
@@ -136,7 +135,7 @@ const Name = () => {
                   phone: e,
                 })
               }
-              placeholder={t`STEP_NAME_LABEL_PHONE`}
+              placeholder={t`name.placeholder_phone`}
               valid={isValidPhoneNumber(lead.phone ?? "")}
             />
           </div>
@@ -155,7 +154,7 @@ const Name = () => {
             onClick={() => nextStep("name")}
             disabled={!isAllValid}
           >
-            {t`SETP_NAME_OFFER_ACTION`}
+            {t`name.action`}
           </Button>
         </motion.div>
       )}

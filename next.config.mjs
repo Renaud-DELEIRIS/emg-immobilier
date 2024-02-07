@@ -3,18 +3,11 @@
  * for Docker builds.
  */
 await import("./src/env.mjs");
-const i18n = await import("./next-i18next.config.mjs");
-
+import i18n from "./next-i18next.config.mjs";
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
 
-  /**
-   * If you have `experimental: { appDir: true }` set, then you must comment the below `i18n` config
-   * out.
-   *
-   * @see https://github.com/vercel/next.js/issues/41980
-   */
-  i18n: i18n.default.i18n,
+  i18n: i18n.i18n,
 };
 export default config;

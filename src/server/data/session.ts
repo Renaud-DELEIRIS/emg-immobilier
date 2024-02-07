@@ -1,5 +1,5 @@
 import { type Prisma, type Step } from "@prisma/client";
-import { initialData, type schemaData } from "~/constants/lead.constant";
+import { initialData, type Data } from "~/constants/lead.constant";
 import { STEPS } from "~/constants/step.constant";
 import { env } from "~/env.mjs";
 import { prisma } from "../db";
@@ -77,7 +77,7 @@ export const initSession = async () => {
 export const updateVersion = async (
   sessionId: string,
   versionId: string,
-  data: Partial<schemaData>,
+  data: Partial<Data>,
   currentStep: Step
 ) => {
   const currentVersion = await prisma.version.findUnique({

@@ -1,22 +1,32 @@
-import { IconCircleCheck, IconUpload } from "@tabler/icons-react";
+import {
+  IconCircleCheck,
+  IconInfoCircle,
+  IconUpload,
+} from "@tabler/icons-react";
 import { useId, useState } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 interface Props {
   onChange: (value: string) => void;
   className?: string;
   label?: string;
-  boldLabel?: boolean;
   placeholder?: string;
   existing?: boolean;
+  tooltip?: string;
 }
 
 const FileInput = ({
   onChange,
   className = "",
   label,
-  boldLabel = false,
   placeholder = "",
   existing = false,
+  tooltip,
 }: Props) => {
   const id = useId();
   const [fileName, setFileName] = useState<string>("");
@@ -24,20 +34,26 @@ const FileInput = ({
     <div>
       {label && (
         <label
+          className="mb-[6px] block text-sm font-medium opacity-80"
           htmlFor={id}
-          className={`mb-1 block ${
-            boldLabel
-              ? "text-base font-bold text-dark"
-              : "text-sm font-normal text-neutral-800"
-          }`}
         >
           {label}
+          {tooltip && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <IconInfoCircle size={16} />
+                </TooltipTrigger>
+                <TooltipContent>{tooltip}</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
         </label>
       )}
       <label
         htmlFor={id}
         className={
-          "bg-dark-900 border-dark-600 group flex h-[46px] cursor-pointer overflow-hidden rounded-md border bg-white text-neutral-800 hover:bg-neutral-100 focus:border-primary-500" +
+          "bg-dark-900 border-dark-600 focus:border-primary-500 group flex h-[46px] cursor-pointer overflow-hidden rounded-md border bg-white text-neutral-800 hover:bg-neutral-100" +
           className
         }
       >
@@ -45,7 +61,7 @@ const FileInput = ({
           className={`mr-4 grid aspect-square h-full place-items-center ${
             fileName || existing
               ? "bg-green-500 text-white group-hover:bg-green-600"
-              : "bg-primary text-white group-hover:bg-primary-600"
+              : "group-hover:bg-primary-600 bg-primary text-white"
           }`}
         >
           {fileName || existing ? (

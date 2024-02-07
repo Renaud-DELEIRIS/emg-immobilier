@@ -9,7 +9,7 @@ import RecallModal from "../modal/recallModal";
 const Header = () => {
   const lead = useFormStore((state) => state.data);
   const currentStep = useFormStore((state) => state.currentVisibleStep);
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("header");
   const [open, setOpen] = useState(false);
 
   const onOpen = () => {
@@ -22,7 +22,7 @@ const Header = () => {
           <Logo />
           <Button variant={"thirdy"} size={"sm"} onClick={onOpen}>
             <IconPhoneCall size={20} className="mr-1" />
-            <span className="hidden md:inline-block">{t("header.recall")}</span>
+            <span className="hidden md:inline-block">{t("recall.action")}</span>
           </Button>
         </header>
       </div>

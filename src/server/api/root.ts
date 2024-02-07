@@ -98,7 +98,9 @@ export const appRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const { token, filename, contentType } = input;
       const ext = contentType ? mime.extension(contentType) : null;
-      const key = `comparea-maladie-frontalier/${token}/${filename}${ext ? `.${ext}` : ""}`;
+      const key = `comparea-maladie-frontalier/${token}/${filename}${
+        ext ? `.${ext}` : ""
+      }`;
       const command = new PutObjectCommand({
         Bucket: "emg-dashboard",
         Key: key,

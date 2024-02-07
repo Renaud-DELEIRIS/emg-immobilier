@@ -1,10 +1,10 @@
-import { type Adherent, type schemaData } from "~/constants/lead.constant";
+import { type Adherent, type Data } from "~/constants/lead.constant";
 import { packOptionById } from "~/data/PackOption";
 import { env } from "~/env.mjs";
 import { getProfilId } from "../getProfilId";
 
 export const sendLeadComparea = async (
-  data: schemaData,
+  data: Data,
   gtmParams: Record<string, string>,
   versionId: string,
   id?: string,

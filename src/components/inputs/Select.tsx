@@ -154,6 +154,7 @@ interface SelectInputProps
   options: {
     label: string;
     value: string;
+    group?: string;
   }[];
   onChange?: (value: string) => void;
 }
@@ -187,6 +188,21 @@ const SelectInput = React.forwardRef<
         document.body.style.removeProperty("overflow-y");
       }
     }, [open]);
+
+    // Sorted options by group
+    const sortedOptions = props.options.reduce<{
+      [key: string]: { label: string; value: string }[];
+    }>((acc, option) => {
+      if (option.group) {
+        acc[option.group] = acc[option.group] || [];
+        acc[option.group]!.push(option);
+      } else {
+        acc[""] = acc[""] || [];
+        acc[""]!.push(option);
+      }
+      return acc;
+    }, {});
+
     return (
       <div className={twMerge("w-full", className)}>
         {label && (
@@ -211,10 +227,19 @@ const SelectInput = React.forwardRef<
             <SelectValue placeholder={placeholder} />
           </SelectTrigger>
           <SelectContent>
-            {props.options.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
+            {Object.entries(sortedOptions).map(([group, options]) => (
+              <React.Fragment key={group}>
+                {group && (
+                  <SelectGroup>
+                    <SelectLabel>{group}</SelectLabel>
+                  </SelectGroup>
+                )}
+                {options.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </React.Fragment>
             ))}
           </SelectContent>
         </Select>
@@ -226,16 +251,4 @@ const SelectInput = React.forwardRef<
   }
 );
 
-export {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectInput,
-  SelectItem,
-  SelectLabel,
-  SelectScrollDownButton,
-  SelectScrollUpButton,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
-};
+export { SelectInput };

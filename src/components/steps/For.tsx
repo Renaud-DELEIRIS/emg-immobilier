@@ -5,40 +5,40 @@ import { EmgCouple } from "~/components/icon/EmgCouple";
 import { EmgCoupleEnfant } from "~/components/icon/EmgCoupleEnfant";
 import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
-import StepContainer from "../StepContainer";
+import StepContainer from "./StepContainer";
 
 const For = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("step");
   return (
-    <StepContainer title={t("STEP_FOR_TITLE")} stepId="for-who">
+    <StepContainer title={t("for-who.title")} stepId="for-who">
       <TileInput
         value={lead.for}
         onChange={(value) => {
-          changeLead({ for: value as "you", adherent: [] });
+          changeLead({ for: value as "you" });
           nextStep("for-who");
         }}
         options={[
           {
             value: "you",
-            label: t("STEP_FOR_YOURSELF"),
+            label: t("for-who.you"),
             icon: <EmgAdulte size={38} />,
           },
           {
             value: "you and your partner",
-            label: t("STEP_FOR_SPOUSE"),
+            label: t("for-who.spouse"),
             icon: <EmgCouple size={38} />,
           },
           {
             value: "you and your kids",
-            label: t("STEP_FOR_CHILD"),
+            label: t("for-who.kids"),
             icon: <EmgAdulteEnfant size={38} />,
           },
           {
             value: "you, your partner and your kids",
-            label: t("STEP_FOR_FAMILY"),
+            label: t("for-who.spouse-kids"),
             icon: <EmgCoupleEnfant size={38} />,
           },
         ]}

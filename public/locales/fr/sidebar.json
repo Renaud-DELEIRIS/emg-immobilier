@@ -1,6 +1,6 @@
 {
-  "STEP_ADHERENT": "Adhérent",
-  "STEP_FRONTALIER": "Frontalier",
-  "STEP_BESOINS": "Besoins",
-  "STEP_FINALISATION": "Finalisation"
+  "group": {
+    "my_car": "My Car",
+    "needs": "Needs Gas"
+  }
 }

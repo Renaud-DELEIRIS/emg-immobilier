@@ -20,7 +20,8 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 
-export interface IInput extends React.HTMLProps<HTMLInputElement> {
+export interface IInput
+  extends Omit<React.HTMLProps<HTMLInputElement>, "onChange"> {
   label?: string;
   tooltip?: string;
   insideText?: string;
@@ -29,6 +30,7 @@ export interface IInput extends React.HTMLProps<HTMLInputElement> {
   wrapperClassName?: string;
   valid?: boolean;
   icon?: React.ReactNode;
+  onChange?: (e: string) => void;
 }
 
 const Input = React.forwardRef<HTMLInputElement, IInput>(
@@ -42,6 +44,7 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
       error = "",
       valid = false,
       icon,
+      onChange,
       ...props
     },
     ref
@@ -80,6 +83,7 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
               className
             )}
             ref={ref}
+            onChange={(e) => onChange && onChange(e.target.value)}
             {...props}
           />
 
@@ -104,7 +108,7 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
 
 export const PhoneNumberInput = React.forwardRef<
   React.ElementRef<typeof PhoneInput>,
-  Omit<IInput, "onChange" | "insideText"> & {
+  Omit<IInput, "insideText"> & {
     onChange?: (e?: E164Number) => void;
   }
 >(
@@ -157,6 +161,7 @@ export const PhoneNumberInput = React.forwardRef<
               className
             )}
             defaultCountry="CH"
+            countryOptionsOrder={["CH", "FR", "DE", "IT"]}
             numberInputProps={{
               ...props,
               className:
@@ -175,7 +180,7 @@ export const PhoneNumberInput = React.forwardRef<
 
 export const DateInput = React.forwardRef<
   HTMLInputElement,
-  Omit<IInput, "insideText" | "onChange"> & {
+  Omit<IInput, "insideText"> & {
     format?: "DD.MM.YYYY" | "YYYY-MM-DD" | "DD/MM/YYYY" | "YYYY";
     value?: string;
     defaultYear?: string;

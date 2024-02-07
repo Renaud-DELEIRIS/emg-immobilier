@@ -3,7 +3,6 @@ import { PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 import { type StepId } from "~/constants/step.constant";
 import { useFormStore } from "~/stores/form";
-import type DefaultProps from "~/types/DefaultProps";
 
 export const StepTitle: React.FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -24,23 +23,22 @@ export const StepDescription: React.FC<PropsWithChildren> = ({ children }) => {
 const StepContainer = ({
   title,
   children,
-  infoTitle,
-  info,
   className = "",
   description,
   stepId,
   id,
   forceActive = false,
 }: {
-  title?: string;
+  title?: React.ReactNode | string;
   description?: React.ReactNode | string;
-  info?: string;
-  infoTitle?: string;
   stepId: StepId;
   forceActive?: boolean;
-} & DefaultProps) => {
-  const activeStep = useFormStore((state) => state.currentVisibleStep);
-  const active = forceActive ? forceActive : activeStep.id === stepId;
+  id?: string;
+  className?: string;
+  children: React.ReactNode;
+}) => {
+  const currentStep = useFormStore((state) => state.currentStep);
+  const active = forceActive ? forceActive : currentStep.id === stepId;
 
   return (
     <motion.div
@@ -61,18 +59,6 @@ const StepContainer = ({
       )}
 
       {children}
-      {info && (
-        <div className="mt-8 flex w-full flex-row items-center rounded-lg bg-[#00c49b14] p-3">
-          <div className="ml-2">
-            {infoTitle && (
-              <h2 className="text-primary-800 text-sm font-semibold">
-                {infoTitle}
-              </h2>
-            )}
-            {info && <p className="text-primary-700 text-sm">{info}</p>}
-          </div>
-        </div>
-      )}
     </motion.div>
   );
 };

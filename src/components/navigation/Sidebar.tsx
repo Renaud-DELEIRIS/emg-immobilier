@@ -1,23 +1,16 @@
 import { IconCheck } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
-import { getStepById, type StepId } from "~/constants/step.constant";
+import { getFirstStepOfGroup, stepGroupId } from "~/constants/step.constant";
 import { useFormStore } from "~/stores/form";
 
 const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
   const lead = useFormStore((state) => state.data);
-  const activeStep = useFormStore((state) => state.currentVisibleStep);
   const currentStep = useFormStore((state) => state.currentStep);
   const setVisibleStep = useFormStore((state) => state.setVisibleStep);
 
-  const passed =
-    currentStep.stepInfo(lead)[0] >= 0 && currentStep.stepInfo(lead)[0] <= 4
-      ? "adherant"
-      : currentStep.stepInfo(lead)[0] >= 5 && currentStep.stepInfo(lead)[0] <= 6
-      ? "besoins"
-      : "finalisation";
+  const currentStepGroup = currentStep.group;
+  const groupIndex = stepGroupId.indexOf(currentStepGroup);
 
-  const isFrontalier =
-    lead.situation === "frontalier" && lead.npa && lead.npa.key === -1;
   const { t } = useTranslation("sidebar");
 
   return (
@@ -26,136 +19,43 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
         className={`sticky top-[106px] hidden h-fit w-full max-w-[340px]  rounded-lg border border-[#8888941A] bg-white p-6 md:block`}
       >
         <ul className="space-y-6 leading-[normal]">
-          <li>
-            <button
-              className="flex  items-center gap-4"
-              onClick={() => {
-                let toStep: StepId =
-                  lead.npa?.key === -1 ? "situation" : "assurance-actuelle";
-                const activeStepInfo = currentStep.stepInfo(lead)[0];
-                while (getStepById(toStep).stepInfo(lead)[0] > activeStepInfo) {
-                  toStep = getStepById(toStep).previous(lead) as StepId;
-                }
-                setVisibleStep(toStep);
-                onClose();
-              }}
-            >
-              <div className="grid h-6 w-6 place-items-center rounded-full bg-primary">
-                <IconCheck size={20} className="text-white" />
-              </div>
-              <span className={`text-sm font-medium text-secondary`}>
-                {t("STEP_ADHERENT")}
-              </span>
-            </button>
-          </li>
-          {isFrontalier ? (
-            <li>
-              <button
-                onClick={() => {
-                  setVisibleStep("work-hours");
-                  onClose();
-                }}
-                disabled={passed === "adherant"}
-                className={"flex items-center  gap-4 disabled:opacity-50"}
-              >
-                <div
-                  className={`grid h-6 w-6 place-items-center rounded-full ${
-                    passed === "adherant" ? "bg-[#0CBCB01A]" : "bg-primary"
-                  }`}
-                >
-                  <IconCheck
-                    size={20}
-                    className={
-                      passed === "adherant" ? "text-primary" : "text-white"
-                    }
-                  />
-                </div>
-                <span
-                  className={`text-sm font-medium ${
-                    passed === "adherant" ? "text-grey" : "text-secondary"
-                  }`}
-                >
-                  {t("STEP_FRONTALIER")}
-                </span>
-              </button>
-            </li>
-          ) : (
-            <>
-              <li>
+          {stepGroupId.map((stepGroupId, index) => {
+            const toStep = getFirstStepOfGroup(stepGroupId, lead);
+
+            if (!toStep) return null;
+
+            const passed = index <= groupIndex;
+            return (
+              <li key={stepGroupId}>
                 <button
                   onClick={() => {
-                    let toStep: StepId = "package";
-                    const activeStepInfo = currentStep.stepInfo(lead)[0];
-                    while (
-                      getStepById(toStep).stepInfo(lead)[0] > activeStepInfo
-                    ) {
-                      toStep = getStepById(toStep).previous(lead) as StepId;
-                    }
-                    setVisibleStep(toStep);
+                    setVisibleStep(toStep.id);
                     onClose();
                   }}
-                  disabled={passed === "adherant"}
-                  className={"flex items-center  gap-4 disabled:opacity-50"}
+                  disabled={!passed}
+                  className={"flex items-center gap-4 disabled:opacity-50"}
                 >
                   <div
                     className={`grid h-6 w-6 place-items-center rounded-full ${
-                      passed === "adherant" ? "bg-[#0CBCB01A]" : "bg-primary"
+                      !passed ? "bg-[#0CBCB01A]" : "bg-primary"
                     }`}
                   >
                     <IconCheck
                       size={20}
-                      className={
-                        passed === "adherant" ? "text-primary" : "text-white"
-                      }
+                      className={!passed ? "text-primary" : "text-white"}
                     />
                   </div>
                   <span
                     className={`text-sm font-medium ${
-                      passed === "adherant" ? "text-grey" : "text-secondary"
+                      !passed ? "text-grey" : "text-secondary"
                     }`}
                   >
-                    {t("STEP_BESOINS")}
+                    {t("group." + stepGroupId)}
                   </span>
                 </button>
               </li>
-              <li>
-                <button
-                  className="flex  items-center gap-4 disabled:opacity-50"
-                  disabled={passed === "adherant" || passed === "besoins"}
-                  onClick={() => {
-                    setVisibleStep("name");
-                    onClose();
-                  }}
-                >
-                  <div
-                    className={`grid h-6 w-6 place-items-center rounded-full ${
-                      passed === "adherant" || passed === "besoins"
-                        ? "bg-[#0CBCB01A]"
-                        : "bg-primary"
-                    }`}
-                  >
-                    <IconCheck
-                      size={20}
-                      className={
-                        passed === "adherant" || passed === "besoins"
-                          ? "text-primary"
-                          : "text-white"
-                      }
-                    />
-                  </div>
-                  <span
-                    className={`text-sm font-medium ${
-                      passed === "adherant" || passed === "besoins"
-                        ? "text-grey"
-                        : "text-secondary"
-                    }`}
-                  >
-                    {t("STEP_FINALISATION")}
-                  </span>
-                </button>
-              </li>
-            </>
-          )}
+            );
+          })}
         </ul>
       </aside>
     </>

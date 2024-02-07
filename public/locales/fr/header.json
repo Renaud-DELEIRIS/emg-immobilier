@@ -1,0 +1,9 @@
+{
+  "recall": {
+    "action": "Rappelez-moi",
+    "title": "Un conseiller vous appelle gratuitement",
+    "description": "Indiquez nous votre numéro de téléphone, un conseiller va vous appeler dans quelques minutes.",
+    "alert": "Nous ne communiquerons jamais votre numéro de téléphone à un tiers sans votre accord.",
+    "modalAction": "Me faire appeler"
+  }
+}

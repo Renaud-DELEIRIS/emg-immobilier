@@ -2,33 +2,28 @@ import { Trans, useTranslation } from "next-i18next";
 import AutoComplete from "~/components/inputs/Autocomplete";
 import localtion from "~/data/ch-locations.json";
 import { useFormStore } from "~/stores/form";
-import StepContainer from "../StepContainer";
+import StepContainer from "./StepContainer";
 
 const Npa = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("step");
 
   return (
     <StepContainer
-      title={t("STEP_NPA_TITLE")}
+      title={t("npa.title")}
       description={
         <Trans
-          i18nKey="STEP_NPA_DESCRIPTION"
+          i18nKey="npa.description"
+          t={t}
           components={{
             notHere: (
               <button
                 data-nofocus
                 className="font-semibold text-primary hover:font-bold"
                 onClick={() => {
-                  changeLead({
-                    npa: { key: -1, value: t("STEP_NPA_NOTHERE_SPAN") },
-                  });
-                  nextStep("npa", {
-                    ...lead,
-                    npa: { key: -1, value: t("STEP_NPA_NOTHERE_SPAN") },
-                  });
+                  nextStep("npa");
                 }}
               />
             ),
@@ -38,24 +33,18 @@ const Npa = () => {
       stepId="npa"
     >
       <AutoComplete
-        value={
-          lead.npa ?? {
-            key: -1,
-            value: "",
-          }
-        }
+        value={lead.npa}
         onChange={(value) => {
-          changeLead({ npa: value, situation: undefined });
-          nextStep("npa", {
-            ...lead,
-            npa: value,
-          });
+          changeLead({ npa: value.toString() });
+          nextStep("npa");
         }}
+        placeholder={t("npa.placeholder")}
         name="locality"
         aria-label="Localité"
-        options={localtion}
-        placeholder={t("STEP_NPA_PLACEHOLDER")}
-        valid={!!lead.npa}
+        options={localtion.map((loc) => ({
+          value: loc.key,
+          label: `${loc.key} - ${loc.value}`,
+        }))}
       ></AutoComplete>
     </StepContainer>
   );
