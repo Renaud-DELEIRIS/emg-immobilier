@@ -18,6 +18,7 @@ const StepLoader = ({
 
   useEffect(() => {
     let internal = currentStep;
+    console.log(internal);
     let interval: NodeJS.Timeout;
     if (internal === -1) {
       interval = setTimeout(() => {

@@ -66,7 +66,7 @@ export const STEPS: Step[] = [
       return "car-model";
     },
     previous: (lead) => {
-      return "car-possesion";
+      return "car-brand";
     },
     disabled: (lead) => {
       return false;
@@ -137,7 +137,7 @@ export const STEPS: Step[] = [
       if (lead.situation === "frontalier") {
         return [6, 11];
       }
-      return [8, 8];
+      return [6, 11];
     },
   },
   {
@@ -152,7 +152,7 @@ export const STEPS: Step[] = [
       return "name";
     },
     stepInfo: (lead) => {
-      return [9, 9];
+      return [7, 11];
     },
   },
 ];

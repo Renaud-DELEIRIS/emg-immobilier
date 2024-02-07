@@ -1,7 +1,8 @@
 import { useTranslation } from "next-i18next";
 import { useEffect } from "react";
 import StepContainer from "~/components/__steps/StepContainer";
-import AutoComplete from "~/components/inputs/Autocomplete";
+import { IconMagnify } from "~/components/icon/IconMagnify";
+import TextInput from "~/components/inputs/TextInput";
 import { useFormStore } from "~/stores/form";
 
 const CarBrand = () => {
@@ -18,23 +19,18 @@ const CarBrand = () => {
 
   return (
     <StepContainer title={t("STEP_BRAND_TITLE")} stepId="car-brand">
-      <AutoComplete
-        value={
-          lead.npa ?? {
-            key: -1,
-            value: "",
-          }
-        }
+      <TextInput
+        className="h-[68px] px-[14px]"
+        value={lead.carBrand}
         onChange={(value) => {
-          changeLead({ npa: value, situation: undefined });
-          nextStep("car-brand");
+          changeLead({ carBrand: value });
+          // nextStep("car-brand");
         }}
         name="car-brand"
         aria-label="Marque de voiture"
-        options={[]}
         placeholder={t("STEP_BRAND_PLACEHOLDER")}
-        valid={!!lead.npa}
-      ></AutoComplete>
+        icon={<IconMagnify size={32} className="pr-[8px]" />}
+      ></TextInput>
     </StepContainer>
   );
 };

@@ -36,7 +36,7 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
             <button
               className="flex items-center gap-4"
               onClick={() => {
-                let toStep: StepId = "car-brand";
+                let toStep: StepId = "car-possesion";
                 const activeStepInfo = currentStep.stepInfo(lead)[0];
                 while (getStepById(toStep).stepInfo(lead)[0] > activeStepInfo) {
                   toStep = getStepById(toStep).previous(lead) as StepId;
