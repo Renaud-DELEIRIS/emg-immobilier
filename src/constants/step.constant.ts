@@ -14,6 +14,7 @@ export type StepId =
   | "car-possesion"
   | "car-brand"
   | "car-model"
+  | "car-recap"
   | "end"
   | "for-who"
   | "npa"
@@ -54,6 +55,16 @@ export const STEPS: Step[] = [
   },
   {
     id: "car-model",
+    group: "my_car",
+    next: (lead) => {
+      return "car-recap";
+    },
+    disabled: (lead) => {
+      return false;
+    },
+  },
+  {
+    id: "car-recap",
     group: "my_car",
     next: (lead) => {
       return "end";

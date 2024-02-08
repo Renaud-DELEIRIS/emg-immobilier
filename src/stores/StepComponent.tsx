@@ -4,6 +4,7 @@ import CarModel from "~/components/steps/CarModel";
 import CarPossesion from "~/components/steps/CarPossesion";
 import { StepId, getComponentToDisplay } from "~/constants/step.constant";
 import { useFormStore } from "./form";
+import CarRecap from "~/components/steps/CarRecap";
 
 export const StepComponent = () => {
   const childs: ReactNode[] = [];
@@ -17,6 +18,7 @@ export const StepComponent = () => {
     "car-possesion": <CarPossesion />,
     "car-brand": <CarBrand />,
     "car-model": <CarModel />,
+    "car-recap": <CarRecap />,
     end: <></>,
     "for-who": <></>,
     name: <></>,

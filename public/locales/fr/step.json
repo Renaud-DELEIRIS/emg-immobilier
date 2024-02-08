@@ -12,6 +12,9 @@
     "title": "Quel est le modèle de votre véhicule ?",
     "placeholder": "Tapez les premières lettres du modèle"
   },
+  "car-recap": {
+    "title": "Véhicule à assurer"
+  },
   "for-who": {
     "title": "Pour qui souhaitez-vous comparer ?",
     "you": "Un adulte",
