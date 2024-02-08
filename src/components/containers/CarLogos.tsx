@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { Fragment, ReactNode } from "react";
 import { Button } from "../button/Button";
 
 type CarLogo = {
@@ -31,8 +31,8 @@ const CarLogos = ({
 
   const brands: CarLogo[] = [
     {
-      brandName: "alpha romeo",
-      component: getLogoButton("alpha romeo", "alpha"),
+      brandName: "alfa romeo",
+      component: getLogoButton("alfa romeo", "alfa_romeo"),
     },
     {
       brandName: "audi",
@@ -107,7 +107,9 @@ const CarLogos = ({
               .trim()
               .includes(query.toLowerCase().trim())
         )
-        .map((brand) => brand.component)}
+        .map((brand) => (
+          <Fragment key={`${brand.brandName}`}>{brand.component}</Fragment>
+        ))}
     </div>
   );
 };
