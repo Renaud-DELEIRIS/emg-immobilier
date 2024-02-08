@@ -10,10 +10,10 @@ const CarPossesion = () => {
   const { t } = useTranslation("step");
   return (
     <StepContainer title={t("car-possesion.title")} stepId="car-possesion">
-      <TileInput
-        value={lead.carPossesion}
+      <TileInput<string>
+        value={lead.carPossesion ?? ""}
         onChange={(value) => {
-          changeLead({ carPossesion: value.toString() });
+          changeLead({ carPossesion: value!.toString() });
           nextStep("car-possesion");
         }}
         options={[
