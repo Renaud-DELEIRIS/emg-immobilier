@@ -8,7 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { ICarOption } from "../steps/CarModel";
+import { ICarOption } from "../CarModel";
 
 export interface IInput extends React.HTMLProps<HTMLInputElement> {
   label?: string;

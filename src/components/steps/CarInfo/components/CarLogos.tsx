@@ -1,5 +1,5 @@
 import { Fragment, ReactNode } from "react";
-import { Button } from "../button/Button";
+import { Button } from "../../../button/Button";
 
 type CarLogo = {
   brandName: string;

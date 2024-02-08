@@ -10,12 +10,12 @@ import {
   useState,
 } from "react";
 import { api } from "~/utils/api";
-import { IconMagnify } from "../icon/IconMagnify";
-import { ICarOption } from "../steps/CarModel";
-import CustomAutoCompleteInput from "./CustomAutoCompleteInput";
+import { IconMagnify } from "../../../icon/IconMagnify";
+import { ICarOption } from "../CarModel";
+import CustomAutoCompleteInput from "./CarAutoCompleteInput";
 
 interface ICustomAutocomplete {
-  carBrand: string;
+  car_brand: string;
   value?: string;
   onChange?: (carOption: ICarOption) => void;
   name?: string;
@@ -37,7 +37,7 @@ export const CustomAutoComplete = forwardRef<
 >(
   (
     {
-      carBrand,
+      car_brand,
       value,
       onChange,
       className = "",
@@ -56,11 +56,11 @@ export const CustomAutoComplete = forwardRef<
     const { t } = useTranslation("common");
     const { data, isLoading } = api.getModele.useQuery(
       {
-        marque: carBrand!,
+        marque: car_brand!,
         search: query,
       },
       {
-        enabled: !!carBrand,
+        enabled: !!car_brand,
         // keep previous data
         keepPreviousData: true,
       }
@@ -72,7 +72,7 @@ export const CustomAutoComplete = forwardRef<
         setCarModels(
           data.map((carInfo) => ({
             value: carInfo.typeId.toString(),
-            brand: carBrand,
+            brand: car_brand,
             from:
               carInfo.firstRegistrationYears[
                 carInfo.firstRegistrationYears.length - 1
