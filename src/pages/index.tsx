@@ -4,7 +4,7 @@ import nextI18nextConfig from "next-i18next.config.mjs";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
@@ -33,10 +33,9 @@ const Home: NextPage = () => {
   const setVersionId = useFormStore((state) => state.setVersionId);
   const trackDurationStep = useFormStore((state) => state.trackDurationStep);
   const initStep = useFormStore((state) => state.initStep);
-
+  const formLoaded = useFormStore((state) => state.loaded);
   const fetchSession = useSessionStore((state) => state.fetchSession);
   const setSessionId = useSessionStore((state) => state.setSessionId);
-  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     initStep();
@@ -46,7 +45,6 @@ const Home: NextPage = () => {
         setVersionId(r.version.id);
       })
       .catch((e) => console.log(e));
-    setLoaded(true);
   }, []);
 
   useEffect(() => {
@@ -73,10 +71,17 @@ const Home: NextPage = () => {
     };
   }, []);
 
-  const displayHeader = true;
-  // currentVisibleStep.id !== "result" && currentVisibleStep.id !== "loader";
-  const displaySidebar = true;
-  // currentVisibleStep.id !== "result" && currentVisibleStep.id !== "loader";
+  // On router change update visible step
+  useEffect(() => {
+    if (router.query.step && formLoaded) {
+      initStep();
+    }
+  }, [router.query]);
+
+  const displayHeader =
+    currentVisibleStep.id !== "result" && currentVisibleStep.id !== "loader";
+  const displaySidebar =
+    currentVisibleStep.id !== "result" && currentVisibleStep.id !== "loader";
 
   return (
     <>
@@ -89,7 +94,7 @@ const Home: NextPage = () => {
         <meta name="robots" content="noindex,nofollow" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
-      {loaded && (
+      {formLoaded && (
         <main
           className={twMerge(
             "relative flex min-h-[100dvh] flex-col",

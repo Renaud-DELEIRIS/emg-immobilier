@@ -151,7 +151,7 @@ const Name = () => {
         >
           <Button
             variant={"thirdy"}
-            onClick={() => nextStep("name")}
+            onClick={() => nextStep("info")}
             disabled={!isAllValid}
           >
             {t`name.action`}

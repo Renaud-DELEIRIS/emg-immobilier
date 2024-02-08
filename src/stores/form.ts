@@ -67,6 +67,9 @@ export const useFormStore = create<FormState>()(
         setVisibleStep: (stepId: StepId) => {
           const nextStep = getStepById(stepId);
           if (!nextStep) return;
+
+          if (get().currentVisibleStep.id === nextStep.id) return;
+
           const stepInfo = getStepInfo(nextStep, get().data);
           const currentStepInfo = getStepInfo(get().currentStep, get().data);
 
@@ -166,18 +169,20 @@ export const useFormStore = create<FormState>()(
           const stepId = queryParams.step as StepId;
           const stepFromRouter = getStepById(stepId);
 
-          const validStepFromRouter =
-            getStepInfo(stepFromRouter, get().data)[0] <=
-            getStepInfo(currentStep, get().data)[0];
+          let validStepFromRouter = false;
+
+          if (stepFromRouter) {
+            validStepFromRouter =
+              getStepInfo(stepFromRouter, get().data)[0] <=
+              getStepInfo(currentStep, get().data)[0];
+          }
 
           const currentVisibleStep = STEPS.find(
             (s) => s.id === get().currentVisibleStep.id
           )!;
 
           get().setVisibleStep(
-            validStepFromRouter && stepFromRouter?.id
-              ? stepFromRouter.id
-              : currentVisibleStep.id
+            validStepFromRouter ? stepFromRouter.id : currentVisibleStep.id
           );
 
           set((state) => ({

@@ -22,5 +22,8 @@
     "oct": "Octobre",
     "nov": "Novembre",
     "dec": "Décembre"
+  },
+  "date": {
+    "inFuture": "La date ne peut pas être dans le passé"
   }
 }

@@ -1,4 +1,6 @@
+import { IconChevronLeft } from "@tabler/icons-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "next-i18next";
 import { PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 import { isLastStepDisplayed, type StepId } from "~/constants/step.constant";
@@ -34,6 +36,7 @@ const StepContainer = ({
   stepId,
   id,
   info,
+  withBackButton = false,
 }: {
   title?: React.ReactNode | string;
   description?: React.ReactNode | string;
@@ -43,10 +46,13 @@ const StepContainer = ({
   className?: string;
   children: React.ReactNode;
   info?: React.ReactNode;
+  withBackButton?: boolean;
 }) => {
   const currentVisibleStep = useFormStore((state) => state.currentVisibleStep);
   const currentStep = useFormStore((state) => state.currentStep);
   const lead = useFormStore((state) => state.data);
+  const backStep = useFormStore((state) => state.backStep);
+  const { t: tCommon } = useTranslation("common");
   const isMaxSize =
     isLastStepDisplayed(stepId, currentStep.id, lead) &&
     currentVisibleStep.id === stepId;
@@ -57,11 +63,20 @@ const StepContainer = ({
       animate={{ opacity: 1, x: 0 }}
       className={twMerge(
         "flex w-full flex-col",
-        isMaxSize && "min-h-[calc(100dvh-210px)]",
+        isMaxSize && "min-h-[calc(100dvh-250px)]",
         className
       )}
       id={id ?? stepId}
     >
+      {withBackButton && (
+        <button
+          className="mb-8 flex h-11 w-fit items-center gap-2.5 rounded-full border border-[#88889440] bg-[#8888941A] px-5 text-base font-semibold text-[#082623CC] transition-colors hover:bg-[#082623CC] hover:text-white md:mb-[40px]"
+          onClick={() => backStep()}
+        >
+          <IconChevronLeft size={20} />
+          {tCommon`BACK`}
+        </button>
+      )}
       {title && (
         <div className="flex items-start justify-between gap-[10px]">
           <div className="mb-[20px] flex flex-col gap-[10px]">

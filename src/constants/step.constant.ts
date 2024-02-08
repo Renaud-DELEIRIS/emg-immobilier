@@ -218,7 +218,7 @@ export const isStepDisabled = (step: Step, lead: Data) => {
   return step.disabled(lead);
 };
 
-export const getStepById = (id: string) => {
+export const getStepById = (id: StepId) => {
   return STEPS.find((step) => step.id === id) as Step;
 };
 
