@@ -176,7 +176,7 @@ export const useFormStore = create<FormState>()(
               dob: "",
               car_buy_date: {},
               car_type: undefined,
-              car_brand: "",
+              car_brand: undefined,
               car_option: null,
             },
             getNextStep: state.getNextStep,

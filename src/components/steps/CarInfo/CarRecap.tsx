@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useTranslation } from "next-i18next";
+import { useEffect } from "react";
 import { useFormStore } from "~/stores/form";
 import CarInfos from "./components/CarInfos";
 
@@ -14,6 +14,11 @@ export interface ICarOption {
 const CarRecap = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
+  const nextStep = useFormStore((state) => state.nextStep);
+
+  useEffect(() => {
+    nextStep("car_info");
+  }, []);
 
   return (
     <AnimatePresence>
