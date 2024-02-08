@@ -1,6 +1,6 @@
 import { IconEdit } from "@tabler/icons-react";
 import { MouseEventHandler } from "react";
-import { ICarOption } from "../steps/CarModel";
+import { ICarOption } from "../CarModel";
 
 const CarInfos = ({
   carOption,
