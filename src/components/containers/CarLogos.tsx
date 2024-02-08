@@ -59,8 +59,8 @@ const CarLogos = ({
       component: getLogoButton("ford"),
     },
     {
-      brandName: "mercedes benz",
-      component: getLogoButton("mercedes-benz", "mercedes"),
+      brandName: "mercedes-benz",
+      component: getLogoButton("mercedes-benz", "mercedes_benz"),
     },
     {
       brandName: "mini",
