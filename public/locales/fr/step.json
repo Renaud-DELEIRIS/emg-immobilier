@@ -1,0 +1,44 @@
+{
+  "car-possesion": {
+    "title": "Quelle voiture souhaitez-vous assurer ?",
+    "current": "Ma voiture actuelle",
+    "next": "Une voiture que je souhaite acheter"
+  },
+  "car-brand": {
+    "title": "Quel est la marque de votre véhicule ?",
+    "placeholder": "Tapez la marque de votre véhicule"
+  },
+  "car-model": {
+    "title": "Quel est le modèle de votre véhicule ?",
+    "placeholder": "Tapez les premières lettres du modèle"
+  },
+  "car-recap": {
+    "title": "Véhicule à assurer"
+  },
+  "for-who": {
+    "title": "Pour qui souhaitez-vous comparer ?",
+    "you": "Un adulte",
+    "spouse": "Un couple",
+    "kids": "Un adulte + enfant(s)",
+    "spouse-kids": "Un couple + enfant(s)"
+  },
+  "npa": {
+    "title": "Quel est votre code postal de résident (NPA) ?",
+    "description": "Pas sur le territoire Suisse ? <notHere>Cliquez ici</notHere>",
+    "placeholder": "Ville ou NPA"
+  },
+  "name": {
+    "alert": {
+      "title": "Vos infos sont protégées !",
+      "message": "Ces informations serviront à établir votre devis. Toutes vos données sont 100% sécurisées."
+    },
+    "label": "Votre prénom et nom",
+    "placeholder_first": "Prénom",
+    "placeholder_last": "Nom",
+    "label_contact": "Informations de contact",
+    "contact_description": "Vous recevrez le récapitulatif de votre comparatif sur votre adresse email. Le numéro de téléphone vous permettra de revenir à tout moment sur vos offres.",
+    "placehodlder_email": "Votre adresse email",
+    "placeholder_phone": "Votre numéro de téléphone",
+    "action": "Découvrir mes offres"
+  }
+}

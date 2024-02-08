@@ -3,48 +3,33 @@ import {
   MapboxAutofill,
   SessionToken,
 } from "@mapbox/search-js-core";
-import { IconLoader, IconMapPin } from "@tabler/icons-react";
+import { IconMapPin } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 import { useClickAway } from "react-use";
-import TextInput from "./TextInput";
 import { env } from "~/env.mjs";
-import { useFormStore } from "~/stores/form";
+import Input from "./input";
 
 interface Props {
   value: string;
   onChange?: (value: string) => void;
   placeholder?: string;
-  readonly?: boolean;
   required?: boolean;
   disabled?: boolean;
   label?: string;
   className?: string;
-  widthFull?: boolean;
-  autocomplete?: string;
   name?: string;
-  description?: string;
-  autofocus?: boolean;
-  boldLabel?: boolean;
 }
 
 const CompleteAddress = ({
   value,
   onChange,
   placeholder = "",
-  readonly = false,
   required = false,
   disabled = false,
   label = "",
   className = "",
-  widthFull = true,
-  autocomplete = "",
   name = "",
-  description = "",
-  autofocus = false,
-  boldLabel = false,
 }: Props) => {
-  const lead = useFormStore((state) => state.data);
-  const changeLead = useFormStore((state) => state.setData);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [autofill, setAutofill] = useState<MapboxAutofill>();
   const sessionToken = useRef<SessionToken>(new SessionToken());
@@ -72,7 +57,7 @@ const CompleteAddress = ({
   const getSuggestion = async () => {
     if (!autofill) return;
     setLoading(true);
-    const r = await autofill.suggest(lead.address || "", {
+    const r = await autofill.suggest(value || "", {
       sessionToken: sessionToken.current,
     });
     setLoading(false);
@@ -80,9 +65,9 @@ const CompleteAddress = ({
   };
 
   useEffect(() => {
-    if (!lead.address) return;
+    if (!value) return;
     void getSuggestion();
-  }, [lead.address]);
+  }, [value]);
 
   const streetRef = useRef<HTMLDivElement>(null);
 
@@ -97,30 +82,22 @@ const CompleteAddress = ({
         onFocusCapture={() => setIsFocused(true)}
         ref={streetRef}
       >
-        <TextInput
-          boldLabel={boldLabel}
+        <Input
           label={label}
           required={required}
           disabled={disabled}
           placeholder={placeholder}
-          value={lead.address || ""}
+          value={value}
           onChange={(e) => {
-            changeLead({
-              address: e,
-            });
+            if (onChange) onChange(e);
           }}
           className={className}
-          widthFull={widthFull}
-          autocomplete={autocomplete}
           name={name}
-          description={description}
-          autofocus={autofocus}
-          readonly={readonly}
           icon={<IconMapPin className="h-5 w-5 text-gray-500" />}
         />
         {isFocused &&
-          lead.address &&
-          lead.address.length > 4 &&
+          value &&
+          value.length > 4 &&
           (suggestions.length > 0 || loading) && (
             <div className="absolute z-10  mt-2 max-h-64 w-full overflow-auto rounded-md bg-white shadow-lg">
               {suggestions.map((suggestion) => (
@@ -128,9 +105,7 @@ const CompleteAddress = ({
                   key={suggestion.full_address}
                   className="flex w-full flex-row items-center gap-3 px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => {
-                    changeLead({
-                      address: suggestion.full_address,
-                    });
+                    if (onChange) onChange(suggestion.full_address ?? "");
                     setTimeout(() => {
                       setIsFocused(false);
                     }, 100);

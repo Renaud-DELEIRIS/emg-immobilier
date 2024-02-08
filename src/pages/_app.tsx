@@ -16,7 +16,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { GtmTrackProvider } from "~/components/provider/GmtTrack";
 import { env } from "~/env.mjs";
 import "~/styles/globals.css";
-import "~/styles/loader.scss";
 import { api } from "~/utils/api";
 
 dayjs.extend(customParseFormat);

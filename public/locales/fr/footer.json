@@ -1,8 +1,14 @@
 {
-  "SAFE_DATA": " Vos données sont sécurisées",
-  "SAFE_DATA_DESCRIPTION": "Nous garantissons la sécurité de vos données.",
-  "INDE": "Indépendants et impartials",
-  "INDE_DESCRIPTION": "Comparea.ch est un groupe indépendant, n’appartenant à aucune société d’assurance.",
-  "SURCOUT": "Pas de surcoût",
-  "SURCOUT_DESCRIPTION": "Les prix affichés sont négociés auprès des assureurs partenaires, aucun surcoût n’est appliqué."
+  "item_1": {
+    "title": "91% de nos utilisateurs",
+    "subtitle": "nous recommandent"
+  },
+  "item_2": {
+    "title": "180 000+ utilisateurs",
+    "subtitle": "nous font confiance"
+  },
+  "item_3": {
+    "title": "100% Gratuit",
+    "subtitle": "et sans engagement"
+  }
 }

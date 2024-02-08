@@ -19,10 +19,10 @@ export const highlight = [
 ];
 
 const Footer = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("footer");
   return (
-    <footer className="h-[104px] w-full bg-white">
-      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 place-items-center justify-between gap-[24px] py-[24px] md:grid-cols-3">
+    <footer className="h-[104px] w-full shrink-0 bg-white">
+      <div className="mx-auto grid h-full w-full max-w-6xl grid-cols-1 place-items-center justify-between gap-[24px]  md:grid-cols-3">
         {highlight.map((item, index) => (
           <div key={index} className="flex flex-row items-center gap-3.5">
             <div className="grid h-[59px] w-[59px] place-items-center rounded-full bg-[#0cbcb026] text-secondary">

@@ -2,40 +2,36 @@
 import Router from "next/router";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
-import { initialData, schemaData } from "~/constants/lead.constant";
-import { STEPS, Step, StepId, getStepById } from "~/constants/step.constant";
+import { Data, initialData } from "~/constants/lead.constant";
+import {
+  STEPS,
+  Step,
+  StepId,
+  getPreviousStep,
+  getStepById,
+  getStepInfo,
+} from "~/constants/step.constant";
 import { trcpProxyClient } from "~/utils/api";
 import getParamsUrl from "~/utils/client/getParamsUrl";
-import { getStepComponent } from "./getComponent";
 import { useSessionStore } from "./session";
 
 interface FormState {
   currentStep: Step;
   currentVisibleStep: Step;
-  previousStep: Step | null;
-  previousVisibleStep: Step | null;
-  nextStep: (stepId: StepId, data?: schemaData) => void;
+  nextStep: (stepId: StepId, data?: Data) => void;
   backStep: () => void;
-  getStepComponent: () => JSX.Element;
-  getNextStep: (stepId: StepId, data?: schemaData) => Step | undefined;
+  getNextStep: (stepId: StepId, data?: Data) => Step;
+  resetStep: () => void;
   initStep: () => void;
-  restoreCurrentStep: (stepId: string) => void;
-  setVisibleStep: (stepId: string) => void;
-  initScroll: () => void;
-  isVisibleStepValid: () => {
-    success: boolean;
-    errors?: { path: string; error: string }[];
-  };
-  isStepValid: (step: Step) => {
-    success: boolean;
-    errors?: { path: string; error: string }[];
-  };
-  data: schemaData;
-  setData: (d: Partial<schemaData>) => void;
-  errors: Record<string, string>;
+  setVisibleStep: (stepId: StepId) => void;
+  data: Data;
+  setData: (d: Partial<Data>) => void;
+
   versionId: string | null;
   setVersionId: (versionId: string) => void;
   trackDurationStep: (step: Step, duration: number) => void;
+
+  loaded: boolean;
 }
 
 let refTimeout: NodeJS.Timeout | null = null;
@@ -45,6 +41,7 @@ export const useFormStore = create<FormState>()(
     persist(
       (set, get) => ({
         versionId: null,
+        data: initialData,
         setVersionId: (v) => set({ versionId: v }),
         trackDurationStep: (step, duration) => {
           const versionId = get().versionId;
@@ -56,167 +53,27 @@ export const useFormStore = create<FormState>()(
             });
           }
         },
-        previousStep: null,
-        previousVisibleStep: null,
         currentStep: STEPS[0]!,
         currentVisibleStep: STEPS[0]!,
+        loaded: false,
         nextStep: (stepId: StepId, newData) => {
           const nextStep = get().getNextStep(stepId, newData);
-          const { success, errors } = get().isStepValid(getStepById(stepId));
-          if (success) {
-            setTimeout(() => {
-              if (!nextStep) return;
-              const element = document.getElementById(nextStep.id);
-              if (element) {
-                const offsetTop =
-                  element.getBoundingClientRect().top + window.scrollY;
-                window.scrollTo({
-                  top: offsetTop - 100,
-                  behavior: "smooth",
-                });
 
-                // Focus on first focusable element
-                const focusableElement = element.querySelector(
-                  "input, select, textarea, button"
-                ) as HTMLElement;
-                if (focusableElement) {
-                  focusableElement.focus();
-                }
-              }
-            }, 100);
+          // Probably the last step of the form
+          if (nextStep.id === stepId) return;
 
-            set((state) => ({
-              ...state,
-              errors: {},
-              previousStep: get().currentStep,
-              previousVisibleStep: get().currentVisibleStep,
-              currentStep: nextStep ?? get().currentStep,
-              currentVisibleStep: nextStep ?? get().currentStep,
-            }));
-            const sessionId = useSessionStore.getState().sessionId;
-            const versionId = get().versionId;
-            if (sessionId && versionId) {
-              void trcpProxyClient.updateSession.mutate({
-                sessionId: sessionId,
-                versionId: versionId,
-                data: get().data,
-                currentStep: {
-                  id: nextStep?.id || "",
-                  stepNumber: nextStep?.stepInfo(get().data)[0] || 0,
-                  lastStep: nextStep?.stepInfo(get().data)[1] || 0,
-                },
-              });
-            }
-            const queryParams = getParamsUrl();
-            void Router.push(
-              {
-                query: {
-                  ...queryParams,
-                  step: nextStep?.id,
-                },
-              },
-              undefined,
-              {
-                shallow: true,
-              }
-            );
-          } else if (errors) {
-            set((state) => ({
-              ...state,
-              errors: {
-                ...state.errors,
-                ...errors.reduce(
-                  (acc, { path, error }) => ({ ...acc, [path]: error }),
-                  {}
-                ),
-              },
-            }));
-          }
+          get().setVisibleStep(nextStep.id);
         },
 
-        getStepComponent: () => {
-          return getStepComponent(
-            get().currentVisibleStep.id,
-            get().backStep,
-            get().data
-          );
-        },
-        backStep() {
-          const prevStepId = get().currentVisibleStep.previous(get().data);
-          if (!prevStepId) return;
+        setVisibleStep: (stepId: StepId) => {
+          const nextStep = getStepById(stepId);
+          if (!nextStep) return;
+          const stepInfo = getStepInfo(nextStep, get().data);
+          const currentStepInfo = getStepInfo(get().currentStep, get().data);
 
-          const previousStep = getStepById(prevStepId);
-
-          set((state) => ({
-            ...state,
-            errors: {},
-            currentVisibleStep: previousStep ?? get().currentStep,
-          }));
-        },
-
-        setVisibleStep: (stepId) => {
-          const selectedStep = STEPS.find((s) => s.id === stepId)!;
-          const { success, errors } = get().isVisibleStepValid();
-          console.log(success, errors);
-          if (success || selectedStep.id < get().currentStep.id) {
-            setTimeout(() => {
-              const element = document.getElementById(selectedStep.id);
-              if (element) {
-                const offsetTop =
-                  element.getBoundingClientRect().top + window.scrollY;
-                window.scrollTo({
-                  top: offsetTop - 100,
-                  behavior: "smooth",
-                });
-
-                // Focus on first focusable element
-                const focusableElement = element.querySelector(
-                  "input, select, textarea, button"
-                ) as HTMLElement;
-                if (focusableElement) {
-                  focusableElement.focus();
-                }
-              }
-            }, 100);
-            set((state) => ({
-              ...state,
-              errors: {},
-              previousVisibleStep: get().currentVisibleStep,
-              currentVisibleStep: selectedStep,
-            }));
-
-            const queryParams = getParamsUrl();
-            if (selectedStep.id !== "loader")
-              void Router.push(
-                {
-                  query: {
-                    ...queryParams,
-                    step: selectedStep.id || "",
-                  },
-                },
-                undefined,
-                {
-                  shallow: true,
-                }
-              );
-          } else if (errors) {
-            set((state) => ({
-              ...state,
-              errors: {
-                ...state.errors,
-                ...errors.reduce(
-                  (acc, { path, error }) => ({ ...acc, [path]: error }),
-                  {}
-                ),
-              },
-            }));
-          }
-        },
-        initScroll() {
           setTimeout(() => {
-            const element = document.getElementById(
-              get().currentVisibleStep.id
-            );
+            if (!nextStep) return;
+            const element = document.getElementById(nextStep.id);
             if (element) {
               const offsetTop =
                 element.getBoundingClientRect().top + window.scrollY;
@@ -225,30 +82,64 @@ export const useFormStore = create<FormState>()(
                 behavior: "smooth",
               });
 
-              // Focus on first focusable element that don't have the attribute data-nofocus
+              // Focus on first focusable element
               const focusableElement = element.querySelector(
-                "input:not([data-nofocus]), select:not([data-nofocus]), textarea:not([data-nofocus]), button:not([data-nofocus])"
+                "input, select, textarea, button"
               ) as HTMLElement;
-              console.log(focusableElement);
               if (focusableElement) {
                 focusableElement.focus();
               }
             }
           }, 100);
-        },
-        restoreCurrentStep: (stepId) => {
-          const selectedStep = STEPS.find((s) => s.id === stepId)!;
+
           set((state) => ({
             ...state,
             errors: {},
-            currentStep: selectedStep,
-            currentVisibleStep: selectedStep,
+            currentStep:
+              stepInfo[0] > currentStepInfo[0] ? nextStep : state.currentStep,
+            currentVisibleStep: nextStep,
           }));
+          const sessionId = useSessionStore.getState().sessionId;
+          const versionId = get().versionId;
+          if (sessionId && versionId) {
+            void trcpProxyClient.updateSession.mutate({
+              sessionId: sessionId,
+              versionId: versionId,
+              data: get().data,
+              currentStep: {
+                id: nextStep.id,
+                stepNumber: getStepInfo(nextStep, get().data)[0],
+                lastStep: getStepInfo(nextStep, get().data)[1],
+              },
+            });
+          }
+          const queryParams = getParamsUrl();
+          void Router.push(
+            {
+              query: {
+                ...queryParams,
+                step: nextStep.id,
+              },
+            },
+            undefined,
+            {
+              shallow: true,
+            }
+          );
         },
-        data: initialData,
-        errors: {},
+
+        backStep() {
+          const prevStep = getPreviousStep(
+            get().currentVisibleStep,
+            get().data
+          );
+          if (!prevStep) return;
+
+          get().setVisibleStep(prevStep.id);
+        },
+
         setData: (d) => {
-          const nextData: schemaData = { ...get().data, ...d };
+          const nextData: Data = { ...get().data, ...d };
           set((state) => ({ ...state, data: nextData, errors: {} }));
           if (refTimeout) clearTimeout(refTimeout);
           refTimeout = setTimeout(() => {
@@ -261,32 +152,55 @@ export const useFormStore = create<FormState>()(
                 data: nextData,
                 currentStep: {
                   id: get().currentStep.id,
-                  stepNumber: get().currentStep.stepInfo(nextData)[0],
-                  lastStep: get().currentStep.stepInfo(nextData)[1],
+                  stepNumber: getStepInfo(get().currentStep, nextData)[0],
+                  lastStep: getStepInfo(get().currentStep, nextData)[1],
                 },
               });
             }
           }, 1500);
         },
-        isVisibleStepValid: () => {
-          return get().isStepValid(get().currentVisibleStep);
-        },
-        isStepValid: (step) => {
-          return { success: !step.disabled(get().data) };
+        resetStep() {
+          set((state) => ({
+            backStep: state.backStep,
+            currentStep: STEPS[0]!,
+            loaded: true,
+            currentVisibleStep: state.currentVisibleStep,
+            data: state.data,
+            getNextStep: state.getNextStep,
+            initStep: state.initStep,
+            nextStep: state.nextStep,
+            resetStep: state.resetStep,
+            setData: state.setData,
+            setVersionId: state.setVersionId,
+            setVisibleStep: state.setVisibleStep,
+            trackDurationStep: state.trackDurationStep,
+            versionId: state.versionId,
+          }));
         },
         initStep() {
           const currentStep = STEPS.find((s) => s.id === get().currentStep.id)!;
+
+          // get step from router if it exists
+          const queryParams = getParamsUrl();
+          const stepId = queryParams.step as StepId;
+          const stepFromRouter = getStepById(stepId);
+
           const currentVisibleStep = STEPS.find(
             (s) => s.id === get().currentVisibleStep.id
           )!;
+
+          get().setVisibleStep(stepFromRouter?.id ?? currentVisibleStep.id);
+
           set((state) => ({
             ...state,
-            currentStep: currentStep,
-            currentVisibleStep: currentVisibleStep,
+            loaded: true,
           }));
         },
-        getNextStep: (stepId: StepId, newData) =>
-          getStepById(getStepById(stepId).next(newData ? newData : get().data)),
+        getNextStep: (stepId: StepId, newData) => {
+          const next = getStepById(stepId).next(newData ? newData : get().data);
+          if (!next) return getStepById(stepId);
+          return getStepById(next);
+        },
       }),
       {
         name: "form-storage", // name of the item in the storage (must be unique)

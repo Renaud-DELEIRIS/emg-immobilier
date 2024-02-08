@@ -1,167 +1,95 @@
 import { z } from "zod";
-import { type schemaData } from "./lead.constant";
+import { type Data } from "./lead.constant";
 
 export interface Step {
   id: StepId;
-  next: (lead: schemaData) => StepId;
-  previous: (lead: schemaData) => StepId | null;
-  disabled: (lead: schemaData) => boolean;
-  stepInfo: (lead: schemaData) => [number, number];
+  next: (lead: Data) => StepId | null;
+  disabled: (lead: Data) => boolean;
+  group: StepGroupId;
   bis?: boolean;
+  newTab?: boolean;
 }
 
 export type StepId =
   | "car-possesion"
   | "car-brand"
   | "car-model"
-  | "car-version"
-  | "car-buy-date"
-  | "car-distance"
-  | "car-use-case"
-  | "car-parking"
-  | "car-donnee-personnelle"
-  | "car-nationalite"
-  | "car-leasing"
-  | "car-cover"
-  | "car-donnee-personnelle-contact"
-  | "car-result"
+  | "car-recap"
+  | "end"
   | "for-who"
-  | "adherent"
   | "npa"
-  | "situation"
-  | "assurance-actuelle"
-  | "franchise"
-  | "work-hours"
-  | "package"
-  | "name"
-  | "economies"
-  | "loader"
-  | "result-frontalier"
-  | "recap-frontalier"
-  | "profils"
-  | "souscrire"
-  | "donnee-personnelle"
-  | "documents"
-  | "result";
+  | "name";
+
+// Groups needs to be ordered
+export const stepGroupId = [
+  "my_car",
+  "needs",
+  "car_informations",
+  "coverage",
+  "infos",
+] as const;
+export type StepGroupId = (typeof stepGroupId)[number];
+
+// Steps needs to start with the first step
 
 export const STEPS: Step[] = [
   {
     id: "car-possesion",
+    group: "my_car",
     next: (lead) => {
       return "car-brand";
     },
-    previous: (lead) => {
-      return "car-possesion";
-    },
     disabled: (lead) => {
-      return false;
-    },
-    stepInfo: (lead) => {
-      return [1, 5];
+      return lead.carPossesion != null;
     },
   },
   {
     id: "car-brand",
+    group: "my_car",
     next: (lead) => {
       return "car-model";
     },
-    previous: (lead) => {
-      return "car-brand";
-    },
     disabled: (lead) => {
       return false;
-    },
-    stepInfo: (lead) => {
-      return [2, 5];
     },
   },
   {
     id: "car-model",
+    group: "my_car",
     next: (lead) => {
-      return "car-version";
-    },
-    previous: (lead) => {
-      return "car-brand";
+      return "car-recap";
     },
     disabled: (lead) => {
       return false;
-    },
-    stepInfo: (lead) => {
-      return [3, 5];
     },
   },
   {
-    id: "car-version",
+    id: "car-recap",
+    group: "my_car",
     next: (lead) => {
-      return "car-buy-date";
-    },
-    previous: (lead) => {
-      return "car-model";
+      return "end";
     },
     disabled: (lead) => {
       return false;
-    },
-    stepInfo: (lead) => {
-      return [4, 5];
     },
   },
   {
-    id: "car-buy-date",
+    id: "end",
+    group: "my_car",
     next: (lead) => {
-      return "car-distance";
-    },
-    previous: (lead) => {
-      return "car-version";
+      return null;
     },
     disabled: (lead) => {
       return false;
-    },
-    stepInfo: (lead) => {
-      return [5, 5];
-    },
-  },
-  {
-    id: "loader",
-    next: (lead) => {
-      return lead.situation == "frontalier" && lead.npa && lead.npa.key === -1
-        ? "result-frontalier"
-        : "result";
-    },
-    disabled: (lead) => {
-      return false;
-    },
-    previous: (lead) => {
-      return "name";
-    },
-    stepInfo: (lead) => {
-      if (lead.situation === "frontalier") {
-        return [6, 11];
-      }
-      return [6, 11];
-    },
-  },
-  {
-    id: "result",
-    next: (lead) => {
-      return "result";
-    },
-    disabled: (lead) => {
-      return false;
-    },
-    previous: (lead) => {
-      return "name";
-    },
-    stepInfo: (lead) => {
-      return [7, 11];
     },
   },
 ];
 
-export const getNextStep = (step: Step, lead: schemaData) => {
-  return getStepById(step.next(lead));
+export const getNextStep = (step: Step, lead: Data) => {
+  return getStepById(step.next(lead) ?? step.id);
 };
 
-export const isStepDisabled = (step: Step, lead: schemaData) => {
+export const isStepDisabled = (step: Step, lead: Data) => {
   return step.disabled(lead);
 };
 
@@ -170,24 +98,116 @@ export const getStepById = (id: string) => {
   return STEPS.find((step) => step.id === id) as Step;
 };
 
-export const getPreviousStep = (step: Step, lead: schemaData) => {
-  const prev = step.previous(lead);
-  if (prev) {
-    return getStepById(prev);
+export const getPreviousStep = (step: Step, lead: Data) => {
+  let activeStep = STEPS[0]!;
+  let previousStep = activeStep;
+  while (activeStep.id !== step.id) {
+    previousStep = activeStep;
+    activeStep = getNextStep(activeStep, lead);
   }
-  return null;
+
+  return previousStep;
 };
 
-export const getStepInfo = (step: Step, lead: schemaData) => {
-  return step.stepInfo(lead);
+export const getStepInfo = (step: Step, lead: Data): [number, number] => {
+  let stepCalc = STEPS[0]!;
+  let stepNumber = 1;
+  let maxStep = 1;
+
+  while (stepCalc.next(lead) !== null) {
+    stepCalc = getNextStep(stepCalc, lead);
+    console.log(stepCalc);
+    maxStep++;
+    if (stepCalc.id === step.id) {
+      stepNumber = maxStep;
+    }
+
+    if (maxStep > 100) {
+      throw new Error("Infinite loop in steps.constant.ts getStepInfo");
+    }
+  }
+  return [stepNumber, maxStep];
 };
 
-export const getActualStep = (step: Step, lead: schemaData) => {
-  return getStepInfo(step, lead)[0];
+export const getFirstStepOfGroup = (group: StepGroupId, lead: Data) => {
+  let actualStep = STEPS[0]!;
+  let count = 0;
+  while (actualStep.group !== group) {
+    actualStep = getNextStep(actualStep, lead);
+    count++;
+    if (count > 100) {
+      console.warn("No step found in group", group);
+      return undefined;
+    }
+  }
+  return actualStep;
 };
 
-export const getTotalStep = (step: Step, lead: schemaData) => {
-  return getStepInfo(step, lead)[1];
+const getMappedDisplay = (lead: Data) => {
+  const mappedStepDisplay: StepId[][] = [];
+  let startStep = STEPS[0]!;
+  let count = 0;
+
+  let tempMap: StepId[] = [];
+  while (startStep.next(lead) !== null) {
+    if (startStep.newTab) {
+      mappedStepDisplay.push(tempMap);
+
+      tempMap = [];
+    }
+    tempMap.push(startStep.id);
+
+    startStep = getNextStep(startStep, lead);
+
+    count++;
+    if (count > 100) {
+      throw new Error(
+        "Infinite loop in steps.constant.ts getComponentToDisplay"
+      );
+    }
+  }
+  if (startStep.newTab) {
+    mappedStepDisplay.push(tempMap);
+    tempMap = [startStep.id];
+    mappedStepDisplay.push(tempMap);
+  } else {
+    tempMap.push(startStep.id);
+    mappedStepDisplay.push(tempMap);
+  }
+
+  return mappedStepDisplay;
+};
+
+export const isLastStepDisplayed = (visibleStepId: StepId, lead: Data) => {
+  const mappedStepDisplay: StepId[][] = getMappedDisplay(lead);
+  const getContainedArray = (stepId: StepId) =>
+    mappedStepDisplay.find((array) => array.includes(stepId));
+
+  const stepContainedArray = getContainedArray(visibleStepId);
+  const isLastStep = stepContainedArray?.[stepContainedArray.length - 1];
+  return isLastStep === visibleStepId;
+};
+
+export const getComponentToDisplay = (
+  visibleStepId: StepId,
+  maxStepId: StepId,
+  lead: Data
+) => {
+  const mappedStepDisplay: StepId[][] = getMappedDisplay(lead);
+
+  // Find the array in mappedStepDisplay that contains the visibleStepId
+  const visibleStepIndex = mappedStepDisplay.findIndex((stepArray) =>
+    stepArray.includes(visibleStepId)
+  );
+  let arrayToDisplay = mappedStepDisplay[visibleStepIndex] as StepId[];
+
+  // If maxStepId is in the array, we slice the array to display only the steps before maxStepId
+  if (arrayToDisplay.includes(maxStepId)) {
+    const maxStepIndex = arrayToDisplay.indexOf(maxStepId);
+    arrayToDisplay = arrayToDisplay.slice(0, maxStepIndex + 1);
+  }
+
+  return arrayToDisplay;
 };
 
 export const schemaStep = z.object({
