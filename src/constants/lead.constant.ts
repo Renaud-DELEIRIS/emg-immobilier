@@ -9,8 +9,6 @@ export const initialData: Data = {
   email: "",
   dob: "",
   car_buy_date: {},
-  carPossesion: "",
-  carBrand: "",
   carOption: null,
 };
 
