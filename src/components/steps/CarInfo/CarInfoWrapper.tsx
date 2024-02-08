@@ -1,24 +1,30 @@
 import { useTranslation } from "next-i18next";
-import { useState } from "react";
 import { useFormStore } from "~/stores/form";
 import StepContainer from "../StepContainer";
 import CarBrand from "./CarBrand";
 import CarModel from "./CarModel";
+import CarRecap from "./CarRecap";
 
 const CarInfoWrapper = () => {
   const lead = useFormStore((state) => state.data);
-  const changeLead = useFormStore((state) => state.setData);
-  const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
 
-  const [activeSubStep, setActiveSubStep] = useState<"car_brand" | "car_model">(
-    "car_brand"
-  );
-
   return (
-    <StepContainer title={t("car-brand.title")} stepId="car_info">
-      {activeSubStep == "car_brand" && <CarBrand />}
-      {activeSubStep == "car_model" && <CarModel />}
+    <StepContainer
+      title={t(
+        lead.car_type != undefined && lead.car_brand == undefined
+          ? "car-brand.title"
+          : "car-model.title"
+      )}
+      stepId="car_info"
+    >
+      {lead.car_type != undefined && lead.car_brand == undefined && (
+        <CarBrand />
+      )}
+      {lead.car_brand != undefined && lead.car_option == undefined && (
+        <CarModel />
+      )}
+      {lead.car_option != undefined && <CarRecap />}
     </StepContainer>
   );
 };

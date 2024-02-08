@@ -16,7 +16,6 @@ export interface ICarOption {
 const CarModel = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
-  const backStep = useFormStore((state) => state.backStep);
   const { t } = useTranslation("step");
 
   return (
@@ -40,7 +39,7 @@ const CarModel = () => {
               {lead.car_brand!.toUpperCase()}
               <IconCloseRemove
                 className="hover:cursor-pointer"
-                onClick={() => backStep()}
+                onClick={() => changeLead({ car_brand: undefined })}
                 size={20}
               />
             </Badge>

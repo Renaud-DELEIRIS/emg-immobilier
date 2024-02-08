@@ -21,7 +21,7 @@ const CarBrand = () => {
           className="border-transparent bg-[#8888941a] text-sm font-normal not-italic leading-none text-[#082623] opacity-50"
           value={lead.car_brand ?? ""}
           onChange={(car_brand) => {
-            changeLead({ car_brand });
+            changeLead({ ...lead, car_brand });
           }}
           name="car-brand"
           aria-label="Marque de voiture"

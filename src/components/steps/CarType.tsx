@@ -14,7 +14,7 @@ const CarType = () => {
         value={lead.car_type}
         onChange={(value) => {
           changeLead({ car_type: value });
-          nextStep("car_info");
+          nextStep("car_type");
         }}
         options={[
           {

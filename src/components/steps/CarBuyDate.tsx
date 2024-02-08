@@ -10,6 +10,7 @@ const CarBuyDate = () => {
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
   const { t: tCommon } = useTranslation("common");
+
   return (
     <StepContainer title={t("car_buy_date.title")} stepId="car_buy_date">
       <div className="grid grid-cols-1 gap-[18px] md:grid-cols-2">

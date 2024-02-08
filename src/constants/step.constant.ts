@@ -59,10 +59,7 @@ export const STEPS: Step[] = [
     next: (lead) => {
       return "car_buy_date";
     },
-    disabled: (lead) =>
-      lead.car_brand === undefined ||
-      lead.car_model === undefined ||
-      lead.car_version === undefined,
+    disabled: (lead) => false,
     group: "my_car",
   },
   {
@@ -70,7 +67,10 @@ export const STEPS: Step[] = [
     next: (lead) => {
       return "car_distance";
     },
-    disabled: (lead) => lead.car_buy_date.year === undefined,
+    disabled: (lead) => {
+      console.log(lead);
+      return lead.car_option === undefined;
+    },
     group: "my_car",
   },
   {
@@ -240,7 +240,6 @@ export const getStepInfo = (step: Step, lead: Data): [number, number] => {
 
   while (stepCalc.next(lead) !== null) {
     stepCalc = getNextStep(stepCalc, lead);
-    console.log(stepCalc);
     maxStep++;
     if (stepCalc.id === step.id) {
       stepNumber = maxStep;
