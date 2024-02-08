@@ -1,4 +1,6 @@
+import dayjs from "dayjs";
 import { z } from "zod";
+import { isValidDate } from "~/utils/validation/date.validation";
 import { type Data } from "./lead.constant";
 
 export interface Step {
@@ -10,45 +12,201 @@ export interface Step {
   newTab?: boolean;
 }
 
-export type StepId = "for-who" | "npa" | "name";
+export type StepId =
+  | "car_type"
+  | "car_info"
+  | "car_buy_date"
+  | "car_distance"
+  | "car_usage"
+  | "car_park_place"
+  | "car_park_type"
+  | "civility"
+  | "dob"
+  | "nationality"
+  | "residency_type"
+  | "eco_assurance_menage"
+  | "car_leasing"
+  | "needs"
+  | "contract_start"
+  | "already_assure"
+  | "info"
+  | "loader"
+  | "result";
 
 // Groups needs to be ordered
-export const stepGroupId = ["my_car", "needs"] as const;
+export const stepGroupId = [
+  "my_car",
+  "car_usage",
+  "my_info",
+  "my_needs",
+  "my_contact",
+] as const;
 export type StepGroupId = (typeof stepGroupId)[number];
 
 // Steps needs to start with the first step
 
 export const STEPS: Step[] = [
   {
-    id: "for-who",
-    group: "my_car",
+    id: "car_type",
     next: (lead) => {
-      return "npa";
+      return "car_info";
     },
-    disabled: (lead) => {
-      return false;
-    },
+    disabled: (lead) => lead.car_type === undefined,
+    group: "my_car",
   },
   {
-    id: "npa",
-    group: "my_car",
+    id: "car_info",
     next: (lead) => {
-      return "name";
+      return "car_buy_date";
     },
-    disabled: (lead) => {
-      return false;
-    },
+    disabled: (lead) =>
+      lead.car_brand === undefined ||
+      lead.car_model === undefined ||
+      lead.car_version === undefined,
+    group: "my_car",
   },
   {
-    id: "name",
-    group: "needs",
+    id: "car_buy_date",
+    next: (lead) => {
+      return "car_distance";
+    },
+    disabled: (lead) => lead.car_buy_date.year === undefined,
+    group: "my_car",
+  },
+  {
+    id: "car_distance",
+    next: (lead) => {
+      return "car_usage";
+    },
+    disabled: (lead) => lead.car_distance === undefined,
+    group: "car_usage",
+  },
+  {
+    id: "car_usage",
+    next: (lead) => {
+      return "car_park_place";
+    },
+    disabled: (lead) => lead.car_usage === undefined,
+    group: "car_usage",
+  },
+  {
+    id: "car_park_place",
+    next: (lead) => {
+      return "car_park_type";
+    },
+    disabled: (lead) => lead.car_park_place === undefined,
+    group: "car_usage",
+  },
+  {
+    id: "car_park_type",
+    next: (lead) => {
+      return "civility";
+    },
+    disabled: (lead) => lead.car_park_type === undefined,
+    group: "car_usage",
+  },
+  {
+    id: "civility",
+    next: (lead) => {
+      return "dob";
+    },
+    disabled: (lead) => lead.civility === undefined,
+    group: "my_info",
     newTab: true,
+  },
+  {
+    id: "dob",
+    next: (lead) => {
+      return "nationality";
+    },
+    disabled: (lead) =>
+      isValidDate(dayjs(lead.dob), { inPast: true, today: true }) !== undefined,
+    group: "my_info",
+  },
+  {
+    id: "nationality",
+    next: (lead) => {
+      return "residency_type";
+    },
+    disabled: (lead) => lead.nationality === undefined,
+    group: "my_info",
+  },
+  {
+    id: "residency_type",
+    next: (lead) => {
+      return "eco_assurance_menage";
+    },
+    disabled: (lead) => lead.residency_type === undefined,
+    group: "my_info",
+  },
+  {
+    id: "eco_assurance_menage",
+    next: (lead) => {
+      return "car_leasing";
+    },
+    disabled: (lead) => lead.eco_assurance_menage === undefined,
+    group: "my_info",
+  },
+  {
+    id: "car_leasing",
+    next: (lead) => {
+      return "needs";
+    },
+    disabled: (lead) => lead.car_leasing === undefined,
+    group: "my_needs",
+    newTab: true,
+  },
+  {
+    id: "needs",
+    next: (lead) => {
+      return "contract_start";
+    },
+    disabled: (lead) => lead.needs === undefined,
+    group: "my_needs",
+  },
+  {
+    id: "contract_start",
+    next: (lead) => {
+      return "already_assure";
+    },
+    disabled: (lead) =>
+      isValidDate(dayjs(lead.contract_start), { inPast: true }) !== undefined,
+    group: "my_needs",
+  },
+  {
+    id: "already_assure",
+    next: (lead) => {
+      return "info";
+    },
+    disabled: (lead) => lead.already_assure === undefined,
+    group: "my_needs",
+  },
+  {
+    id: "info",
+    next: (lead) => {
+      return "loader";
+    },
+    disabled: (lead) => false,
+    group: "my_contact",
+    newTab: true,
+  },
+  {
+    id: "loader",
+    next: (lead) => {
+      return "result";
+    },
+    disabled: (lead) => false,
+    group: "my_contact",
+    newTab: true,
+  },
+  {
+    id: "result",
     next: (lead) => {
       return null;
     },
-    disabled: (lead) => {
-      return false;
-    },
+    disabled: (lead) => false,
+    group: "my_contact",
+    newTab: true,
   },
 ];
 
@@ -144,12 +302,24 @@ const getMappedDisplay = (lead: Data) => {
   return mappedStepDisplay;
 };
 
-export const isLastStepDisplayed = (visibleStepId: StepId, lead: Data) => {
+export const isLastStepDisplayed = (
+  visibleStepId: StepId,
+  maxStepId: StepId,
+  lead: Data
+) => {
   const mappedStepDisplay: StepId[][] = getMappedDisplay(lead);
   const getContainedArray = (stepId: StepId) =>
     mappedStepDisplay.find((array) => array.includes(stepId));
 
-  const stepContainedArray = getContainedArray(visibleStepId);
+  let stepContainedArray = getContainedArray(visibleStepId);
+
+  if (stepContainedArray?.includes(maxStepId)) {
+    stepContainedArray = stepContainedArray.slice(
+      0,
+      stepContainedArray.indexOf(maxStepId) + 1
+    );
+  }
+
   const isLastStep = stepContainedArray?.[stepContainedArray.length - 1];
   return isLastStep === visibleStepId;
 };

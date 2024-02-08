@@ -1,22 +1,22 @@
-import { Fragment, type ReactNode } from "react";
-import For from "~/components/steps/For";
-import Name from "~/components/steps/Name";
-import Npa from "~/components/steps/Npa";
+import { Fragment } from "react";
+import CarBuyDate from "~/components/steps/CarBuyDate";
+import CarDistance from "~/components/steps/CarDistance";
+import CarType from "~/components/steps/CarType";
+import Carusage from "~/components/steps/CarUsage";
 import { StepId, getComponentToDisplay } from "~/constants/step.constant";
 import { useFormStore } from "./form";
 
 export const StepComponent = () => {
-  const childs: ReactNode[] = [];
-
   const currentVisibleStep = useFormStore((state) => state.currentVisibleStep);
   const currentStep = useFormStore((state) => state.currentStep);
   const lead = useFormStore((state) => state.data);
 
   // Map component with step Id
   const componentMap: Record<StepId, React.ReactNode> = {
-    "for-who": <For />,
-    name: <Name />,
-    npa: <Npa />,
+    car_type: <CarType />,
+    car_buy_date: <CarBuyDate />,
+    car_distance: <CarDistance />,
+    car_usage: <Carusage />,
   };
 
   return (

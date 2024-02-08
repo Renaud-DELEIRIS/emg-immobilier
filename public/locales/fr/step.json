@@ -1,15 +1,26 @@
 {
-  "for-who": {
-    "title": "Pour qui souhaitez-vous comparer ?",
-    "you": "Un adulte",
-    "spouse": "Un couple",
-    "kids": "Un adulte + enfant(s)",
-    "spouse-kids": "Un couple + enfant(s)"
+  "car_type": {
+    "title": "Quelle voiture souhaitez-vous assurer ?",
+    "my_car": "Ma voiture actuelle",
+    "future_car": "Une voiture que je souhaite acheter"
   },
-  "npa": {
-    "title": "Quel est votre code postal de résident (NPA) ?",
-    "description": "Pas sur le territoire Suisse ? <notHere>Cliquez ici</notHere>",
-    "placeholder": "Ville ou NPA"
+  "car_buy_date": {
+    "title": "Quelle est la date d’achat du véhicule ?",
+    "placeholder_month": "Mois (Facultatif)",
+    "placeholder_year": "Année : ex. 2014"
+  },
+  "car_distance": {
+    "title": "Quelle distance parcourez-vous dans l’année ?",
+    "7000km": "Moins de 7'000 kms",
+    "7000-15000": "Entre 7'000 et 15'000 kms",
+    "15000km": "Plus de 15'000 kms"
+  },
+  "car_usage": {
+    "title": "Dans quel cas utilisez-vous votre voiture ?",
+    "description": "Pour la plupart des assureurs, l'utilisation de votre voiture peut avoir un impact sur le tarif de votre assurance auto.",
+    "semi-private": "Privé et trajet travail",
+    "private": "Privé",
+    "professional": "Professionnel"
   },
   "name": {
     "alert": {

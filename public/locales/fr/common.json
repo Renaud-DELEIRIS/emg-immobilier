@@ -8,5 +8,19 @@
   "YES": "Oui",
   "NO": "Non",
   "no_result": "Aucun résultat",
-  "google_review": "600+ avis clients sur Google"
+  "google_review": "600+ avis clients sur Google",
+  "month": {
+    "jan": "Janvier",
+    "feb": "Février",
+    "mar": "Mars",
+    "apr": "Avril",
+    "may": "Mai",
+    "jun": "Juin",
+    "jul": "Juillet",
+    "aug": "Août",
+    "sep": "Septembre",
+    "oct": "Octobre",
+    "nov": "Novembre",
+    "dec": "Décembre"
+  }
 }
