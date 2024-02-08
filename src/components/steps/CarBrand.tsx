@@ -9,14 +9,19 @@ const CarBrand = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
+  const currentVisibleStep = useFormStore((state) => state.currentVisibleStep);
   const { t } = useTranslation("step");
 
   return (
-    <StepContainer title={t("car-brand.title")} stepId="car-brand">
+    <StepContainer
+      className={currentVisibleStep.id != "car-brand" ? "hidden" : ""}
+      title={t("car-brand.title")}
+      stepId="car-brand"
+    >
       <Input
         wrapperClassName="inline-flex px-[14px] items-center gap-[8px] shrink-0 w-[670px] h-[68px]"
         className="border-transparent bg-[#8888941a] text-sm font-normal not-italic leading-none text-[#082623] opacity-50"
-        value={lead.carBrand}
+        value={lead.carBrand ?? ""}
         onChange={(carBrand) => {
           changeLead({ carBrand });
         }}
@@ -31,7 +36,7 @@ const CarBrand = () => {
         }
       />
       <CarLogos
-        query={lead.carBrand}
+        query={lead.carBrand ?? ""}
         onClick={(modelName) => {
           changeLead({ carBrand: modelName });
           nextStep("car-brand");

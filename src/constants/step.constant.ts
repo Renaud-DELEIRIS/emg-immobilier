@@ -39,7 +39,7 @@ export const STEPS: Step[] = [
       return "car-brand";
     },
     disabled: (lead) => {
-      return false;
+      return lead.carPossesion != null;
     },
   },
   {
