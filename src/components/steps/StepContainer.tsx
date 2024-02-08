@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
-import { type StepId } from "~/constants/step.constant";
+import { isLastStepDisplayed, type StepId } from "~/constants/step.constant";
 import { useFormStore } from "~/stores/form";
 
 export const StepTitle: React.FC<PropsWithChildren> = ({ children }) => {
@@ -37,8 +37,10 @@ const StepContainer = ({
   className?: string;
   children: React.ReactNode;
 }) => {
-  const currentStep = useFormStore((state) => state.currentStep);
-  const active = forceActive ? forceActive : currentStep.id === stepId;
+  const currentVisibleStep = useFormStore((state) => state.currentVisibleStep);
+  const lead = useFormStore((state) => state.data);
+  const isMaxSize =
+    isLastStepDisplayed(stepId, lead) && currentVisibleStep.id === stepId;
 
   return (
     <motion.div
@@ -46,7 +48,7 @@ const StepContainer = ({
       animate={{ opacity: 1, x: 0 }}
       className={twMerge(
         "flex w-full flex-col",
-        active && "min-h-[calc(100dvh-210px)]",
+        isMaxSize && "min-h-[calc(100dvh-210px)]",
         className
       )}
       id={id ?? stepId}

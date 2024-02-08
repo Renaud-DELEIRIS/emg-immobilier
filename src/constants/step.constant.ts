@@ -109,11 +109,7 @@ export const getFirstStepOfGroup = (group: StepGroupId, lead: Data) => {
   return actualStep;
 };
 
-export const getComponentToDisplay = (
-  visibleStepId: StepId,
-  maxStepId: StepId,
-  lead: Data
-) => {
+const getMappedDisplay = (lead: Data) => {
   const mappedStepDisplay: StepId[][] = [];
   let startStep = STEPS[0]!;
   let count = 0;
@@ -144,6 +140,26 @@ export const getComponentToDisplay = (
     tempMap.push(startStep.id);
     mappedStepDisplay.push(tempMap);
   }
+
+  return mappedStepDisplay;
+};
+
+export const isLastStepDisplayed = (visibleStepId: StepId, lead: Data) => {
+  const mappedStepDisplay: StepId[][] = getMappedDisplay(lead);
+  const getContainedArray = (stepId: StepId) =>
+    mappedStepDisplay.find((array) => array.includes(stepId));
+
+  const stepContainedArray = getContainedArray(visibleStepId);
+  const isLastStep = stepContainedArray?.[stepContainedArray.length - 1];
+  return isLastStep === visibleStepId;
+};
+
+export const getComponentToDisplay = (
+  visibleStepId: StepId,
+  maxStepId: StepId,
+  lead: Data
+) => {
+  const mappedStepDisplay: StepId[][] = getMappedDisplay(lead);
 
   // Find the array in mappedStepDisplay that contains the visibleStepId
   const visibleStepIndex = mappedStepDisplay.findIndex((stepArray) =>
