@@ -39,7 +39,7 @@ const CarModel = () => {
         aria-label="Marque de voiture"
         placeholder={t("car-model.placeholder")}
         before={
-          <Badge className="flex items-center justify-center rounded-[40px] border-0 bg-[#082623] px-3.5 py-2 font-semibold text-white">
+          <Badge className="flex items-center justify-center rounded-[40px] border-0 bg-[#082623] px-3.5 py-2 text-center font-semibold text-white">
             {lead.carBrand!.toUpperCase()}
             <IconCloseRemove
               className="hover:cursor-pointer"

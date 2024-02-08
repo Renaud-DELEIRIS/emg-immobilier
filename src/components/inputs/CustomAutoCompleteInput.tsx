@@ -39,6 +39,7 @@ const CustomAutoCompleteInput = React.forwardRef<HTMLInputElement, IInput>(
       displayValue,
       onChangeQuery,
       value,
+      placeholder,
       ...props
     },
     ref
@@ -86,7 +87,9 @@ const CustomAutoCompleteInput = React.forwardRef<HTMLInputElement, IInput>(
               `py-[18px] text-base font-medium outline-none placeholder:text-grey focus-within:outline-none`,
               className
             )}
+            placeholder={placeholder}
             displayValue={displayValue}
+            autoComplete="off"
           />
           {/* <input
             id={id}
