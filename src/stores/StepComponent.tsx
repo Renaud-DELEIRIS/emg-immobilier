@@ -1,8 +1,6 @@
 import { Fragment, type ReactNode } from "react";
+import CarBrand from "~/components/steps/CarBrand";
 import CarPossesion from "~/components/steps/CarPossesion";
-import For from "~/components/steps/For";
-import Name from "~/components/steps/Name";
-import Npa from "~/components/steps/Npa";
 import { StepId, getComponentToDisplay } from "~/constants/step.constant";
 import { useFormStore } from "./form";
 
@@ -16,9 +14,12 @@ export const StepComponent = () => {
   // Map component with step Id
   const componentMap: Record<StepId, React.ReactNode> = {
     "car-possesion": <CarPossesion />,
-    "for-who": <For />,
-    name: <Name />,
-    npa: <Npa />,
+    "car-brand": <CarBrand />,
+    "car-model": <></>,
+    end: <></>,
+    "for-who": <></>,
+    name: <></>,
+    npa: <></>,
   };
 
   return (

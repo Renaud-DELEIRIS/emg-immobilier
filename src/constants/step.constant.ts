@@ -10,7 +10,14 @@ export interface Step {
   newTab?: boolean;
 }
 
-export type StepId = "for-who" | "npa" | "name" | "car-possesion";
+export type StepId =
+  | "car-possesion"
+  | "car-brand"
+  | "car-model"
+  | "end"
+  | "for-who"
+  | "npa"
+  | "name";
 
 // Groups needs to be ordered
 export const stepGroupId = [
@@ -29,36 +36,35 @@ export const STEPS: Step[] = [
     id: "car-possesion",
     group: "my_car",
     next: (lead) => {
-      return "for-who";
+      return "car-brand";
     },
     disabled: (lead) => {
       return false;
     },
   },
   {
-    id: "for-who",
+    id: "car-brand",
     group: "my_car",
     next: (lead) => {
-      return "npa";
+      return "car-model";
     },
     disabled: (lead) => {
       return false;
     },
   },
   {
-    id: "npa",
+    id: "car-model",
     group: "my_car",
     next: (lead) => {
-      return "name";
+      return "end";
     },
     disabled: (lead) => {
       return false;
     },
   },
   {
-    id: "name",
-    group: "needs",
-    newTab: true,
+    id: "end",
+    group: "my_car",
     next: (lead) => {
       return null;
     },
@@ -98,7 +104,7 @@ export const getStepInfo = (step: Step, lead: Data): [number, number] => {
 
   while (stepCalc.next(lead) !== null) {
     stepCalc = getNextStep(stepCalc, lead);
-
+    console.log(stepCalc);
     maxStep++;
     if (stepCalc.id === step.id) {
       stepNumber = maxStep;
