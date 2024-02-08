@@ -20,13 +20,6 @@
   "car-recap": {
     "title": "Véhicule à assurer"
   },
-  "for-who": {
-    "title": "Pour qui souhaitez-vous comparer ?",
-    "you": "Un adulte",
-    "spouse": "Un couple",
-    "kids": "Un adulte + enfant(s)",
-    "spouse-kids": "Un couple + enfant(s)"
-  },
   "car_buy_date": {
     "title": "Quelle est la date d’achat du véhicule ?",
     "placeholder_month": "Mois (Facultatif)",
