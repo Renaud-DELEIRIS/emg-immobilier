@@ -1,10 +1,16 @@
 import { Fragment } from "react";
+import AlreadyAssure from "~/components/steps/AlreadyAssure";
 import CarBuyDate from "~/components/steps/CarBuyDate";
 import CarDistance from "~/components/steps/CarDistance";
 import CarParkPlace from "~/components/steps/CarParkPlace";
 import CarParkType from "~/components/steps/CarParkType";
 import CarType from "~/components/steps/CarType";
 import Carusage from "~/components/steps/CarUsage";
+import ContractStart from "~/components/steps/ContractStart";
+import Leasing from "~/components/steps/Leasing";
+import Loading from "~/components/steps/Loader";
+import Name from "~/components/steps/Name";
+import Needs from "~/components/steps/Needs";
 import { StepId, getComponentToDisplay } from "~/constants/step.constant";
 import { useFormStore } from "./form";
 
@@ -21,6 +27,13 @@ export const StepComponent = () => {
     car_usage: <Carusage />,
     car_park_place: <CarParkPlace />,
     car_park_type: <CarParkType />,
+    car_leasing: <Leasing />,
+    needs: <Needs />,
+    contract_start: <ContractStart />,
+    already_assure: <AlreadyAssure />,
+    info: <Name />,
+    loader: <Loading />,
+    result: <></>,
   };
 
   return (

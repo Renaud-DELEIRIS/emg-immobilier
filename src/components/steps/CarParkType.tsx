@@ -21,7 +21,7 @@ const CarParkType = () => {
         value={lead.car_park_type}
         onChange={(value) => {
           changeLead({ car_park_type: value });
-          nextStep("car_park_type");
+          nextStep("eco_assurance_menage");
         }}
         options={[
           {

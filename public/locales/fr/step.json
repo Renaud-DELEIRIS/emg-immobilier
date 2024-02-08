@@ -36,6 +36,28 @@
     "street": "Voie publique",
     "other": "Autres"
   },
+  "car_leasing": {
+    "title": "Le véhicule est-il en leasing ?"
+  },
+  "needs": {
+    "title": "Quelle couverture souhaitez-vous ?",
+    "description": "La responsabilité est déjà incluse par défaut dans votre couverture.",
+    "casco-partielle": "Casco partielle",
+    "casco-complete": "Casco complète",
+    "casco-partielle-info": "La casco partielle couvre les dommages dont vous n'êtes pas responsable, comme le vol, les intempéries ou le bris de glace.",
+    "casco-complete-info": "La casco complète vous couvre aussi pour les dommages que vous causez, comme un accident dont vous êtes responsable."
+  },
+  "contract_start": {
+    "title": "Quand souhaitez-vous que votre contrat débute ?",
+    "today": "Aujourd'hui",
+    "tomorrow": "Demain",
+    "one_month": "Dans un mois",
+    "other": "Une autre date",
+    "label": "Renseignez une date"
+  },
+  "already_assure": {
+    "title": "Êtes-vous actuellement assuré(e) ?"
+  },
   "name": {
     "alert": {
       "title": "Vos infos sont protégées !",
@@ -49,5 +71,9 @@
     "placehodlder_email": "Votre adresse email",
     "placeholder_phone": "Votre numéro de téléphone",
     "action": "Découvrir mes offres"
+  },
+  "loader": {
+    "title": "Nous comparons pour vous parmi plus de 35 partenaires",
+    "subtitle": "Vos données personnelles garanties 100% sécurisées."
   }
 }
