@@ -22,7 +22,7 @@ export const StepComponent = () => {
   const lead = useFormStore((state) => state.data);
 
   // Map component with step Id
-  const componentMap: Record<StepId, React.ReactNode> = {
+  const componentMap: Partial<Record<StepId, React.ReactNode>> = {
     car_type: <CarType />,
     car_buy_date: <CarBuyDate />,
     car_distance: <CarDistance />,
