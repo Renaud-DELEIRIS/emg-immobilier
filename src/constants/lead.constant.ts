@@ -1,6 +1,8 @@
 import { z } from "zod";
 
 export const initialData: Data = {
+  carPossesion: "",
+  carBrand: "",
   nom: "",
   prenom: "",
   phone: "",
@@ -10,6 +12,8 @@ export const initialData: Data = {
 };
 
 export const schemaData = z.object({
+  carPossesion: z.string(),
+  carBrand: z.string(),
   // Default
   phone: z.string(),
   email: z.string(),
