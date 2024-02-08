@@ -6,6 +6,7 @@ export const initialData: Data = {
   phone: "",
   email: "",
   dob: "",
+  carPossesion: "",
 };
 
 export const schemaData = z.object({
@@ -18,6 +19,7 @@ export const schemaData = z.object({
   // Step
   for: z.string().optional(),
   npa: z.string().optional(),
+  carPossesion: z.string().optional(),
 });
 
 export type Data = z.infer<typeof schemaData>;

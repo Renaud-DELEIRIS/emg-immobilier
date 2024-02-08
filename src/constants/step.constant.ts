@@ -10,15 +10,31 @@ export interface Step {
   newTab?: boolean;
 }
 
-export type StepId = "for-who" | "npa" | "name";
+export type StepId = "for-who" | "npa" | "name" | "car-possesion";
 
 // Groups needs to be ordered
-export const stepGroupId = ["my_car", "needs"] as const;
+export const stepGroupId = [
+  "my_car",
+  "needs",
+  "car_informations",
+  "coverage",
+  "infos",
+] as const;
 export type StepGroupId = (typeof stepGroupId)[number];
 
 // Steps needs to start with the first step
 
 export const STEPS: Step[] = [
+  {
+    id: "car-possesion",
+    group: "my_car",
+    next: (lead) => {
+      return "for-who";
+    },
+    disabled: (lead) => {
+      return false;
+    },
+  },
   {
     id: "for-who",
     group: "my_car",

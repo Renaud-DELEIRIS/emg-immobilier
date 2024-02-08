@@ -1,4 +1,9 @@
 {
+  "car-possesion": {
+    "title": "Quelle voiture souhaitez-vous assurer ?",
+    "current": "Ma voiture actuelle",
+    "next": "Une voiture que je souhaite acheter"
+  },
   "for-who": {
     "title": "Pour qui souhaitez-vous comparer ?",
     "you": "Un adulte",

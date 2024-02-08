@@ -1,6 +1,9 @@
 {
   "group": {
-    "my_car": "My Car",
-    "needs": "Needs Gas"
+    "my_car": "Votre voiture",
+    "needs": "Utilisation de votre voiture",
+    "car_informations": "Vos informations",
+    "coverage": "Votre couverture",
+    "infos": "Vos coordonnées"
   }
 }
