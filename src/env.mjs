@@ -11,6 +11,7 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
     AWS_PUBLIC: z.string(),
     AWS_SECRET: z.string(),
+    SMILE_API: z.string(),
   },
 
   /**
@@ -44,5 +45,6 @@ export const env = createEnv({
     NEXT_PUBLIC_TUNNEL: process.env.NEXT_PUBLIC_TUNNEL,
     AWS_PUBLIC: process.env.AWS_PUBLIC,
     AWS_SECRET: process.env.AWS_SECRET,
+    SMILE_API: process.env.SMILE_API,
   },
 });
