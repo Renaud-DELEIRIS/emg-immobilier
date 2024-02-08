@@ -12,6 +12,7 @@ const Carusage = () => {
     <StepContainer
       title={t("car_usage.title")}
       description={t("car_usage.description")}
+      info={t("car_usage.info")}
       stepId="car_usage"
     >
       <TileInput

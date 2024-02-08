@@ -51,10 +51,6 @@ const StepContainer = ({
     isLastStepDisplayed(stepId, currentStep.id, lead) &&
     currentVisibleStep.id === stepId;
 
-  if (currentVisibleStep.id === stepId) {
-    console.log(description, "description");
-  }
-
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}

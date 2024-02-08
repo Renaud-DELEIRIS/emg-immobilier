@@ -18,6 +18,7 @@
   "car_usage": {
     "title": "Dans quel cas utilisez-vous votre voiture ?",
     "description": "Pour la plupart des assureurs, l'utilisation de votre voiture peut avoir un impact sur le tarif de votre assurance auto.",
+    "info": "Cette information influe sur le prix de votre assurance.",
     "semi-private": "Privé et trajet travail",
     "private": "Privé",
     "professional": "Professionnel"
