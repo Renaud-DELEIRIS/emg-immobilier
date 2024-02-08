@@ -36,6 +36,15 @@
     "street": "Voie publique",
     "other": "Autres"
   },
+  "civility": {
+    "title": "Civilité",
+    "description": "Cette information est utilisée uniquement à des fins statistiques.",
+    "mr": "Homme",
+    "mrs": "Femme"
+  },
+  "dob": {
+    "title": "Date de naissance"
+  },
   "car_leasing": {
     "title": "Le véhicule est-il en leasing ?"
   },

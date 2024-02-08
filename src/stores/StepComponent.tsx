@@ -6,7 +6,9 @@ import CarParkPlace from "~/components/steps/CarParkPlace";
 import CarParkType from "~/components/steps/CarParkType";
 import CarType from "~/components/steps/CarType";
 import Carusage from "~/components/steps/CarUsage";
+import Civility from "~/components/steps/Civility";
 import ContractStart from "~/components/steps/ContractStart";
+import Dob from "~/components/steps/Dob";
 import Leasing from "~/components/steps/Leasing";
 import Loading from "~/components/steps/Loader";
 import Name from "~/components/steps/Name";
@@ -27,6 +29,8 @@ export const StepComponent = () => {
     car_usage: <Carusage />,
     car_park_place: <CarParkPlace />,
     car_park_type: <CarParkType />,
+    civility: <Civility />,
+    dob: <Dob />,
     car_leasing: <Leasing />,
     needs: <Needs />,
     contract_start: <ContractStart />,
