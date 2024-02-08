@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "next-i18next";
+import { useState } from "react";
 import { IconMagnify } from "~/components/icon/IconMagnify";
 import Input from "~/components/inputs/input";
 import CarLogos from "~/components/steps/CarInfo/components/CarLogos";
@@ -10,6 +11,8 @@ const CarBrand = () => {
   const changeLead = useFormStore((state) => state.setData);
   const { t } = useTranslation("step");
 
+  const [localBrand, setLocalBrand] = useState<string>(lead.car_brand ?? "");
+
   return (
     <AnimatePresence>
       <motion.div
@@ -19,9 +22,9 @@ const CarBrand = () => {
         <Input
           wrapperClassName="inline-flex px-[14px] items-center gap-[8px] shrink-0 w-[670px] h-[68px]"
           className="border-transparent bg-[#8888941a] text-sm font-normal not-italic leading-none text-[#082623] opacity-50"
-          value={lead.car_brand ?? ""}
+          value={localBrand}
           onChange={(car_brand) => {
-            changeLead({ ...lead, car_brand });
+            setLocalBrand(car_brand);
           }}
           name="car-brand"
           aria-label="Marque de voiture"
@@ -34,7 +37,7 @@ const CarBrand = () => {
           }
         />
         <CarLogos
-          query={lead.car_brand ?? ""}
+          query={localBrand}
           onClick={(modelName) => {
             changeLead({ car_brand: modelName });
           }}
