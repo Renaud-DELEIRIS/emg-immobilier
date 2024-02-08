@@ -23,6 +23,18 @@
     "private": "Privé",
     "professional": "Professionnel"
   },
+  "car_park_place": {
+    "title": "Dans quelle ville garez-vous votre voiture la nuit ?",
+    "description": "Si vous êtes travailleur frontalier, veuillez renseigner la commune dont dépend votre foyer fiscal"
+  },
+  "car_park_type": {
+    "title": "Quel mode de stationnement utilisez-vous la nuit ?",
+    "description": "Le type de stationnement peut aussi avoir un impact sur votre tarif !",
+    "close_parking": "Garage fermé",
+    "secure_parking": "Parking sécurisé",
+    "street": "Voie publique",
+    "other": "Autres"
+  },
   "name": {
     "alert": {
       "title": "Vos infos sont protégées !",

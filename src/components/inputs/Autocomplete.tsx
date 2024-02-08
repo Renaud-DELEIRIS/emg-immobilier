@@ -12,7 +12,7 @@ import {
 
 interface Autocomplete {
   options: {
-    value: string | number;
+    value: string;
     label: string;
   }[];
   value?: string;
@@ -93,7 +93,7 @@ export const AutoComplete = forwardRef<
             <div className="relative w-full cursor-default overflow-hidden bg-white text-left ">
               <Combobox.Input
                 className={twMerge(
-                  "w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-sm font-medium opacity-80 placeholder:text-grey focus-within:outline-secondary focus-within:ring-1 focus-within:ring-secondary",
+                  "w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-sm font-medium placeholder:text-grey focus-within:outline-secondary focus-within:ring-1 focus-within:ring-secondary",
                   valid &&
                     "border-primary bg-[#0CBCB014] focus-within:border-primary focus-within:outline-primary"
                 )}

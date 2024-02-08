@@ -1,6 +1,8 @@
 import { Fragment } from "react";
 import CarBuyDate from "~/components/steps/CarBuyDate";
 import CarDistance from "~/components/steps/CarDistance";
+import CarParkPlace from "~/components/steps/CarParkPlace";
+import CarParkType from "~/components/steps/CarParkType";
 import CarType from "~/components/steps/CarType";
 import Carusage from "~/components/steps/CarUsage";
 import { StepId, getComponentToDisplay } from "~/constants/step.constant";
@@ -17,6 +19,8 @@ export const StepComponent = () => {
     car_buy_date: <CarBuyDate />,
     car_distance: <CarDistance />,
     car_usage: <Carusage />,
+    car_park_place: <CarParkPlace />,
+    car_park_type: <CarParkType />,
   };
 
   return (

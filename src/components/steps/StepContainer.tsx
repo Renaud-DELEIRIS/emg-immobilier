@@ -71,7 +71,7 @@ const StepContainer = ({
           {info && (
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger data-nofocus>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="36"
