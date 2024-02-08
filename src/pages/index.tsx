@@ -4,7 +4,7 @@ import nextI18nextConfig from "next-i18next.config.mjs";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
@@ -34,6 +34,7 @@ const Home: NextPage = () => {
   const trackDurationStep = useFormStore((state) => state.trackDurationStep);
   const initStep = useFormStore((state) => state.initStep);
   const formLoaded = useFormStore((state) => state.loaded);
+  const [loaded, setLoaded] = useState(false);
   const fetchSession = useSessionStore((state) => state.fetchSession);
   const setSessionId = useSessionStore((state) => state.setSessionId);
 
@@ -45,6 +46,7 @@ const Home: NextPage = () => {
         setVersionId(r.version.id);
       })
       .catch((e) => console.log(e));
+    setLoaded(true);
   }, []);
 
   useEffect(() => {
@@ -94,7 +96,7 @@ const Home: NextPage = () => {
         <meta name="robots" content="noindex,nofollow" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
-      {formLoaded && (
+      {formLoaded && loaded && (
         <main
           className={twMerge(
             "relative flex min-h-[100dvh] flex-col",
