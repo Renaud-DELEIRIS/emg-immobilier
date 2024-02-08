@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "next-i18next";
 import { Badge } from "~/components/containers/Badge";
 import { IconCloseRemove } from "~/components/icon/IconCloseRemove";
@@ -22,34 +23,43 @@ const CarModel = () => {
   const { t } = useTranslation("step");
 
   return (
-    <StepContainer
-      className={currentVisibleStep.id != "car-model" ? "hidden" : ""}
-      title={t("car-model.title")}
-      stepId="car-model"
-    >
-      <CustomAutoComplete
-        className="h-[68px]"
-        value={lead.carOption?.label ?? ""}
-        onChange={(carOption: ICarOption) => {
-          changeLead({ carOption });
-          nextStep("car-model");
-        }}
-        carBrand={lead.carBrand!}
-        name="car-model"
-        aria-label="Marque de voiture"
-        placeholder={t("car-model.placeholder")}
-        before={
-          <Badge className="flex items-center justify-center rounded-[40px] border-0 bg-[#082623] px-3.5 py-2 text-center font-semibold text-white">
-            {lead.carBrand!.toUpperCase()}
-            <IconCloseRemove
-              className="hover:cursor-pointer"
-              onClick={() => backStep()}
-              size={20}
-            />
-          </Badge>
-        }
-      ></CustomAutoComplete>
-    </StepContainer>
+    <AnimatePresence>
+      {currentVisibleStep.id == "car-model" && (
+        <motion.div
+          initial={{ opacity: 0, x: -250 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <StepContainer
+            className={currentVisibleStep.id != "car-model" ? "hidden" : ""}
+            title={t("car-model.title")}
+            stepId="car-model"
+          >
+            <CustomAutoComplete
+              className="h-[68px]"
+              value={lead.carOption?.label ?? ""}
+              onChange={(carOption: ICarOption) => {
+                changeLead({ carOption });
+                nextStep("car-model");
+              }}
+              carBrand={lead.carBrand!}
+              name="car-model"
+              aria-label="Marque de voiture"
+              placeholder={t("car-model.placeholder")}
+              before={
+                <Badge className="flex items-center justify-center rounded-[40px] border-0 bg-[#082623] px-3.5 py-2 text-center font-semibold text-white">
+                  {lead.carBrand!.toUpperCase()}
+                  <IconCloseRemove
+                    className="hover:cursor-pointer"
+                    onClick={() => backStep()}
+                    size={20}
+                  />
+                </Badge>
+              }
+            ></CustomAutoComplete>
+          </StepContainer>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
