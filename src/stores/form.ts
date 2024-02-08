@@ -21,6 +21,7 @@ interface FormState {
   nextStep: (stepId: StepId, data?: Data) => void;
   backStep: () => void;
   getNextStep: (stepId: StepId, data?: Data) => Step;
+  resetStep: () => void;
   initStep: () => void;
   setVisibleStep: (stepId: StepId) => void;
   data: Data;
@@ -160,6 +161,24 @@ export const useFormStore = create<FormState>()(
               });
             }
           }, 1500);
+        },
+        resetStep() {
+          set((state) => ({
+            backStep: state.backStep,
+            currentStep: STEPS[0]!,
+            loaded: true,
+            currentVisibleStep: state.currentVisibleStep,
+            data: state.data,
+            getNextStep: state.getNextStep,
+            initStep: state.initStep,
+            nextStep: state.nextStep,
+            resetStep: state.resetStep,
+            setData: state.setData,
+            setVersionId: state.setVersionId,
+            setVisibleStep: state.setVisibleStep,
+            trackDurationStep: state.trackDurationStep,
+            versionId: state.versionId,
+          }));
         },
         initStep() {
           const currentStep = STEPS.find((s) => s.id === get().currentStep.id)!;

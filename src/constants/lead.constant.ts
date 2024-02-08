@@ -9,11 +9,22 @@ export const initialData: Data = {
   email: "",
   dob: "",
   car_buy_date: {},
+  carPossesion: "",
+  carBrand: "",
+  carOption: null,
 };
 
+export const schemaCarOption = z
+  .object({
+    value: z.string(),
+    brand: z.string(),
+    label: z.string(),
+    from: z.number(),
+    to: z.number(),
+  })
+  .nullable();
+
 export const schemaData = z.object({
-  carPossesion: z.string(),
-  carBrand: z.string(),
   // Default
   phone: z.string(),
   email: z.string(),
@@ -45,6 +56,11 @@ export const schemaData = z.object({
   needs: z.enum(["casco-partielle", "casco-complete"]).optional(),
   contract_start: z.string().optional(),
   already_assure: z.boolean().optional(),
+  for: z.string().optional(),
+  npa: z.string().optional(),
+  carPossesion: z.string().nullable(),
+  carBrand: z.string().nullable(),
+  carOption: schemaCarOption,
 });
 
 export type Data = z.infer<typeof schemaData>;

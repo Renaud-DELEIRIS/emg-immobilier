@@ -4,6 +4,29 @@
     "my_car": "Ma voiture actuelle",
     "future_car": "Une voiture que je souhaite acheter"
   },
+  "car-possesion": {
+    "title": "Quelle voiture souhaitez-vous assurer ?",
+    "current": "Ma voiture actuelle",
+    "next": "Une voiture que je souhaite acheter"
+  },
+  "car-brand": {
+    "title": "Quel est la marque de votre véhicule ?",
+    "placeholder": "Tapez la marque de votre véhicule"
+  },
+  "car-model": {
+    "title": "Quel est le modèle de votre véhicule ?",
+    "placeholder": "Tapez les premières lettres du modèle"
+  },
+  "car-recap": {
+    "title": "Véhicule à assurer"
+  },
+  "for-who": {
+    "title": "Pour qui souhaitez-vous comparer ?",
+    "you": "Un adulte",
+    "spouse": "Un couple",
+    "kids": "Un adulte + enfant(s)",
+    "spouse-kids": "Un couple + enfant(s)"
+  },
   "car_buy_date": {
     "title": "Quelle est la date d’achat du véhicule ?",
     "placeholder_month": "Mois (Facultatif)",

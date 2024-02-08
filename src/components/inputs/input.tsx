@@ -71,7 +71,7 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
             )}
           </label>
         )}
-        <div className={"full-width relative"}>
+        <div className={"relative w-full"}>
           <input
             id={id}
             className={twMerge(
@@ -148,7 +148,7 @@ export const PhoneNumberInput = React.forwardRef<
             )}
           </label>
         )}
-        <div className={"full-width relative bg-white"}>
+        <div className={"relative w-full bg-white"}>
           <PhoneInput
             id={id}
             ref={ref}

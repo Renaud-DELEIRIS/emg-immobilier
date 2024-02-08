@@ -87,6 +87,28 @@ export const appRouter = createTRPCRouter({
       const { versionId, stepId, duration } = input;
       await updateTrackingStepDuration(versionId, stepId, duration);
     }),
+  getModele: publicProcedure
+    .input(z.object({ marque: z.string(), search: z.string() }))
+    .query(async ({ input }) => {
+      const { marque, search } = input;
+      let parsedMarque = marque == "volkswagen" ? "vw" : marque;
+      const res = await fetch(
+        env.SMILE_API +
+          `/car/vehicle/search/types?vehicleType=PKW&searchTerm=${parsedMarque}`
+      );
+      const data = (await res.json()) as {
+        brand: string;
+        description: string;
+        firstRegistrationYears: number[];
+        typeId: number;
+      }[];
+
+      return data.filter(
+        (d) =>
+          d.brand.toLowerCase() === parsedMarque.toLowerCase() &&
+          d.description.toLowerCase().includes(search.toLowerCase())
+      );
+    }),
   createPresignedUrl: publicProcedure
     .input(
       z.object({
