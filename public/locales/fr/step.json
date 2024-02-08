@@ -25,7 +25,8 @@
   },
   "car_park_place": {
     "title": "Dans quelle ville garez-vous votre voiture la nuit ?",
-    "description": "Si vous êtes travailleur frontalier, veuillez renseigner la commune dont dépend votre foyer fiscal"
+    "description": "Si vous êtes travailleur frontalier, veuillez renseigner la commune dont dépend votre foyer fiscal",
+    "placeholder": "Ville ou code postal"
   },
   "car_park_type": {
     "title": "Quel mode de stationnement utilisez-vous la nuit ?",

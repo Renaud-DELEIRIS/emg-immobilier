@@ -166,11 +166,19 @@ export const useFormStore = create<FormState>()(
           const stepId = queryParams.step as StepId;
           const stepFromRouter = getStepById(stepId);
 
+          const validStepFromRouter =
+            getStepInfo(stepFromRouter, get().data)[0] <=
+            getStepInfo(currentStep, get().data)[0];
+
           const currentVisibleStep = STEPS.find(
             (s) => s.id === get().currentVisibleStep.id
           )!;
 
-          get().setVisibleStep(stepFromRouter?.id ?? currentVisibleStep.id);
+          get().setVisibleStep(
+            validStepFromRouter && stepFromRouter?.id
+              ? stepFromRouter.id
+              : currentVisibleStep.id
+          );
 
           set((state) => ({
             ...state,
