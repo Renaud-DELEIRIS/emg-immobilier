@@ -141,7 +141,7 @@ export const CustomAutoComplete = forwardRef<
               leaveTo="opacity-0"
               afterLeave={() => setQuery("")}
             >
-              <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md border-2 border-secondary py-1 text-base text-dark shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md border-2 border-secondary bg-white py-1 text-base text-dark shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {(data?.length ?? 0) === 0 && query !== "" ? (
                   <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                     {t("no_result")}
