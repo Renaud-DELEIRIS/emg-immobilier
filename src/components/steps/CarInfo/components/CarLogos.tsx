@@ -1,11 +1,11 @@
+import { Fragment, ReactNode } from "react";
+import { Button } from "~/components/button/Button";
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
-} from "@radix-ui/react-tooltip";
-import { Fragment, ReactNode } from "react";
-import { Button } from "~/components/button/Button";
-import { TooltipProvider } from "~/components/ui/tooltip";
+} from "~/components/ui/tooltip";
 import marques from "~/data/car-brands.json";
 
 type CarLogo = {
