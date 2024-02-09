@@ -1,10 +1,11 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { IconChevronUp } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
+import Image from "next/image";
 import {
-  forwardRef,
   Fragment,
   ReactNode,
+  forwardRef,
   useEffect,
   useId,
   useState,
@@ -12,6 +13,7 @@ import {
 import marques from "~/data/car-brands.json";
 import { api } from "~/utils/api";
 import { IconMagnify } from "../../../icon/IconMagnify";
+import Loading from "../../Loader";
 import { ICarOption } from "../CarModel";
 import CustomAutoCompleteInput from "./CarAutoCompleteInput";
 
@@ -54,10 +56,11 @@ export const CarAutoComplete = forwardRef<
   ) => {
     const [query, setQuery] = useState(value ?? "");
     const [carModels, setCarModels] = useState<ICarOption[]>([]);
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("step");
+    const { t: tCommon } = useTranslation("common");
     const { data, isLoading } = api.getModele.useQuery(
       {
-        marque: car_brand,
+        marque: car_brand.toUpperCase(),
         search: query,
       },
       {
@@ -68,7 +71,6 @@ export const CarAutoComplete = forwardRef<
     );
 
     useEffect(() => {
-      console.log(data);
       if (data) {
         setCarModels(
           data.map((carInfo) => ({
@@ -104,7 +106,20 @@ export const CarAutoComplete = forwardRef<
           value={value}
           onChange={(value) =>
             onChange != null &&
-            onChange(carModels.find((carModel) => carModel.label == value)!)
+            onChange(
+              carModels.find((carModel) => carModel.label == value) ?? {
+                brand: car_brand,
+                from: 2024,
+                to: 2024,
+                label: t("car-model.unknown_model"),
+                logo:
+                  marques.find(
+                    (marque) =>
+                      marque.brand.toLowerCase() == car_brand.toLowerCase()
+                  )?.logo ?? "placeholder",
+                value: "UNKNOWN",
+              }
+            )
           }
         >
           <div className="relative rounded-xl bg-[#8888941a]">
@@ -146,9 +161,11 @@ export const CarAutoComplete = forwardRef<
               afterLeave={() => setQuery("")}
             >
               <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-xl border-[1.5px] border-[#8888941A] bg-white  px-1 py-[6px] text-base text-dark shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {(data?.length ?? 0) === 0 && query !== "" ? (
+                {isLoading ? (
+                  <Loading />
+                ) : (data?.length ?? 0) === 0 && query !== "" ? (
                   <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
-                    {t("no_result")}
+                    {tCommon("no_result")}
                   </div>
                 ) : (
                   carModels.slice(0, 100).map((carModel) => (
@@ -165,9 +182,12 @@ export const CarAutoComplete = forwardRef<
                         <>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center">
-                              <img
-                                className="mr-[10px] w-[42px]"
+                              <Image
+                                className="mr-[10px]"
+                                width={42}
+                                height={108}
                                 src={`/images/car-brands/${carModel.logo}.png`}
+                                alt={carModel.brand}
                               />
                               <span>{carModel.label}</span>
                             </div>
@@ -200,6 +220,18 @@ export const CarAutoComplete = forwardRef<
                     </Combobox.Option>
                   ))
                 )}
+                <Combobox.Option
+                  value="UNKNOWN"
+                  className={({ active }) =>
+                    `sticky bottom-[-6px] h-[58px] cursor-default select-none rounded-lg bg-white px-4 py-2 hover:bg-neutral-50 ${
+                      active ? "bg-neutral-50" : "text-gray-900"
+                    }`
+                  }
+                >
+                  <span className="flex h-full items-center">
+                    {t("car-model.missing_model")}
+                  </span>
+                </Combobox.Option>
               </Combobox.Options>
             </Transition>
           </div>
