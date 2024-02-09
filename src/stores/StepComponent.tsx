@@ -12,6 +12,7 @@ import Dob from "~/components/steps/Dob";
 import Leasing from "~/components/steps/Leasing";
 import Loading from "~/components/steps/Loader";
 import Name from "~/components/steps/Name";
+import Nationality from "~/components/steps/Nationality";
 import Needs from "~/components/steps/Needs";
 import { StepId, getComponentToDisplay } from "~/constants/step.constant";
 import { useFormStore } from "./form";
@@ -31,6 +32,7 @@ export const StepComponent = () => {
     car_park_type: <CarParkType />,
     civility: <Civility />,
     dob: <Dob />,
+    nationality: <Nationality />,
     car_leasing: <Leasing />,
     needs: <Needs />,
     contract_start: <ContractStart />,

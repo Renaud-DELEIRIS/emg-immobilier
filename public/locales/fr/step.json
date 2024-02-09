@@ -66,7 +66,15 @@
     "mrs": "Femme"
   },
   "dob": {
-    "title": "Date de naissance"
+    "title": "Quelle est votre date de naissance ?"
+  },
+  "nationality": {
+    "title": "Quelle est votre nationalité ?",
+    "placeholder": "Saisissez les 3 premières lettres",
+    "swiss": "Suisse",
+    "french": "Française",
+    "german": "Allemande",
+    "italian": "Italienne"
   },
   "car_leasing": {
     "title": "Le véhicule est-il en leasing ?"

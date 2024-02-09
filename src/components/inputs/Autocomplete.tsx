@@ -28,6 +28,7 @@ interface Autocomplete {
   valid?: boolean;
   "aria-label"?: string;
   tooltip?: string;
+  icon?: React.ReactNode;
 }
 
 export const AutoComplete = forwardRef<

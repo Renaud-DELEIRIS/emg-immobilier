@@ -22,8 +22,10 @@ const Dob = () => {
         value={lead.dob}
         onChange={(value) => {
           changeLead({ dob: value });
+          if (!isValidDate(dayjs(value, "YYYY-MM-DD"), { inPast: true })) {
+            nextStep("dob");
+          }
         }}
-        placeholder={t("dob.placeholder")}
         name="dob"
         aria-label="Date de naissance"
         error={
@@ -31,7 +33,6 @@ const Dob = () => {
         }
         valid={!validDateInfo}
       ></DateInput>
-      <button onClick={() => nextStep("eco_assurance_menage")}>Next</button>
     </StepContainer>
   );
 };

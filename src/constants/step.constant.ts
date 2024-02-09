@@ -240,7 +240,6 @@ export const getStepInfo = (step: Step, lead: Data): [number, number] => {
 
   while (stepCalc.next(lead) !== null) {
     stepCalc = getNextStep(stepCalc, lead);
-    console.log(stepCalc);
     maxStep++;
     if (stepCalc.id === step.id) {
       stepNumber = maxStep;
