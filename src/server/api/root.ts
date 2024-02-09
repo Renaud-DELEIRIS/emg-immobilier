@@ -31,6 +31,13 @@ const s3 = new S3({
   },
 });
 
+type Vehicle = {
+  brand: string;
+  description: string;
+  firstRegistrationYears: number[];
+  typeId: number;
+};
+
 export const appRouter = createTRPCRouter({
   fetchSession: publicProcedure
     .input(
@@ -91,17 +98,16 @@ export const appRouter = createTRPCRouter({
     .input(z.object({ marque: z.string(), search: z.string() }))
     .query(async ({ input }) => {
       const { marque, search } = input;
+      if (search.length < 2) {
+        return [] as Vehicle[];
+      }
       const parsedMarque = marque == "volkswagen" ? "vw" : marque;
       const res = await fetch(
         env.SMILE_API +
           `/car/vehicle/search/types?vehicleType=PKW&searchTerm=${search}`
       );
-      const data = (await res.json()) as {
-        brand: string;
-        description: string;
-        firstRegistrationYears: number[];
-        typeId: number;
-      }[];
+
+      const data = (await res.json()) as Vehicle[];
 
       return data.filter(
         (d) =>
