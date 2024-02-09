@@ -17,7 +17,7 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
   return (
     <>
       <aside
-        className={`sticky top-[106px] hidden h-fit w-full max-w-[340px]  rounded-lg border border-[#8888941A] bg-white p-6 md:block`}
+        className={`sticky top-[106px] hidden h-fit w-full max-w-[340px]  rounded-lg border border-[#8888941A] bg-white p-6 xl:block`}
       >
         <ul className="space-y-6 leading-[normal]">
           {stepGroupId.map((stepGroupId, index) => {

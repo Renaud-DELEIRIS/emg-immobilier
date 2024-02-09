@@ -20,7 +20,7 @@ const CarBrand = () => {
         animate={{ opacity: 1, x: 0 }}
       >
         <Input
-          wrapperClassName="inline-flex px-[14px] items-center gap-[8px] shrink-0 w-[670px] h-[68px]"
+          wrapperClassName="inline-flex px-[14px] items-center gap-[8px] shrink-0 w-full h-[68px]"
           className="border-transparent bg-[#8888941a] text-sm font-normal not-italic leading-none text-[#082623] opacity-50"
           value={localBrand}
           onChange={(car_brand) => {

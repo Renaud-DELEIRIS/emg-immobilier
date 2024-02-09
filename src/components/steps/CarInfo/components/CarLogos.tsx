@@ -49,7 +49,7 @@ const CarLogos = ({
   }));
 
   return (
-    <div className="mt-[18px] grid w-full grid-cols-4 flex-row items-start justify-center gap-4">
+    <div className="mt-[18px] grid w-full grid-cols-3 flex-row items-start justify-center gap-4 md:grid-cols-4">
       {brands
         .filter(
           (brand) =>
