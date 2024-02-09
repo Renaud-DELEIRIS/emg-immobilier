@@ -44,7 +44,7 @@ const Footer = () => {
           <div className="flex items-center gap-2.5">
             <div className="flex h-[32px] items-center rounded-full bg-[#0CBCB033] px-3.5  text-secondary">
               <span className="text-[13px] font-semibold tracking-[-0.26px]">
-                Étape {groupIndex + 1}
+                <span className="capitalize">{t("step")}</span> {groupIndex + 1}
               </span>
             </div>
             <span className="text-[14px] font-normal leading-normal text-secondary">
@@ -59,7 +59,7 @@ const Footer = () => {
           />
         </button>
         <Dialog open={isFooterOpen} onOpenChange={setIsFooterOpen}>
-          <DialogContent className="bottom-1/4  rounded-lg border-0 bg-transparent p-6 data-[state=closed]:slide-out-to-bottom-[25%] data-[state=closed]:slide-out-to-left-[48%] data-[state=open]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-left-[48%]">
+          <DialogContent className="bottom-1/4  rounded-lg border-0 bg-transparent p-6 data-[state=closed]:duration-200 data-[state=open]:duration-500 data-[state=closed]:fade-out-0 data-[state=open]:fade-in-100 data-[state=closed]:slide-out-to-bottom-[250%] data-[state=closed]:slide-out-to-left-[48%] data-[state=open]:slide-in-from-bottom-[150%] data-[state=open]:slide-in-from-left-[50%]">
             <Sidebar onClose={() => setIsFooterOpen(false)} />
           </DialogContent>
         </Dialog>
