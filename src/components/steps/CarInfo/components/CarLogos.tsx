@@ -27,7 +27,7 @@ const CarLogos = ({
     return (
       <Button
         onClick={() => onClick(brandName)}
-        className="flex h-auto flex-[1_0_0] items-center justify-center rounded-xl bg-white px-5 py-[14px] hover:bg-[#8888941a]"
+        className="flex h-[108px] flex-[1_0_0] items-center justify-center rounded-xl bg-white px-5 py-[14px] hover:bg-[#8888941a]"
       >
         <TooltipProvider>
           <Tooltip>
