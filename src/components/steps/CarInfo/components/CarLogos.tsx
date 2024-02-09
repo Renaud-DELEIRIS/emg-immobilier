@@ -24,22 +24,22 @@ const CarLogos = ({
 }) => {
   function getLogoButton(brandName: string, logoName?: string) {
     return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <Button
-              onClick={() => onClick(brandName)}
-              className="flex h-auto flex-[1_0_0] items-center justify-center rounded-xl bg-white px-[20px] py-[14px] hover:bg-[#8888941a]"
-            >
+      <Button
+        onClick={() => onClick(brandName)}
+        className="flex h-auto flex-[1_0_0] items-center justify-center rounded-xl bg-white px-5 py-[14px] hover:bg-[#8888941a]"
+      >
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
               <img
                 className="h-20 w-20"
                 src={`/images/car-brands/${logoName ?? brandName}.png`}
               ></img>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent className="ml-[-32px]">{brandName}</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+            </TooltipTrigger>
+            <TooltipContent>{brandName}</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </Button>
     );
   }
 

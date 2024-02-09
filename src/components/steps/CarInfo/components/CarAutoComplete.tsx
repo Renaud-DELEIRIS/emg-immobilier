@@ -2,9 +2,9 @@ import { Combobox, Transition } from "@headlessui/react";
 import { IconChevronUp } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
 import {
-  forwardRef,
   Fragment,
   ReactNode,
+  forwardRef,
   useEffect,
   useId,
   useState,
@@ -32,7 +32,7 @@ interface ICustomAutocomplete {
   before?: ReactNode;
 }
 
-export const CustomAutoComplete = forwardRef<
+export const CarAutoComplete = forwardRef<
   React.ElementRef<typeof Combobox.Input>,
   ICustomAutocomplete
 >(
@@ -121,7 +121,7 @@ export const CustomAutoComplete = forwardRef<
                 autoFocus={autoFocus}
                 ref={ref}
                 before={
-                  <div className="flex flex-auto items-center">
+                  <div className="flex flex-[1_0_auto] items-center">
                     <IconMagnify
                       size={32}
                       className="opacity-1 pr-[8px] text-[#082623]"
@@ -212,4 +212,4 @@ export const CustomAutoComplete = forwardRef<
   }
 );
 
-export default CustomAutoComplete;
+export default CarAutoComplete;

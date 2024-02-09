@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "next-i18next";
 import { IconCloseRemove } from "~/components/icon/IconCloseRemove";
 import { Badge } from "~/components/steps/CarInfo/components/Badge";
-import { CustomAutoComplete } from "~/components/steps/CarInfo/components/CarAutoComplete";
+import { CarAutoComplete } from "~/components/steps/CarInfo/components/CarAutoComplete";
 import { useFormStore } from "~/stores/form";
 
 export interface ICarOption {
@@ -25,7 +25,7 @@ const CarModel = () => {
         initial={{ opacity: 0, x: -250 }}
         animate={{ opacity: 1, x: 0 }}
       >
-        <CustomAutoComplete
+        <CarAutoComplete
           className="h-[68px]"
           value={lead.car_option?.label ?? ""}
           onChange={(carOption: ICarOption) => {
@@ -45,7 +45,7 @@ const CarModel = () => {
               />
             </Badge>
           }
-        ></CustomAutoComplete>
+        ></CarAutoComplete>
       </motion.div>
     </AnimatePresence>
   );
