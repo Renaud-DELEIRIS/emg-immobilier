@@ -73,7 +73,7 @@ const CustomAutoCompleteInput = React.forwardRef<HTMLInputElement, IInput>(
           }
           onClick={() => {
             if (localRef?.current) {
-              let parsedRef = localRef.current as HTMLInputElement;
+              const parsedRef = localRef.current as HTMLInputElement;
               parsedRef.focus();
             }
           }}

@@ -57,7 +57,7 @@ export const CustomAutoComplete = forwardRef<
     const { t } = useTranslation("common");
     const { data, isLoading } = api.getModele.useQuery(
       {
-        marque: car_brand!,
+        marque: car_brand,
         search: query,
       },
       {
