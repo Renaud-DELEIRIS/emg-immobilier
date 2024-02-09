@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Fragment, ReactNode } from "react";
 import { Button } from "~/components/button/Button";
 import {
@@ -31,10 +32,12 @@ const CarLogos = ({
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <img
-                className="h-20 w-20"
+              <Image
+                width={80}
+                height={80}
                 src={`/images/car-brands/${logoName ?? brandName}.png`}
-              ></img>
+                alt={brandName}
+              />
             </TooltipTrigger>
             <TooltipContent>{brandName}</TooltipContent>
           </Tooltip>
@@ -59,7 +62,7 @@ const CarLogos = ({
               .trim()
               .includes(query.toLowerCase().trim())
         )
-        .slice(0, 16)
+        // .slice(0, 16)
         .map((brand) => (
           <Fragment key={`${brand.brandName}`}>{brand.component}</Fragment>
         ))}

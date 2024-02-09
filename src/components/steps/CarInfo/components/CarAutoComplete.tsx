@@ -1,6 +1,7 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { IconChevronUp } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
+import Image from "next/image";
 import {
   forwardRef,
   Fragment,
@@ -165,9 +166,12 @@ export const CarAutoComplete = forwardRef<
                         <>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center">
-                              <img
-                                className="mr-[10px] w-[42px]"
+                              <Image
+                                className="mr-[10px]"
+                                width={42}
+                                height={108}
                                 src={`/images/car-brands/${carModel.logo}.png`}
+                                alt={carModel.brand}
                               />
                               <span>{carModel.label}</span>
                             </div>
