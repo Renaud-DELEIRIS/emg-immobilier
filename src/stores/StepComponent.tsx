@@ -1,6 +1,5 @@
 import { Fragment, useEffect } from "react";
 import AlreadyAssure from "~/components/steps/AlreadyAssure";
-import CarBuyDate from "~/components/steps/CarBuyDate";
 import CarDistance from "~/components/steps/CarDistance";
 import CarInfoWrapper from "~/components/steps/CarInfo/CarInfoWrapper";
 import CarParkPlace from "~/components/steps/CarParkPlace";
@@ -26,7 +25,6 @@ export const StepComponent = () => {
   const componentMap: Partial<Record<StepId, React.ReactNode>> = {
     car_type: <CarType />,
     car_info: <CarInfoWrapper />,
-    car_buy_date: <CarBuyDate />,
     car_distance: <CarDistance />,
     car_usage: <Carusage />,
     car_park_place: <CarParkPlace />,
