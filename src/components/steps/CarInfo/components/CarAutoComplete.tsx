@@ -3,9 +3,9 @@ import { IconChevronUp } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import {
-  forwardRef,
   Fragment,
   ReactNode,
+  forwardRef,
   useEffect,
   useId,
   useState,
@@ -58,7 +58,7 @@ export const CarAutoComplete = forwardRef<
     const { t } = useTranslation("common");
     const { data, isLoading } = api.getModele.useQuery(
       {
-        marque: car_brand,
+        marque: car_brand.toUpperCase(),
         search: query,
       },
       {
