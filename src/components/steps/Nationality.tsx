@@ -66,6 +66,7 @@ const Nationality = () => {
           changeLead({
             nationality: value,
           });
+          nextStep("nationality");
         }}
         theme="dark"
         icon={<IconMagnify size={28} />}
