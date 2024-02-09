@@ -94,7 +94,7 @@ export const appRouter = createTRPCRouter({
       const parsedMarque = marque == "volkswagen" ? "vw" : marque;
       const res = await fetch(
         env.SMILE_API +
-          `/car/vehicle/search/types?vehicleType=PKW&searchTerm=${search}`
+          `/car/vehicle/search/types?vehicleType=PKW&searchTerm=${parsedMarque}`
       );
       const data = (await res.json()) as {
         brand: string;
