@@ -30,7 +30,7 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
               <li key={stepGroupId}>
                 <button
                   onClick={() => {
-                    resetStep();
+                    // resetStep();
                     setVisibleStep(toStep.id);
                     onClose();
                   }}

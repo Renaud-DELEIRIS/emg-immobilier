@@ -34,7 +34,10 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     <>
       <Head>
         <link rel="shortcut icon" href="/images/favicon.svg" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
       </Head>
       <style jsx global>{`
         html {

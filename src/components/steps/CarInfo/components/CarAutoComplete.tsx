@@ -2,9 +2,9 @@ import { Combobox, Transition } from "@headlessui/react";
 import { IconChevronUp } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
 import {
+  forwardRef,
   Fragment,
   ReactNode,
-  forwardRef,
   useEffect,
   useId,
   useState,
@@ -145,7 +145,7 @@ export const CarAutoComplete = forwardRef<
               leaveTo="opacity-0"
               afterLeave={() => setQuery("")}
             >
-              <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md border-2 border-secondary bg-white py-1 text-base text-dark shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Combobox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-xl border-[1.5px] border-[#8888941A] bg-white  px-1 py-[6px] text-base text-dark shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {(data?.length ?? 0) === 0 && query !== "" ? (
                   <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                     {t("no_result")}
@@ -155,8 +155,8 @@ export const CarAutoComplete = forwardRef<
                     <Combobox.Option
                       key={carModel.label}
                       className={({ active }) =>
-                        `relative cursor-default select-none px-4 py-2 ${
-                          active ? "bg-neutral-100" : "text-gray-900"
+                        `relative cursor-default select-none rounded-lg px-4 py-2 ${
+                          active ? "bg-neutral-50" : "text-gray-900"
                         }`
                       }
                       value={carModel.label}

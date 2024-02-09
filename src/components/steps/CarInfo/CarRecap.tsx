@@ -66,9 +66,7 @@ const CarRecap = () => {
                   changeLead({
                     car_buy_date: { ...lead.car_buy_date, year: value },
                   });
-                  if ((lead.car_buy_date?.month ?? "") != "") {
-                    nextStep("car_info");
-                  }
+                  nextStep("car_info");
                 }}
                 placeholder={t("car_buy_date.placeholder_year")}
               ></SelectInput>
