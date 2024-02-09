@@ -1,29 +1,33 @@
+import { getPreviousStep } from "./../constants/step.constant";
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Router from "next/router";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { Data, initialData } from "~/constants/lead.constant";
 import {
-  STEPS,
-  Step,
-  StepId,
-  getPreviousStep,
   getStepById,
   getStepInfo,
+  Step,
+  StepId,
+  STEPS,
 } from "~/constants/step.constant";
 import { trcpProxyClient } from "~/utils/api";
 import getParamsUrl from "~/utils/client/getParamsUrl";
 import { useSessionStore } from "./session";
 
+interface SetStepOpts {
+  scrollToNextStep?: boolean;
+}
+
 interface FormState {
   currentStep: Step;
   currentVisibleStep: Step;
-  nextStep: (stepId: StepId, data?: Data) => void;
-  backStep: () => void;
+  nextStep: (stepId: StepId, data?: Data, opts?: SetStepOpts) => void;
+  backStep: (from?: StepId) => void;
   getNextStep: (stepId: StepId, data?: Data) => Step;
   resetStep: () => void;
   initStep: () => void;
-  setVisibleStep: (stepId: StepId) => void;
+  setVisibleStep: (stepId: StepId, opts?: SetStepOpts) => void;
   data: Data;
   setData: (d: Partial<Data>) => void;
 
@@ -56,7 +60,13 @@ export const useFormStore = create<FormState>()(
         currentStep: STEPS[0]!,
         currentVisibleStep: STEPS[0]!,
         loaded: false,
-        nextStep: (stepId: StepId, newData) => {
+        nextStep: (
+          stepId: StepId,
+          newData,
+          opts = {
+            scrollToNextStep: true,
+          }
+        ) => {
           const nextStep = get().getNextStep(stepId, newData);
 
           // Probably the last step of the form
@@ -65,7 +75,12 @@ export const useFormStore = create<FormState>()(
           get().setVisibleStep(nextStep.id);
         },
 
-        setVisibleStep: (stepId: StepId) => {
+        setVisibleStep: (
+          stepId: StepId,
+          opts = {
+            scrollToNextStep: true,
+          }
+        ) => {
           const nextStep = getStepById(stepId);
           if (!nextStep) return;
 
@@ -74,26 +89,27 @@ export const useFormStore = create<FormState>()(
           const stepInfo = getStepInfo(nextStep, get().data);
           const currentStepInfo = getStepInfo(get().currentStep, get().data);
 
-          setTimeout(() => {
-            if (!nextStep) return;
-            const element = document.getElementById(nextStep.id);
-            if (element) {
-              const offsetTop =
-                element.getBoundingClientRect().top + window.scrollY;
-              window.scrollTo({
-                top: offsetTop - 100,
-                behavior: "smooth",
-              });
+          if (opts.scrollToNextStep)
+            setTimeout(() => {
+              if (!nextStep) return;
+              const element = document.getElementById(nextStep.id);
+              if (element) {
+                const offsetTop =
+                  element.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({
+                  top: offsetTop - 100,
+                  behavior: "smooth",
+                });
 
-              // Focus on first focusable element
-              const focusableElement = element.querySelector(
-                "input, select, textarea, button"
-              ) as HTMLElement;
-              if (focusableElement) {
-                focusableElement.focus();
+                // Focus on first focusable element
+                const focusableElement = element.querySelector(
+                  "input, select, textarea, button"
+                ) as HTMLElement;
+                if (focusableElement) {
+                  focusableElement.focus();
+                }
               }
-            }
-          }, 100);
+            }, 100);
 
           set((state) => ({
             ...state,
@@ -131,11 +147,10 @@ export const useFormStore = create<FormState>()(
           );
         },
 
-        backStep() {
-          const prevStep = getPreviousStep(
-            get().currentVisibleStep,
-            get().data
-          );
+        backStep(from) {
+          const prevStep = from
+            ? getPreviousStep(getStepById(from), get().data)
+            : getPreviousStep(get().currentVisibleStep, get().data);
           if (!prevStep) return;
 
           get().setVisibleStep(prevStep.id);

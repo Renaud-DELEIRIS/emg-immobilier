@@ -48,7 +48,9 @@ export const schemaData = z.object({
     .optional(),
   civility: z.enum(["mr", "mrs"]).optional(),
   nationality: z.string().optional(),
-  residency_type: z.enum(["owner", "tenant", "other"]).optional(),
+  residency_type: z
+    .enum(["rent_apartment", "rent_house", "owner_apartment", "owner_house"])
+    .optional(),
   eco_assurance_menage: z.boolean().optional(),
   car_leasing: z.boolean().optional(),
   needs: z.enum(["casco-partielle", "casco-complete"]).optional(),

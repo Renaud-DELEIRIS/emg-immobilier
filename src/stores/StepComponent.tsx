@@ -9,12 +9,14 @@ import Carusage from "~/components/steps/CarUsage";
 import Civility from "~/components/steps/Civility";
 import ContractStart from "~/components/steps/ContractStart";
 import Dob from "~/components/steps/Dob";
+import EcoAssuranceMenage from "~/components/steps/EcoAssuranceMenage";
 import Leasing from "~/components/steps/Leasing";
 import Loading from "~/components/steps/Loader";
 import Name from "~/components/steps/Name";
 import Nationality from "~/components/steps/Nationality";
 import Needs from "~/components/steps/Needs";
-import { StepId, getComponentToDisplay } from "~/constants/step.constant";
+import ResidencyType from "~/components/steps/ResidencyType";
+import { getComponentToDisplay, StepId } from "~/constants/step.constant";
 import { useFormStore } from "./form";
 
 export const StepComponent = () => {
@@ -33,12 +35,15 @@ export const StepComponent = () => {
     civility: <Civility />,
     dob: <Dob />,
     nationality: <Nationality />,
+    residency_type: <ResidencyType />,
+    eco_assurance_menage: <EcoAssuranceMenage />,
     car_leasing: <Leasing />,
     needs: <Needs />,
     contract_start: <ContractStart />,
     already_assure: <AlreadyAssure />,
     info: <Name />,
     loader: <Loading />,
+    car_info: <></>,
     result: <></>,
   };
 

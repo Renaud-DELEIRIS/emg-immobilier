@@ -76,6 +76,21 @@
     "german": "Allemande",
     "italian": "Italienne"
   },
+  "residency_type": {
+    "title": "Vous êtes actuellement ?",
+    "description": "Cette information est utilisée uniquement à des fins statistiques.",
+    "rent_apartment": "Locataire en appartement",
+    "rent_house": "Locataire en maison",
+    "owner_apartment": "Propriétaire en appartement",
+    "owner_house": "Propriétaire en maison",
+    "placeholder": "Sélectionnez votre situation"
+  },
+  "eco_assurance_menage": {
+    "title": "Souhaitez-vous économiser sur votre assurance ménage ?",
+    "description": "Comparea peut vous permettre d'économiser jusqu'à 220 CHF/an sur votre assurance ménage.",
+    "yes": "Oui",
+    "no": "Non, merci"
+  },
   "car_leasing": {
     "title": "Le véhicule est-il en leasing ?"
   },

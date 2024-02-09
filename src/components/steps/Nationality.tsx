@@ -1,5 +1,6 @@
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
+import { twMerge } from "tailwind-merge";
 import nationalities from "~/data/nationalites.json";
 import { useFormStore } from "~/stores/form";
 import AutoComplete from "../inputs/Autocomplete";
@@ -35,10 +36,14 @@ const Nationality = () => {
   const { t } = useTranslation("step");
   return (
     <StepContainer title={t("nationality.title")} stepId="nationality">
-      <div className="mb-2.5 grid grid-cols-2 gap-2.5 md:grid-cols-4">
+      <div className="mb-2.5 grid grid-cols-2 gap-2.5 lg:grid-cols-4">
         {country.map((item, index) => (
           <button
-            className="flex h-[110px] w-full min-w-[160px] flex-col items-center justify-center gap-2.5 rounded-xl border-[1.5px] border-[#8888941A] bg-white shadow transition-all hover:bg-opacity-80 hover:shadow-md"
+            className={twMerge(
+              "flex h-[110px] w-full min-w-[160px] flex-col items-center justify-center gap-2.5 rounded-xl border-[1.5px] border-[#8888941A] bg-white shadow transition-all hover:bg-opacity-80 hover:shadow-md focus:outline-primary",
+              lead.nationality === item.nationalite &&
+                "border-primary bg-[#0CBCB014]"
+            )}
             key={index}
             onClick={() => {
               changeLead({

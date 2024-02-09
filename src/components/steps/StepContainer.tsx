@@ -71,7 +71,7 @@ const StepContainer = ({
       {withBackButton && (
         <button
           className="mb-8 flex h-11 w-fit items-center gap-2.5 rounded-full border border-[#88889440] bg-[#8888941A] px-5 text-base font-semibold text-[#082623CC] transition-colors hover:bg-[#082623CC] hover:text-white md:mb-[40px]"
-          onClick={() => backStep()}
+          onClick={() => backStep(stepId)}
         >
           <IconChevronLeft size={20} />
           {tCommon`BACK`}
