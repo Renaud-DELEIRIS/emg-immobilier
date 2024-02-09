@@ -8,6 +8,7 @@ import { useFormStore } from "~/stores/form";
 export interface ICarOption {
   value: string;
   brand: string;
+  logo: string;
   label: string;
   from: number;
   to: number;

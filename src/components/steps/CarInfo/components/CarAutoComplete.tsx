@@ -9,6 +9,7 @@ import {
   useId,
   useState,
 } from "react";
+import marques from "~/data/car-brands.json";
 import { api } from "~/utils/api";
 import { IconMagnify } from "../../../icon/IconMagnify";
 import { ICarOption } from "../CarModel";
@@ -73,6 +74,9 @@ export const CustomAutoComplete = forwardRef<
           data.map((carInfo) => ({
             value: carInfo.typeId.toString(),
             brand: car_brand,
+            logo:
+              marques.find((marque) => marque.brand == carInfo.brand)?.logo ??
+              "placeholder",
             from:
               carInfo.firstRegistrationYears[
                 carInfo.firstRegistrationYears.length - 1
@@ -163,10 +167,7 @@ export const CustomAutoComplete = forwardRef<
                             <div className="flex items-center">
                               <img
                                 className="mr-[10px] w-[42px]"
-                                src={`/images/car-brands/${carModel.brand.replaceAll(
-                                  " ",
-                                  "_"
-                                )}.png`}
+                                src={`/images/car-brands/${carModel.logo}.png`}
                               />
                               <span>{carModel.label}</span>
                             </div>

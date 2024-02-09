@@ -14,6 +14,7 @@ export const schemaCarOption = z
   .object({
     value: z.string(),
     brand: z.string(),
+    logo: z.string(),
     label: z.string(),
     from: z.number(),
     to: z.number(),

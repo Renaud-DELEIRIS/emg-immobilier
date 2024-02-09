@@ -6,14 +6,6 @@ import { useFormStore } from "~/stores/form";
 import { StepTitle } from "../StepContainer";
 import CarInfos from "./components/CarInfos";
 
-export interface ICarOption {
-  value: string;
-  brand: string;
-  label: string;
-  from: number;
-  to: number;
-}
-
 const CarRecap = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
