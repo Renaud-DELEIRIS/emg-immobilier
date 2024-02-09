@@ -7,6 +7,7 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
   const lead = useFormStore((state) => state.data);
   const currentStep = useFormStore((state) => state.currentStep);
   const setVisibleStep = useFormStore((state) => state.setVisibleStep);
+  const resetStep = useFormStore((state) => state.resetStep);
 
   const currentStepGroup = currentStep.group;
   const groupIndex = stepGroupId.indexOf(currentStepGroup);
@@ -29,6 +30,7 @@ const Sidebar = ({ onClose = () => null }: { onClose?: () => void }) => {
               <li key={stepGroupId}>
                 <button
                   onClick={() => {
+                    resetStep();
                     setVisibleStep(toStep.id);
                     onClose();
                   }}

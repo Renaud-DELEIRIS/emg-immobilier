@@ -15,7 +15,6 @@ export interface Step {
 export type StepId =
   | "car_type"
   | "car_info"
-  | "car_buy_date"
   | "car_distance"
   | "car_usage"
   | "car_park_place"
@@ -57,20 +56,9 @@ export const STEPS: Step[] = [
   {
     id: "car_info",
     next: (lead) => {
-      return "car_buy_date";
-    },
-    disabled: (lead) =>
-      lead.car_brand === undefined ||
-      lead.car_model === undefined ||
-      lead.car_version === undefined,
-    group: "my_car",
-  },
-  {
-    id: "car_buy_date",
-    next: (lead) => {
       return "car_distance";
     },
-    disabled: (lead) => lead.car_buy_date.year === undefined,
+    disabled: (lead) => false,
     group: "my_car",
   },
   {

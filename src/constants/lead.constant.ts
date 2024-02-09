@@ -1,21 +1,20 @@
 import { z } from "zod";
 
 export const initialData: Data = {
-  carPossesion: "",
-  carBrand: "",
   nom: "",
   prenom: "",
   phone: "",
   email: "",
   dob: "",
   car_buy_date: {},
-  carOption: null,
+  car_option: null,
 };
 
 export const schemaCarOption = z
   .object({
     value: z.string(),
     brand: z.string(),
+    logo: z.string(),
     label: z.string(),
     from: z.number(),
     to: z.number(),
@@ -58,9 +57,7 @@ export const schemaData = z.object({
   already_assure: z.boolean().optional(),
   for: z.string().optional(),
   npa: z.string().optional(),
-  carPossesion: z.string().nullable(),
-  carBrand: z.string().nullable(),
-  carOption: schemaCarOption,
+  car_option: schemaCarOption,
 });
 
 export type Data = z.infer<typeof schemaData>;

@@ -1,7 +1,7 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import AlreadyAssure from "~/components/steps/AlreadyAssure";
-import CarBuyDate from "~/components/steps/CarBuyDate";
 import CarDistance from "~/components/steps/CarDistance";
+import CarInfoWrapper from "~/components/steps/CarInfo/CarInfoWrapper";
 import CarParkPlace from "~/components/steps/CarParkPlace";
 import CarParkType from "~/components/steps/CarParkType";
 import CarType from "~/components/steps/CarType";
@@ -25,9 +25,9 @@ export const StepComponent = () => {
   const lead = useFormStore((state) => state.data);
 
   // Map component with step Id
-  const componentMap: Record<StepId, React.ReactNode> = {
+  const componentMap: Partial<Record<StepId, React.ReactNode>> = {
     car_type: <CarType />,
-    car_buy_date: <CarBuyDate />,
+    car_info: <CarInfoWrapper />,
     car_distance: <CarDistance />,
     car_usage: <Carusage />,
     car_park_place: <CarParkPlace />,
@@ -46,6 +46,12 @@ export const StepComponent = () => {
     car_info: <></>,
     result: <></>,
   };
+
+  useEffect(() => {
+    console.log(
+      getComponentToDisplay(currentVisibleStep.id, currentStep.id, lead)
+    );
+  }, []);
 
   return (
     <div
