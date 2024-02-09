@@ -43,7 +43,6 @@ export const StepComponent = () => {
     already_assure: <AlreadyAssure />,
     info: <Name />,
     loader: <Loading />,
-    car_info: <></>,
     result: <></>,
   };
 
