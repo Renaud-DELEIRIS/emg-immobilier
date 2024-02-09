@@ -13,11 +13,8 @@ const buttonVariants = cva(
         default: "bg-[#60dcd499] text-dark hover:bg-[#60DCD4]",
         "outline-thirdy": "border-2 border-thirdy text-dark hover:bg-thirdy/5",
         thirdy: "bg-thirdy text-white hover:bg-thirdy/90",
-        outline:
-          "border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         secondary: "bg-secondary text-white hover:bg-secondary/90",
         ghost: "text-secondary bg-[#0CBCB026] hover:bg-[#0CBCB044]",
-        link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50",
       },
       size: {
         default: "h-[56px] px-[26px]",

@@ -63,7 +63,7 @@ const StepContainer = ({
       animate={{ opacity: 1, x: 0 }}
       className={twMerge(
         "flex w-full flex-col",
-        isMaxSize && "min-h-[calc(100dvh-250px)]",
+        isMaxSize && "min-h-[calc(100dvh-190px)] md:min-h-[calc(100dvh-250px)]",
         className
       )}
       id={id ?? stepId}

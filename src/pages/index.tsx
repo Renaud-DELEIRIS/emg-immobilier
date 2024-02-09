@@ -9,9 +9,9 @@ import { twMerge } from "tailwind-merge";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
-import { StepComponent } from "~/stores/StepComponent";
 import { useFormStore } from "~/stores/form";
 import { useSessionStore } from "~/stores/session";
+import { StepComponent } from "~/stores/StepComponent";
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
@@ -113,11 +113,13 @@ const Home: NextPage = () => {
                 )}
               >
                 <StepComponent />
-                {displaySidebar && <Sidebar />}
+                {displaySidebar && (
+                  <div className="hidden xl:block">
+                    <Sidebar />
+                  </div>
+                )}
               </div>
-              <div className="hidden md:block">
-                <Footer />
-              </div>
+              <Footer />
             </>
           )}
         </main>
