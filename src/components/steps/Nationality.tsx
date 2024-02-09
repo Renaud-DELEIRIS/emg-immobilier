@@ -3,6 +3,7 @@ import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import nationalities from "~/data/nationalites.json";
 import { useFormStore } from "~/stores/form";
+import { IconMagnify } from "../icon/IconMagnify";
 import AutoComplete from "../inputs/Autocomplete";
 import StepContainer from "./StepContainer";
 
@@ -66,6 +67,8 @@ const Nationality = () => {
             nationality: value,
           });
         }}
+        theme="dark"
+        icon={<IconMagnify size={28} />}
         name="nationalite"
         options={nationalities.map(({ libelle, nationalite }) => ({
           value: nationalite,

@@ -1,7 +1,7 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { IconCheck, IconChevronUp, IconInfoCircle } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
-import { Fragment, forwardRef, useId, useMemo, useState } from "react";
+import { forwardRef, Fragment, useId, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import {
   Tooltip,
@@ -29,6 +29,7 @@ interface Autocomplete {
   "aria-label"?: string;
   tooltip?: string;
   icon?: React.ReactNode;
+  theme?: "normal" | "dark";
 }
 
 export const AutoComplete = forwardRef<
@@ -47,6 +48,8 @@ export const AutoComplete = forwardRef<
       error,
       valid = false,
       tooltip,
+      icon,
+      theme = "normal",
       ...props
     },
     ref
@@ -95,8 +98,10 @@ export const AutoComplete = forwardRef<
               <Combobox.Input
                 className={twMerge(
                   "w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-sm font-medium placeholder:text-grey focus-within:outline-secondary focus-within:ring-1 focus-within:ring-secondary",
+                  theme === "dark" && "bg-[#8888941A] text-dark",
                   valid &&
-                    "border-primary bg-[#0CBCB014] focus-within:border-primary focus-within:outline-primary"
+                    "border-primary bg-[#0CBCB014] focus-within:border-primary focus-within:outline-primary",
+                  icon && "pl-12"
                 )}
                 displayValue={(person: string) => {
                   return options.find((o) => o.value === person)?.label ?? "";
@@ -114,6 +119,11 @@ export const AutoComplete = forwardRef<
                   aria-hidden="true"
                 />
               </Combobox.Button>
+              {icon && (
+                <div className="absolute bottom-0 left-0 top-0 flex items-center pl-4 text-grey opacity-80">
+                  {icon}
+                </div>
+              )}
             </div>
             <Transition
               as={Fragment}
