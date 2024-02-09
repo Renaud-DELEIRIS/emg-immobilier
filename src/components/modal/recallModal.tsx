@@ -22,7 +22,7 @@ const RecallModal = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent>
+      <DialogContent effect="slide-down">
         <DialogHeader>
           <DialogTitle>{t("recall.title")}</DialogTitle>
           <button

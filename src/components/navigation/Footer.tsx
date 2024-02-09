@@ -59,7 +59,10 @@ const Footer = () => {
           />
         </button>
         <Dialog open={isFooterOpen} onOpenChange={setIsFooterOpen}>
-          <DialogContent className="bottom-1/4  rounded-lg border-0 bg-transparent p-6 data-[state=closed]:duration-200 data-[state=open]:duration-500 data-[state=closed]:fade-out-0 data-[state=open]:fade-in-100 data-[state=closed]:slide-out-to-bottom-[250%] data-[state=closed]:slide-out-to-left-[48%] data-[state=open]:slide-in-from-bottom-[150%] data-[state=open]:slide-in-from-left-[50%]">
+          <DialogContent
+            className="bottom-1/4  rounded-lg border-0 bg-transparent p-6"
+            effect="slide-up"
+          >
             <Sidebar onClose={() => setIsFooterOpen(false)} />
           </DialogContent>
         </Dialog>
