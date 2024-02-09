@@ -204,6 +204,7 @@ export const DateInput = React.forwardRef<
     ref
   ) => {
     const id = useId();
+    const [loaded, setLoaded] = useState(false);
 
     const separator =
       format
@@ -334,8 +335,13 @@ export const DateInput = React.forwardRef<
       }
     };
     useEffect(() => {
+      // Don't trigger on first render
+      if (!loaded) {
+        setLoaded(true);
+        return;
+      }
+
       onChange &&
-        // Fire html input event
         onChange(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
     }, [day, month, year]);
 

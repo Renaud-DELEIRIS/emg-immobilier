@@ -91,7 +91,7 @@ export const appRouter = createTRPCRouter({
     .input(z.object({ marque: z.string(), search: z.string() }))
     .query(async ({ input }) => {
       const { marque, search } = input;
-      let parsedMarque = marque == "volkswagen" ? "vw" : marque;
+      const parsedMarque = marque == "volkswagen" ? "vw" : marque;
       const res = await fetch(
         env.SMILE_API +
           `/car/vehicle/search/types?vehicleType=PKW&searchTerm=${parsedMarque}`

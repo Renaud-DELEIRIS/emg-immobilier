@@ -4,11 +4,11 @@ export const IconMagnify: React.FC<
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={props.size}
-      height={props.size}
+      width={props.size || 24}
+      height={props.size || 24}
       fill="none"
       {...props}
-      viewBox={`0 0 ${props.size} ${props.size}`}
+      viewBox={`0 0 32 32`}
     >
       <path
         d="M26.6667 26.6675L21.8351 21.8359"

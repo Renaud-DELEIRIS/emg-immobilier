@@ -85,12 +85,7 @@ const ContractStart = () => {
               isValidDate(dayjs(lead.contract_start, "DD.MM.YYYY"), {
                 inFuture: true,
               }) === "inFuture"
-                ? tCommon(
-                    "date." +
-                      isValidDate(dayjs(lead.contract_start, "DD.MM.YYYY"), {
-                        inFuture: true,
-                      })
-                  )
+                ? tCommon("date.inFuture")
                 : ""
             }
             valid={
