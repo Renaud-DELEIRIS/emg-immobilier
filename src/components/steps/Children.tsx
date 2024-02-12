@@ -17,7 +17,7 @@ const Children = () => {
           changeLead({ child_nb: parseInt(value!) });
           if (value === "0")
             nextStep("children", {
-              child_nb: parseInt(value!),
+              child_nb: parseInt(value),
             });
         }}
         className="grid md:grid-cols-2"

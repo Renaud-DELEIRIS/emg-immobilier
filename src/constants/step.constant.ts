@@ -198,7 +198,7 @@ export const getStepListBetweenSteps = (
   lead: Data
 ) => {
   let activeStep = step1;
-  let stepList: Step[] = [];
+  const stepList: Step[] = [];
   let count = 0;
   while (activeStep.id !== step2.id) {
     stepList.push(activeStep);
