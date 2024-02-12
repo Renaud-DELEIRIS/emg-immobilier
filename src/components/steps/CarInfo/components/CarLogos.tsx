@@ -58,8 +58,10 @@ const CarLogos = ({
   return (
     <div
       className={twMerge(
-        `mt-[18px] grid w-full flex-row items-start justify-center gap-4`,
-        isMobile ? "h-[240px] grid-cols-3" : "h-[480px] grid-cols-4"
+        `mt-[18px] grid w-full gap-4`,
+        isMobile
+          ? "h-[240px] grid-cols-3 grid-rows-2"
+          : "h-[480px] grid-cols-4 grid-rows-4 "
       )}
     >
       {brands
