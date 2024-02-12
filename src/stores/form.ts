@@ -5,11 +5,11 @@ import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { Data, initialData } from "~/constants/lead.constant";
 import {
-  getStepById,
-  getStepInfo,
+  STEPS,
   Step,
   StepId,
-  STEPS,
+  getStepById,
+  getStepInfo,
 } from "~/constants/step.constant";
 import { trcpProxyClient } from "~/utils/api";
 import getParamsUrl from "~/utils/client/getParamsUrl";
@@ -22,7 +22,7 @@ interface SetStepOpts {
 interface FormState {
   currentStep: Step;
   currentVisibleStep: Step;
-  nextStep: (stepId: StepId, data?: Data, opts?: SetStepOpts) => void;
+  nextStep: (stepId: StepId, data?: Partial<Data>, opts?: SetStepOpts) => void;
   backStep: (from?: StepId) => void;
   getNextStep: (stepId: StepId, data?: Data) => Step;
   resetStep: () => void;
@@ -67,12 +67,15 @@ export const useFormStore = create<FormState>()(
             scrollToNextStep: true,
           }
         ) => {
-          const nextStep = get().getNextStep(stepId, newData);
+          const nextStep = get().getNextStep(stepId, {
+            ...get().data,
+            ...newData,
+          });
 
           // Probably the last step of the form
           if (nextStep.id === stepId) return;
 
-          get().setVisibleStep(nextStep.id);
+          get().setVisibleStep(nextStep.id, opts);
         },
 
         setVisibleStep: (

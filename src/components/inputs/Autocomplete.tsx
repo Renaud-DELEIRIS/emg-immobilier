@@ -1,7 +1,7 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { IconCheck, IconChevronUp, IconInfoCircle } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
-import { forwardRef, Fragment, useId, useMemo, useState } from "react";
+import { Fragment, forwardRef, useId, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import {
   Tooltip,
@@ -61,12 +61,18 @@ export const AutoComplete = forwardRef<
       () =>
         query === ""
           ? options
-          : options.filter((option) =>
-              option.value
-                .toString()
-                .toLowerCase()
-                .replace(/\s+/g, "")
-                .includes(query.toLowerCase().replace(/\s+/g, ""))
+          : options.filter(
+              (option) =>
+                option.value
+                  .toString()
+                  .toLowerCase()
+                  .replace(/\s+/g, "")
+                  .includes(query.toLowerCase().replace(/\s+/g, "")) ||
+                option.label
+                  .toString()
+                  .toLowerCase()
+                  .replace(/\s+/g, "")
+                  .includes(query.toLowerCase().replace(/\s+/g, ""))
             ),
       [query, options]
     );

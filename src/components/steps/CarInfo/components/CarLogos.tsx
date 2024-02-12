@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Fragment, ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 import { Button } from "~/components/button/Button";
 import useIsMobile from "~/components/hooks/useIsMobile";
 import {
@@ -32,7 +33,7 @@ const CarLogos = ({
       >
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <Image
                 width={80}
                 height={80}
@@ -56,11 +57,10 @@ const CarLogos = ({
 
   return (
     <div
-      className={`h-[${
-        isMobile ? "240" : "480"
-      }px] mt-[18px] grid w-full grid-cols-${
-        isMobile ? 3 : 4
-      } flex-row items-start justify-center gap-4`}
+      className={twMerge(
+        `mt-[18px] grid w-full flex-row items-start justify-center gap-4`,
+        isMobile ? "h-[240px] grid-cols-3" : "h-[480px] grid-cols-4"
+      )}
     >
       {brands
         .filter(

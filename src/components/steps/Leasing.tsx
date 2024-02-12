@@ -19,7 +19,9 @@ const Leasing = () => {
         value={lead.car_leasing}
         onChange={(value) => {
           changeLead({ car_leasing: value });
-          nextStep("car_leasing");
+          nextStep("car_leasing", {
+            car_leasing: value,
+          });
         }}
         className="grid md:grid-cols-2"
         options={[

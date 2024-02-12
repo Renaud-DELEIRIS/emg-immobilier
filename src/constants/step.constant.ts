@@ -138,7 +138,7 @@ export const STEPS: Step[] = [
   {
     id: "car_leasing",
     next: (lead) => {
-      return "needs";
+      return lead.car_leasing ? "contract_start" : "needs";
     },
     disabled: (lead) => lead.car_leasing === undefined,
     group: "my_needs",
