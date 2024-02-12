@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CHCanton, ChCantonValue } from "~/data/chCanton";
 
 export const initialData: Data = {
   nom: "",
@@ -6,20 +7,16 @@ export const initialData: Data = {
   phone: "",
   email: "",
   dob: "",
-  car_buy_date: {},
-  car_option: null,
+  situation: [],
 };
 
-export const schemaCarOption = z
-  .object({
-    value: z.string(),
-    brand: z.string(),
-    logo: z.string(),
-    label: z.string(),
-    from: z.number(),
-    to: z.number(),
-  })
-  .nullable();
+export const situation = [
+  "Traveaux de rénovation résidence principale",
+  "à éffectué des rachats d'années LPP",
+  "à versé des pension alimentaires",
+  "à cotisé sur un 3ème pilier",
+  "à payé ces intérêts sur un crédit",
+] as const;
 
 export const schemaData = z.object({
   // Default
@@ -29,35 +26,29 @@ export const schemaData = z.object({
   nom: z.string(),
   prenom: z.string(),
   // Step
-  car_type: z.enum(["my_car", "future_car"]).optional(),
-  car_brand: z.string().optional(),
-  car_model: z.string().optional(),
-  car_version: z.string().optional(),
-  car_buy_date: z.object({
-    month: z.string().optional(),
-    year: z.string().optional(),
-  }),
-  car_distance: z.enum(["-7000km", "7000-15000", "+15000km"]).optional(),
-  car_usage: z
-    .enum(["private and go to work", "private", "professional"])
+  pays_residence: z.enum(["france", "suisse"]).optional(),
+  canton_work: z
+    .enum(CHCanton.map((a) => a.value) as [ChCantonValue, ...ChCantonValue[]])
     .optional(),
-  car_park_place: z.string().optional(),
-  car_park_type: z
-    .enum(["close parking", "secure parking", "street", "other"])
+  regime_assurance_maladie_frontalier: z
+    .enum(["LAMal", "CMU", "autre"])
     .optional(),
-  civility: z.enum(["mr", "mrs"]).optional(),
   nationality: z.string().optional(),
-  residency_type: z
-    .enum(["rent_apartment", "rent_house", "owner_apartment", "owner_house"])
-    .optional(),
-  eco_assurance_menage: z.boolean().optional(),
-  car_leasing: z.boolean().optional(),
-  needs: z.enum(["casco-partielle", "casco-complete"]).optional(),
-  contract_start: z.string().optional(),
-  already_assure: z.boolean().optional(),
-  for: z.string().optional(),
+  permis_type: z.enum(["B", "C", "autre"]).optional(),
   npa: z.string().optional(),
-  car_option: schemaCarOption,
+  situation_marital: z
+    .enum(["marié", "célibataire", "divorcé", "autre"])
+    .optional(),
+  yob: z.string().optional(),
+
+  child_nb: z.number().optional(),
+  situation_professionnelle: z
+    .enum(["employé", "indépendant", "employé et indépendant", "autre"])
+    .optional(),
+  salary_brut: z.number().optional(),
+  is_salary_above_120k: z.boolean().optional(),
+  is_owner_property: z.boolean().optional(),
+  situation: z.array(z.enum(situation)),
 });
 
 export type Data = z.infer<typeof schemaData>;

@@ -3,35 +3,34 @@ import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
 import StepContainer from "./StepContainer";
 
-const Leasing = () => {
+const RegimeAssuranceMaladie = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
-  const { t: tCommon } = useTranslation("common");
   return (
-    <StepContainer
-      title={t("car_leasing.title")}
-      stepId="car_leasing"
-      withBackButton
-    >
+    <StepContainer stepId="regime_assurance_maladie">
       <TileInput
-        value={lead.car_leasing}
+        value={lead.regime_assurance_maladie_frontalier}
         onChange={(value) => {
-          changeLead({ car_leasing: value });
-          nextStep("car_leasing", {
-            car_leasing: value,
+          changeLead({ regime_assurance_maladie_frontalier: value });
+          nextStep("regime_assurance_maladie", {
+            regime_assurance_maladie_frontalier: value,
           });
         }}
         className="grid md:grid-cols-2"
         options={[
           {
-            value: true,
-            label: tCommon("YES"),
+            value: "LAMal",
+            label: t("regime_assurance_maladie.lamal"),
           },
           {
-            value: false,
-            label: tCommon("NO"),
+            value: "CMU",
+            label: t("regime_assurance_maladie.cmu"),
+          },
+          {
+            value: "autre",
+            label: t("other"),
           },
         ]}
       ></TileInput>
@@ -39,4 +38,4 @@ const Leasing = () => {
   );
 };
 
-export default Leasing;
+export default RegimeAssuranceMaladie;

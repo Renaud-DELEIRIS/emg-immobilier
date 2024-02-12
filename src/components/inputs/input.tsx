@@ -79,7 +79,7 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
               insideText ? "pr-10" : "pr-4",
               icon && "pl-12",
               valid &&
-                "border-primary bg-[#0CBCB014] focus-within:border-primary focus-within:outline-primary",
+                "border-primary bg-primary/5 focus-within:border-primary focus-within:outline-primary",
               className
             )}
             ref={ref}

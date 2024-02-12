@@ -35,7 +35,7 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <g clip-path="url(#clip0_805_5022)">
+                <g clipPath="url(#clip0_805_5022)">
                   <path
                     opacity="0.65"
                     d="M27.5 14C27.5 21.4561 21.4561 27.5 14 27.5C6.54394 27.5 0.5 21.4561 0.5 14C0.5 6.54394 6.54394 0.5 14 0.5C21.4561 0.5 27.5 6.54394 27.5 14Z"
@@ -81,7 +81,10 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
                 <button
                   onClick={() => {
                     // resetStep();
-                    setVisibleStep(toStep.id);
+                    setVisibleStep(toStep.id, {
+                      bypassSameStep: true,
+                      scrollToNextStep: true,
+                    });
                     onClose && onClose();
                   }}
                   disabled={!passed}
@@ -89,7 +92,7 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
                 >
                   <div
                     className={`grid h-6 w-6 place-items-center rounded-full ${
-                      !passed ? "bg-[#0CBCB01A]" : "bg-primary"
+                      !passed ? "bg-primary/5" : "bg-primary"
                     }`}
                   >
                     <IconCheck

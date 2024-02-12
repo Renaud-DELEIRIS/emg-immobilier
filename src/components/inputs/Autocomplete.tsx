@@ -106,7 +106,7 @@ export const AutoComplete = forwardRef<
                   "w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-sm font-medium placeholder:text-grey focus-within:outline-secondary focus-within:ring-1 focus-within:ring-secondary",
                   theme === "dark" && "bg-[#8888941A] text-dark",
                   valid &&
-                    "border-primary bg-[#0CBCB014] focus-within:border-primary focus-within:outline-primary",
+                    "border-primary bg-primary/5 focus-within:border-primary focus-within:outline-primary",
                   icon && "pl-12"
                 )}
                 displayValue={(person: string) => {

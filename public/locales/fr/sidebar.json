@@ -1,9 +1,8 @@
 {
   "group": {
-    "my_car": "Votre voiture",
-    "car_usage": "Utilisation de votre voiture",
-    "my_info": "Vos informations",
-    "my_needs": "Votre couverture",
-    "my_contact": "Vos coordonnées"
+    "residence": "Résidence",
+    "info": "Vos informations",
+    "professional": "Votre activité professionnelle",
+    "situation": "Votre situation"
   }
 }

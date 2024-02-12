@@ -3,29 +3,30 @@ import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
 import StepContainer from "./StepContainer";
 
-const Needs = () => {
+const Owner = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
   return (
-    <StepContainer title={t("needs.title")} stepId="needs">
+    <StepContainer stepId="owner">
       <TileInput
-        value={lead.needs}
+        value={lead.is_owner_property}
         onChange={(value) => {
-          changeLead({ needs: value });
-          nextStep("needs");
+          changeLead({ is_owner_property: value });
+          nextStep("owner", {
+            is_owner_property: value,
+          });
         }}
+        className="grid md:grid-cols-2"
         options={[
           {
-            value: "casco-partielle",
-            label: t("needs.casco-partielle"),
-            info: t("needs.casco-partielle-info"),
+            value: true,
+            label: t("yes"),
           },
           {
-            value: "casco-complete",
-            label: t("needs.casco-complete"),
-            info: t("needs.casco-complete-info"),
+            value: false,
+            label: t("no"),
           },
         ]}
       ></TileInput>
@@ -33,4 +34,4 @@ const Needs = () => {
   );
 };
 
-export default Needs;
+export default Owner;

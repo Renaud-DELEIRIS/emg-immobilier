@@ -1,6 +1,4 @@
-import dayjs from "dayjs";
 import { z } from "zod";
-import { isValidDate } from "~/utils/validation/date.validation";
 import { type Data } from "./lead.constant";
 
 export interface Step {
@@ -13,32 +11,30 @@ export interface Step {
 }
 
 export type StepId =
-  | "car_type"
-  | "car_info"
-  | "car_distance"
-  | "car_usage"
-  | "car_park_place"
-  | "car_park_type"
-  | "civility"
-  | "dob"
+  | "pays_residence"
+  | "canton_work"
+  | "regime_assurance_maladie"
   | "nationality"
-  | "residency_type"
-  | "eco_assurance_menage"
-  | "car_leasing"
-  | "needs"
-  | "contract_start"
-  | "already_assure"
+  | "permis_type"
+  | "npa"
+  | "situation_marital"
+  | "yob"
+  | "children"
   | "info"
+  | "situation_professionnelle"
+  | "salary_brut"
+  | "salary_above_120k"
+  | "owner"
+  | "situation"
   | "loader"
   | "result";
 
 // Groups needs to be ordered
 export const stepGroupId = [
-  "my_car",
-  "car_usage",
-  "my_info",
-  "my_needs",
-  "my_contact",
+  "residence",
+  "info",
+  "professional",
+  "situation",
 ] as const;
 export type StepGroupId = (typeof stepGroupId)[number];
 
@@ -46,155 +42,113 @@ export type StepGroupId = (typeof stepGroupId)[number];
 
 export const STEPS: Step[] = [
   {
-    id: "car_type",
+    id: "pays_residence",
     next: (lead) => {
-      return "car_info";
+      if (lead.pays_residence === "suisse") {
+        return "nationality";
+      }
+      return "canton_work";
     },
-    disabled: (lead) => lead.car_type === undefined,
-    group: "my_car",
+    disabled: (lead) => lead.pays_residence === undefined,
+    group: "residence",
   },
   {
-    id: "car_info",
-    next: (lead) => {
-      return "car_distance";
-    },
-    disabled: (lead) => false,
-    group: "my_car",
+    id: "canton_work",
+    next: (lead) => "regime_assurance_maladie",
+    disabled: (lead) => lead.canton_work === undefined,
+    group: "residence",
   },
   {
-    id: "car_distance",
-    next: (lead) => {
-      return "car_usage";
-    },
-    disabled: (lead) => lead.car_distance === undefined,
-    group: "car_usage",
-  },
-  {
-    id: "car_usage",
-    next: (lead) => {
-      return "car_park_place";
-    },
-    disabled: (lead) => lead.car_usage === undefined,
-    group: "car_usage",
-  },
-  {
-    id: "car_park_place",
-    next: (lead) => {
-      return "car_park_type";
-    },
-    disabled: (lead) => lead.car_park_place === undefined,
-    group: "car_usage",
-  },
-  {
-    id: "car_park_type",
-    next: (lead) => {
-      return "civility";
-    },
-    disabled: (lead) => lead.car_park_type === undefined,
-    group: "car_usage",
-  },
-  {
-    id: "civility",
-    next: (lead) => {
-      return "dob";
-    },
-    disabled: (lead) => lead.civility === undefined,
-    group: "my_info",
-    newTab: true,
-  },
-  {
-    id: "dob",
-    next: (lead) => {
-      return "nationality";
-    },
-    disabled: (lead) =>
-      isValidDate(dayjs(lead.dob), { inPast: true, today: true }) !== undefined,
-    group: "my_info",
+    id: "regime_assurance_maladie",
+    next: (lead) => "situation_marital",
+    disabled: (lead) => lead.regime_assurance_maladie_frontalier === undefined,
+    group: "residence",
   },
   {
     id: "nationality",
-    next: (lead) => {
-      return "residency_type";
-    },
+    next: (lead) => (lead.nationality === "suisse" ? "npa" : "permis_type"),
     disabled: (lead) => lead.nationality === undefined,
-    group: "my_info",
+    group: "residence",
   },
   {
-    id: "residency_type",
-    next: (lead) => {
-      return "eco_assurance_menage";
-    },
-    disabled: (lead) => lead.residency_type === undefined,
-    group: "my_info",
+    id: "permis_type",
+    next: (lead) => "npa",
+    disabled: (lead) => lead.permis_type === undefined,
+    group: "residence",
   },
   {
-    id: "eco_assurance_menage",
-    next: (lead) => {
-      return "car_leasing";
-    },
-    disabled: (lead) => lead.eco_assurance_menage === undefined,
-    group: "my_info",
+    id: "npa",
+    next: (lead) => "situation_marital",
+    disabled: (lead) => lead.npa === undefined,
+    group: "residence",
   },
   {
-    id: "car_leasing",
-    next: (lead) => {
-      return lead.car_leasing ? "contract_start" : "needs";
-    },
-    disabled: (lead) => lead.car_leasing === undefined,
-    group: "my_needs",
-    newTab: true,
+    id: "situation_marital",
+    next: (lead) => "yob",
+    disabled: (lead) => lead.situation_marital === undefined,
+    group: "info",
   },
   {
-    id: "needs",
-    next: (lead) => {
-      return "contract_start";
-    },
-    disabled: (lead) => lead.needs === undefined,
-    group: "my_needs",
+    id: "yob",
+    next: (lead) => "children",
+    disabled: (lead) => lead.yob === undefined || lead.yob.length !== 4,
+    group: "info",
   },
   {
-    id: "contract_start",
-    next: (lead) => {
-      return "already_assure";
-    },
-    disabled: (lead) =>
-      isValidDate(dayjs(lead.contract_start), { inPast: true }) !== undefined,
-    group: "my_needs",
-  },
-  {
-    id: "already_assure",
-    next: (lead) => {
-      return "info";
-    },
-    disabled: (lead) => lead.already_assure === undefined,
-    group: "my_needs",
+    id: "children",
+    next: (lead) => "info",
+    disabled: (lead) => lead.child_nb === undefined,
+    group: "info",
   },
   {
     id: "info",
-    next: (lead) => {
-      return "loader";
-    },
-    disabled: (lead) => false,
-    group: "my_contact",
+    next: () => "situation_professionnelle",
+    disabled: (lead) => !lead.nom,
+    group: "info",
+  },
+  {
+    id: "situation_professionnelle",
+    next: (lead) =>
+      lead.permis_type === "B" ? "salary_above_120k" : "salary_brut",
+    disabled: (lead) => lead.situation_professionnelle === undefined,
+    group: "professional",
     newTab: true,
+  },
+  {
+    id: "salary_brut",
+    next: (lead) => "owner",
+    disabled: (lead) => lead.salary_brut === undefined,
+    group: "professional",
+  },
+  {
+    id: "salary_above_120k",
+    next: (lead) => "owner",
+    disabled: (lead) => lead.is_salary_above_120k === undefined,
+    group: "professional",
+  },
+  {
+    id: "owner",
+    next: (lead) => "situation",
+    disabled: (lead) => lead.is_owner_property === undefined,
+    group: "professional",
+  },
+  {
+    id: "situation",
+    next: (lead) => "loader",
+    disabled: (lead) => lead.situation === undefined,
+    group: "situation",
   },
   {
     id: "loader",
-    next: (lead) => {
-      return "result";
-    },
+    next: (lead) => "result",
     disabled: (lead) => false,
-    group: "my_contact",
-    newTab: true,
+    group: "situation",
   },
   {
     id: "result",
-    next: (lead) => {
-      return null;
-    },
+    next: (lead) => null,
     disabled: (lead) => false,
-    group: "my_contact",
-    newTab: true,
+    group: "situation",
   },
 ];
 
@@ -221,6 +175,46 @@ export const getPreviousStep = (step: Step, lead: Data) => {
   return previousStep;
 };
 
+export const getPreviousStepList = (step: Step, lead: Data) => {
+  let activeStep = STEPS[0]!;
+  const previousStepList: Step[] = [];
+  let count = 0;
+  while (activeStep.id !== step.id) {
+    previousStepList.push(activeStep);
+    activeStep = getNextStep(activeStep, lead);
+    count++;
+    if (count > 100) {
+      console.error("Infinite loop in steps.constant.ts getPreviousStepList");
+      break;
+    }
+  }
+
+  return previousStepList.length > 0 ? previousStepList : [activeStep];
+};
+
+export const getStepListBetweenSteps = (
+  step1: Step,
+  step2: Step,
+  lead: Data
+) => {
+  let activeStep = step1;
+  let stepList: Step[] = [];
+  let count = 0;
+  while (activeStep.id !== step2.id) {
+    stepList.push(activeStep);
+    activeStep = getNextStep(activeStep, lead);
+    count++;
+    if (count > 100) {
+      console.error(
+        "Infinite loop in steps.constant.ts getStepListBetweenSteps"
+      );
+      break;
+    }
+  }
+
+  return stepList;
+};
+
 export const getStepInfo = (step: Step, lead: Data): [number, number] => {
   let stepCalc = STEPS[0]!;
   let stepNumber = 1;
@@ -234,7 +228,8 @@ export const getStepInfo = (step: Step, lead: Data): [number, number] => {
     }
 
     if (maxStep > 100) {
-      throw new Error("Infinite loop in steps.constant.ts getStepInfo");
+      console.error("Infinite loop in steps.constant.ts getStepInfo");
+      break;
     }
   }
   return [stepNumber, maxStep];

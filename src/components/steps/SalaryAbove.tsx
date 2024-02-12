@@ -3,36 +3,30 @@ import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
 import StepContainer from "./StepContainer";
 
-const Carusage = () => {
+const SalaryAbove = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
   return (
-    <StepContainer
-      title={t("car_usage.title")}
-      description={t("car_usage.description")}
-      info={t("car_usage.info")}
-      stepId="car_usage"
-    >
+    <StepContainer stepId="salary_above_120k">
       <TileInput
-        value={lead.car_usage}
+        value={lead.is_salary_above_120k}
         onChange={(value) => {
-          changeLead({ car_usage: value });
-          nextStep("car_usage");
+          changeLead({ is_salary_above_120k: value });
+          nextStep("salary_above_120k", {
+            is_salary_above_120k: value,
+          });
         }}
+        className="grid md:grid-cols-2"
         options={[
           {
-            value: "private and go to work",
-            label: t("car_usage.semi-private"),
+            value: true,
+            label: t("yes"),
           },
           {
-            value: "private",
-            label: t("car_usage.private"),
-          },
-          {
-            value: "professional",
-            label: t("car_usage.professional"),
+            value: false,
+            label: t("no"),
           },
         ]}
       ></TileInput>
@@ -40,4 +34,4 @@ const Carusage = () => {
   );
 };
 
-export default Carusage;
+export default SalaryAbove;

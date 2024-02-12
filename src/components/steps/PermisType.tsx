@@ -1,31 +1,37 @@
 import { useTranslation } from "next-i18next";
-import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
+import TileInput from "../inputs/Tile";
 import StepContainer from "./StepContainer";
 
-const AlreadyAssure = () => {
+const PermisType = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
-  const { t: tCommon } = useTranslation("common");
+
   return (
-    <StepContainer title={t("already_assure.title")} stepId="already_assure">
+    <StepContainer stepId="permis_type">
       <TileInput
-        value={lead.already_assure}
+        value={lead.permis_type}
         onChange={(value) => {
-          changeLead({ already_assure: value });
-          nextStep("already_assure");
+          changeLead({ permis_type: value });
+          nextStep("permis_type", {
+            permis_type: value,
+          });
         }}
         className="grid md:grid-cols-2"
         options={[
           {
-            value: true,
-            label: tCommon("YES"),
+            value: "B",
+            label: t("permis_type.permis_b"),
           },
           {
-            value: false,
-            label: tCommon("NO"),
+            value: "C",
+            label: t("permis_type.permis_c"),
+          },
+          {
+            value: "autre",
+            label: t("other"),
           },
         ]}
       ></TileInput>
@@ -33,4 +39,4 @@ const AlreadyAssure = () => {
   );
 };
 
-export default AlreadyAssure;
+export default PermisType;

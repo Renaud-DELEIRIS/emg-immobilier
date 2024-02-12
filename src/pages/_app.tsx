@@ -30,6 +30,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     if (!sessionStorage.getItem("createdAt"))
       sessionStorage.setItem("createdAt", new Date().toISOString());
   }, []);
+
   return (
     <>
       <Head>

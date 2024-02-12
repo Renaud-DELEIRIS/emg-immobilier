@@ -42,7 +42,7 @@ const Footer = () => {
           onClick={() => setIsFooterOpen(!isFooterOpen)}
         >
           <div className="flex items-center gap-2.5">
-            <div className="flex h-[32px] items-center rounded-full bg-[#0CBCB033] px-3.5  text-secondary">
+            <div className="flex h-[32px] items-center rounded-full bg-primary/5 px-3.5  text-secondary">
               <span className="text-[13px] font-semibold tracking-[-0.26px]">
                 <span className="capitalize">{t("step")}</span> {groupIndex + 1}
               </span>
@@ -73,7 +73,7 @@ const Footer = () => {
         <div className="mx-auto grid h-full w-full max-w-6xl grid-cols-1 place-items-center justify-between gap-[24px]  md:grid-cols-3">
           {highlight.map((item, index) => (
             <div key={index} className="flex flex-row items-center gap-3.5">
-              <div className="grid h-[59px] w-[59px] place-items-center rounded-full bg-[#0cbcb026] text-secondary">
+              <div className="grid h-[59px] w-[59px] place-items-center rounded-full bg-primary/5 text-secondary">
                 {item.icon}
               </div>
               <div className="flex flex-col text-left">

@@ -1,6 +1,12 @@
-import { getPreviousStep } from "./../constants/step.constant";
+import {
+  getPreviousStep,
+  getPreviousStepList,
+  getStepListBetweenSteps,
+} from "./../constants/step.constant";
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { i18n } from "next-i18next";
 import Router from "next/router";
+import { toast } from "react-toastify";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { Data, initialData } from "~/constants/lead.constant";
@@ -17,6 +23,7 @@ import { useSessionStore } from "./session";
 
 interface SetStepOpts {
   scrollToNextStep?: boolean;
+  bypassSameStep?: boolean;
 }
 
 interface FormState {
@@ -29,6 +36,7 @@ interface FormState {
   initStep: () => void;
   setVisibleStep: (stepId: StepId, opts?: SetStepOpts) => void;
   data: Data;
+  stepWithError: StepId[];
   setData: (d: Partial<Data>) => void;
 
   versionId: string | null;
@@ -46,6 +54,7 @@ export const useFormStore = create<FormState>()(
       (set, get) => ({
         versionId: null,
         data: initialData,
+        stepWithError: [],
         setVersionId: (v) => set({ versionId: v }),
         trackDurationStep: (step, duration) => {
           const versionId = get().versionId;
@@ -82,19 +91,55 @@ export const useFormStore = create<FormState>()(
           stepId: StepId,
           opts = {
             scrollToNextStep: true,
+            bypassSameStep: false,
           }
         ) => {
           const nextStep = getStepById(stepId);
           if (!nextStep) return;
 
-          if (get().currentVisibleStep.id === nextStep.id) return;
+          // If there is newTab between nextStep and previousStep
+          const listBetweenStep = getStepListBetweenSteps(
+            getPreviousStepList(
+              getStepById(get().currentVisibleStep.id),
+              get().data
+            )[0]!,
+            nextStep,
+            get().data
+          );
+          const hasNewTab = listBetweenStep.some((step) => step.newTab);
+
+          if (hasNewTab) {
+            const previouStepList = getPreviousStepList(nextStep, get().data);
+            // Check if some step before nextStep is not completed
+            // Check for disabled steps
+            const disabledStep = previouStepList.filter((step) =>
+              step.disabled(get().data)
+            );
+            if (disabledStep.length > 0) {
+              set((state) => ({
+                ...state,
+                stepWithError: disabledStep.map((s) => s.id),
+              }));
+              get().setVisibleStep(disabledStep[0]!.id, {
+                scrollToNextStep: true,
+                bypassSameStep: true,
+              });
+              toast.error(i18n?.t("common:please_complete_previous_steps"));
+              return;
+            }
+          }
+
+          if (
+            get().currentVisibleStep.id === nextStep.id &&
+            !opts.bypassSameStep
+          )
+            return;
 
           const stepInfo = getStepInfo(nextStep, get().data);
           const currentStepInfo = getStepInfo(get().currentStep, get().data);
 
           if (opts.scrollToNextStep)
             setTimeout(() => {
-              if (!nextStep) return;
               const element = document.getElementById(nextStep.id);
               if (element) {
                 const offsetTop =
@@ -109,11 +154,12 @@ export const useFormStore = create<FormState>()(
                   "input, select, textarea, button"
                 ) as HTMLElement;
                 if (focusableElement) {
-                  focusableElement.focus();
+                  focusableElement.focus({
+                    preventScroll: true,
+                  });
                 }
               }
             }, 100);
-
           set((state) => ({
             ...state,
             errors: {},
@@ -121,6 +167,7 @@ export const useFormStore = create<FormState>()(
               stepInfo[0] > currentStepInfo[0] ? nextStep : state.currentStep,
             currentVisibleStep: nextStep,
           }));
+
           const sessionId = useSessionStore.getState().sessionId;
           const versionId = get().versionId;
           if (sessionId && versionId) {
@@ -162,6 +209,13 @@ export const useFormStore = create<FormState>()(
         setData: (d) => {
           const nextData: Data = { ...get().data, ...d };
           set((state) => ({ ...state, data: nextData, errors: {} }));
+          const newStepWithError = get()
+            .stepWithError.map((stepId) => {
+              const step = getStepById(stepId);
+              return step.disabled(nextData) ? stepId : null;
+            })
+            .filter(Boolean) as StepId[];
+          set((state) => ({ ...state, stepWithError: newStepWithError }));
           if (refTimeout) clearTimeout(refTimeout);
           refTimeout = setTimeout(() => {
             const sessionId = useSessionStore.getState().sessionId;
@@ -186,17 +240,7 @@ export const useFormStore = create<FormState>()(
             currentStep: STEPS[0]!,
             loaded: true,
             currentVisibleStep: STEPS[0]!,
-            data: {
-              nom: "",
-              prenom: "",
-              phone: "",
-              email: "",
-              dob: "",
-              car_buy_date: {},
-              car_type: undefined,
-              car_brand: undefined,
-              car_option: null,
-            },
+            data: initialData,
             getNextStep: state.getNextStep,
             initStep: state.initStep,
             nextStep: state.nextStep,

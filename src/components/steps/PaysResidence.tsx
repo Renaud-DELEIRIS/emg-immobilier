@@ -3,27 +3,30 @@ import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
 import StepContainer from "./StepContainer";
 
-const CarType = () => {
+const PaysResidence = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
   return (
-    <StepContainer title={t("car_type.title")} stepId="car_type">
+    <StepContainer stepId="pays_residence" withTitle withInfo>
       <TileInput
-        value={lead.car_type}
+        value={lead.pays_residence}
         onChange={(value) => {
-          changeLead({ car_type: value });
-          nextStep("car_type");
+          changeLead({ pays_residence: value });
+          nextStep("pays_residence", {
+            pays_residence: value,
+          });
         }}
+        className="grid md:grid-cols-2"
         options={[
           {
-            value: "my_car",
-            label: t("car_type.my_car"),
+            value: "suisse",
+            label: t("pays_residence.sui"),
           },
           {
-            value: "future_car",
-            label: t("car_type.future_car"),
+            value: "france",
+            label: t("pays_residence.fra"),
           },
         ]}
       ></TileInput>
@@ -31,4 +34,4 @@ const CarType = () => {
   );
 };
 
-export default CarType;
+export default PaysResidence;

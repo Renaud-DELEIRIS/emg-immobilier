@@ -59,7 +59,7 @@ const TileInput = <T extends string | boolean | string[] | undefined>({
           key={option.value?.toString()}
           className={twMerge(
             `group flex min-h-[68px] w-full items-center gap-[10px] rounded-xl border-[1.5px] border-[#8888941A] bg-white px-[20px] py-[14px] text-left shadow-[0px_0px_20px_0px_rgba(8,38,35,0.05)] transition-[color] duration-200 ease-in-out hover:border-primary hover:shadow-[0px_0px_20px_0px_rgba(8,38,35,0.1)] focus:outline-primary focus-visible:outline-primary`,
-            isSelected(option.value) && "border-primary bg-[#0CBCB014]"
+            isSelected(option.value) && "border-primary bg-primary/5"
           )}
           onClick={() => handleChange(option.value)}
         >

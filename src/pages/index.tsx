@@ -37,6 +37,7 @@ const Home: NextPage = () => {
   const [loaded, setLoaded] = useState(false);
   const fetchSession = useSessionStore((state) => state.fetchSession);
   const setSessionId = useSessionStore((state) => state.setSessionId);
+  const [stepToInfo, setStepToInfo] = useState("");
 
   useEffect(() => {
     initStep();
@@ -115,6 +116,9 @@ const Home: NextPage = () => {
                 <StepComponent />
                 {displaySidebar && (
                   <div className="hidden xl:block">
+                    <div className="fixed right-0 top-[106px] w-[300px]">
+                      {stepToInfo}
+                    </div>
                     <Sidebar />
                   </div>
                 )}

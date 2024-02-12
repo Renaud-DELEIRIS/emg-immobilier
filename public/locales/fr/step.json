@@ -1,67 +1,26 @@
 {
-  "car_type": {
-    "title": "Quelle voiture souhaitez-vous assurer ?",
-    "my_car": "Ma voiture actuelle",
-    "future_car": "Une voiture que je souhaite acheter"
+  "yes": "Oui",
+  "no": "Non",
+  "other": "Autre",
+  "pays_residence": {
+    "title": "Dans quel pays résidez-vous ?",
+    "fra": "France",
+    "sui": "Suisse",
+    "info": "Le pays de résidence influ sur votre système d'imposition."
   },
-  "car-possesion": {
-    "title": "Quelle voiture souhaitez-vous assurer ?",
-    "current": "Ma voiture actuelle",
-    "next": "Une voiture que je souhaite acheter"
+  "canton_work": {
+    "title": "Dans quel canton travaillez-vous ?",
+    "placeholder": "Choisissez votre canton de travail",
+    "ge": "Genève",
+    "vd": "Vaud",
+    "ne": "Neuchâtel",
+    "info": "Le canton de travail influ sur votre système d'imposition."
   },
-  "car-brand": {
-    "title": "Quel est la marque de votre véhicule ?",
-    "placeholder": "Tapez la marque de votre véhicule"
-  },
-  "car-model": {
-    "title": "Quel est le modèle de votre véhicule ?",
-    "placeholder": "Tapez les premières lettres du modèle",
-    "missing_model": "Je ne connais pas ma version",
-    "unknown_model": "Modèle inconnu"
-  },
-  "car-recap": {
-    "title": "Véhicule à assurer"
-  },
-  "car_buy_date": {
-    "title": "Quelle est la date d’achat du véhicule ?",
-    "placeholder_month": "Mois (Facultatif)",
-    "placeholder_year": "Année : ex. 2014"
-  },
-  "car_distance": {
-    "title": "Quelle distance parcourez-vous dans l’année ?",
-    "7000km": "Moins de 7'000 kms",
-    "7000-15000": "Entre 7'000 et 15'000 kms",
-    "15000km": "Plus de 15'000 kms"
-  },
-  "car_usage": {
-    "title": "Dans quel cas utilisez-vous votre voiture ?",
-    "description": "Pour la plupart des assureurs, l'utilisation de votre voiture peut avoir un impact sur le tarif de votre assurance auto.",
-    "info": "Cette information influe sur le prix de votre assurance.",
-    "semi-private": "Privé et trajet travail",
-    "private": "Privé",
-    "professional": "Professionnel"
-  },
-  "car_park_place": {
-    "title": "Dans quelle ville garez-vous votre voiture la nuit ?",
-    "description": "Si vous êtes travailleur frontalier, veuillez renseigner la commune dont dépend votre foyer fiscal",
-    "placeholder": "Ville ou code postal"
-  },
-  "car_park_type": {
-    "title": "Quel mode de stationnement utilisez-vous la nuit ?",
-    "description": "Le type de stationnement peut aussi avoir un impact sur votre tarif !",
-    "close_parking": "Garage fermé",
-    "secure_parking": "Parking sécurisé",
-    "street": "Voie publique",
-    "other": "Autres"
-  },
-  "civility": {
-    "title": "Civilité",
-    "description": "Cette information est utilisée uniquement à des fins statistiques.",
-    "mr": "Homme",
-    "mrs": "Femme"
-  },
-  "dob": {
-    "title": "Quelle est votre date de naissance ?"
+  "regime_assurance_maladie": {
+    "title": "Quel est votre régime d'assurance maladie ?",
+    "lamal": "LAMal Frontalier",
+    "cmu": "CMU Frontalier",
+    "info": "L'assurance maladie fait parti des dépenses que vous pouvez déduire de votre revenu."
   },
   "nationality": {
     "title": "Quelle est votre nationalité ?",
@@ -69,61 +28,92 @@
     "swiss": "Suisse",
     "french": "Française",
     "german": "Allemande",
-    "italian": "Italienne"
+    "italian": "Italienne",
+    "info": "La nationalité influ sur le type d'imposition."
   },
-  "residency_type": {
-    "title": "Vous êtes actuellement ?",
-    "description": "Cette information est utilisée uniquement à des fins statistiques.",
-    "rent_apartment": "Locataire en appartement",
-    "rent_house": "Locataire en maison",
-    "owner_apartment": "Propriétaire en appartement",
-    "owner_house": "Propriétaire en maison",
-    "placeholder": "Sélectionnez votre situation"
+  "permis_type": {
+    "title": "Quel-est votre type de permis ?",
+    "permis_b": "Permis B",
+    "permis_c": "Permis C",
+    "info": "Le permis de résidence a un impact sur le type d'imposition (imposition à la source ou déclaration des revenus)"
   },
-  "eco_assurance_menage": {
-    "title": "Souhaitez-vous économiser sur votre assurance ménage ?",
-    "description": "Comparea peut vous permettre d'économiser jusqu'à 220 CHF/an sur votre assurance ménage.",
-    "yes": "Oui",
-    "no": "Non, merci"
+  "npa": {
+    "title": "Indiquez votre code postal (NPA) au 31.12.2023",
+    "placeholder": "Votre npa...",
+    "info": "Le code postal a une influence sur le moment de l'imposition.<ul><li>Impôt fédéral direct (IFD)</li><li>Impôts cantonal</li><li>Impôts communal</li></ul>"
   },
-  "car_leasing": {
-    "title": "Le véhicule est-il en leasing ?"
+  "situation_marital": {
+    "title": "Quelle est votre situation maritale ?",
+    "celibataire": "Célibataire",
+    "marie": "Marié(e)",
+    "pacse": "Pacsé(e)",
+    "union_libre": "Union libre",
+    "separe": "Séparé(e)",
+    "divorce": "Divorcé(e)",
+    "veuf": "Veuf(ve)",
+    "info": "Votre situation martitale jour un rôle important sur le barème d'imposition et des déductions possibles."
   },
-  "needs": {
-    "title": "Quelle couverture souhaitez-vous ?",
-    "description": "La responsabilité est déjà incluse par défaut dans votre couverture.",
-    "casco-partielle": "Casco partielle",
-    "casco-complete": "Casco complète",
-    "casco-partielle-info": "La casco partielle couvre les dommages dont vous n'êtes pas responsable, comme le vol, les intempéries ou le bris de glace.",
-    "casco-complete-info": "La casco complète vous couvre aussi pour les dommages que vous causez, comme un accident dont vous êtes responsable."
+  "yob": {
+    "title": "Quel est votre année de naissance ?",
+    "placeholder": "p. ex. 1978",
+    "too_old": "L'année de naissance rensignez est invalid",
+    "future": "L'année de naissance rensignez est invalid",
+    "info": "Votre âge permet d'estimer le montant des primes d'assurance maladie ainsi que vos cotisations à la LPP (2ème pilier)."
   },
-  "contract_start": {
-    "title": "Quand souhaitez-vous que votre contrat débute ?",
-    "today": "Aujourd'hui",
-    "tomorrow": "Demain",
-    "one_month": "Dans un mois",
-    "other": "Une autre date",
-    "label": "Renseignez une date"
+
+  "children": {
+    "title": "Avez-vous des enfants à charge ?",
+    "info": "Seul les enfants de moins de 25 ans sont considérés comme étant à charge.",
+    "how_many": "Indiquez le nombre d'enfants de moins de 25 ans"
   },
-  "already_assure": {
-    "title": "Êtes-vous actuellement assuré(e) ?"
+
+  "info": {
+    "title": "Quel est votre nom et prénom ?",
+    "label_prenom": "Votre prénom (facultatif)",
+    "placeholder_prenom": "Jean",
+
+    "label_nom": "Votre nom",
+    "placeholder_nom": "Dupont",
+    "action": "Suivant",
+    "info": "Ces informations sont utile pour rendre votre résultat plus personnel."
   },
-  "name": {
-    "alert": {
-      "title": "Vos infos sont protégées !",
-      "message": "Ces informations serviront à établir votre devis. Toutes vos données sont 100% sécurisées."
-    },
-    "label": "Votre prénom et nom",
-    "placeholder_first": "Prénom",
-    "placeholder_last": "Nom",
-    "label_contact": "Informations de contact",
-    "contact_description": "Vous recevrez le récapitulatif de votre comparatif (2 pages PDF) sur votre adresse email. Le numéro de téléphone vous permettra de revenir à tout moment sur vos offres.",
-    "placehodlder_email": "Votre adresse email",
-    "placeholder_phone": "Votre numéro de téléphone",
-    "action": "Découvrir mes offres"
+
+  "situation_professionnelle": {
+    "title": "Quel est votre situation professionnel ?",
+    "employe": "Employé(e)",
+    "inde": "Indépendant(e)",
+    "employe_inde": "Employé(e) et indépendant(e)",
+    "info": "Cette information est utile pour estimer vos cotisations sociales, ainsi que vos obligations fiscales"
   },
+
+  "salary_brut": {
+    "title": "Quel a été votre salaire annuel brut en 2023 ?",
+    "placeholder": "Salaire brut annuel",
+    "info": "Cette information est importante pour définir votre taux marginal d'imposition.",
+    "action": "Suivant"
+  },
+
+  "salary_above_120k": {
+    "title": "Percevez-vous un salaire brut annuel supérieur à 120'000 CHF ?",
+    "info": "L'une des conditions obligatoire pour effectuer une TOU (Taxation Ordinaire Ultérieur) componez par la, une déclaration d'impôts ; est de dépasser le seuil de 120'000 CHF en temps que permis B."
+  },
+
+  "owner": {
+    "title": "Êtes-vous propriétaire d'un bien immobilier ?",
+    "info": "Cette informations est essentiel pour connaître vos charges déductibles."
+  },
+
+  "situation": {
+    "title": "Êtes-vous dans l'une de ces situations ?",
+    "Traveaux de rénovation résidence principale": "J'ai effectué des travaux de rénovation sur ma résidence principale",
+    "à éffectué des rachats d'années LPP": "J'ai effectué des rachats d'années LPP",
+    "à versé des pension alimentaires": "J'ai versé des pension alimentaires",
+    "à cotisé sur un 3ème pilier": "J'ai cotisé sur un 3ème pilier",
+    "à payé ces intérêts sur un crédit": "J'ai payé des intérêts sur un crédit",
+    "info": "Beaucoup de déductions existent dans votre situation, celles-ci sont les principales. Il ne s'agit pas d'une liste exhaustive."
+  },
+
   "loader": {
-    "title": "Nous comparons pour vous parmi plus de 35 partenaires",
-    "subtitle": "Vos données personnelles garanties 100% sécurisées."
+    "step": "Calcul de l'impôt"
   }
 }
