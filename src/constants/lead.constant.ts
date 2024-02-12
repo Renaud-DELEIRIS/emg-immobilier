@@ -15,7 +15,7 @@ export const situation = [
   "à éffectué des rachats d'années LPP",
   "à versé des pension alimentaires",
   "à cotisé sur un 3ème pilier",
-  "à payé ces intérêts sur un crédit",
+  "à payé ses intérêts sur un crédit",
 ] as const;
 
 export const schemaData = z.object({
