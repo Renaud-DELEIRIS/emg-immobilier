@@ -149,7 +149,7 @@ export const AutoComplete = forwardRef<
                       <Combobox.Option
                         key={person.value.toString()}
                         className={({ active }) =>
-                          `relative cursor-default select-none rounded-md px-2 py-2 ${
+                          `relative flex cursor-default select-none justify-between rounded-md px-2 py-2 ${
                             active ? "bg-neutral-50" : "text-gray-900"
                           }`
                         }
@@ -165,11 +165,7 @@ export const AutoComplete = forwardRef<
                               {person.label}
                             </span>
                             {selected ? (
-                              <span
-                                className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                                  active ? "text-white" : "text-teal-600"
-                                }`}
-                              >
+                              <span className={` ${"text-secondary"}`}>
                                 <IconCheck
                                   className="h-5 w-5"
                                   aria-hidden="true"
