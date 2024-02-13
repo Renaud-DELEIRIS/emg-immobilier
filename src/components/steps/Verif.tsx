@@ -23,6 +23,7 @@ const Verif = () => {
   const onCompletion = async (code: string) => {
     // TODO CREATE LEAD
     setOpenCode(false);
+    await new Promise((r) => setTimeout(r, 10));
     // Try catch is already handled in the modal
     changeLead({ verified: true });
     nextStep("verif");
