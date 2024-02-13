@@ -93,10 +93,7 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Déclaration en ligne - Digitaxe</title>
-        <meta
-          name="description"
-          content="Comparea.ch - Comparateur de Bases et de Complémentaires"
-        />
+        <meta name="description" content="Déclaration en ligne - Digitaxe" />
       </Head>
       {formLoaded && loaded && (
         <main
