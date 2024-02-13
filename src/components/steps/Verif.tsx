@@ -1,3 +1,4 @@
+import { useGTMDispatch } from "@elgorditosalsero/react-gtm-hook";
 import { motion } from "framer-motion";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import { useTranslation } from "next-i18next";
@@ -25,6 +26,7 @@ const Verif = () => {
   const { mutateAsync: createLead, isLoading: isCreating } =
     api.createDigitaxeLead.useMutation();
   const { params } = useGtmtrack();
+  const gtmDispatch = useGTMDispatch();
 
   const [toShowContact, setToShowContact] = useState(false);
 
@@ -44,6 +46,8 @@ const Verif = () => {
         idlead: lead.idlead,
       });
       const code = await mutateAsync({ phone: lead.phone });
+      gtmDispatch({ event: "leadOk" });
+
       changeLead({ idlead });
       setVerifCode(code.toString());
     } catch (e) {

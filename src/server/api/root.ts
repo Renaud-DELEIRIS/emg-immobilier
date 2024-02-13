@@ -182,6 +182,23 @@ export const appRouter = createTRPCRouter({
       const data = (await response.json()) as { code: number };
       return data.code;
     }),
+
+  beCalled: publicProcedure
+    .input(z.object({ phone: z.string(), idlead: z.string().optional() }))
+    .mutation(async ({ input }) => {
+      const url =
+        env.NEXT_PUBLIC_APIV2_ROOT +
+        "/digitaxe/becalled?telephone=" +
+        input.phone +
+        (input.idlead ? "&idlead=" + input.idlead : "");
+      console.log(url);
+      const response = await fetch(url);
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("Error sending sms");
+      }
+      return true;
+    }),
 });
 
 // export type definition of API

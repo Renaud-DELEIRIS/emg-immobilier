@@ -1,6 +1,8 @@
 import { IconPhoneCall, IconX } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
+import { toast } from "react-toastify";
 import { useFormStore } from "~/stores/form";
+import { api } from "~/utils/api";
 import { isValidPhone } from "~/utils/validation/phone.validation";
 import { Button } from "../button/Button";
 import { Alert, AlertDescription } from "../feedback/alert";
@@ -17,10 +19,17 @@ const RecallModal = ({
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const { t } = useTranslation("header");
+  const { mutateAsync, isLoading } = api.beCalled.useMutation();
 
-  // TODO
-
-  const onRecall = () => null;
+  const onRecall = async () => {
+    try {
+      await mutateAsync({ phone: lead.phone, idlead: lead.idlead });
+      toast.success(t("recall.success"));
+    } catch (e) {
+      toast.error(t("recall.error"));
+    }
+    setOpen(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -54,6 +63,7 @@ const RecallModal = ({
           disabled={!isValidPhone(lead.phone)}
           className="mt-[14px]"
           onClick={() => void onRecall()}
+          loading={isLoading}
         >
           <IconPhoneCall size={24} className="mr-1" />
           {t("recall.modalAction")}
