@@ -6,7 +6,7 @@
     "title": "Dans quel pays résidez-vous ?",
     "fra": "France",
     "sui": "Suisse",
-    "info": "Le pays de résidence influ sur votre système d'imposition."
+    "info": "Le pays de résidence influe sur votre système d'imposition."
   },
   "canton_work": {
     "title": "Dans quel canton travaillez-vous ?",
@@ -14,7 +14,7 @@
     "ge": "Genève",
     "vd": "Vaud",
     "ne": "Neuchâtel",
-    "info": "Le canton de travail influ sur votre système d'imposition."
+    "info": "Le canton de travail influe sur votre système d'imposition."
   },
   "regime_assurance_maladie": {
     "title": "Quel est votre régime d'assurance maladie ?",
@@ -29,16 +29,16 @@
     "french": "Française",
     "german": "Allemande",
     "italian": "Italienne",
-    "info": "La nationalité influ sur le type d'imposition."
+    "info": "La nationalité influe sur le type d'imposition."
   },
   "permis_type": {
-    "title": "Quel-est votre type de permis ?",
+    "title": "Quel est votre type de permis ?",
     "permis_b": "Permis B",
     "permis_c": "Permis C",
     "info": "Le permis de résidence a un impact sur le type d'imposition (imposition à la source ou déclaration des revenus)"
   },
   "npa": {
-    "title": "Indiquez votre code postal (NPA) au 31.12.2023",
+    "title": "Indiquez votre NPA (code postal) au 31.12.2023",
     "placeholder": "Votre npa...",
     "info": "Le code postal a une influence sur le moment de l'imposition.<ul><li>Impôt fédéral direct (IFD)</li><li>Impôts cantonal</li><li>Impôts communal</li></ul>"
   },
@@ -54,7 +54,7 @@
     "info": "Votre situation martitale jour un rôle important sur le barème d'imposition et des déductions possibles."
   },
   "yob": {
-    "title": "Quel est votre année de naissance ?",
+    "title": "Quelle est votre année de naissance ?",
     "placeholder": "p. ex. 1978",
     "too_old": "L'année de naissance rensignez est invalid",
     "future": "L'année de naissance rensignez est invalid",
@@ -68,18 +68,18 @@
   },
 
   "info": {
-    "title": "Quel est votre nom et prénom ?",
+    "title": "Quel est votre prénom et nom ?",
     "label_prenom": "Votre prénom (facultatif)",
     "placeholder_prenom": "Jean",
 
     "label_nom": "Votre nom",
     "placeholder_nom": "Dupont",
     "action": "Suivant",
-    "info": "Ces informations sont utile pour rendre votre résultat plus personnel."
+    "info": "Ces informations nous permettent de personnaliser votre résultat."
   },
 
   "situation_professionnelle": {
-    "title": "Quel est votre situation professionnel ?",
+    "title": "Quelle est votre situation professionnel ?",
     "employe": "Employé(e)",
     "inde": "Indépendant(e)",
     "employe_inde": "Employé(e) et indépendant(e)",
@@ -105,11 +105,11 @@
 
   "situation": {
     "title": "Êtes-vous dans l'une de ces situations ?",
-    "Traveaux de rénovation résidence principale": "J'ai effectué des travaux de rénovation sur ma résidence principale",
-    "à éffectué des rachats d'années LPP": "J'ai effectué des rachats d'années LPP",
-    "à versé des pension alimentaires": "J'ai versé des pension alimentaires",
-    "à cotisé sur un 3ème pilier": "J'ai cotisé sur un 3ème pilier",
-    "à payé ses intérêts sur un crédit": "J'ai payé des intérêts sur un crédit",
+    "Travaux de rénovation résidence principale": "J'ai effectué des travaux de rénovation sur ma résidence principale",
+    "A effectué des rachats d'années LPP": "J'ai effectué des rachats d'années LPP",
+    "A versé des pensions alimentaires": "J'ai versé des pension alimentaires",
+    "A cotisé sur un 3ème pilier": "J'ai cotisé sur un 3ème pilier",
+    "A payé ses intérêts sur un crédit": "J'ai payé des intérêts sur un crédit",
     "info": "Beaucoup de déductions existent dans votre situation, celles-ci sont les principales. Il ne s'agit pas d'une liste exhaustive.",
     "action": "Obtenir mes résultats"
   },

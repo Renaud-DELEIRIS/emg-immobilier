@@ -22,7 +22,7 @@ const Npa = () => {
         name="locality"
         aria-label="Localité"
         options={localtion.map((loc) => ({
-          value: loc.key.toString(),
+          value: loc.value,
           label: `${loc.value}`,
         }))}
         valid={lead.npa !== undefined}

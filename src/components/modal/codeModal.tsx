@@ -33,8 +33,6 @@ const CodeModal = ({
   const handleVerify = async () => {
     try {
       setLoading(true);
-      // TODO remove auto reject
-      await new Promise((r, rej) => setTimeout(rej, 1000));
       await onVerify(code);
     } catch (e) {
       // Make modal shake

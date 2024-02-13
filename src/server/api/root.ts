@@ -136,6 +136,52 @@ export const appRouter = createTRPCRouter({
         },
       };
     }),
+
+  createDigitaxeLead: publicProcedure
+    .input(
+      z.object({
+        gtmparams: z.record(z.string()),
+        idlead: z.string().optional(),
+        idtracking: z.string().optional(),
+        data: schemaData,
+      })
+    )
+    .mutation(async ({ input: { data, ...input } }) => {
+      const url = env.NEXT_PUBLIC_APIV2_ROOT + "/digitaxe/createlead";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...input,
+          ...data,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error creating lead");
+      }
+
+      const json = (await response.json()) as string;
+      return json;
+    }),
+
+  sendSmsCode: publicProcedure
+    .input(z.object({ phone: z.string() }))
+    .mutation(async ({ input }) => {
+      const url =
+        env.NEXT_PUBLIC_APIV2_ROOT +
+        "/verifyleadv2?telephone=" +
+        input.phone.replace("+", "%2B");
+
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Error sending sms");
+      }
+      const data = (await response.json()) as { code: number };
+      return data.code;
+    }),
 });
 
 // export type definition of API

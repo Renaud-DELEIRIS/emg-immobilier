@@ -3,28 +3,52 @@ import { motion } from "framer-motion";
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { useFormStore } from "~/stores/form";
+import { api } from "~/utils/api";
 import { isValidPhone } from "~/utils/validation/phone.validation";
 import { Button } from "../button/Button";
 import { PhoneNumberInput } from "../inputs/input";
 import CodeModal from "../modal/codeModal";
+import { useGtmtrack } from "../provider/GmtTrack";
 
 const Verif = () => {
   const { t } = useTranslation("step");
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
+  const versionId = useFormStore((state) => state.versionId);
   const [openCode, setOpenCode] = useState(false);
+  const [verifCode, setVerifCode] = useState("");
+  const { mutateAsync, isLoading } = api.sendSmsCode.useMutation();
+  const { mutateAsync: createLead, isLoading: isCreating } =
+    api.createDigitaxeLead.useMutation();
+  const { params } = useGtmtrack();
 
-  const onOpenCode = () => {
-    setOpenCode(true);
-    // TODO SEND CODE with lead.phone
+  const onOpenCode = async () => {
+    try {
+      setOpenCode(true);
+      const idlead = await createLead({
+        data: lead,
+        idtracking: versionId === null ? undefined : versionId,
+        gtmparams: params,
+        idlead: lead.idlead,
+      });
+      const code = await mutateAsync({ phone: lead.phone });
+      changeLead({ idlead });
+      setVerifCode(code.toString());
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const onCompletion = async (code: string) => {
-    // TODO CREATE LEAD
+    if (code !== verifCode) throw new Error("Code is not valid");
+    await createLead({
+      data: lead,
+      idtracking: versionId === null ? undefined : versionId,
+      gtmparams: params,
+      idlead: lead.idlead,
+    });
     setOpenCode(false);
-    await new Promise((r) => setTimeout(r, 10));
-    // Try catch is already handled in the modal
     changeLead({ verified: true });
     nextStep("verif");
   };
@@ -61,7 +85,8 @@ const Verif = () => {
             <Button
               variant={"thirdy"}
               disabled={!isValidPhone(lead.phone)}
-              onClick={onOpenCode}
+              onClick={() => void onOpenCode()}
+              loading={openCode || isLoading || isCreating}
             >
               {t("verif.action")}
             </Button>

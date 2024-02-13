@@ -12,11 +12,11 @@ export const initialData: Data = {
 };
 
 export const situation = [
-  "Traveaux de rénovation résidence principale",
-  "à éffectué des rachats d'années LPP",
-  "à versé des pension alimentaires",
-  "à cotisé sur un 3ème pilier",
-  "à payé ses intérêts sur un crédit",
+  "Travaux de rénovation résidence principale",
+  "A effectué des rachats d'années LPP",
+  "A versé des pensions alimentaires",
+  "A cotisé sur un 3ème pilier",
+  "A payé ses intérêts sur un crédit",
 ] as const;
 
 export const schemaData = z.object({
@@ -27,6 +27,7 @@ export const schemaData = z.object({
   nom: z.string(),
   prenom: z.string(),
   verified: z.boolean(),
+  idlead: z.string().optional(),
   // Step
   pays_residence: z.enum(["france", "suisse"]).optional(),
   canton_work: z

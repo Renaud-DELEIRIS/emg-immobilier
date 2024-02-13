@@ -21,7 +21,7 @@ const config = {
       colors: {
         primary: "#f7931e",
         secondary: "#c0590e",
-        thirdy: "#31a5f7",
+        thirdy: "#041d3d",
         dark: "#082623",
         grey: "#888894",
         white: "#FFFFFF",

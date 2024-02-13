@@ -2,13 +2,19 @@ import { Fragment } from "react";
 import CantonsWork from "~/components/steps/CantonsWork";
 import Children from "~/components/steps/Children";
 import Info from "~/components/steps/Info";
+import Loading from "~/components/steps/Loader";
 import Nationality from "~/components/steps/Nationality";
 import Npa from "~/components/steps/Npa";
+import Owner from "~/components/steps/Owner";
 import PaysResidence from "~/components/steps/PaysResidence";
 import PermisType from "~/components/steps/PermisType";
 import RegimeAssuranceMaladie from "~/components/steps/RegimeAssuranceMaladie";
+import SalaryAbove from "~/components/steps/SalaryAbove";
+import SalaryBrut from "~/components/steps/SalaryBrut";
+import Situation from "~/components/steps/Situation";
 import SituationMarital from "~/components/steps/SituationMarital";
 import SituationProfessionnelle from "~/components/steps/SituationProfessionnelle";
+import Verif from "~/components/steps/Verif";
 import Yob from "~/components/steps/Yob";
 import { StepId, getComponentToDisplay } from "~/constants/step.constant";
 import { useFormStore } from "./form";
@@ -31,13 +37,13 @@ export const StepComponent = () => {
     children: <Children />,
     info: <Info />,
     situation_professionnelle: <SituationProfessionnelle />,
-    // salary_above_120k: <SalaryAbove />,
-    // salary_brut: <SalaryBrut />,
-    // owner: <Owner />,
-    // situation: <Situation />,
-    // loader: <Loading />,
-    // verif: <Verif />,
-    // result: <></>,
+    salary_above_120k: <SalaryAbove />,
+    salary_brut: <SalaryBrut />,
+    owner: <Owner />,
+    situation: <Situation />,
+    loader: <Loading />,
+    verif: <Verif />,
+    result: <></>,
   };
 
   return (
