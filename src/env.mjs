@@ -19,8 +19,6 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_SCRAPPER: z.string().url(),
-    NEXT_PUBLIC_LCA: z.string().url(),
     NEXT_PUBLIC_GTMID: z.string(),
     NEXT_PUBLIC_APIV2_ROOT: z.string().url(),
     NEXT_PUBLIC_MAPBOX: z.string(),
@@ -34,8 +32,6 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
-    NEXT_PUBLIC_SCRAPPER: process.env.NEXT_PUBLIC_SCRAPPER,
-    NEXT_PUBLIC_LCA: process.env.NEXT_PUBLIC_LCA,
     NEXT_PUBLIC_GTMID: process.env.NEXT_PUBLIC_GTMID,
     NEXT_PUBLIC_APIV2_ROOT: process.env.NEXT_PUBLIC_APIV2_ROOT,
     NEXT_PUBLIC_MAPBOX: process.env.NEXT_PUBLIC_MAPBOX,

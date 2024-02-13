@@ -2,6 +2,7 @@ import { IconCircleCheck } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { useFormStore } from "~/stores/form";
 import { api } from "~/utils/api";
 import { isValidPhone } from "~/utils/validation/phone.validation";
@@ -36,6 +37,7 @@ const Verif = () => {
       changeLead({ idlead });
       setVerifCode(code.toString());
     } catch (e) {
+      toast.error(t("verif.error"));
       console.error(e);
     }
   };
