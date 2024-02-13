@@ -23,7 +23,12 @@ const Children = () => {
         className="grid md:grid-cols-2"
         options={[
           {
-            value: "1",
+            value:
+              lead.child_nb === undefined
+                ? "1"
+                : lead.child_nb.toString() !== "0"
+                ? lead.child_nb.toString()
+                : "1",
             label: t("yes"),
           },
           {
@@ -33,7 +38,7 @@ const Children = () => {
         ]}
       ></TileInput>
       {lead.child_nb !== undefined && lead.child_nb >= 1 && (
-        <div className="mt-4 flex gap-4 md:flex-col">
+        <div className="mt-4 flex flex-col gap-4">
           <StepTitle>{t`children.how_many`}</StepTitle>
           <SelectInput
             value={lead.child_nb.toString()}
