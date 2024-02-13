@@ -34,6 +34,7 @@ interface FormState {
   getNextStep: (stepId: StepId, data?: Data) => Step;
   resetStep: () => void;
   initStep: () => void;
+  onRouterChange: () => void;
   setVisibleStep: (stepId: StepId, opts?: SetStepOpts) => void;
   data: Data;
   stepWithError: StepId[];
@@ -106,6 +107,7 @@ export const useFormStore = create<FormState>()(
             nextStep,
             get().data
           );
+
           const hasNewTab = listBetweenStep.some((step) => step.newTab);
 
           if (hasNewTab) {
@@ -137,7 +139,6 @@ export const useFormStore = create<FormState>()(
 
           const stepInfo = getStepInfo(nextStep, get().data);
           const currentStepInfo = getStepInfo(get().currentStep, get().data);
-
           if (opts.scrollToNextStep)
             setTimeout(() => {
               const element = document.getElementById(nextStep.id);
@@ -273,13 +274,28 @@ export const useFormStore = create<FormState>()(
           )!;
 
           get().setVisibleStep(
-            validStepFromRouter ? stepFromRouter.id : currentVisibleStep.id
+            validStepFromRouter ? stepFromRouter.id : currentVisibleStep.id,
+            {
+              scrollToNextStep: true,
+              bypassSameStep: true,
+            }
           );
 
           set((state) => ({
             ...state,
             loaded: true,
           }));
+        },
+        onRouterChange() {
+          const queryParams = getParamsUrl();
+          const stepId = queryParams.step as StepId;
+          const stepFromRouter = getStepById(stepId);
+          if (stepFromRouter) {
+            get().setVisibleStep(stepFromRouter.id, {
+              scrollToNextStep: true,
+              bypassSameStep: false,
+            });
+          }
         },
         getNextStep: (stepId: StepId, newData) => {
           const next = getStepById(stepId).next(newData ? newData : get().data);

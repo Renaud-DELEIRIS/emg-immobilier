@@ -33,7 +33,11 @@ const SalaryBrut = () => {
           insideText="CHF"
           valid={lead.salary_brut !== undefined}
         ></Input>
-        <Button type="submit" className="mt-4">
+        <Button
+          type="submit"
+          className="mt-4"
+          disabled={lead.salary_brut === undefined}
+        >
           {t("salary_brut.action")}
         </Button>
       </form>

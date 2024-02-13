@@ -110,10 +110,26 @@
     "à versé des pension alimentaires": "J'ai versé des pension alimentaires",
     "à cotisé sur un 3ème pilier": "J'ai cotisé sur un 3ème pilier",
     "à payé ses intérêts sur un crédit": "J'ai payé des intérêts sur un crédit",
-    "info": "Beaucoup de déductions existent dans votre situation, celles-ci sont les principales. Il ne s'agit pas d'une liste exhaustive."
+    "info": "Beaucoup de déductions existent dans votre situation, celles-ci sont les principales. Il ne s'agit pas d'une liste exhaustive.",
+    "action": "Obtenir mes résultats"
   },
 
   "loader": {
-    "step": "Calcul de l'impôt"
+    "title": "Nous comparons pour vous parmi plus de 35 partenaires",
+    "subtitle": "Vos données personnelles garanties 100% sécurisées."
+  },
+
+  "verif": {
+    "thanks": "Merci {{name}} !",
+    "more_info": "Nous avons besoin de plus d'informations pour vous fournir un résultat.",
+    "contact": "Nous vous contacterons dans les plus brefs délais.",
+    "action": "Compléter mes informations",
+    "modal": {
+      "title": "Vérifié votre numéro de téléphone",
+      "subtitle": "Nous vous avons envoyé un code de vérification par SMS au <b>{{phone}}</b>.",
+      "alert": " Ces <b>informations protégées</b> seront utilisées uniquement dans le cadre de votre dossier.",
+      "action": "Vérifier mon numéro",
+      "error": "Le code de vérification est incorrect"
+    }
   }
 }

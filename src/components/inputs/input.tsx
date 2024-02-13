@@ -157,7 +157,7 @@ export const PhoneNumberInput = React.forwardRef<
               `w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-base font-medium placeholder:text-grey
               focus-within:ring-1 focus-within:ring-secondary`,
               valid &&
-                "border-primary bg-[#EAF6F8] focus-within:border-primary focus-within:ring-primary",
+                "border-primary bg-primary/5 focus-within:border-primary focus-within:ring-primary",
               className
             )}
             defaultCountry="CH"
@@ -165,7 +165,7 @@ export const PhoneNumberInput = React.forwardRef<
             numberInputProps={{
               ...props,
               className:
-                "focus-within:outline-none focus-within:ring-0 bg-inherit",
+                "focus-within:outline-none focus-within:ring-0 bg-transparent ",
             }}
             onChange={(e) => onChange && onChange(e)}
           />
@@ -371,7 +371,7 @@ export const DateInput = React.forwardRef<
               `flex h-[58px] w-full rounded-lg border-[1.5px] border-secondary bg-white px-4 py-[18px] text-sm
               font-medium opacity-80 placeholder:text-grey focus-within:ring-1 focus-within:ring-secondary`,
               valid &&
-                "border-primary bg-[#EAF6F8] focus-within:border-primary focus-within:ring-primary",
+                "border-primary bg-primary/5 focus-within:border-primary focus-within:ring-primary",
               className
             )}
           >
@@ -387,7 +387,7 @@ export const DateInput = React.forwardRef<
                     maxLength={2}
                     size={2}
                     id={id}
-                    className="w-0 flex-1 bg-inherit text-center text-sm placeholder:text-neutral-400 focus:outline-none focus:outline-0"
+                    className="w-0 flex-1 bg-transparent text-center text-sm placeholder:text-neutral-400 focus:outline-none focus:outline-0"
                     pattern="[0-9]*"
                     type="number"
                     inputMode="numeric"
@@ -404,7 +404,7 @@ export const DateInput = React.forwardRef<
                     onChange={onChangeMonth}
                     maxLength={2}
                     size={2}
-                    className="w-0 flex-1 bg-inherit text-center text-sm placeholder:text-neutral-400 focus:outline-none focus:outline-0"
+                    className="w-0 flex-1 bg-transparent text-center text-sm placeholder:text-neutral-400 focus:outline-none focus:outline-0"
                     pattern="[0-9]*"
                     type="number"
                     inputMode="numeric"
@@ -421,7 +421,7 @@ export const DateInput = React.forwardRef<
                     onChange={onChangeYear}
                     maxLength={4}
                     size={4}
-                    className="w-0 flex-1 bg-inherit text-center text-sm placeholder:text-neutral-400 focus:outline-none focus:outline-0"
+                    className="w-0 flex-1 bg-transparent text-center text-sm placeholder:text-neutral-400 focus:outline-none focus:outline-0"
                     pattern="[0-9]*"
                     type="number"
                     inputMode="numeric"

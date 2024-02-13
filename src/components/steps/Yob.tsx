@@ -26,7 +26,7 @@ const Yob = () => {
         }}
       >
         <Input
-          value={lead.yob}
+          value={lead.yob ?? ""}
           onChange={(value) => {
             changeLead({ yob: value.toString() });
             if (

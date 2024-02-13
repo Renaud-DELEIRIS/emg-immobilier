@@ -1,8 +1,15 @@
 import { Fragment } from "react";
 import CantonsWork from "~/components/steps/CantonsWork";
+import Children from "~/components/steps/Children";
+import Info from "~/components/steps/Info";
 import Nationality from "~/components/steps/Nationality";
+import Npa from "~/components/steps/Npa";
 import PaysResidence from "~/components/steps/PaysResidence";
+import PermisType from "~/components/steps/PermisType";
 import RegimeAssuranceMaladie from "~/components/steps/RegimeAssuranceMaladie";
+import SituationMarital from "~/components/steps/SituationMarital";
+import SituationProfessionnelle from "~/components/steps/SituationProfessionnelle";
+import Yob from "~/components/steps/Yob";
 import { StepId, getComponentToDisplay } from "~/constants/step.constant";
 import { useFormStore } from "./form";
 
@@ -17,18 +24,20 @@ export const StepComponent = () => {
     canton_work: <CantonsWork />,
     regime_assurance_maladie: <RegimeAssuranceMaladie />,
     nationality: <Nationality />,
-    // permis_type: <PermisType />,
-    // npa: <Npa />,
-    // situation_marital: <SituationMarital />,
-    // yob: <Yob />,
-    // children: <Children />,
-    // info: <Info />,
-    // situation_professionnelle: <SituationProfessionnelle />,
+    permis_type: <PermisType />,
+    npa: <Npa />,
+    situation_marital: <SituationMarital />,
+    yob: <Yob />,
+    children: <Children />,
+    info: <Info />,
+    situation_professionnelle: <SituationProfessionnelle />,
     // salary_above_120k: <SalaryAbove />,
     // salary_brut: <SalaryBrut />,
     // owner: <Owner />,
     // situation: <Situation />,
-    result: <></>,
+    // loader: <Loading />,
+    // verif: <Verif />,
+    // result: <></>,
   };
 
   return (

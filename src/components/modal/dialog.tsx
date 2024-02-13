@@ -26,7 +26,18 @@ const DialogOverlay = React.forwardRef<
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
-type Effect = "default" | "slide-up" | "slide-down";
+const effectClassname = {
+  default:
+    "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
+  "slide-up":
+    "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-100 data-[state=closed]:slide-out-to-bottom-[250%] data-[state=closed]:slide-out-to-left-[48%] data-[state=open]:slide-in-from-bottom-[150%] data-[state=open]:slide-in-from-left-[50%] data-[state=closed]:duration-200 data-[state=open]:duration-500",
+  "slide-down":
+    "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-100 data-[state=closed]:slide-out-to-top-[250%] data-[state=closed]:slide-out-to-left-[48%] data-[state=open]:slide-in-from-top-[150%] data-[state=open]:slide-in-from-left-[50%] data-[state=closed]:duration-200 data-[state=open]:duration-500",
+  scale:
+    "data-[state=closed]:zoom-out-95 data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=open]:zoom-in-[0.1] data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] data-[state=closed]:duration-200 data-[state=open]:duration-200",
+};
+
+type Effect = keyof typeof effectClassname;
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
@@ -34,22 +45,13 @@ const DialogContent = React.forwardRef<
     effect?: Effect;
   }
 >(({ className, children, effect = "default", ...props }, ref) => {
-  const effectClassname: Record<Effect, string> = {
-    default:
-      "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
-    "slide-up":
-      "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-100 data-[state=closed]:slide-out-to-bottom-[250%] data-[state=closed]:slide-out-to-left-[48%] data-[state=open]:slide-in-from-bottom-[150%] data-[state=open]:slide-in-from-left-[50%] data-[state=closed]:duration-200 data-[state=open]:duration-500",
-    "slide-down":
-      "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-100 data-[state=closed]:slide-out-to-top-[250%] data-[state=closed]:slide-out-to-left-[48%] data-[state=open]:slide-in-from-top-[150%] data-[state=open]:slide-in-from-left-[50%] data-[state=closed]:duration-200 data-[state=open]:duration-500",
-  };
-
   return (
     <DialogPortal>
       <DialogOverlay />
       <DialogPrimitive.Content
         ref={ref}
         className={cn(
-          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-[95%] translate-x-[-50%] translate-y-[-50%] rounded-xl border border-slate-200 bg-white px-6 py-[18px] shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out  dark:border-slate-800 dark:bg-slate-950 sm:rounded-lg md:max-w-lg",
+          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-[95%] translate-x-[-50%] translate-y-[-50%] rounded-xl border border-slate-200 bg-white px-3 py-[18px] shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out dark:border-slate-800  dark:bg-slate-950 sm:rounded-lg md:max-w-lg md:px-6",
           effectClassname[effect],
           className
         )}

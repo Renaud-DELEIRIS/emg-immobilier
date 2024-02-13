@@ -8,6 +8,7 @@ export const initialData: Data = {
   email: "",
   dob: "",
   situation: [],
+  verified: false,
 };
 
 export const situation = [
@@ -25,6 +26,7 @@ export const schemaData = z.object({
   dob: z.string(),
   nom: z.string(),
   prenom: z.string(),
+  verified: z.boolean(),
   // Step
   pays_residence: z.enum(["france", "suisse"]).optional(),
   canton_work: z

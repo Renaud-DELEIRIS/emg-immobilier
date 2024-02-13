@@ -27,6 +27,7 @@ export type StepId =
   | "owner"
   | "situation"
   | "loader"
+  | "verif"
   | "result";
 
 // Groups needs to be ordered
@@ -140,15 +141,24 @@ export const STEPS: Step[] = [
   },
   {
     id: "loader",
+    next: (lead) => (!lead.verified ? "verif" : "result"),
+    disabled: (lead) => false,
+    group: "situation",
+    newTab: true,
+  },
+  {
+    id: "verif",
     next: (lead) => "result",
     disabled: (lead) => false,
     group: "situation",
+    newTab: true,
   },
   {
     id: "result",
     next: (lead) => null,
     disabled: (lead) => false,
     group: "situation",
+    newTab: true,
   },
 ];
 
@@ -211,6 +221,8 @@ export const getStepListBetweenSteps = (
       break;
     }
   }
+
+  stepList.push(step2);
 
   return stepList;
 };
@@ -317,7 +329,11 @@ export const getComponentToDisplay = (
   const visibleStepIndex = mappedStepDisplay.findIndex((stepArray) =>
     stepArray.includes(visibleStepId)
   );
-  let arrayToDisplay = mappedStepDisplay[visibleStepIndex] as StepId[];
+  let arrayToDisplay = mappedStepDisplay[visibleStepIndex];
+
+  if (!arrayToDisplay) {
+    return [];
+  }
 
   // If maxStepId is in the array, we slice the array to display only the steps before maxStepId
   if (arrayToDisplay.includes(maxStepId)) {

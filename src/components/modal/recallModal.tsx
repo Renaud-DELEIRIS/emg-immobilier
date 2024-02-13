@@ -18,6 +18,8 @@ const RecallModal = ({
   const changeLead = useFormStore((state) => state.setData);
   const { t } = useTranslation("header");
 
+  // TODO
+
   const onRecall = () => null;
 
   return (
@@ -41,6 +43,7 @@ const RecallModal = ({
           }}
           required
           className="my-4"
+          placeholder="079 123 45 67"
           valid={isValidPhone(lead.phone)}
         />
         <Alert variant="info" noTitle>

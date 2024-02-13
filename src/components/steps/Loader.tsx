@@ -65,7 +65,7 @@ const Loading: FC = () => {
               transition={{ duration: appearAnimation / 1000 }}
             >
               <Image
-                src={"/mascotte/car_hand.png"}
+                src={"/mascotte/bras_croise.png"}
                 width={136}
                 height={136}
                 alt="mascotte"
@@ -77,7 +77,7 @@ const Loading: FC = () => {
               height="160"
               viewBox="0 0 160 160"
               fill="none"
-              className="absolute h-full w-full"
+              className="absolute h-full w-full text-primary"
             >
               <path
                 opacity="0.15"
@@ -93,12 +93,11 @@ const Loading: FC = () => {
                   y2="159.909"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stopColor="#0CBCB0" />
-                  <stop offset="1" stopColor="#0CBCB0" stopOpacity="0" />
+                  <stop stopColor="currentColor" />
+                  <stop offset="1" stopColor="currentColor" stopOpacity="0" />
                 </linearGradient>
               </defs>
             </svg>
-            {/* make the parent border turn */}
             {hasStarted && (
               <motion.svg
                 initial={{ opacity: 0 }}
@@ -108,11 +107,11 @@ const Loading: FC = () => {
                 height="160"
                 viewBox="0 0 160 160"
                 fill="none"
-                className="absolute h-full w-full animate-spin"
+                className="absolute h-full w-full animate-spin text-primary"
               >
                 <path
                   d="M156.8 80C158.567 80 160.007 78.5667 159.936 76.8008C159.559 67.387 157.522 58.105 153.91 49.3853C149.89 39.6793 143.997 30.8601 136.569 23.4315C129.14 16.0028 120.321 10.11 110.615 6.08964C101.895 2.47784 92.613 0.440739 83.1992 0.0639908C81.4333 -0.00668197 80 1.43269 80 3.2C80 4.96731 81.4334 6.39274 83.1991 6.46956C91.7721 6.84253 100.222 8.71233 108.165 12.0025C117.095 15.7012 125.209 21.1225 132.043 27.9569C138.877 34.7913 144.299 42.9049 147.998 51.8345C151.288 59.7776 153.157 68.2279 153.53 76.8009C153.607 78.5666 155.033 80 156.8 80Z"
-                  fill="#0CBCB0"
+                  fill="currentColor"
                 />
               </motion.svg>
             )}

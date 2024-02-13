@@ -3,7 +3,11 @@ import { motion } from "framer-motion";
 import { Trans, useTranslation } from "next-i18next";
 import { PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
-import { isLastStepDisplayed, type StepId } from "~/constants/step.constant";
+import {
+  getStepById,
+  isLastStepDisplayed,
+  type StepId,
+} from "~/constants/step.constant";
 import { useFormStore } from "~/stores/form";
 import { Alert } from "../feedback/alert";
 
@@ -40,7 +44,6 @@ const StepContainer = ({
   stepId,
   id,
   withInfo = true,
-  withBackButton = false,
 }: {
   stepId: StepId;
   forceActive?: boolean;
@@ -50,7 +53,6 @@ const StepContainer = ({
   withInfo?: boolean;
   withTitle?: boolean;
   withDescription?: boolean;
-  withBackButton?: boolean;
 }) => {
   const currentVisibleStep = useFormStore((state) => state.currentVisibleStep);
   const currentStep = useFormStore((state) => state.currentStep);
@@ -60,6 +62,7 @@ const StepContainer = ({
   const { t } = useTranslation("step");
   const stepWithError = useFormStore((state) => state.stepWithError);
   const isErrored = stepWithError.includes(stepId);
+  const withBackButton = getStepById(stepId).newTab;
   const isMaxSize =
     isLastStepDisplayed(stepId, currentStep.id, lead) &&
     currentVisibleStep.id === stepId;

@@ -33,6 +33,7 @@ const Home: NextPage = () => {
   const setVersionId = useFormStore((state) => state.setVersionId);
   const trackDurationStep = useFormStore((state) => state.trackDurationStep);
   const initStep = useFormStore((state) => state.initStep);
+  const onRouterChange = useFormStore((state) => state.onRouterChange);
   const formLoaded = useFormStore((state) => state.loaded);
   const [loaded, setLoaded] = useState(false);
   const fetchSession = useSessionStore((state) => state.fetchSession);
@@ -76,15 +77,17 @@ const Home: NextPage = () => {
 
   // On router change update visible step
   useEffect(() => {
-    if (router.query.step && formLoaded) {
-      initStep();
+    if (router.query.step && formLoaded && loaded) {
+      onRouterChange();
     }
   }, [router.query]);
 
   const displayHeader =
     currentVisibleStep.id !== "result" && currentVisibleStep.id !== "loader";
   const displaySidebar =
-    currentVisibleStep.id !== "result" && currentVisibleStep.id !== "loader";
+    currentVisibleStep.id !== "result" &&
+    currentVisibleStep.id !== "loader" &&
+    currentVisibleStep.id !== "verif";
 
   return (
     <>
