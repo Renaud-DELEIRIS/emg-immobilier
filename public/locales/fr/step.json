@@ -67,17 +67,6 @@
     "how_many": "Indiquez le nombre d'enfants de moins de 25 ans"
   },
 
-  "info": {
-    "title": "Quel est votre prénom et nom ?",
-    "label_prenom": "Votre prénom (facultatif)",
-    "placeholder_prenom": "Jean",
-
-    "label_nom": "Votre nom",
-    "placeholder_nom": "Dupont",
-    "action": "Suivant",
-    "info": "Ces informations nous permettent de personnaliser votre résultat."
-  },
-
   "situation_professionnelle": {
     "title": "Quelle est votre situation professionnel ?",
     "employe": "Employé(e)",
@@ -115,14 +104,21 @@
   },
 
   "loader": {
-    "title": "Nous comparons pour vous parmi plus de 35 partenaires",
+    "title": "Nous analysons votre situation...",
     "subtitle": "Vos données personnelles garanties 100% sécurisées."
   },
 
   "verif": {
-    "thanks": "Merci {{name}} !",
-    "more_info": "Nous avons besoin de plus d'informations pour vous fournir un résultat.",
-    "contact": "Nous vous contacterons dans les plus brefs délais.",
+    "alert": {
+      "title": "Vos infos sont protégées !",
+      "message": "Ces informations serviront à établir votre devis. Toutes vos données sont 100% sécurisées."
+    },
+    "label": "Votre prénom et nom",
+    "placeholder_first": "Prénom (facultatif)",
+    "placeholder_last": "Nom",
+    "label_contact": "Informations de contact",
+    "contact_description": "Vous recevrez le récapitulatif de votre comparatif (2 pages PDF) sur votre adresse email. Le numéro de téléphone vous permettra de revenir à tout moment sur vos offres.",
+    "placeholder_phone": "Votre numéro de téléphone",
     "action": "Compléter mes informations",
     "error": "Une erreur est survenue, veuillez réessayer plus tard.",
     "modal": {
@@ -131,6 +127,25 @@
       "alert": " Ces <b>informations protégées</b> seront utilisées uniquement dans le cadre de votre dossier.",
       "action": "Vérifier mon numéro",
       "error": "Le code de vérification est incorrect"
+    }
+  },
+
+  "result": {
+    "title": "<b>Merci !</b> Votre dossier est complet.",
+    "subtitle": "Dans le cas où vos informations sont correctes, voici les prochaines étapes :",
+    "agent": {
+      "title": "<b>{{agent}}</b> est en charge de votre demande",
+      "subtitle": "Celle-ci va être examinée dans les prochaines heures.",
+      "action": "Être rappelé"
+    },
+    "list": {
+      "item_1": "Etablissement d'un questionnaire fiscal numérique de pré-déclaration",
+      "item_2": "Consultation fiscale téléphonique sur demande du fiscaliste en charge du dossier",
+      "item_3": "Obtention d'un délai supplémentaire auprès de l'administration fiscale cantonale via nos outils",
+      "item_4": "Etablissement de votre déclaration, DRIS ou TOU",
+      "item_5": "Estimation précise de votre imposition finale",
+      "item_6": "Remise d'une copie numérique de votre déclaration via notre outil en ligne",
+      "item_7": "Communication continue avec votre fiscaliste, assurant un suivi personnalisé tout au long de l'année"
     }
   }
 }

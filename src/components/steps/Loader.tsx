@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useEffect, useState, type FC } from "react";
@@ -20,19 +20,10 @@ const Loading: FC = () => {
   const { t } = useTranslation("step");
   const [show, setShow] = useState(true);
   const nextStep = useFormStore((state) => state.nextStep);
-  const [partnaireToShow, setPartnaireToShow] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
     scrollTo(0, 0);
-    const interval = setInterval(() => {
-      setPartnaireToShow((prev) => {
-        if (prev === partnaire.length - 1) {
-          return 0;
-        }
-        return prev + 1;
-      });
-    }, totalAnimationTime / partnaire.length);
 
     const appear = setTimeout(() => {
       setHasStarted(true);
@@ -40,9 +31,8 @@ const Loading: FC = () => {
 
     const time = setTimeout(() => {
       nextStep("loader");
-    }, 6800);
+    }, 3000);
     return () => {
-      clearInterval(interval);
       clearTimeout(appear);
       clearTimeout(time);
     };
@@ -57,20 +47,7 @@ const Loading: FC = () => {
           animate={{ opacity: 1 }}
         >
           <div className="relative mb-[22px] flex h-40 w-40 items-end justify-center overflow-hidden rounded-full">
-            {/* Scale and come from under */}
-            <motion.div
-              initial={{ scale: 0.5, y: 100, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.5, y: -100, opacity: 0 }}
-              transition={{ duration: appearAnimation / 1000 }}
-            >
-              <Image
-                src={"/mascotte/bras_croise.png"}
-                width={136}
-                height={136}
-                alt="mascotte"
-              />
-            </motion.div>
+            <Image src={"/logo/digitax_small.jpeg"} fill alt="logo" />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="160"
@@ -118,22 +95,6 @@ const Loading: FC = () => {
           </div>
           <StepTitle>{t("loader.title")}</StepTitle>
           <span>{t("loader.subtitle")}</span>
-          <div className="relative mt-[18px] h-10 w-40 opacity-50">
-            <AnimatePresence>
-              <motion.img
-                key={partnaireToShow}
-                src={partnaire[partnaireToShow]}
-                alt="partnaire"
-                className="absolute left-0 right-0 top-0 mx-auto h-10 w-40 object-contain"
-                initial={{ opacity: 0, scale: 0.5, x: 100 }}
-                animate={{ opacity: 1, scale: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.5, x: -100 }}
-                transition={{ duration: 0.5 }}
-                width={160}
-                height={40}
-              />
-            </AnimatePresence>
-          </div>
         </motion.div>
       )}
     </>

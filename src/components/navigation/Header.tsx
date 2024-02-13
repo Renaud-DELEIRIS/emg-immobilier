@@ -1,16 +1,15 @@
 import { IconPhoneCall } from "@tabler/icons-react";
+import { atom, useAtom } from "jotai";
 import { useTranslation } from "next-i18next";
-import { useState } from "react";
-import { useFormStore } from "~/stores/form";
 import { Button } from "../button/Button";
 import Logo from "../icon/Logo";
 import RecallModal from "../modal/recallModal";
 
+export const beCalledAtom = atom(false);
+
 const Header = () => {
-  const lead = useFormStore((state) => state.data);
-  const currentStep = useFormStore((state) => state.currentVisibleStep);
   const { t } = useTranslation("header");
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useAtom(beCalledAtom);
 
   const onOpen = () => {
     setOpen(true);

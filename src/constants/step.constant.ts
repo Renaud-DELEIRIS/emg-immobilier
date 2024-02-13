@@ -20,7 +20,6 @@ export type StepId =
   | "situation_marital"
   | "yob"
   | "children"
-  | "info"
   | "situation_professionnelle"
   | "salary_brut"
   | "salary_above_120k"
@@ -97,14 +96,8 @@ export const STEPS: Step[] = [
   },
   {
     id: "children",
-    next: (lead) => "info",
+    next: (lead) => "situation_professionnelle",
     disabled: (lead) => lead.child_nb === undefined,
-    group: "info",
-  },
-  {
-    id: "info",
-    next: () => "situation_professionnelle",
-    disabled: (lead) => !lead.nom,
     group: "info",
   },
   {

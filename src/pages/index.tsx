@@ -92,13 +92,11 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Comparea.ch - Comparateur de Bases et de Complémentaires</title>
+        <title>Déclaration en ligne - Digitaxe</title>
         <meta
           name="description"
           content="Comparea.ch - Comparateur de Bases et de Complémentaires"
         />
-        <meta name="robots" content="noindex,nofollow" />
-        <link rel="icon" href="/favicon.svg" />
       </Head>
       {formLoaded && loaded && (
         <main
