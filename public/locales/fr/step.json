@@ -135,7 +135,7 @@
     "subtitle": "Dans le cas où vos informations sont correctes, voici les prochaines étapes :",
     "agent": {
       "title": "<b>{{agent}}</b> est en charge de votre demande",
-      "subtitle": "Celle-ci va être examinée dans les prochaines heures.",
+      "subtitle": "Celle-ci va être examinée dans les prochaines heures. Dans le cas où nous constatons une erreur, vous serez contacté par un membre expert de notre équipe.",
       "action": "Être rappelé"
     },
     "list": {
