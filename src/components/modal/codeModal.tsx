@@ -110,7 +110,7 @@ const CodeModal = ({
           variant={"thirdy"}
           disabled={code.length !== 4}
           className="mt-[14px]"
-          onClick={() => handleVerify()}
+          onClick={() => void handleVerify()}
           loading={loading}
         >
           <IconPhoneCall size={24} className="mr-1" />
