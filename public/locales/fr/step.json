@@ -124,6 +124,7 @@
     "more_info": "Nous avons besoin de plus d'informations pour vous fournir un résultat.",
     "contact": "Nous vous contacterons dans les plus brefs délais.",
     "action": "Compléter mes informations",
+    "error": "Une erreur est survenue, veuillez réessayer plus tard.",
     "modal": {
       "title": "Vérifié votre numéro de téléphone",
       "subtitle": "Nous vous avons envoyé un code de vérification par SMS au <b>{{phone}}</b>.",
