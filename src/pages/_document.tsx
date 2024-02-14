@@ -38,6 +38,8 @@ export default function Document() {
             })(window,document,'script','dataLayer','GTM-${env.NEXT_PUBLIC_GTMID}');`,
           }}
         />
+      </Head>
+      <body>
         <noscript
           dangerouslySetInnerHTML={{
             __html: `<iframe
@@ -48,8 +50,6 @@ export default function Document() {
             ></iframe>`,
           }}
         ></noscript>
-      </Head>
-      <body>
         <Main />
         <NextScript />
         <div id="portal-root"></div>

@@ -17,7 +17,7 @@ const Result = () => {
   return (
     <>
       <motion.div
-        className="mx-auto flex w-full max-w-[350px] flex-1 flex-col justify-center pt-12 md:max-w-2xl md:pt-0"
+        className="mx-auto flex w-full max-w-[350px] flex-1 flex-col justify-center pt-12 md:max-w-2xl md:pt-16"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         id="result"

@@ -64,7 +64,8 @@
   "children": {
     "title": "Avez-vous des enfants à charge ?",
     "info": "Seul les enfants de moins de 25 ans sont considérés comme étant à charge.",
-    "how_many": "Indiquez le nombre d'enfants de moins de 25 ans"
+    "how_many": "Indiquez le nombre d'enfants de moins de 25 ans",
+    "select_placeholder": "Sélectionnez le nombre d'enfants"
   },
 
   "situation_professionnelle": {
@@ -122,7 +123,7 @@
     "action": "Compléter mes informations",
     "error": "Une erreur est survenue, veuillez réessayer plus tard.",
     "modal": {
-      "title": "Vérifié votre numéro de téléphone",
+      "title": "Vérifiéz votre numéro de téléphone",
       "subtitle": "Nous vous avons envoyé un code de vérification par SMS au <b>{{phone}}</b>.",
       "alert": " Ces <b>informations protégées</b> seront utilisées uniquement dans le cadre de votre dossier.",
       "action": "Vérifier mon numéro",
