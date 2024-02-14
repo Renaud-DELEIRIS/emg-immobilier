@@ -111,7 +111,7 @@ export const STEPS: Step[] = [
   {
     id: "salary_brut",
     next: (lead) => "owner",
-    disabled: (lead) => lead.salary_brut === undefined,
+    disabled: (lead) => false,
     group: "professional",
   },
   {

@@ -80,7 +80,13 @@ const CodeModal = ({
             components={{
               b: <span className="font-semibold" />,
             }}
-          />
+          />{" "}
+          <button
+            className="w-fit text-left text-sm text-secondary hover:underline"
+            onClick={onClose}
+          >
+            ({t("verif.modal.modif")})
+          </button>
         </span>
         <CodeInput2
           className="my-6"

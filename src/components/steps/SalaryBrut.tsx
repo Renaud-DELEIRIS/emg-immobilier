@@ -15,7 +15,7 @@ const SalaryBrut = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (lead.salary_brut !== undefined) nextStep("salary_brut");
+          nextStep("salary_brut");
         }}
       >
         <Input
@@ -33,11 +33,7 @@ const SalaryBrut = () => {
           insideText="CHF"
           valid={lead.salary_brut !== undefined}
         ></Input>
-        <Button
-          type="submit"
-          className="mt-4"
-          disabled={lead.salary_brut === undefined}
-        >
+        <Button type="submit" className="mt-4">
           {t("salary_brut.action")}
         </Button>
       </form>

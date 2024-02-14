@@ -9,7 +9,7 @@ const SalaryAbove = () => {
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
   return (
-    <StepContainer stepId="salary_above_120k">
+    <StepContainer stepId="salary_above_120k" withInfo={false}>
       <TileInput
         value={lead.is_salary_above_120k}
         onChange={(value) => {

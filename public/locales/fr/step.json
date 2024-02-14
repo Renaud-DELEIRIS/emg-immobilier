@@ -18,7 +18,7 @@
   },
   "regime_assurance_maladie": {
     "title": "Quel est votre régime d'assurance maladie ?",
-    "lamal": "LAMal Frontalier",
+    "lamal": "LAMal Frontalière",
     "cmu": "CMU Frontalier",
     "info": "L'assurance maladie fait parti des dépenses que vous pouvez déduire de votre revenu."
   },
@@ -40,7 +40,7 @@
   "npa": {
     "title": "Indiquez votre NPA (code postal) au 31.12.2023",
     "placeholder": "Votre npa...",
-    "info": "Le code postal a une influence sur le moment de l'imposition.<ul><li>Impôt fédéral direct (IFD)</li><li>Impôts cantonal</li><li>Impôts communal</li></ul>"
+    "info": "Le NPA a une influence sur le moment de l'imposition.<ul><li>Impôt fédéral direct (IFD)</li><li>Impôts cantonal</li><li>Impôts communal</li></ul>"
   },
   "situation_marital": {
     "title": "Quelle est votre situation maritale ?",
@@ -63,7 +63,7 @@
 
   "children": {
     "title": "Avez-vous des enfants à charge ?",
-    "info": "Seul les enfants de moins de 25 ans sont considérés comme étant à charge.",
+    "info": "Il s’agit uniquement des enfants à charge.",
     "how_many": "Indiquez le nombre d'enfants de moins de 25 ans",
     "select_placeholder": "Sélectionnez le nombre d'enfants"
   },
@@ -77,15 +77,14 @@
   },
 
   "salary_brut": {
-    "title": "Quel a été votre salaire annuel brut en 2023 ?",
-    "placeholder": "Salaire brut annuel",
-    "info": "Cette information est importante pour définir votre taux marginal d'imposition.",
+    "title": "Quel a été votre salaire annuel brut en 2023 ? (facultatif) ",
+    "placeholder": "Salaire brut annuel (facultatif)",
+    "info": "Remplissez ce champs si vous souhaitez connaître votre taux marginal d’imposition",
     "action": "Suivant"
   },
 
   "salary_above_120k": {
-    "title": "Percevez-vous un salaire brut annuel supérieur à 120'000 CHF ?",
-    "info": "L'une des conditions obligatoire pour effectuer une TOU (Taxation Ordinaire Ultérieur) componez par la, une déclaration d'impôts ; est de dépasser le seuil de 120'000 CHF en temps que permis B."
+    "title": "Percevez-vous un salaire brut annuel supérieur à 120'000 CHF ?"
   },
 
   "owner": {
@@ -97,7 +96,7 @@
     "title": "Êtes-vous dans l'une de ces situations ?",
     "Travaux de rénovation résidence principale": "J'ai effectué des travaux de rénovation sur ma résidence principale",
     "A effectué des rachats d'années LPP": "J'ai effectué des rachats d'années LPP",
-    "A versé des pensions alimentaires": "J'ai versé des pension alimentaires",
+    "A versé des pensions alimentaires": "J'ai versé des pensions alimentaires",
     "A cotisé sur un 3ème pilier": "J'ai cotisé sur un 3ème pilier",
     "A payé ses intérêts sur un crédit": "J'ai payé des intérêts sur un crédit",
     "info": "Beaucoup de déductions existent dans votre situation, celles-ci sont les principales. Il ne s'agit pas d'une liste exhaustive.",
@@ -112,22 +111,23 @@
   "verif": {
     "alert": {
       "title": "Vos infos sont protégées !",
-      "message": "Ces informations serviront à établir votre devis. Toutes vos données sont 100% sécurisées."
+      "message": "Ces informations servent à enregistrer vos recherches actuelles et futures. Toutes vos données sont 100% sécurisées."
     },
     "label": "Votre prénom et nom",
     "placeholder_first": "Prénom (facultatif)",
     "placeholder_last": "Nom",
-    "label_contact": "Informations de contact",
-    "contact_description": "Vous recevrez le récapitulatif de votre comparatif (2 pages PDF) sur votre adresse email. Le numéro de téléphone vous permettra de revenir à tout moment sur vos offres.",
+    "label_contact": "Nous y sommes presque",
+    "contact_description": "11 optimisations fiscales ont été trouvées pour votre profil, indiquez votre numéro de téléphone afin d’authentifier votre demande.",
     "placeholder_phone": "Votre numéro de téléphone",
-    "action": "Compléter mes informations",
+    "action": "Valider mes informations",
     "error": "Une erreur est survenue, veuillez réessayer plus tard.",
     "modal": {
       "title": "Vérifiéz votre numéro de téléphone",
       "subtitle": "Nous vous avons envoyé un code de vérification par SMS au <b>{{phone}}</b>.",
       "alert": " Ces <b>informations protégées</b> seront utilisées uniquement dans le cadre de votre dossier.",
       "action": "Vérifier mon numéro",
-      "error": "Le code de vérification est incorrect"
+      "error": "Le code de vérification est incorrect",
+      "modif": "Modifier mon numéro"
     }
   },
 
