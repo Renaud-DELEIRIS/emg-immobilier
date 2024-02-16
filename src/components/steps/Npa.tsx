@@ -15,7 +15,7 @@ const Npa = () => {
       <AutoComplete
         value={lead.npa}
         onChange={(value) => {
-          changeLead({ npa: value.toString() });
+          changeLead({ npa: value });
           nextStep("npa");
         }}
         placeholder={t("npa.placeholder")}

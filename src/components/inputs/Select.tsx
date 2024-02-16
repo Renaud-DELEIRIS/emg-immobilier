@@ -145,110 +145,115 @@ const SelectSeparator = React.forwardRef<
 ));
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
-interface SelectInputProps
-  extends React.ComponentPropsWithoutRef<typeof Select> {
+interface SelectInputProps<T>
+  extends Omit<React.ComponentPropsWithoutRef<typeof Select>, "value"> {
+  value?: T;
   label?: string;
   error?: string;
   placeholder?: string;
   className?: string;
   options: {
     label: string;
-    value: string;
+    value: T;
     group?: string;
   }[];
-  onChange?: (value: string) => void;
+  onChange?: (value: T) => void;
 }
 
-const SelectInput = React.forwardRef<
-  React.ElementRef<typeof Select>,
-  SelectInputProps
->(
-  (
-    {
-      label,
-      error,
-      value,
-      className,
-      onValueChange,
-      onChange,
-      placeholder,
-      ...props
-    },
-    ref
-  ) => {
-    const id = React.useId();
-    const [open, setOpen] = React.useState(false);
+const SelectInputComp = <T extends string>(
+  {
+    label,
+    error,
+    value,
+    className,
+    onValueChange,
+    onChange,
+    placeholder,
+    ...props
+  }: SelectInputProps<T>,
+  ref: React.Ref<typeof Select>
+) => {
+  const id = React.useId();
+  const [open, setOpen] = React.useState(false);
 
-    React.useEffect(() => {
-      if (open) {
-        document.body.style.setProperty("overflow-y", "auto", "important");
-        document.body.style.setProperty("margin-right", "0px", "important");
-      } else {
-        document.body.style.removeProperty("margin-right");
-        document.body.style.removeProperty("overflow-y");
-      }
-    }, [open]);
+  React.useEffect(() => {
+    if (open) {
+      document.body.style.setProperty("overflow-y", "auto", "important");
+      document.body.style.setProperty("margin-right", "0px", "important");
+    } else {
+      document.body.style.removeProperty("margin-right");
+      document.body.style.removeProperty("overflow-y");
+    }
+  }, [open]);
 
-    // Sorted options by group
-    const sortedOptions = props.options.reduce<{
-      [key: string]: { label: string; value: string }[];
-    }>((acc, option) => {
-      if (option.group) {
-        acc[option.group] = acc[option.group] || [];
-        acc[option.group]!.push(option);
-      } else {
-        acc[""] = acc[""] || [];
-        acc[""]!.push(option);
-      }
-      return acc;
-    }, {});
+  // Sorted options by group
+  const sortedOptions = props.options.reduce<{
+    [key: string]: { label: string; value: string }[];
+  }>((acc, option) => {
+    if (option.group) {
+      acc[option.group] = acc[option.group] || [];
+      acc[option.group]!.push(option);
+    } else {
+      acc[""] = acc[""] || [];
+      acc[""]!.push(option);
+    }
+    return acc;
+  }, {});
 
-    return (
-      <div className={twMerge("w-full", className)}>
-        {label && (
-          <label
-            className="mb-[6px] block text-sm font-medium opacity-80"
-            htmlFor={id}
-          >
-            {label}
-          </label>
-        )}
-        <Select
-          value={value}
-          onValueChange={(e) => {
-            onValueChange && onValueChange(e);
-            onChange && onChange(e);
-          }}
-          open={open}
-          onOpenChange={setOpen}
-          {...props}
+  return (
+    <div className={twMerge("w-full", className)}>
+      {label && (
+        <label
+          className="mb-[6px] block text-sm font-medium opacity-80"
+          htmlFor={id}
         >
-          <SelectTrigger ref={ref} onClick={() => setOpen(!open)}>
-            <SelectValue placeholder={placeholder} />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.entries(sortedOptions).map(([group, options]) => (
-              <React.Fragment key={group}>
-                {group && (
-                  <SelectGroup>
-                    <SelectLabel>{group}</SelectLabel>
-                  </SelectGroup>
-                )}
-                {options.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </React.Fragment>
-            ))}
-          </SelectContent>
-        </Select>
-        {error && (
-          <span className="mt-1 block text-sm text-red-500">{error}</span>
-        )}
-      </div>
-    );
+          {label}
+        </label>
+      )}
+      <Select
+        value={value}
+        onValueChange={(e: T) => {
+          onValueChange && onValueChange(e);
+          onChange && onChange(e);
+        }}
+        open={open}
+        onOpenChange={setOpen}
+        {...props}
+      >
+        <SelectTrigger
+          ref={ref as React.ElementRef<typeof Select>}
+          onClick={() => setOpen(!open)}
+        >
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          {Object.entries(sortedOptions).map(([group, options]) => (
+            <React.Fragment key={group}>
+              {group && (
+                <SelectGroup>
+                  <SelectLabel>{group}</SelectLabel>
+                </SelectGroup>
+              )}
+              {options.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </React.Fragment>
+          ))}
+        </SelectContent>
+      </Select>
+      {error && (
+        <span className="mt-1 block text-sm text-red-500">{error}</span>
+      )}
+    </div>
+  );
+};
+
+const SelectInput = React.forwardRef(SelectInputComp) as <T extends string>(
+  p: SelectInputProps<T> & {
+    ref?: React.RefObject<React.ElementRef<typeof Select>>;
   }
-);
+) => React.ReactElement;
 
 export { SelectInput };

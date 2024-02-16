@@ -54,9 +54,9 @@ const CantonsWork = () => {
           className="mt-4"
           value={lead.canton_work}
           onChange={(value) => {
-            changeLead({ canton_work: value as ChCantonValue });
+            changeLead({ canton_work: value });
             nextStep("canton_work", {
-              canton_work: value as ChCantonValue,
+              canton_work: value,
             });
           }}
           placeholder={t("canton_work.placeholder")}
