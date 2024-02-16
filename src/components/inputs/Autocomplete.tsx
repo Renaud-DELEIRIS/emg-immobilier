@@ -11,7 +11,7 @@ import {
 } from "../ui/tooltip";
 
 interface Autocomplete<T> {
-  value?: T;
+  value: T;
   onChange?: (value: T) => void;
   options: {
     value: T;
@@ -32,7 +32,7 @@ interface Autocomplete<T> {
   theme?: "normal" | "dark";
 }
 
-export const AutoCompleteComp = <T extends string>(
+export const AutoCompleteComp = <T extends string | undefined>(
   {
     options,
     value,
@@ -59,16 +59,17 @@ export const AutoCompleteComp = <T extends string>(
         ? options
         : options.filter(
             (option) =>
-              option.value
+              option.value &&
+              (option.value
                 .toString()
                 .toLowerCase()
                 .replace(/\s+/g, "")
                 .includes(query.toLowerCase().replace(/\s+/g, "")) ||
-              option.label
-                .toString()
-                .toLowerCase()
-                .replace(/\s+/g, "")
-                .includes(query.toLowerCase().replace(/\s+/g, ""))
+                option.label
+                  .toString()
+                  .toLowerCase()
+                  .replace(/\s+/g, "")
+                  .includes(query.toLowerCase().replace(/\s+/g, "")))
           ),
     [query, options]
   );
@@ -143,7 +144,7 @@ export const AutoCompleteComp = <T extends string>(
                 filteredPeople.slice(0, 100).map((person) => {
                   return (
                     <Combobox.Option
-                      key={person.value.toString()}
+                      key={person.value ? person.value.toString() : ""}
                       className={({ active }) =>
                         `relative flex cursor-default select-none justify-between rounded-md px-2 py-2 ${
                           active ? "bg-neutral-50" : "text-gray-900"
@@ -185,7 +186,9 @@ export const AutoCompleteComp = <T extends string>(
   );
 };
 
-const AutoComplete = forwardRef(AutoCompleteComp) as <T extends string>(
+const AutoComplete = forwardRef(AutoCompleteComp) as <
+  T extends string | undefined
+>(
   p: Autocomplete<T> & { ref?: React.Ref<typeof Combobox.Input> }
 ) => JSX.Element;
 

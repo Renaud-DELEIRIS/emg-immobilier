@@ -147,20 +147,20 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 interface SelectInputProps<T>
   extends Omit<React.ComponentPropsWithoutRef<typeof Select>, "value"> {
-  value?: T;
-  label?: string;
-  error?: string;
-  placeholder?: string;
-  className?: string;
+  value: T;
+  onChange: (value: T) => void;
   options: {
     label: string;
     value: T;
     group?: string;
   }[];
-  onChange?: (value: T) => void;
+  label?: string;
+  error?: string;
+  placeholder?: string;
+  className?: string;
 }
 
-const SelectInputComp = <T extends string>(
+const SelectInputComp = <T extends string | undefined>(
   {
     label,
     error,
@@ -188,7 +188,7 @@ const SelectInputComp = <T extends string>(
 
   // Sorted options by group
   const sortedOptions = props.options.reduce<{
-    [key: string]: { label: string; value: string }[];
+    [key: string]: { label: string; value: T }[];
   }>((acc, option) => {
     if (option.group) {
       acc[option.group] = acc[option.group] || [];
@@ -212,9 +212,9 @@ const SelectInputComp = <T extends string>(
       )}
       <Select
         value={value}
-        onValueChange={(e: T) => {
+        onValueChange={(e) => {
           onValueChange && onValueChange(e);
-          onChange && onChange(e);
+          onChange && onChange(e as T);
         }}
         open={open}
         onOpenChange={setOpen}
@@ -235,7 +235,7 @@ const SelectInputComp = <T extends string>(
                 </SelectGroup>
               )}
               {options.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
+                <SelectItem key={option.value} value={option.value!}>
                   {option.label}
                 </SelectItem>
               ))}
@@ -250,7 +250,9 @@ const SelectInputComp = <T extends string>(
   );
 };
 
-const SelectInput = React.forwardRef(SelectInputComp) as <T extends string>(
+const SelectInput = React.forwardRef(SelectInputComp) as <
+  T extends string | undefined
+>(
   p: SelectInputProps<T> & {
     ref?: React.RefObject<React.ElementRef<typeof Select>>;
   }

@@ -1,5 +1,5 @@
 import { useTranslation } from "next-i18next";
-import { CHCanton, ChCantonValue } from "~/data/chCanton";
+import { CHCanton } from "~/data/chCanton";
 import { useFormStore } from "~/stores/form";
 import { SelectInput } from "../inputs/Select";
 import TileInput from "../inputs/Tile";
@@ -25,7 +25,7 @@ const CantonsWork = () => {
           changeLead({ canton_work: value });
           if (value === "GE" || value === "VD" || value === "NE") {
             nextStep("canton_work", {
-              canton_work: value as ChCantonValue,
+              canton_work: value,
             });
           }
         }}
