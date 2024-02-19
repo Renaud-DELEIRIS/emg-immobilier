@@ -11,146 +11,159 @@ export interface Step {
 }
 
 export type StepId =
-  | "pays_residence"
-  | "canton_work"
-  | "regime_assurance_maladie"
-  | "nationality"
-  | "permis_type"
-  | "npa"
-  | "situation_marital"
-  | "yob"
-  | "children"
-  | "situation_professionnelle"
-  | "salary_brut"
-  | "salary_above_120k"
-  | "owner"
-  | "situation"
+  | "project"
+  | "which_step"
+  | "residence_type"
+  | "bien_type"
+  | "research_zone"
+  | "research_budget"
+  | "canton_bien"
+  | "bien_price"
+  | "do_work"
+  | "emprunteur"
+  | "ddn"
+  | "revenue"
+  | "fonds_propres"
   | "loader"
   | "verif"
   | "result";
 
 // Groups needs to be ordered
-export const stepGroupId = [
-  "residence",
-  "info",
-  "professional",
-  "situation",
-] as const;
+export const stepGroupId = ["project"] as const;
 export type StepGroupId = (typeof stepGroupId)[number];
 
 // Steps needs to start with the first step
 
 export const STEPS: Step[] = [
   {
-    id: "pays_residence",
+    id: "project",
     next: (lead) => {
-      if (lead.pays_residence === "suisse") {
-        return "nationality";
-      }
-      return "canton_work";
+      return "which_step";
     },
-    disabled: (lead) => lead.pays_residence === undefined,
-    group: "residence",
+    disabled: (lead) => lead.project === undefined,
+    group: "project",
   },
   {
-    id: "canton_work",
-    next: (lead) => "regime_assurance_maladie",
-    disabled: (lead) => lead.canton_work === undefined,
-    group: "residence",
+    id: "which_step",
+    next: (lead) => {
+      return lead.which_step === "recherche bien"
+        ? "research_zone"
+        : "residence_type";
+    },
+    disabled: (lead) => lead.which_step === undefined,
+    group: "project",
   },
   {
-    id: "regime_assurance_maladie",
-    next: (lead) => "situation_marital",
-    disabled: (lead) => lead.regime_assurance_maladie_frontalier === undefined,
-    group: "residence",
+    id: "research_zone",
+    next: (lead) => {
+      return "research_budget";
+    },
+    disabled: (lead) => lead.research.npa === undefined,
+    group: "project",
   },
   {
-    id: "nationality",
-    next: (lead) => (lead.nationality === "suisse" ? "npa" : "permis_type"),
-    disabled: (lead) => lead.nationality === undefined,
-    group: "residence",
+    id: "research_budget",
+    next: (lead) => {
+      return "emprunteur";
+    },
+    disabled: (lead) => lead.research.budget === undefined,
+    group: "project",
   },
   {
-    id: "permis_type",
-    next: (lead) => "npa",
-    disabled: (lead) => lead.permis_type === undefined,
-    group: "residence",
+    id: "residence_type",
+    next: (lead) => {
+      return "bien_type";
+    },
+    disabled: (lead) => lead.residence_type === undefined,
+    group: "project",
   },
   {
-    id: "npa",
-    next: (lead) => "situation_marital",
-    disabled: (lead) => lead.npa === undefined,
-    group: "residence",
+    id: "bien_type",
+    next: (lead) => {
+      return "canton_bien";
+    },
+    disabled: (lead) => lead.bien_type === undefined,
+    group: "project",
   },
   {
-    id: "situation_marital",
-    next: (lead) => "yob",
-    disabled: (lead) => lead.situation_marital === undefined,
-    group: "info",
+    id: "canton_bien",
+    next: (lead) => {
+      return "bien_price";
+    },
+    disabled: (lead) => lead.canton_bien === undefined,
+    group: "project",
   },
   {
-    id: "yob",
-    next: (lead) => "children",
-    disabled: (lead) => lead.yob === undefined || lead.yob.length !== 4,
-    group: "info",
+    id: "bien_price",
+    next: (lead) => {
+      return "do_work";
+    },
+    disabled: (lead) => lead.bien_price === undefined,
+    group: "project",
   },
   {
-    id: "children",
-    next: (lead) => "situation_professionnelle",
-    disabled: (lead) => lead.child_nb === undefined,
-    group: "info",
+    id: "do_work",
+    next: (lead) => {
+      return "emprunteur";
+    },
+    disabled: (lead) => lead.do_work === undefined,
+    group: "project",
   },
   {
-    id: "situation_professionnelle",
-    next: (lead) =>
-      lead.permis_type === "B" ? "salary_above_120k" : "salary_brut",
-    disabled: (lead) => lead.situation_professionnelle === undefined,
-    group: "professional",
-    newTab: true,
+    id: "emprunteur",
+    next: (lead) => {
+      return "ddn";
+    },
+    disabled: (lead) => lead.emprunteur === undefined,
+    group: "project",
   },
   {
-    id: "salary_brut",
-    next: (lead) => "owner",
-    disabled: (lead) => false,
-    group: "professional",
+    id: "ddn",
+    next: (lead) => {
+      return "revenue";
+    },
+    disabled: (lead) => lead.ddn === undefined,
+    group: "project",
   },
   {
-    id: "salary_above_120k",
-    next: (lead) => "owner",
-    disabled: (lead) => lead.is_salary_above_120k === undefined,
-    group: "professional",
+    id: "revenue",
+    next: (lead) => {
+      return "fonds_propres";
+    },
+    disabled: (lead) => lead.revenue === undefined,
+    group: "project",
   },
   {
-    id: "owner",
-    next: (lead) => "situation",
-    disabled: (lead) => lead.is_owner_property === undefined,
-    group: "professional",
-  },
-  {
-    id: "situation",
-    next: (lead) => "loader",
-    disabled: (lead) => lead.situation === undefined,
-    group: "situation",
+    id: "fonds_propres",
+    next: (lead) => {
+      return "loader";
+    },
+    disabled: (lead) =>
+      lead.fonds_propres.fonds_propres === undefined ||
+      lead.fonds_propres.lpp === undefined ||
+      lead.fonds_propres.pilier3 === undefined ||
+      lead.fonds_propres.donation === undefined,
+    group: "project",
   },
   {
     id: "loader",
     next: (lead) => (!lead.verified ? "verif" : "result"),
     disabled: (lead) => false,
-    group: "situation",
+    group: "project",
     newTab: true,
   },
   {
     id: "verif",
     next: (lead) => "result",
     disabled: (lead) => false,
-    group: "situation",
+    group: "project",
     newTab: true,
   },
   {
     id: "result",
     next: (lead) => null,
     disabled: (lead) => false,
-    group: "situation",
+    group: "project",
     newTab: true,
   },
 ];
@@ -159,8 +172,8 @@ export const getNextStep = (step: Step, lead: Data) => {
   return getStepById(step.next(lead) ?? step.id);
 };
 
-export const isStepDisabled = (step: Step, lead: Data) => {
-  return step.disabled(lead);
+export const isStepDisabled = (step: StepId, lead: Data) => {
+  return getStepById(step).disabled(lead);
 };
 
 export const getStepById = (id: StepId) => {

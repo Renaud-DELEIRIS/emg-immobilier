@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useFormStore } from "~/stores/form";
 import { api } from "~/utils/api";
+import { isValidEmail } from "~/utils/validation/email.validation";
 import { Button } from "../button/Button";
 import { Alert, AlertTitle } from "../feedback/alert";
 import Input, { PhoneNumberInput } from "../inputs/input";
@@ -57,20 +58,22 @@ const Verif = () => {
   };
 
   const onCompletion = async (code: string) => {
-    if (code !== verifCode) throw new Error("Code is not valid");
-    await createLead({
-      data: lead,
-      idtracking: versionId === null ? undefined : versionId,
-      gtmparams: params,
-      idlead: lead.idlead,
-    });
+    // if (code !== verifCode) throw new Error("Code is not valid");
+    // await createLead({
+    //   data: lead,
+    //   idtracking: versionId === null ? undefined : versionId,
+    //   gtmparams: params,
+    //   idlead: lead.idlead,
+    // });
     setOpenCode(false);
     changeLead({ verified: true });
     nextStep("verif");
   };
 
   const isAllValid =
-    lead.nom.length > 0 && isValidPhoneNumber(lead.phone ?? "");
+    lead.nom.length > 0 &&
+    isValidPhoneNumber(lead.phone ?? "") &&
+    isValidEmail(lead.email);
 
   return (
     <>
@@ -143,6 +146,19 @@ const Verif = () => {
               <StepDescription>{t`verif.contact_description`}</StepDescription>
             </div>
             <div className="grid grid-cols-1 gap-[18px]">
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={lead.email}
+                onChange={(e) =>
+                  changeLead({
+                    email: e,
+                  })
+                }
+                placeholder={t`verif.placeholder_email`}
+                valid={isValidEmail(lead.email)}
+              />
               <PhoneNumberInput
                 id="phone"
                 name="phone"
@@ -166,11 +182,7 @@ const Verif = () => {
             transition={{ duration: 0.5 }}
             className="mt-10 flex justify-center"
           >
-            <Button
-              variant={"thirdy"}
-              onClick={() => void onOpenCode()}
-              disabled={!isAllValid}
-            >
+            <Button onClick={() => void onOpenCode()} disabled={!isAllValid}>
               {t`verif.action`}
             </Button>
           </motion.div>

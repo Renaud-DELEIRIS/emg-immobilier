@@ -14,5 +14,6 @@ export const formatAmount = (amount: number) => {
     maximumFractionDigits: 0,
   })
     .format(amount)
-    .replace("CHF ", "");
+    .replace("CHF ", "")
+    .replace("CHF", "");
 };

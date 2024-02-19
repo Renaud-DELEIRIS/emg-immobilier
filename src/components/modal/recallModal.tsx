@@ -59,7 +59,6 @@ const RecallModal = ({
           <AlertDescription>{t("recall.alert")}</AlertDescription>
         </Alert>
         <Button
-          variant={"thirdy"}
           disabled={!isValidPhone(lead.phone)}
           className="mt-[14px]"
           onClick={() => void onRecall()}

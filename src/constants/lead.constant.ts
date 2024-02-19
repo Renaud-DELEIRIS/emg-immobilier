@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { CHCanton, ChCantonValue } from "~/data/chCanton";
 
 export const initialData: Data = {
   nom: "",
@@ -7,17 +6,16 @@ export const initialData: Data = {
   phone: "",
   email: "",
   dob: "",
-  situation: [],
+  research: {
+    radius: 30,
+    budget: [100000, 1000000],
+  },
+  bien_price: 50000,
   verified: false,
+  fonds_propres: {},
+  charge: [],
+  revenue_other: [],
 };
-
-export const situation = [
-  "Travaux de rénovation résidence principale",
-  "A effectué des rachats d'années LPP",
-  "A versé des pensions alimentaires",
-  "A cotisé sur un 3ème pilier",
-  "A payé ses intérêts sur un crédit",
-] as const;
 
 export const schemaData = z.object({
   // Default
@@ -29,29 +27,57 @@ export const schemaData = z.object({
   verified: z.boolean(),
   idlead: z.string().optional(),
   // Step
-  pays_residence: z.enum(["france", "suisse"]).optional(),
-  canton_work: z
-    .enum(CHCanton.map((a) => a.value) as [ChCantonValue, ...ChCantonValue[]])
+  project: z
+    .enum(["nouveau bien", "capacité d'emprunt", "renouveller hypothèque"])
     .optional(),
-  regime_assurance_maladie_frontalier: z
-    .enum(["LAMal", "CMU", "autre"])
+  which_step: z
+    .enum([
+      "recherche bien",
+      "bien trouvé",
+      "offre acceptée",
+      "bientot signer",
+      "signer",
+    ])
     .optional(),
-  nationality: z.string().optional(),
-  permis_type: z.enum(["B", "C", "autre"]).optional(),
-  npa: z.string().optional(),
-  situation_marital: z
-    .enum(["marié", "célibataire", "divorcé", "autre"])
-    .optional(),
-  yob: z.string().optional(),
 
-  child_nb: z.number().optional(),
-  situation_professionnelle: z
-    .enum(["employé", "indépendant", "employé et indépendant", "autre"])
+  research: z.object({
+    npa: z.string().optional(),
+    radius: z.number(),
+    budget: z.array(z.number()).length(2),
+  }),
+
+  residence_type: z
+    .enum(["principal", "secondaire", "invest", "other"])
     .optional(),
-  salary_brut: z.number().optional(),
-  is_salary_above_120k: z.boolean().optional(),
-  is_owner_property: z.boolean().optional(),
-  situation: z.array(z.enum(situation)),
+  bien_type: z
+    .enum(["house", "appartement", "building", "construction"])
+    .optional(),
+  canton_bien: z.string().optional(),
+  bien_price: z.number(),
+  do_work: z.boolean().optional(),
+  emprunteur: z.enum(["seul", "deux", "other"]).optional(),
+  ddn: z.string().optional(),
+  ddn_2eme_emprunteur: z.string().optional(),
+  revenue: z.number().optional(),
+  revenue_other: z.array(
+    z.object({
+      type: z.string().optional(),
+      montant: z.number().optional(),
+    })
+  ),
+  charge: z.array(
+    z.object({
+      type: z.string().optional(),
+      montant: z.number().optional(),
+    })
+  ),
+  fonds_propres: z.object({
+    fonds_propres: z.number().optional(),
+    lpp: z.number().optional(),
+    pilier3: z.number().optional(),
+    donation: z.number().optional(),
+    autre: z.number().optional(),
+  }),
 });
 
 export type Data = z.infer<typeof schemaData>;

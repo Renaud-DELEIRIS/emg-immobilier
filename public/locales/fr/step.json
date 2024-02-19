@@ -2,110 +2,127 @@
   "yes": "Oui",
   "no": "Non",
   "other": "Autre",
-  "pays_residence": {
-    "title": "Dans quel pays résidez-vous ?",
-    "fra": "France",
-    "sui": "Suisse",
+  "next": "Suivant",
+  "project": {
+    "title": "Quel est votre projet ?",
+    "new": "Acquérir un bien immobilier",
+    "renew_hypo": "Renouveler mon hypothèque",
+    "capa_emprunt": "Je veux connaitre ma capacité d'emprunt",
     "info": "Le pays de résidence influe sur votre système d'imposition."
   },
-  "canton_work": {
-    "title": "Dans quel canton travaillez-vous ?",
-    "placeholder": "Choisissez votre canton de travail",
-    "ge": "Genève",
-    "vd": "Vaud",
-    "ne": "Neuchâtel",
-    "info": "Le canton de travail influe sur votre système d'imposition."
+  "which_step": {
+    "title": "Où en êtes-vous ?",
+    "recherche": "Je suis en recherche du bien",
+    "find": "J'ai déjà trouvé le bien, et je compte faire une offre",
+    "accepted_offer": "J'ai déjà fait une offre qui a été acceptée",
+    "soon_signer": "Je vais signer chez le notaire",
+    "signer": "J'ai signé chez le notaire"
   },
-  "regime_assurance_maladie": {
-    "title": "Quel est votre régime d'assurance maladie ?",
-    "lamal": "LAMal Frontalière",
-    "cmu": "CMU Frontalier",
-    "info": "L'assurance maladie fait parti des dépenses que vous pouvez déduire de votre revenu."
+  "research_zone": {
+    "title": "Quelle est la zone de recherche ?",
+    "placeholder": "NPA",
+    "distance": "Distance maximale"
   },
-  "nationality": {
-    "title": "Quelle est votre nationalité ?",
-    "placeholder": "Saisissez les 3 premières lettres",
-    "swiss": "Suisse",
-    "french": "Française",
-    "german": "Allemande",
-    "italian": "Italienne",
-    "info": "La nationalité influe sur le type d'imposition."
+  "residence_type": {
+    "title": "Quel est type de bien ?",
+    "principal": "Résidence principale",
+    "secondaire": "Résidence secondaire",
+    "invest": "Bien d'investissement"
   },
-  "permis_type": {
-    "title": "Quel est votre type de permis ?",
-    "permis_b": "Permis B",
-    "permis_c": "Permis C",
-    "info": "Le permis de résidence a un impact sur le type d'imposition (imposition à la source ou déclaration des revenus)"
+  "bien_type": {
+    "title": "Quelle est la taille du bien ?",
+    "house": "Maison",
+    "appartement": "Appartement",
+    "building": "Immeuble",
+    "construction": "Construction"
   },
-  "npa": {
-    "title": "Indiquez votre NPA (code postal) au 31.12.2023",
-    "placeholder": "Votre npa...",
-    "info": "Le NPA a une influence sur le moment de l'imposition.<ul><li>Impôt fédéral direct (IFD)</li><li>Impôts cantonal</li><li>Impôts communal</li></ul>"
-  },
-  "situation_marital": {
-    "title": "Quelle est votre situation maritale ?",
-    "celibataire": "Célibataire",
-    "marie": "Marié(e)",
-    "pacse": "Pacsé(e)",
-    "union_libre": "Union libre",
-    "separe": "Séparé(e)",
-    "divorce": "Divorcé(e)",
-    "veuf": "Veuf(ve)",
-    "info": "Votre situation martitale jour un rôle important sur le barème d'imposition et des déductions possibles."
-  },
-  "yob": {
-    "title": "Quelle est votre année de naissance ?",
-    "placeholder": "p. ex. 1978",
-    "too_old": "L'année de naissance rensignez est invalid",
-    "future": "L'année de naissance rensignez est invalid",
-    "info": "Votre âge permet d'estimer le montant des primes d'assurance maladie ainsi que vos cotisations à la LPP (2ème pilier)."
+  "research_budget": {
+    "title": "Quel est votre budget ?",
+    "info": "Nos réseaux de partenaire pourraient vous envoyer des offres de bien dans vos critères."
   },
 
-  "children": {
-    "title": "Avez-vous des enfants à charge ?",
-    "info": "Il s’agit uniquement des enfants à charge.",
-    "how_many": "Indiquez le nombre d'enfants de moins de 25 ans",
-    "select_placeholder": "Sélectionnez le nombre d'enfants"
+  "canton_bien": {
+    "title": "Quel est le canton du bien ?",
+    "placeholder": "Canton du bien",
+    "info": "Les frais d'émoluments varient en fonction des cantons.",
+    "validate": "Valider l'adresse"
   },
 
-  "situation_professionnelle": {
-    "title": "Quelle est votre situation professionnel ?",
-    "employe": "Employé(e)",
-    "inde": "Indépendant(e)",
-    "employe_inde": "Employé(e) et indépendant(e)",
-    "info": "Cette information est utile pour estimer vos cotisations sociales, ainsi que vos obligations fiscales"
+  "bien_price": {
+    "title": "Quel est le prix du bien ?",
+    "placeholder": "Prix du bien",
+    "info": "Prix du bien"
   },
 
-  "salary_brut": {
-    "title": "Quel a été votre salaire annuel brut en 2023 ? (facultatif) ",
-    "placeholder": "Salaire brut annuel (facultatif)",
-    "info": "Remplissez ce champs si vous souhaitez connaître votre taux marginal d’imposition",
-    "action": "Suivant"
+  "do_work": {
+    "title": "Souhaitez-vous effectuer des travaux ?"
   },
 
-  "salary_above_120k": {
-    "title": "Percevez-vous un salaire brut annuel supérieur à 120'000 CHF ?"
+  "emprunteur": {
+    "title": "Combien de personne empruntent ?",
+    "seul": "Une personne",
+    "deux": "Deux personnes"
   },
 
-  "owner": {
-    "title": "Êtes-vous propriétaire d'un bien immobilier ?",
-    "info": "Cette informations est essentiel pour connaître vos charges déductibles."
+  "ddn": {
+    "title": "Quelle est votre date de naissance ?",
+    "label": "Votre date de naissance",
+    "label_2": "Date de naissance de l'emprunteur 2"
   },
 
-  "situation": {
-    "title": "Êtes-vous dans l'une de ces situations ?",
-    "Travaux de rénovation résidence principale": "J'ai effectué des travaux de rénovation sur ma résidence principale",
-    "A effectué des rachats d'années LPP": "J'ai effectué des rachats d'années LPP",
-    "A versé des pensions alimentaires": "J'ai versé des pensions alimentaires",
-    "A cotisé sur un 3ème pilier": "J'ai cotisé sur un 3ème pilier",
-    "A payé ses intérêts sur un crédit": "J'ai payé des intérêts sur un crédit",
-    "info": "Beaucoup de déductions existent dans votre situation, celles-ci sont les principales. Il ne s'agit pas d'une liste exhaustive.",
-    "action": "Obtenir mes résultats"
+  "revenue": {
+    "title": "Quel sont vos revenues annuels brut ?",
+    "placeholder": "Revenu annuel (hors bonus)",
+    "charge": {
+      "description": "Charges financières (leasing, pensions, crédits...)",
+      "add": "Ajouter une charge",
+      "labelMontant": "Montant annuel",
+      "labelType": "Type de charge",
+      "placeholderMontant": "p.ex CHF 10'000",
+      "placeholderType": "Choisissez...",
+      "delete": "Supprimer",
+      "optionType": {
+        "credit_personnel": "Crédit personnel",
+        "leasing": "Leasing",
+        "loyer_actuel": "Loyer actuel",
+        "remboursement": "Remboursement d'emprunt",
+        "rentes_pensions": "Rentes et pensions versées",
+        "autre": "Autre"
+      }
+    },
+    "other": {
+      "description": "Autres revenus (allocations, bonus, pensions...)",
+      "add": "Ajouter un revenus",
+      "labelMontant": "Montant annuel",
+      "labelType": "Type de revenue",
+      "placeholderMontant": "p.ex CHF 10'000",
+      "placeholderType": "Choisissez...",
+      "delete": "Supprimer",
+      "optionType": {
+        "frais_de_representation": "Frais de représentation",
+        "indemnites_employeur": "Indemnités employeur",
+        "indemnites_employeurDetail": "Repas, transport, maladie, enfant",
+        "rentes_et_pensions": "Rentes et pensions reçues",
+        "rentes_et_pensionsDetail": "Ajoutez-en une par enfant/ex-conjoint(e)",
+        "autre": "Autre"
+      }
+    }
+  },
+
+  "fonds_propres": {
+    "title": "Quel est votre apport en fonds propres ?",
+    "label": "Fortune bancaire",
+    "lpp": "2ème pilier",
+    "pillier3": "3ème pilier",
+    "donation": "Donation",
+    "autre": "Autre",
+    "placeholder": "Montant",
+    "info": "Il est conseillé d'apporter 20% du montant du bien, mais au minimum 10% provenant de cash."
   },
 
   "loader": {
-    "title": "Nous analysons votre situation...",
-    "subtitle": "Vos données personnelles garanties 100% sécurisées."
+    "title": "Nous comparons pour vous parmi plus de 35 partenaires",
+    "subtitle": "Calcul des taux d’interêts..."
   },
 
   "verif": {
@@ -118,6 +135,7 @@
     "placeholder_last": "Nom",
     "label_contact": "Nous y sommes presque",
     "contact_description": "11 optimisations fiscales ont été trouvées pour votre profil, indiquez votre numéro de téléphone afin d’authentifier votre demande.",
+    "placeholder_email": "Votre adresse email",
     "placeholder_phone": "Votre numéro de téléphone",
     "action": "Valider mes informations",
     "error": "Une erreur est survenue, veuillez réessayer plus tard.",
@@ -132,21 +150,35 @@
   },
 
   "result": {
-    "title": "<b>Merci !</b> Votre dossier est complet.",
-    "subtitle": "Dans le cas où vos informations sont correctes, voici les prochaines étapes :",
-    "agent": {
-      "title": "<b>{{agent}}</b> est en charge de votre demande",
-      "subtitle": "Celle-ci va être examinée dans les prochaines heures. Dans le cas où nous constatons une erreur, vous serez contacté par un membre expert de notre équipe.",
-      "action": "Être rappelé"
+    "title": "{{nb}} résultats",
+
+    "recap": {
+      "title": "Récapitulatif des coûts",
+      "price": "Prix mensuel",
+      "investment": "Investissement initiale",
+      "remboursement": "Remboursement"
     },
-    "list": {
-      "item_1": "Etablissement d'un questionnaire fiscal numérique de pré-déclaration",
-      "item_2": "Consultation fiscale téléphonique sur demande du fiscaliste en charge du dossier",
-      "item_3": "Obtention d'un délai supplémentaire auprès de l'administration fiscale cantonale via nos outils",
-      "item_4": "Etablissement de votre déclaration, DRIS ou TOU",
-      "item_5": "Estimation précise de votre imposition finale",
-      "item_6": "Remise d'une copie numérique de votre déclaration via notre outil en ligne",
-      "item_7": "Communication continue avec votre fiscaliste, assurant un suivi personnalisé tout au long de l'année"
+
+    "info": {
+      "title": "Mes informations",
+      "hypotheque": "Hypothèque",
+      "statut": {
+        "title": "Statut",
+        "recherche bien": "Recherche de bien",
+        "bien trouvé": "Bien trouvé",
+        "offre acceptée": "Offre acceptée",
+        "bientot signer": "Bientôt signer",
+        "signer": "Signer chez le notaire"
+      },
+      "salaire": "Salaire annuel",
+      "bien_type": {
+        "title": "Type de bien",
+        "house": "Maison",
+        "appartement": "Appartement",
+        "building": "Immeuble",
+        "construction": "En construction"
+      },
+      "projet": "Projet"
     }
   }
 }

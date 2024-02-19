@@ -3,30 +3,33 @@ import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
 import StepContainer from "./StepContainer";
 
-const SalaryAbove = () => {
+const Project = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
   return (
-    <StepContainer stepId="salary_above_120k" withInfo={false}>
+    <StepContainer stepId="project" withTitle>
       <TileInput
-        value={lead.is_salary_above_120k}
+        value={lead.project}
         onChange={(value) => {
-          changeLead({ is_salary_above_120k: value });
-          nextStep("salary_above_120k", {
-            is_salary_above_120k: value,
+          changeLead({ project: value });
+          nextStep("project", {
+            project: value,
           });
         }}
-        className="grid md:grid-cols-2"
         options={[
           {
-            value: true,
-            label: t("yes"),
+            value: "nouveau bien",
+            label: t("project.new"),
           },
           {
-            value: false,
-            label: t("no"),
+            value: "capacité d'emprunt",
+            label: t("project.capa_emprunt"),
+          },
+          {
+            value: "renouveller hypothèque",
+            label: t("project.renew_hypo"),
           },
         ]}
       ></TileInput>
@@ -34,4 +37,4 @@ const SalaryAbove = () => {
   );
 };
 
-export default SalaryAbove;
+export default Project;

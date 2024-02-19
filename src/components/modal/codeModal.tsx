@@ -111,7 +111,6 @@ const CodeModal = ({
           </AlertDescription>
         </Alert>
         <Button
-          variant={"thirdy"}
           disabled={code.length !== 4}
           className="mt-[14px]"
           onClick={() => void handleVerify()}

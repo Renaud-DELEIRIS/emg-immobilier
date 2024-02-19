@@ -1,35 +1,38 @@
 import { useTranslation } from "next-i18next";
 import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
+import { EmgAdulte } from "../icon/EmgAdulte";
+import { EmgCouple } from "../icon/EmgCouple";
 import StepContainer from "./StepContainer";
 
-const RegimeAssuranceMaladie = () => {
+const Emprunteur = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
   return (
-    <StepContainer stepId="regime_assurance_maladie">
+    <StepContainer stepId="emprunteur">
       <TileInput
-        value={lead.regime_assurance_maladie_frontalier}
+        value={lead.emprunteur}
         onChange={(value) => {
-          changeLead({ regime_assurance_maladie_frontalier: value });
-          nextStep("regime_assurance_maladie", {
-            regime_assurance_maladie_frontalier: value,
+          changeLead({ emprunteur: value });
+          nextStep("emprunteur", {
+            emprunteur: value,
           });
         }}
-        className="grid md:grid-cols-2"
         options={[
           {
-            value: "LAMal",
-            label: t("regime_assurance_maladie.lamal"),
+            value: "seul",
+            label: t("emprunteur.seul"),
+            icon: <EmgAdulte size={38} />,
           },
           {
-            value: "CMU",
-            label: t("regime_assurance_maladie.cmu"),
+            value: "deux",
+            label: t("emprunteur.deux"),
+            icon: <EmgCouple size={38} />,
           },
           {
-            value: "autre",
+            value: "other",
             label: t("other"),
           },
         ]}
@@ -38,4 +41,4 @@ const RegimeAssuranceMaladie = () => {
   );
 };
 
-export default RegimeAssuranceMaladie;
+export default Emprunteur;

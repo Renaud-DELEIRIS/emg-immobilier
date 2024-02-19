@@ -6,7 +6,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
 import { useFormStore } from "~/stores/form";
@@ -82,8 +81,7 @@ const Home: NextPage = () => {
     }
   }, [router.query]);
 
-  const displayHeader =
-    currentVisibleStep.id !== "result" && currentVisibleStep.id !== "loader";
+  const displayHeader = currentVisibleStep.id !== "loader";
   const displaySidebar =
     currentVisibleStep.id !== "result" &&
     currentVisibleStep.id !== "loader" &&
@@ -121,7 +119,6 @@ const Home: NextPage = () => {
                   </div>
                 )}
               </div>
-              <Footer />
             </>
           )}
         </main>

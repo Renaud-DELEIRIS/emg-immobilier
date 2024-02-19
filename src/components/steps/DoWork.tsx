@@ -3,22 +3,22 @@ import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
 import StepContainer from "./StepContainer";
 
-const Owner = () => {
+const DoWork = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
   return (
-    <StepContainer stepId="owner">
+    <StepContainer stepId="do_work">
       <TileInput
-        value={lead.is_owner_property}
+        value={lead.do_work}
+        className="grid md:grid-cols-2"
         onChange={(value) => {
-          changeLead({ is_owner_property: value });
-          nextStep("owner", {
-            is_owner_property: value,
+          changeLead({ do_work: value });
+          nextStep("do_work", {
+            do_work: value,
           });
         }}
-        className="grid md:grid-cols-2"
         options={[
           {
             value: true,
@@ -34,4 +34,4 @@ const Owner = () => {
   );
 };
 
-export default Owner;
+export default DoWork;

@@ -18,7 +18,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex h-[56px] w-full items-center justify-between rounded-lg border border-secondary bg-white px-4 py-[18px] text-sm ring-offset-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[placeholder]:text-grey [&>span]:line-clamp-1",
+      "flex h-[46px] w-full items-center justify-between rounded-lg border border-secondary bg-white px-4 py-[18px] text-base font-medium ring-offset-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[placeholder]:text-grey [&>span]:truncate",
       className
     )}
     {...props}
@@ -117,7 +117,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-slate-100 focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50",
+      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-base outline-none focus:bg-slate-100 focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50",
       className
     )}
     {...props}
@@ -153,6 +153,7 @@ interface SelectInputProps<T>
     label: string;
     value: T;
     group?: string;
+    detail?: string;
   }[];
   label?: string;
   error?: string;
@@ -188,7 +189,7 @@ const SelectInputComp = <T extends string | undefined>(
 
   // Sorted options by group
   const sortedOptions = props.options.reduce<{
-    [key: string]: { label: string; value: T }[];
+    [key: string]: { label: string; value: T; detail?: string }[];
   }>((acc, option) => {
     if (option.group) {
       acc[option.group] = acc[option.group] || [];
@@ -223,8 +224,11 @@ const SelectInputComp = <T extends string | undefined>(
         <SelectTrigger
           ref={ref as React.ElementRef<typeof Select>}
           onClick={() => setOpen(!open)}
+          className="w-full text-left"
         >
-          <SelectValue placeholder={placeholder} />
+          <SelectValue className="text-left" placeholder={placeholder}>
+            {value ? props.options.find((o) => o.value === value)?.label : null}
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           {Object.entries(sortedOptions).map(([group, options]) => (
@@ -235,8 +239,19 @@ const SelectInputComp = <T extends string | undefined>(
                 </SelectGroup>
               )}
               {options.map((option) => (
-                <SelectItem key={option.value} value={option.value!}>
-                  {option.label}
+                <SelectItem
+                  key={option.value}
+                  value={option.value!}
+                  textValue={option.label}
+                >
+                  <div className="flex flex-col items-start text-left">
+                    <span className="w-full truncate">{option.label}</span>
+                    {option.detail && (
+                      <span className="w-full truncate text-xs text-slate-500">
+                        {option.detail}
+                      </span>
+                    )}
+                  </div>
                 </SelectItem>
               ))}
             </React.Fragment>

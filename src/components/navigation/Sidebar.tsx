@@ -1,12 +1,19 @@
 import { IconCheck } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
 import { twMerge } from "tailwind-merge";
-import { getFirstStepOfGroup, stepGroupId } from "~/constants/step.constant";
+import {
+  StepId,
+  getFirstStepOfGroup,
+  stepGroupId,
+} from "~/constants/step.constant";
 import { useFormStore } from "~/stores/form";
+import { formatAmount } from "~/utils/money";
+import { EMGIconInforCircle } from "../icon/IconInfoCircle";
 
 const Sidebar = ({ onClose }: { onClose?: () => void }) => {
   const lead = useFormStore((state) => state.data);
   const currentStep = useFormStore((state) => state.currentStep);
+  const currentVisibleStep = useFormStore((state) => state.currentVisibleStep);
   const setVisibleStep = useFormStore((state) => state.setVisibleStep);
   const resetStep = useFormStore((state) => state.resetStep);
 
@@ -14,15 +21,77 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
   const groupIndex = stepGroupId.indexOf(currentStepGroup);
 
   const { t } = useTranslation("sidebar");
+  const { t: tStep } = useTranslation("step");
+
+  const getInfoComponent = () => {
+    const stepWithInfo: StepId[] = [
+      "canton_bien",
+      "project",
+      "research_budget",
+      "fonds_propres",
+    ];
+    if (stepWithInfo.includes(currentVisibleStep.id)) {
+      return (
+        <div className="flex items-center gap-2">
+          <EMGIconInforCircle />
+          <span className="text-sm">
+            {tStep(currentVisibleStep.id + ".info")}
+          </span>
+        </div>
+      );
+    }
+    if (currentVisibleStep.id === "bien_price")
+      return (
+        <div className="grid w-full place-items-center">
+          <div
+            className={`mask ${
+              lead.bien_type === "house"
+                ? "house"
+                : lead.bien_type === "building" ||
+                  lead.bien_type === "appartement"
+                ? "building"
+                : lead.bien_type === "construction"
+                ? "construction"
+                : "house"
+            } mb-4`}
+          >
+            <div
+              className="filler"
+              style={{
+                // Height is at 100% when acquerirPrice is 2000000 and 0% when acquerirPrice is 100000
+                height: `${
+                  100 -
+                  ((lead.bien_price - 100000) / 1900000 < 0
+                    ? 0
+                    : (lead.bien_price - 100000) / 1900000 > 1
+                    ? 1
+                    : (lead.bien_price - 100000) / 1900000) *
+                    100
+                }%`,
+              }}
+            ></div>
+          </div>
+          <p className="mb-2 text-center text-[30px] font-bold">
+            CHF {formatAmount(lead.bien_price)}
+          </p>
+          <div className="flex items-center gap-2">
+            <EMGIconInforCircle />
+            <span className="text-sm">
+              {tStep(currentVisibleStep.id + ".info")}
+            </span>
+          </div>
+        </div>
+      );
+  };
 
   return (
     <>
       <aside
         className={twMerge(
-          `flex h-fit w-full flex-col gap-6 bg-white p-6`,
+          `flex h-fit w-full flex-col gap-6 bg-white px-4 py-6`,
           onClose
             ? "rounded-lg"
-            : "sticky top-[106px] max-w-[340px] rounded-lg border border-[#8888941A]"
+            : "sticky top-[106px] w-[340px] rounded-lg border border-[#E6E8EC]"
         )}
       >
         {onClose && (
@@ -69,6 +138,7 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
             </button>
           </div>
         )}
+        {getInfoComponent()}
         <ul className="w-full space-y-6 leading-[normal]">
           {stepGroupId.map((stepGroupId, index) => {
             const toStep = getFirstStepOfGroup(stepGroupId, lead);

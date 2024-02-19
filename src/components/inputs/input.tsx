@@ -59,6 +59,7 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
             htmlFor={id}
           >
             {label}
+            {props.required && <span className="ml-1 text-red-500">*</span>}
             {tooltip && (
               <TooltipProvider>
                 <Tooltip>
@@ -75,7 +76,7 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
           <input
             id={id}
             className={twMerge(
-              `w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-base font-medium outline-8 placeholder:text-grey focus-within:border-secondary  focus-within:outline-secondary`,
+              `h-[46px] w-full rounded-lg border-[1.5px] border-secondary px-4 py-[9px] text-base font-medium outline-8 placeholder:text-grey focus-within:border-secondary  focus-within:outline-secondary`,
               insideText ? "pr-10" : "pr-4",
               icon && "pl-12",
               valid &&
@@ -154,7 +155,7 @@ export const PhoneNumberInput = React.forwardRef<
             ref={ref}
             value={val?.toString() ?? ""}
             className={twMerge(
-              `w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-base font-medium placeholder:text-grey
+              `h-[46px] w-full rounded-lg border-[1.5px] border-secondary px-4 text-base font-medium placeholder:text-grey
               focus-within:ring-1 focus-within:ring-secondary`,
               valid &&
                 "border-primary bg-primary/5 focus-within:border-primary focus-within:ring-primary",
@@ -368,7 +369,7 @@ export const DateInput = React.forwardRef<
         <div className={"relative w-full"}>
           <div
             className={twMerge(
-              `flex h-[58px] w-full rounded-lg border-[1.5px] border-secondary bg-white px-4 py-[18px] text-sm
+              `flex h-[46px] w-full rounded-lg border-[1.5px] border-secondary bg-white px-4  text-sm
               font-medium opacity-80 placeholder:text-grey focus-within:ring-1 focus-within:ring-secondary`,
               valid &&
                 "border-primary bg-primary/5 focus-within:border-primary focus-within:ring-primary",

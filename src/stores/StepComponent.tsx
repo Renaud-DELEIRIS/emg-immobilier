@@ -1,21 +1,20 @@
 import { Fragment } from "react";
-import CantonsWork from "~/components/steps/CantonsWork";
-import Children from "~/components/steps/Children";
+import { twMerge } from "tailwind-merge";
+import BienPrice from "~/components/steps/BienPrice";
+import BienType from "~/components/steps/BienType";
+import CantonBien from "~/components/steps/CantonBien";
+import Ddn from "~/components/steps/Ddn";
+import DoWork from "~/components/steps/DoWork";
+import Emprunteur from "~/components/steps/Emprunteur";
+import FondsPropre from "~/components/steps/FondsPropre";
 import Loading from "~/components/steps/Loader";
-import Nationality from "~/components/steps/Nationality";
-import Npa from "~/components/steps/Npa";
-import Owner from "~/components/steps/Owner";
-import PaysResidence from "~/components/steps/PaysResidence";
-import PermisType from "~/components/steps/PermisType";
-import RegimeAssuranceMaladie from "~/components/steps/RegimeAssuranceMaladie";
-import Result from "~/components/steps/Result";
-import SalaryAbove from "~/components/steps/SalaryAbove";
-import SalaryBrut from "~/components/steps/SalaryBrut";
-import Situation from "~/components/steps/Situation";
-import SituationMarital from "~/components/steps/SituationMarital";
-import SituationProfessionnelle from "~/components/steps/SituationProfessionnelle";
+import Project from "~/components/steps/Project";
+import ResearchBudget from "~/components/steps/ResearchBudget";
+import ResearchZone from "~/components/steps/ResearchZone";
+import ResidenceType from "~/components/steps/ResidenceType";
+import Revenue from "~/components/steps/Revenue";
 import Verif from "~/components/steps/Verif";
-import Yob from "~/components/steps/Yob";
+import WhichStep from "~/components/steps/WhichStep";
 import { StepId, getComponentToDisplay } from "~/constants/step.constant";
 import { useFormStore } from "./form";
 
@@ -26,28 +25,31 @@ export const StepComponent = () => {
 
   // Map component with step Id
   const componentMap: Partial<Record<StepId, React.ReactNode>> = {
-    pays_residence: <PaysResidence />,
-    canton_work: <CantonsWork />,
-    regime_assurance_maladie: <RegimeAssuranceMaladie />,
-    nationality: <Nationality />,
-    permis_type: <PermisType />,
-    npa: <Npa />,
-    situation_marital: <SituationMarital />,
-    yob: <Yob />,
-    children: <Children />,
-    situation_professionnelle: <SituationProfessionnelle />,
-    salary_above_120k: <SalaryAbove />,
-    salary_brut: <SalaryBrut />,
-    owner: <Owner />,
-    situation: <Situation />,
+    project: <Project />,
+    which_step: <WhichStep />,
+    research_zone: <ResearchZone />,
+    research_budget: <ResearchBudget />,
+    residence_type: <ResidenceType />,
+    bien_type: <BienType />,
+    canton_bien: <CantonBien />,
+    bien_price: <BienPrice />,
+    do_work: <DoWork />,
+    emprunteur: <Emprunteur />,
+    ddn: <Ddn />,
+    revenue: <Revenue />,
+    fonds_propres: <FondsPropre />,
     loader: <Loading />,
     verif: <Verif />,
-    result: <Result />,
   };
+
+  const stepWithoutMaxwidth: StepId[] = ["result"];
 
   return (
     <div
-      className={`flex w-full flex-col gap-[40px] md:max-w-[670px] `}
+      className={twMerge(
+        `flex w-full flex-col gap-[40px] md:max-w-[670px]`,
+        stepWithoutMaxwidth.includes(currentVisibleStep.id) && "md:max-w-none"
+      )}
       id="step-container"
     >
       {getComponentToDisplay(currentVisibleStep.id, currentStep.id, lead).map(

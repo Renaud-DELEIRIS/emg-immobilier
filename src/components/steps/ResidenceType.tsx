@@ -3,37 +3,37 @@ import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
 import StepContainer from "./StepContainer";
 
-const SituationProfessionnelle = () => {
+const ResidenceType = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
   return (
-    <StepContainer stepId="situation_professionnelle">
+    <StepContainer stepId="residence_type">
       <TileInput
-        value={lead.situation_professionnelle}
+        value={lead.residence_type}
         onChange={(value) => {
-          changeLead({ situation_professionnelle: value });
-          nextStep("situation_professionnelle", {
-            situation_professionnelle: value,
+          changeLead({ residence_type: value });
+          nextStep("residence_type", {
+            residence_type: value,
           });
         }}
         className="grid md:grid-cols-2"
         options={[
           {
-            value: "employé",
-            label: t("situation_professionnelle.employe"),
+            value: "principal",
+            label: t("residence_type.principal"),
           },
           {
-            value: "indépendant",
-            label: t("situation_professionnelle.inde"),
+            value: "secondaire",
+            label: t("residence_type.secondaire"),
           },
           {
-            value: "employé et indépendant",
-            label: t("situation_professionnelle.employe_inde"),
+            value: "invest",
+            label: t("residence_type.invest"),
           },
           {
-            value: "autre",
+            value: "other",
             label: t("other"),
           },
         ]}
@@ -42,4 +42,4 @@ const SituationProfessionnelle = () => {
   );
 };
 
-export default SituationProfessionnelle;
+export default ResidenceType;

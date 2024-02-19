@@ -30,7 +30,7 @@ export const StepTitle: React.FC<
 
 export const StepDescription: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <span className="text-[16px] font-normal leading-[22px] text-grey">
+    <span className="text-[16px] font-normal leading-[normal] text-[#061C3D]">
       {children}
     </span>
   );
@@ -43,7 +43,7 @@ const StepContainer = ({
   withDescription = false,
   stepId,
   id,
-  withInfo = true,
+  withInfo = false,
 }: {
   stepId: StepId;
   forceActive?: boolean;
@@ -73,7 +73,7 @@ const StepContainer = ({
       animate={{ opacity: 1, x: 0 }}
       className={twMerge(
         "flex w-full flex-col",
-        isMaxSize && "min-h-[calc(100dvh-190px)] md:min-h-[calc(100dvh-250px)]",
+        isMaxSize && "min-h-[calc(100dvh-190px)] md:min-h-[calc(100dvh-130px)]",
         className
       )}
       id={id ?? stepId}

@@ -1,8 +1,5 @@
 {
   "group": {
-    "residence": "Résidence",
-    "info": "Vos informations",
-    "professional": "Votre activité professionnelle",
-    "situation": "Votre situation"
+    "project": "Votre projet"
   }
 }

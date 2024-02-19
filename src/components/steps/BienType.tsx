@@ -3,30 +3,38 @@ import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
 import StepContainer from "./StepContainer";
 
-const PaysResidence = () => {
+const BienType = () => {
   const lead = useFormStore((state) => state.data);
   const changeLead = useFormStore((state) => state.setData);
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
   return (
-    <StepContainer stepId="pays_residence" withTitle withInfo>
+    <StepContainer stepId="bien_type">
       <TileInput
-        value={lead.pays_residence}
+        value={lead.bien_type}
         onChange={(value) => {
-          changeLead({ pays_residence: value });
-          nextStep("pays_residence", {
-            pays_residence: value,
+          changeLead({ bien_type: value });
+          nextStep("bien_type", {
+            bien_type: value,
           });
         }}
         className="grid md:grid-cols-2"
         options={[
           {
-            value: "suisse",
-            label: t("pays_residence.sui"),
+            value: "house",
+            label: t("bien_type.house"),
           },
           {
-            value: "france",
-            label: t("pays_residence.fra"),
+            value: "appartement",
+            label: t("bien_type.appartement"),
+          },
+          {
+            value: "building",
+            label: t("bien_type.building"),
+          },
+          {
+            value: "construction",
+            label: t("bien_type.construction"),
           },
         ]}
       ></TileInput>
@@ -34,4 +42,4 @@ const PaysResidence = () => {
   );
 };
 
-export default PaysResidence;
+export default BienType;

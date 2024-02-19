@@ -6,18 +6,14 @@ import { IconLoader2 } from "@tabler/icons-react";
 import { cn } from "~/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-[56px] text-base font-semibold ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-center",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-[6px] text-base font-semibold ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-center",
   {
     variants: {
       variant: {
         default: "bg-primary text-white hover:bg-primary/80",
-        "outline-thirdy": "border-2 border-thirdy text-dark hover:bg-thirdy/5",
-        thirdy: "bg-thirdy text-white hover:bg-thirdy/90",
-        secondary: "bg-secondary text-white hover:bg-secondary/90",
-        ghost: "text-secondary bg-[#0CBCB026] hover:bg-[#0CBCB044]",
       },
       size: {
-        default: "h-[56px] px-[26px]",
+        default: "h-[46px] px-[17.5px]",
         xs: "h-[40px] px-[21px]",
         sm: "h-[50px] px-[21px]",
         lg: "h-11 rounded-md px-8",

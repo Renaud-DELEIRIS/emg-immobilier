@@ -2,6 +2,40 @@ html {
   background: #f9fafd;
 }
 
+.house {
+  mask-image: url("/house-01.svg");
+  -webkit-mask-image: url("/house-01.svg");
+}
+
+.building {
+  mask-image: url("/house-02.svg");
+  -webkit-mask-image: url("/house-02.svg");
+}
+
+.construction {
+  mask-image: url("/house-03.svg");
+  -webkit-mask-image: url("/house-03.svg");
+}
+
+.mask {
+  width: 88px;
+  height: 88px;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: 100%;
+  -webkit-mask-size: 100%;
+  background: linear-gradient(180deg, #d42049 0%, #ba163f 100%);
+
+  transition: all 0.5s ease-out;
+}
+
+.filler {
+  background-color: rgb(243 244 246);
+  transition: all 0.5s ease;
+  height: 80%;
+  width: 100%;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -32,7 +32,7 @@ interface Autocomplete<T> {
   theme?: "normal" | "dark";
 }
 
-export const AutoCompleteComp = <T extends string | undefined>(
+const AutoCompleteComp = <T extends string | undefined>(
   {
     options,
     value,
