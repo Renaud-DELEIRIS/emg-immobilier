@@ -65,6 +65,7 @@ const Verif = () => {
     //   gtmparams: params,
     //   idlead: lead.idlead,
     // });
+    await new Promise((resolve) => setTimeout(resolve, 200));
     setOpenCode(false);
     changeLead({ verified: true });
     nextStep("verif");

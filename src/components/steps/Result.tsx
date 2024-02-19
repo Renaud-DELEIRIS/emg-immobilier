@@ -74,7 +74,7 @@ const ResultComp: React.FC = () => {
             <div>
               <p className="text-sm">{t`result.info.statut.title`}</p>
               <p className="text-base font-semibold">
-                {t("result.info.statut." + lead.which_step)}
+                {t("result.info.statut." + (lead.which_step ?? ""))}
               </p>
             </div>
           </div>
@@ -92,7 +92,7 @@ const ResultComp: React.FC = () => {
             <div>
               <p className="text-sm">{t`result.info.bien_type.title`}</p>
               <p className="text-base font-semibold">
-                {t("result.info.bien_type." + lead.bien_type)}
+                {t("result.info.bien_type." + (lead.bien_type ?? ""))}
               </p>
             </div>
           </div>

@@ -1,9 +1,11 @@
+// @ts-nocheck
 import { IconLoader } from "@tabler/icons-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useRef, useState } from "react";
 import { MapContainer, Marker, Polygon, TileLayer } from "react-leaflet";
 
+// TS ignore all file because of leaflet
 const Map: React.FC<{
   neightborhood?: string | null;
 }> = ({ neightborhood }) => {
@@ -61,11 +63,10 @@ const Map: React.FC<{
   }, [neightborhood]);
 
   return (
-    <div className="z-0" style={{ width: 100 + "%", height: 100 + "%" }}>
+    <div className="z-0" style={{ width: "100" + "%", height: "100" + "%" }}>
       {coordinates && coordinates.length > 0 ? (
-        // @ts-ignore
         <MapContainer
-          style={{ width: 100 + "%", height: 100 + "%" }}
+          style={{ width: "100" + "%", height: "100" + "%" }}
           {...(hasFoundCompleteAddress
             ? { center: coordinates[0], bounds: [coordinates[0]] }
             : { bounds: coordinates })}
