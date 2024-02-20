@@ -23,7 +23,7 @@ const BienPrice = () => {
           onChange={(value) => {
             changeLead({
               bien_price: parseMoney(value),
-              revenue: Math.round(parseMoney(value) * 0.2)
+              revenue: Math.round((parseMoney(value) ?? 0) * 0.2)
             });
           }}
           insideText="CHF"
