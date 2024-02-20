@@ -18,8 +18,8 @@ const ResearchBudget = () => {
     <StepContainer stepId="research_budget">
       <div className="flex flex-col gap-4">
         <Input
-          value={`${formatAmount(lead.research.budget[0]!)} - ${formatAmount(
-            lead.research.budget[1]!
+          value={`${formatAmount(lead.research.budget[0])} - ${formatAmount(
+            lead.research.budget[1]
           )}`}
           ref={inputRef}
           onChange={(value) => {
