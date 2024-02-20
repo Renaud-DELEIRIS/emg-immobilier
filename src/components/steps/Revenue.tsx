@@ -70,7 +70,6 @@ const Revenue = () => {
                     }),
                   });
                 }}
-                required
                 label={t("revenue.other.labelType")}
                 placeholder={t("revenue.other.placeholderType")}
                 options={[
@@ -121,7 +120,6 @@ const Revenue = () => {
                     }),
                   });
                 }}
-                required
                 insideText="CHF"
                 label={t("revenue.other.labelMontant")}
                 wrapperClassName="w-full md:w-2/3"
@@ -183,7 +181,6 @@ const Revenue = () => {
                     }),
                   });
                 }}
-                required
                 label={t("revenue.charge.labelType")}
                 placeholder={t("revenue.charge.placeholderType")}
                 options={[
@@ -234,7 +231,6 @@ const Revenue = () => {
                     }),
                   });
                 }}
-                required
                 insideText="CHF"
                 label={t("revenue.charge.labelMontant")}
                 wrapperClassName="w-full md:w-2/3"
