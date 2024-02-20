@@ -1,4 +1,6 @@
+import dayjs from "dayjs";
 import { z } from "zod";
+import { isValidDate } from "~/utils/validation/date.validation";
 import { type Data } from "./lead.constant";
 
 export interface Step {
@@ -18,6 +20,7 @@ export type StepId =
   | "research_zone"
   | "research_budget"
   | "canton_bien"
+  | "financement_actuel"
   | "bien_price"
   | "do_work"
   | "emprunteur"
@@ -29,7 +32,7 @@ export type StepId =
   | "result";
 
 // Groups needs to be ordered
-export const stepGroupId = ["project"] as const;
+export const stepGroupId = ["project", "bien", "info"] as const;
 export type StepGroupId = (typeof stepGroupId)[number];
 
 // Steps needs to start with the first step
@@ -38,6 +41,8 @@ export const STEPS: Step[] = [
   {
     id: "project",
     next: (lead) => {
+      if (lead.project === "renouveller hypothèque") return "canton_bien";
+      if (lead.project === "capacité d'emprunt") return "emprunteur";
       return "which_step";
     },
     disabled: (lead) => lead.project === undefined,
@@ -59,7 +64,7 @@ export const STEPS: Step[] = [
       return "research_budget";
     },
     disabled: (lead) => lead.research.npa === undefined,
-    group: "project",
+    group: "bien",
   },
   {
     id: "research_budget",
@@ -67,7 +72,7 @@ export const STEPS: Step[] = [
       return "emprunteur";
     },
     disabled: (lead) => lead.research.budget === undefined,
-    group: "project",
+    group: "bien",
   },
   {
     id: "residence_type",
@@ -75,7 +80,7 @@ export const STEPS: Step[] = [
       return "bien_type";
     },
     disabled: (lead) => lead.residence_type === undefined,
-    group: "project",
+    group: "bien",
   },
   {
     id: "bien_type",
@@ -83,7 +88,7 @@ export const STEPS: Step[] = [
       return "canton_bien";
     },
     disabled: (lead) => lead.bien_type === undefined,
-    group: "project",
+    group: "bien",
   },
   {
     id: "canton_bien",
@@ -91,15 +96,25 @@ export const STEPS: Step[] = [
       return "bien_price";
     },
     disabled: (lead) => lead.canton_bien === undefined,
-    group: "project",
+    group: "bien",
   },
   {
     id: "bien_price",
     next: (lead) => {
+      if (lead.project === "renouveller hypothèque")
+        return "financement_actuel";
       return "do_work";
     },
     disabled: (lead) => lead.bien_price === undefined,
-    group: "project",
+    group: "bien",
+  },
+  {
+    id: "financement_actuel",
+    next: (lead) => {
+      return "emprunteur";
+    },
+    disabled: (lead) => lead.financement_actuel === undefined,
+    group: "bien",
   },
   {
     id: "do_work",
@@ -107,7 +122,7 @@ export const STEPS: Step[] = [
       return "emprunteur";
     },
     disabled: (lead) => lead.do_work === undefined,
-    group: "project",
+    group: "bien",
   },
   {
     id: "emprunteur",
@@ -115,15 +130,26 @@ export const STEPS: Step[] = [
       return "ddn";
     },
     disabled: (lead) => lead.emprunteur === undefined,
-    group: "project",
+    group: "info",
+    newTab: true,
   },
   {
     id: "ddn",
     next: (lead) => {
       return "revenue";
     },
-    disabled: (lead) => lead.ddn === undefined,
-    group: "project",
+    disabled: (lead) =>
+      lead.emprunteur === "deux"
+        ? lead.ddn === undefined ||
+          lead.ddn_2eme_emprunteur === undefined ||
+          !!isValidDate(dayjs(lead.ddn, "YYYY-MM-DD"), {
+            inPast: true,
+          }) ||
+          !!isValidDate(dayjs(lead.ddn_2eme_emprunteur, "YYYY-MM-DD"), {
+            inPast: true,
+          })
+        : lead.ddn === undefined,
+    group: "info",
   },
   {
     id: "revenue",
@@ -131,39 +157,35 @@ export const STEPS: Step[] = [
       return "fonds_propres";
     },
     disabled: (lead) => lead.revenue === undefined,
-    group: "project",
+    group: "info",
   },
   {
     id: "fonds_propres",
     next: (lead) => {
       return "loader";
     },
-    disabled: (lead) =>
-      lead.fonds_propres.fonds_propres === undefined ||
-      lead.fonds_propres.lpp === undefined ||
-      lead.fonds_propres.pilier3 === undefined ||
-      lead.fonds_propres.donation === undefined,
-    group: "project",
+    disabled: (lead) => false,
+    group: "info",
   },
   {
     id: "loader",
     next: (lead) => (!lead.verified ? "verif" : "result"),
     disabled: (lead) => false,
-    group: "project",
+    group: "info",
     newTab: true,
   },
   {
     id: "verif",
     next: (lead) => "result",
     disabled: (lead) => false,
-    group: "project",
+    group: "info",
     newTab: true,
   },
   {
     id: "result",
     next: (lead) => null,
     disabled: (lead) => false,
-    group: "project",
+    group: "info",
     newTab: true,
   },
 ];

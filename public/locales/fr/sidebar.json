@@ -1,5 +1,7 @@
 {
   "group": {
-    "project": "Votre projet"
+    "project": "Votre projet",
+    "bien": "Votre bien",
+    "info": "Vos informations"
   }
 }

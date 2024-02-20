@@ -24,7 +24,7 @@ const EmgLoader = () => {
             gradientUnits="userSpaceOnUse"
           >
             <stop stopColor="#D42049" />
-            <stop offset="1" stop-color="#D42049" stopOpacity="0" />
+            <stop offset="1" stopColor="#D42049" stopOpacity="0" />
           </linearGradient>
         </defs>
       </svg>

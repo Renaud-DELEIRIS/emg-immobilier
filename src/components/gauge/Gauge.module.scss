@@ -1,0 +1,42 @@
+.speedtest {
+  position: relative;
+  width: 222px;
+  height: 222px;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+  .gauge {
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    path:first-child {
+      opacity: 1 !important;
+      display: block !important;
+    }
+  }
+  .gauge-label {
+    position: absolute;
+    top: 47.5%;
+    left: 50%;
+    font-size: 3rem;
+    transform: translate(-50%, -50%);
+  }
+  &:before,
+  &:after {
+    display: block;
+    position: absolute;
+    bottom: 25%;
+    font-family: inherit;
+    font-size: 14px;
+  }
+  &:before {
+    content: attr(data-min);
+    left: 10%;
+    bottom: 15%;
+  }
+  &:after {
+    content: attr(data-max);
+    right: 10%;
+    bottom: 15%;
+  }
+}

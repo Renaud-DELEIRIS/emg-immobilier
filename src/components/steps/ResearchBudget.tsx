@@ -13,7 +13,6 @@ const ResearchBudget = () => {
   const nextStep = useFormStore((state) => state.nextStep);
   const { t } = useTranslation("step");
   const currentVisibleStep = useFormStore((state) => state.currentVisibleStep);
-  const showValidate = currentVisibleStep.id === "research_budget";
   const inputRef = useRef<HTMLInputElement>(null);
   return (
     <StepContainer stepId="research_budget">
@@ -56,18 +55,16 @@ const ResearchBudget = () => {
           max={1_000_000}
           step={50_000}
         ></Slider>
-        {showValidate && (
-          <Button
-            onClick={() => {
-              nextStep("research_budget", {
-                research: lead.research,
-              });
-            }}
-            className="ml-auto w-fit"
-          >
-            {t("next")}
-          </Button>
-        )}
+        <Button
+          onClick={() => {
+            nextStep("research_budget", {
+              research: lead.research,
+            });
+          }}
+          className="ml-auto w-fit"
+        >
+          {t("next")}
+        </Button>
       </div>
     </StepContainer>
   );

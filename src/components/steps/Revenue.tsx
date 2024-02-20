@@ -5,6 +5,7 @@ import { useFormStore } from "~/stores/form";
 import { formatAmount, parseMoney } from "~/utils/money";
 import { Button } from "../button/Button";
 import { SelectInput } from "../inputs/Select";
+import { Slider } from "../inputs/Slider";
 import Input from "../inputs/input";
 import StepContainer, { StepTitle } from "./StepContainer";
 
@@ -35,6 +36,17 @@ const Revenue = () => {
           }}
           insideText="CHF"
         ></Input>
+        <Slider
+          value={[lead.revenue ?? 0]}
+          onValueChange={(value) => {
+            changeLead({
+              revenue: value[0]!,
+            });
+          }}
+          min={25_000}
+          max={500_000}
+          step={5_000}
+        ></Slider>
 
         <div className="mt-4 flex flex-col gap-4">
           <StepTitle>{t("revenue.other.description")}</StepTitle>

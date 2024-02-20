@@ -60,7 +60,10 @@ const Verif = () => {
   const onCompletion = async (code: string) => {
     // if (code !== verifCode) throw new Error("Code is not valid");
     // await createLead({
-    //   data: lead,
+    //   data: {
+    //     ...lead,
+    //     verified: true,
+    // },
     //   idtracking: versionId === null ? undefined : versionId,
     //   gtmparams: params,
     //   idlead: lead.idlead,

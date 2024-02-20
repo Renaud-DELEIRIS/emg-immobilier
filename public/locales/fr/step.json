@@ -54,6 +54,10 @@
     "info": "Prix du bien"
   },
 
+  "financement_actuel": {
+    "title": "Quel est le financement actuel ?"
+  },
+
   "do_work": {
     "title": "Souhaitez-vous effectuer des travaux ?"
   },
@@ -73,6 +77,7 @@
   "revenue": {
     "title": "Quel sont vos revenues annuels brut ?",
     "placeholder": "Revenu annuel (hors bonus)",
+    "info": "Taux d'entement",
     "charge": {
       "description": "Charges financières (leasing, pensions, crédits...)",
       "add": "Ajouter une charge",
@@ -117,7 +122,9 @@
     "donation": "Donation",
     "autre": "Autre",
     "placeholder": "Montant",
-    "info": "Il est conseillé d'apporter 20% du montant du bien, mais au minimum 10% provenant de cash."
+    "info": "Il est conseillé d'apporter 20% du montant du bien, mais au minimum 10% provenant de cash.",
+    "chartText1": "Fonds propres",
+    "chartText2": "Hypothéque"
   },
 
   "loader": {
@@ -151,17 +158,26 @@
 
   "result": {
     "title": "{{nb}} résultats",
+    "interest": "Taux d'intérêt",
+    "talk_conseiller": "Parler à un conseiller",
+    "contact": "Être rappelé",
+    "filter": {
+      "bank": "Banque",
+      "insurance": "Assurance"
+    },
 
     "recap": {
       "title": "Récapitulatif des coûts",
-      "price": "Prix mensuel",
+      "price": "Frais mensuel",
       "investment": "Investissement initiale",
-      "remboursement": "Remboursement"
+      "taux_interet": "Taux d'intérêt",
+      "interet": "Intérêts",
+      "ammortissement": "Amortissement",
+      "frais_annexes": "Frais annexes"
     },
 
     "info": {
       "title": "Mes informations",
-      "hypotheque": "Hypothèque",
       "statut": {
         "title": "Statut",
         "recherche bien": "Recherche de bien",
@@ -171,6 +187,7 @@
         "signer": "Signer chez le notaire"
       },
       "salaire": "Salaire annuel",
+      "canton": "Canton",
       "bien_type": {
         "title": "Type de bien",
         "house": "Maison",

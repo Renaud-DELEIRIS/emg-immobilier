@@ -8,7 +8,10 @@ import {
 } from "~/constants/step.constant";
 import { useFormStore } from "~/stores/form";
 import { formatAmount } from "~/utils/money";
+import Gauge from "../gauge/Gauge";
+import HypoCalculateur from "../hypoCalculateur/hypoCalculateur";
 import { EMGIconInforCircle } from "../icon/IconInfoCircle";
+import { useHypoCalculateur } from "../provider/ResultProvider";
 
 const Sidebar = ({ onClose }: { onClose?: () => void }) => {
   const lead = useFormStore((state) => state.data);
@@ -22,13 +25,13 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
 
   const { t } = useTranslation("sidebar");
   const { t: tStep } = useTranslation("step");
+  const { tauxDentement } = useHypoCalculateur();
 
   const getInfoComponent = () => {
     const stepWithInfo: StepId[] = [
       "canton_bien",
       "project",
       "research_budget",
-      "fonds_propres",
     ];
     if (stepWithInfo.includes(currentVisibleStep.id)) {
       return (
@@ -75,6 +78,32 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
             CHF {formatAmount(lead.bien_price)}
           </p>
           <div className="flex items-center gap-2">
+            <EMGIconInforCircle />
+            <span className="text-sm">
+              {tStep(currentVisibleStep.id + ".info")}
+            </span>
+          </div>
+        </div>
+      );
+
+    if (currentVisibleStep.id === "revenue")
+      return (
+        <div className="grid w-full place-items-center">
+          <Gauge value={Math.max(Math.round(tauxDentement * 100), 0)} />
+          <div className="flex items-center gap-2">
+            <EMGIconInforCircle />
+            <span className="text-sm">
+              {tStep(currentVisibleStep.id + ".info")}
+            </span>
+          </div>
+        </div>
+      );
+
+    if (currentVisibleStep.id === "fonds_propres")
+      return (
+        <div className="grid w-full place-items-center">
+          <HypoCalculateur />
+          <div className="mt-4 flex items-center gap-2">
             <EMGIconInforCircle />
             <span className="text-sm">
               {tStep(currentVisibleStep.id + ".info")}

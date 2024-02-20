@@ -1,5 +1,6 @@
 html {
-  background: #f9fafd;
+  --background-color: #f9fafd;
+  background: var(--background-color);
 }
 
 .house {

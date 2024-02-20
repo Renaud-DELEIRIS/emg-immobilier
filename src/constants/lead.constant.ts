@@ -53,6 +53,7 @@ export const schemaData = z.object({
     .enum(["house", "appartement", "building", "construction"])
     .optional(),
   canton_bien: z.string().optional(),
+  financement_actuel: z.number().optional(),
   bien_price: z.number(),
   do_work: z.boolean().optional(),
   emprunteur: z.enum(["seul", "deux", "other"]).optional(),

@@ -96,7 +96,7 @@ const Loading: FC = () => {
           </div>
         </motion.div>
       )}
-      <div className="mb-9">
+      <div className="mb-9 flex w-full justify-center">
         <EmgLoader />
       </div>
     </>

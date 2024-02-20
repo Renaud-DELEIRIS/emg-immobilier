@@ -6,12 +6,14 @@ import CantonBien from "~/components/steps/CantonBien";
 import Ddn from "~/components/steps/Ddn";
 import DoWork from "~/components/steps/DoWork";
 import Emprunteur from "~/components/steps/Emprunteur";
+import FinancementActuelle from "~/components/steps/FinancementActuelle";
 import FondsPropre from "~/components/steps/FondsPropre";
 import Loading from "~/components/steps/Loader";
 import Project from "~/components/steps/Project";
 import ResearchBudget from "~/components/steps/ResearchBudget";
 import ResearchZone from "~/components/steps/ResearchZone";
 import ResidenceType from "~/components/steps/ResidenceType";
+import Result from "~/components/steps/Result";
 import Revenue from "~/components/steps/Revenue";
 import Verif from "~/components/steps/Verif";
 import WhichStep from "~/components/steps/WhichStep";
@@ -33,6 +35,7 @@ export const StepComponent = () => {
     bien_type: <BienType />,
     canton_bien: <CantonBien />,
     bien_price: <BienPrice />,
+    financement_actuel: <FinancementActuelle />,
     do_work: <DoWork />,
     emprunteur: <Emprunteur />,
     ddn: <Ddn />,
@@ -40,6 +43,7 @@ export const StepComponent = () => {
     fonds_propres: <FondsPropre />,
     loader: <Loading />,
     verif: <Verif />,
+    result: <Result />,
   };
 
   const stepWithoutMaxwidth: StepId[] = ["result"];

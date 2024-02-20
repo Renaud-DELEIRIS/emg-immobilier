@@ -12,6 +12,8 @@ interface HypoCalculateurContext {
   percent: number;
   graphData: [string, string];
   fraisMensuels: number;
+  tauxInteretRetenu: number;
+  tauxDentement: number;
 }
 
 const HypoCalculateurContext = React.createContext<HypoCalculateurContext>({
@@ -25,6 +27,8 @@ const HypoCalculateurContext = React.createContext<HypoCalculateurContext>({
   percent: 0,
   graphData: ["0", "0"],
   fraisMensuels: 0,
+  tauxInteretRetenu: 0,
+  tauxDentement: 0,
 });
 
 const HypoCalculateurProvider = ({
@@ -34,7 +38,10 @@ const HypoCalculateurProvider = ({
 }) => {
   const lead = useFormStore((state) => state.data);
 
-  const prixDachat = lead.bien_price;
+  const prixDachat =
+    lead.which_step === "recherche bien"
+      ? lead.research.budget[1]!
+      : lead.bien_price;
   type FondsPropres = keyof typeof lead.fonds_propres;
   const fondsPropres = Object.keys(lead.fonds_propres).reduce(
     (acc, key) => acc + (lead.fonds_propres[key as FondsPropres] ?? 0),
@@ -52,6 +59,7 @@ const HypoCalculateurProvider = ({
     () => prixDachat - fondsPropres,
     [prixDachat, fondsPropres]
   );
+
   const tauxInteretCalculatoire = useMemo(
     () => toFinance * (tauxInteretRetenu / 100),
     [toFinance, tauxInteretRetenu]
@@ -85,6 +93,13 @@ const HypoCalculateurProvider = ({
     [tauxInteretCalculatoire, ammortissement, fraisAnnexes]
   );
 
+  const tauxDentement = useMemo(() => {
+    const total = tauxInteretCalculatoire + ammortissement + fraisAnnexes;
+    if (revenuAnnuels <= 0) return 1;
+    const tauxEndetement = total / revenuAnnuels;
+    return tauxEndetement > 1 ? 1 : tauxEndetement;
+  }, [lead]);
+
   return (
     <HypoCalculateurContext.Provider
       value={{
@@ -98,6 +113,8 @@ const HypoCalculateurProvider = ({
         percent,
         graphData,
         fraisMensuels,
+        tauxInteretRetenu,
+        tauxDentement,
       }}
     >
       {children}

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { IconLoader } from "@tabler/icons-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -10,8 +9,8 @@ const Map: React.FC<{
   neightborhood?: string | null;
 }> = ({ neightborhood }) => {
   const [coordinates, setCoordinates] = useState<
-    Array<[number, number]> | undefined
-  >([]);
+    [number, number, number | undefined] | undefined
+  >();
   const [hasFoundCompleteAddress, setHasFoundCompleteAddress] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout>();
 
@@ -24,28 +23,48 @@ const Map: React.FC<{
         name
       )}&polygon_geojson=1&format=json`
     );
-    const data = await res.json();
+    const data = (await res.json()) as {
+      geojson:
+        | {
+            type: "Polygon";
+            coordinates: number[][][];
+          }
+        | {
+            type: "MultiPolygon";
+            coordinates: number[][][][];
+          }
+        | {
+            type: "Point";
+          };
+      lat: number;
+      lon: number;
+    }[];
 
     for (const item of data) {
       if (!item.geojson) continue;
       if (item.geojson.type === "Polygon") {
         setCoordinates(
-          item.geojson.coordinates[0].map((row: number[]) => [row[1], row[0]])
+          item.geojson.coordinates[0]!.map((row) => [
+            row[1],
+            row[0],
+            undefined,
+          ]) as unknown as typeof coordinates
         );
         setHasFoundCompleteAddress(false);
         break;
       } else if (item.geojson.type === "MultiPolygon") {
         setCoordinates(
-          item.geojson.coordinates[0][0].map((row: number[]) => [
+          item.geojson.coordinates[0]![0]!.map((row) => [
             row[1],
             row[0],
-          ])
+            undefined,
+          ]) as unknown as typeof coordinates
         );
         setHasFoundCompleteAddress(false);
         break;
       }
       if (item.geojson.type === "Point") {
-        setCoordinates([[item.lat, item.lon]]);
+        setCoordinates([item.lat, item.lon, undefined]);
         setHasFoundCompleteAddress(true);
         break;
       }
@@ -55,7 +74,7 @@ const Map: React.FC<{
   useEffect(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
-      getBoundaries(neightborhood ? neightborhood : "Suisse");
+      void getBoundaries(neightborhood ? neightborhood : "Suisse");
     }, 500);
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -68,22 +87,27 @@ const Map: React.FC<{
         <MapContainer
           style={{ width: "100" + "%", height: "100" + "%" }}
           {...(hasFoundCompleteAddress
-            ? { center: coordinates[0], bounds: [coordinates[0]] }
-            : { bounds: coordinates })}
+            ? { center: [coordinates][0]!, bounds: [[coordinates][0]!] }
+            : { bounds: [coordinates] })}
           boundsOptions={{ padding: [1, 1] }}
           zoom={hasFoundCompleteAddress ? 16 : 12}
           doubleClickZoom={false}
           touchZoom={false}
-          key={coordinates.map((c) => c.join(",")).join(",")}
+          key={[coordinates].map((c) => c.join(",")).join(",")}
           className="z-0"
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {!hasFoundCompleteAddress && <Polygon positions={coordinates} />}
+          {!hasFoundCompleteAddress && <Polygon positions={[coordinates]} />}
           {hasFoundCompleteAddress && (
-            <Marker position={coordinates[0] as [number, number]} icon={icon} />
+            <Marker
+              position={
+                [coordinates][0] as [number, number, number | undefined]
+              }
+              icon={icon}
+            />
           )}
         </MapContainer>
       ) : (

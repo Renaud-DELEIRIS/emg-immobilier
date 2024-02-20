@@ -14,6 +14,7 @@ import "react-phone-number-input/style.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GtmTrackProvider } from "~/components/provider/GmtTrack";
+import { HypoCalculateurProvider } from "~/components/provider/ResultProvider";
 import { env } from "~/env.mjs";
 import "~/styles/globals.css";
 import { api } from "~/utils/api";
@@ -49,22 +50,24 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <GTMProvider
           state={{ id: env.NEXT_PUBLIC_GTMID, dataLayerName: "dataLayer" }}
         >
-          <div className="text-dark">
-            <Component {...pageProps} />
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-          </div>
-          <ToastContainer />
+          <HypoCalculateurProvider>
+            <div className="text-dark">
+              <Component {...pageProps} />
+              <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
+            </div>
+            <ToastContainer />
+          </HypoCalculateurProvider>
         </GTMProvider>
       </GtmTrackProvider>
     </>
