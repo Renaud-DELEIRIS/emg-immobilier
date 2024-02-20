@@ -63,7 +63,6 @@ const TileInput = <T extends string | boolean | string[] | undefined>({
           )}
           onClick={() => handleChange(option.value)}
         >
-          <div className="shrink-0">{option.icon}</div>
           {!withoutDot && (
             <div
               className={twMerge(
@@ -82,6 +81,7 @@ const TileInput = <T extends string | boolean | string[] | undefined>({
               </span>
             )}
           </div>
+          <div className="ml-auto shrink-0">{option.icon}</div>
         </button>
       ))}
     </div>

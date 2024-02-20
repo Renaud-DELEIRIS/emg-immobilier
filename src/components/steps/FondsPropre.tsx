@@ -54,7 +54,7 @@ const FondsPropre = () => {
         ></Slider>
 
         <Input
-          value={`${formatAmount(lead.fonds_propres.lpp ?? 0)}`}
+          value={formatAmount(lead.fonds_propres.lpp)}
           onChange={(value) => {
             changeLead({
               fonds_propres: {
@@ -69,7 +69,7 @@ const FondsPropre = () => {
         ></Input>
 
         <Input
-          value={`${formatAmount(lead.fonds_propres.pilier3 ?? 0)}`}
+          value={formatAmount(lead.fonds_propres.pilier3)}
           onChange={(value) => {
             changeLead({
               fonds_propres: {
@@ -83,10 +83,8 @@ const FondsPropre = () => {
           insideText="CHF"
         ></Input>
 
-        
-
         <Input
-          value={`${formatAmount(lead.fonds_propres.donation ?? 0)}`}
+          value={formatAmount(lead.fonds_propres.donation)}
           onChange={(value) => {
             changeLead({
               fonds_propres: {
@@ -100,10 +98,8 @@ const FondsPropre = () => {
           insideText="CHF"
         ></Input>
 
-        
-
         <Input
-          value={`${formatAmount(lead.fonds_propres.autre ?? 0)}`}
+          value={formatAmount(lead.fonds_propres.autre)}
           onChange={(value) => {
             changeLead({
               fonds_propres: {
@@ -116,8 +112,6 @@ const FondsPropre = () => {
           placeholder={t("fonds_propres.placeholder")}
           insideText="CHF"
         ></Input>
-
-        
 
         <Button type="submit" className={twMerge("ml-auto w-fit")}>
           {t("next")}

@@ -146,7 +146,8 @@ const Revenue = () => {
           ))}
           <div className="mt-2 flex w-full flex-col justify-between gap-4 md:flex-row">
             <button
-              className="flex h-[46px] w-fit items-center gap-1.5 rounded-md bg-primary/10 px-5 transition-colors duration-200 ease-in-out hover:bg-primary/20"
+              className="flex h-[46px] w-fit items-center gap-1.5 rounded-md bg-[rgba(200,189,192,0.1)] px-5 transition-colors duration-200 ease-in-out hover:bg-primary/5"
+              type="button"
               onClick={() => {
                 changeLead({
                   revenue_other: [...lead.revenue_other, {}],
@@ -255,7 +256,8 @@ const Revenue = () => {
           ))}
           <div className="mt-2 flex w-full flex-col justify-between gap-4 md:flex-row">
             <button
-              className="flex h-[46px] w-fit items-center gap-1.5 rounded-md bg-primary/10 px-5 transition-colors duration-200 ease-in-out hover:bg-primary/20"
+              className="flex h-[46px] w-fit items-center gap-1.5 rounded-md bg-[rgba(200,189,192,0.1)] px-5 transition-colors duration-200 ease-in-out hover:bg-primary/5"
+              type="button"
               onClick={() => {
                 changeLead({
                   charge: [...lead.charge, {}],

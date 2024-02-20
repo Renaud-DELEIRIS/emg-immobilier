@@ -6,7 +6,8 @@ export const parseMoney = (value: string) => {
   return parsed;
 };
 
-export const formatAmount = (amount: number) => {
+export const formatAmount = (amount: number | undefined) => {
+  if (amount === undefined) return "";
   return new Intl.NumberFormat("de-CH", {
     style: "currency",
     currency: "CHF",
