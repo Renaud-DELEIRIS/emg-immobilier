@@ -67,20 +67,6 @@ const FondsPropre = () => {
           placeholder={t("fonds_propres.placeholder")}
           insideText="CHF"
         ></Input>
-        <Slider
-          value={[lead.fonds_propres.lpp ?? 0]}
-          onValueChange={(value) => {
-            changeLead({
-              fonds_propres: {
-                ...lead.fonds_propres,
-                lpp: value[0],
-              },
-            });
-          }}
-          min={25_000}
-          max={500_000}
-          step={5_000}
-        ></Slider>
 
         <Input
           value={`${formatAmount(lead.fonds_propres.pilier3 ?? 0)}`}
@@ -97,20 +83,7 @@ const FondsPropre = () => {
           insideText="CHF"
         ></Input>
 
-        <Slider
-          value={[lead.fonds_propres.pilier3 ?? 0]}
-          onValueChange={(value) => {
-            changeLead({
-              fonds_propres: {
-                ...lead.fonds_propres,
-                pilier3: value[0],
-              },
-            });
-          }}
-          min={25_000}
-          max={500_000}
-          step={5_000}
-        ></Slider>
+        
 
         <Input
           value={`${formatAmount(lead.fonds_propres.donation ?? 0)}`}
@@ -127,20 +100,7 @@ const FondsPropre = () => {
           insideText="CHF"
         ></Input>
 
-        <Slider
-          value={[lead.fonds_propres.donation ?? 0]}
-          onValueChange={(value) => {
-            changeLead({
-              fonds_propres: {
-                ...lead.fonds_propres,
-                donation: value[0],
-              },
-            });
-          }}
-          min={25_000}
-          max={500_000}
-          step={5_000}
-        ></Slider>
+        
 
         <Input
           value={`${formatAmount(lead.fonds_propres.autre ?? 0)}`}
@@ -157,20 +117,7 @@ const FondsPropre = () => {
           insideText="CHF"
         ></Input>
 
-        <Slider
-          value={[lead.fonds_propres.autre ?? 0]}
-          onValueChange={(value) => {
-            changeLead({
-              fonds_propres: {
-                ...lead.fonds_propres,
-                autre: value[0],
-              },
-            });
-          }}
-          min={25_000}
-          max={500_000}
-          step={5_000}
-        ></Slider>
+        
 
         <Button type="submit" className={twMerge("ml-auto w-fit")}>
           {t("next")}
