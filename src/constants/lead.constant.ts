@@ -10,7 +10,7 @@ export const initialData: Data = {
     radius: 30,
     budget: [100000, 1000000],
   },
-  bien_price: 50000,
+  bien_price: 400000,
   verified: false,
   fonds_propres: {},
   charge: [],
