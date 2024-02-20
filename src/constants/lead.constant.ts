@@ -12,7 +12,9 @@ export const initialData: Data = {
   },
   bien_price: 400000,
   verified: false,
-  fonds_propres: {},
+  fonds_propres: {
+    fonds_propres: 80000
+  },
   charge: [],
   revenue_other: [],
 };
