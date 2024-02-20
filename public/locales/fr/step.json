@@ -55,7 +55,8 @@
   },
 
   "financement_actuel": {
-    "title": "Quel est le financement actuel ?"
+    "title": "Quel est le financement actuel ?",
+    "placeholder": "Montant actuel"
   },
 
   "do_work": {

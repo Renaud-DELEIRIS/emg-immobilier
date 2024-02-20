@@ -6,6 +6,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
 import { useFormStore } from "~/stores/form";
@@ -37,7 +38,6 @@ const Home: NextPage = () => {
   const [loaded, setLoaded] = useState(false);
   const fetchSession = useSessionStore((state) => state.fetchSession);
   const setSessionId = useSessionStore((state) => state.setSessionId);
-  const [stepToInfo, setStepToInfo] = useState("");
 
   useEffect(() => {
     initStep();
@@ -112,13 +112,13 @@ const Home: NextPage = () => {
                 <StepComponent />
                 {displaySidebar && (
                   <div className="hidden xl:block">
-                    <div className="fixed right-0 top-[106px] w-[300px]">
-                      {stepToInfo}
-                    </div>
-                    <Sidebar />
+                    <aside className="sticky top-[106px] flex h-fit w-[340px] flex-col gap-4">
+                      <Sidebar />
+                    </aside>
                   </div>
                 )}
               </div>
+              <Footer />
             </>
           )}
         </main>

@@ -35,8 +35,11 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
     ];
     if (stepWithInfo.includes(currentVisibleStep.id)) {
       return (
-        <div className="flex items-center gap-2">
-          <EMGIconInforCircle />
+        <div className="flex flex-col items-start gap-2">
+          <div className="flex items-center gap-2">
+            <EMGIconInforCircle />
+            <span className="text-base font-semibold">{t("info")}</span>
+          </div>
           <span className="text-sm">
             {tStep(currentVisibleStep.id + ".info")}
           </span>
@@ -46,6 +49,12 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
     if (currentVisibleStep.id === "bien_price")
       return (
         <div className="grid w-full place-items-center">
+          <div className="flex items-center gap-2">
+            <EMGIconInforCircle />
+            <span className="text-base font-semibold">
+              {tStep(currentVisibleStep.id + ".info")}
+            </span>
+          </div>
           <div
             className={`mask ${
               lead.bien_type === "house"
@@ -56,7 +65,7 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
                 : lead.bien_type === "construction"
                 ? "construction"
                 : "house"
-            } mb-4`}
+            } my-2`}
           >
             <div
               className="filler"
@@ -74,28 +83,22 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
               }}
             ></div>
           </div>
-          <p className="mb-2 text-center text-[30px] font-bold">
+          <p className="text-center text-[30px] font-bold">
             CHF {formatAmount(lead.bien_price)}
           </p>
-          <div className="flex items-center gap-2">
-            <EMGIconInforCircle />
-            <span className="text-sm">
-              {tStep(currentVisibleStep.id + ".info")}
-            </span>
-          </div>
         </div>
       );
 
     if (currentVisibleStep.id === "revenue")
       return (
         <div className="grid w-full place-items-center">
-          <Gauge value={Math.max(Math.round(tauxDentement * 100), 0)} />
           <div className="flex items-center gap-2">
             <EMGIconInforCircle />
-            <span className="text-sm">
+            <span className="text-base font-semibold">
               {tStep(currentVisibleStep.id + ".info")}
             </span>
           </div>
+          <Gauge value={Math.max(Math.round(tauxDentement * 100), 0)} />
         </div>
       );
 
@@ -115,12 +118,18 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
 
   return (
     <>
-      <aside
+      {getInfoComponent() !== undefined && (
+        <div
+          className={twMerge(
+            `flex h-fit w-full flex-col gap-6 rounded-lg border border-[#E6E8EC] bg-white px-4 py-6`
+          )}
+        >
+          {getInfoComponent()}
+        </div>
+      )}
+      <div
         className={twMerge(
-          `flex h-fit w-full flex-col gap-6 bg-white px-4 py-6`,
-          onClose
-            ? "rounded-lg"
-            : "sticky top-[106px] w-[340px] rounded-lg border border-[#E6E8EC]"
+          `flex h-fit w-full flex-col gap-6 rounded-lg border border-[#E6E8EC] bg-white px-4 py-6`
         )}
       >
         {onClose && (
@@ -167,7 +176,6 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
             </button>
           </div>
         )}
-        {getInfoComponent()}
         <ul className="w-full space-y-6 leading-[normal]">
           {stepGroupId.map((stepGroupId, index) => {
             const toStep = getFirstStepOfGroup(stepGroupId, lead);
@@ -211,7 +219,7 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
             );
           })}
         </ul>
-      </aside>
+      </div>
     </>
   );
 };

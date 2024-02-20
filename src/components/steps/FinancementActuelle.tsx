@@ -18,7 +18,7 @@ const FinancementActuelle = () => {
     <StepContainer stepId="financement_actuel">
       <div className="flex flex-col gap-4">
         <Input
-          value={`${formatAmount(lead.financement_actuel ?? 0)}`}
+          value={formatAmount(lead.financement_actuel)}
           placeholder={t("financement_actuelle.placeholder")}
           onChange={(value) => {
             changeLead({
