@@ -72,7 +72,7 @@
   "ddn": {
     "title": "Quelle est votre date de naissance ?",
     "label": "Votre date de naissance",
-    "label_2": "Date de naissance de l'emprunteur 2"
+    "label_2": "Date de naissance du co-emprunteur ?"
   },
 
   "revenue": {
@@ -121,7 +121,7 @@
     "pillier3": "3ème pilier",
     "donation": "Donation",
     "autre": "Autre",
-    "placeholder": "Montant",
+    "placeholder": "0",
     "info": "Il est conseillé d'apporter 20% du montant du bien, mais au minimum 10% provenant de cash.",
     "chartText1": "Fonds propres",
     "chartText2": "Hypothéque"
