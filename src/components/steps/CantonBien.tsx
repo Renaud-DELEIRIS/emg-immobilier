@@ -40,7 +40,7 @@ const CantonBien = () => {
           valid={lead.canton_bien !== undefined}
         ></AutoComplete>
 
-        <div className="hidden h-[500px] overflow-hidden rounded-xl md:block">
+        <div className="hidden h-[300px] overflow-hidden rounded-xl md:block">
           <Map neightborhood={lead.canton_bien}></Map>
         </div>
 
