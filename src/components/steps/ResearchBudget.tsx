@@ -51,8 +51,8 @@ const ResearchBudget = () => {
               },
             });
           }}
-          min={50_000}
-          max={1_000_000}
+          min={300_000}
+          max={3_000_000}
           step={50_000}
         ></Slider>
         <Button
