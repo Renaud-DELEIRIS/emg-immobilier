@@ -41,7 +41,7 @@ const HypoCalculateurData = () => {
         <div className="flex w-full flex-row justify-between">
           <div className={style.chart_legend}>
             <div
-              className={`${style.chart_legend_prcent ?? ""}  ${
+              className={`${style.chart_legend_percent ?? ""}  ${
                 style.blue ?? ""
               }`}
             >

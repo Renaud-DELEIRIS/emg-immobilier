@@ -2,15 +2,23 @@ import { IconLoader } from "@tabler/icons-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useRef, useState } from "react";
-import { MapContainer, Marker, Polygon, TileLayer } from "react-leaflet";
+import {
+  Circle,
+  MapContainer,
+  Marker,
+  Polygon,
+  TileLayer,
+} from "react-leaflet";
 
 // TS ignore all file because of leaflet
 const Map: React.FC<{
   neightborhood?: string | null;
-}> = ({ neightborhood }) => {
+  radius?: number;
+}> = ({ neightborhood, radius }) => {
   const [coordinates, setCoordinates] = useState<
     [number, number, number | undefined] | undefined
   >();
+  const [center, setCenter] = useState<[number, number]>([0, 0]);
   const [hasFoundCompleteAddress, setHasFoundCompleteAddress] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout>();
 
@@ -42,6 +50,7 @@ const Map: React.FC<{
 
     for (const item of data) {
       if (!item.geojson) continue;
+      setCenter([item.lat, item.lon]);
       if (item.geojson.type === "Polygon") {
         setCoordinates(
           item.geojson.coordinates[0]!.map((row) => [
@@ -86,28 +95,47 @@ const Map: React.FC<{
       {coordinates && coordinates.length > 0 ? (
         <MapContainer
           style={{ width: "100" + "%", height: "100" + "%" }}
-          {...(hasFoundCompleteAddress
-            ? { center: [coordinates][0]!, bounds: [[coordinates][0]!] }
+          {...(radius || hasFoundCompleteAddress
+            ? { center: center, bounds: [[coordinates][0]!] }
             : { bounds: [coordinates] })}
           boundsOptions={{ padding: [1, 1] }}
-          zoom={hasFoundCompleteAddress ? 16 : 12}
+          zoom={
+            radius
+              ? radius <= 10
+                ? 12
+                : radius <= 20
+                ? 11
+                : radius <= 30
+                ? 10
+                : radius <= 60
+                ? 9
+                : radius <= 80
+                ? 8
+                : radius <= 100
+                ? 8
+                : 7
+              : hasFoundCompleteAddress
+              ? 16
+              : 12
+          }
           doubleClickZoom={false}
           touchZoom={false}
-          key={[coordinates].map((c) => c.join(",")).join(",")}
+          key={
+            [coordinates].map((c) => c.join(",")).join(",") +
+            (radius?.toString() ?? "")
+          }
           className="z-0"
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {!hasFoundCompleteAddress && <Polygon positions={[coordinates]} />}
-          {hasFoundCompleteAddress && (
-            <Marker
-              position={
-                [coordinates][0] as [number, number, number | undefined]
-              }
-              icon={icon}
-            />
+          {!hasFoundCompleteAddress && (
+            <Polygon positions={[coordinates]} color="#D42049" />
+          )}
+          {center && <Marker position={center} icon={icon} />}
+          {radius != undefined && (
+            <Circle center={center} radius={radius * 1000} color="#D42049" />
           )}
         </MapContainer>
       ) : (

@@ -1,4 +1,4 @@
-import { IconCheck, IconPhoneCalling, IconX } from "@tabler/icons-react";
+import { IconCheck, IconPhoneCall, IconX } from "@tabler/icons-react";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { Button } from "~/components/button/Button";
@@ -15,9 +15,10 @@ export interface Offre {
 
 interface Props {
   offre: Offre;
+  openRecall: (offre: Offre) => void;
 }
 
-const ResultCard: React.FC<Props> = ({ offre }) => {
+const ResultCard: React.FC<Props> = ({ offre, openRecall }) => {
   const { t } = useTranslation("step");
   return (
     <div className="flex w-full flex-col overflow-hidden rounded-xl border-[1.5px] border-[#8888941A] bg-white">
@@ -56,11 +57,13 @@ const ResultCard: React.FC<Props> = ({ offre }) => {
           </p>
         </div>
         <div className="flex w-full items-center justify-between gap-2 md:w-auto">
-          <Button className="w-fit gap-2">
-            <IconPhoneCalling size={24} />
+          <Button className="w-fit gap-2" onClick={() => openRecall(offre)}>
+            <IconPhoneCall size={24} />
             {t("result.contact")}
           </Button>
-          <Button className="w-fit gap-2">Souscrire</Button>
+          <Button onClick={() => openRecall(offre)} className="w-fit gap-2">
+            Souscrire
+          </Button>
         </div>
       </div>
     </div>

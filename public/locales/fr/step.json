@@ -42,8 +42,8 @@
   },
 
   "canton_bien": {
-    "title": "Quel est le canton du bien ?",
-    "placeholder": "Canton du bien",
+    "title": "Dans quelle ville se situe le bien ?",
+    "placeholder": "NPA ou ville",
     "info": "Les frais d'émoluments varient en fonction des cantons.",
     "validate": "Valider l'adresse"
   },
@@ -64,7 +64,7 @@
   },
 
   "emprunteur": {
-    "title": "Combien de personne empruntent ?",
+    "title": "Combien de personnes empruntent ?",
     "seul": "Une personne",
     "deux": "Deux personnes"
   },
@@ -90,7 +90,6 @@
       "optionType": {
         "credit_personnel": "Crédit personnel",
         "leasing": "Leasing",
-        "loyer_actuel": "Loyer actuel",
         "remboursement": "Remboursement d'emprunt",
         "rentes_pensions": "Rentes et pensions versées",
         "autre": "Autre"
@@ -105,7 +104,7 @@
       "placeholderType": "Choisissez...",
       "delete": "Supprimer",
       "optionType": {
-        "frais_de_representation": "Frais de représentation",
+        "bonus": "Bonus",
         "indemnites_employeur": "Indemnités employeur",
         "indemnites_employeurDetail": "Repas, transport, maladie, enfant",
         "rentes_et_pensions": "Rentes et pensions reçues",
@@ -197,6 +196,15 @@
         "construction": "En construction"
       },
       "projet": "Projet"
+    },
+
+    "recall": {
+      "free": "Gratuitement",
+      "description": "Une équipe d’expert pour vous conseiller",
+      "action": "Être rappelé",
+      "or": "ou",
+      "rdv": "Prendre rendez-vous",
+      "info": "Vos données personnelles seront utilisées afin de répondre à votre demande d'information"
     }
   }
 }

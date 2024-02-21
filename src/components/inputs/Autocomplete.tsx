@@ -100,7 +100,7 @@ const AutoCompleteComp = <T extends string | undefined>(
           <div className="relative w-full cursor-default overflow-hidden bg-white text-left ">
             <Combobox.Input
               className={twMerge(
-                "w-full rounded-lg border-[1.5px] border-secondary px-4 py-[18px] text-sm font-medium placeholder:text-grey focus-within:outline-secondary focus-within:ring-1 focus-within:ring-secondary",
+                "w-full rounded-lg border-[1.5px] border-[#E6E8EC] px-4 py-[18px] text-sm font-medium placeholder:text-grey focus-within:outline-secondary focus-within:ring-1 focus-within:ring-secondary",
                 theme === "dark" && "bg-[#8888941A] text-dark",
                 valid &&
                   "border-primary bg-primary/5 focus-within:border-primary focus-within:outline-primary",

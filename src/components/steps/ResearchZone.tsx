@@ -46,7 +46,10 @@ const ResearchZone = () => {
         ></AutoComplete>
 
         <div className="hidden h-[500px] overflow-hidden rounded-xl md:block">
-          <Map neightborhood={lead.research.npa}></Map>
+          <Map
+            neightborhood={lead.research.npa}
+            radius={lead.research.radius ?? 50}
+          ></Map>
         </div>
 
         <Input
@@ -55,7 +58,7 @@ const ResearchZone = () => {
             changeLead({
               research: {
                 ...lead.research,
-                radius: parseInt(value),
+                radius: isNaN(parseInt(value)) ? 0 : parseInt(value),
               },
             });
           }}

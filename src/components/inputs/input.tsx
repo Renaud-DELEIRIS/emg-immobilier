@@ -76,7 +76,7 @@ const Input = React.forwardRef<HTMLInputElement, IInput>(
           <input
             id={id}
             className={twMerge(
-              `h-[46px] w-full rounded-lg border-[1.5px] border-secondary px-4 py-[9px] text-base font-medium outline-8 placeholder:text-grey focus-within:border-secondary  focus-within:outline-secondary`,
+              `h-[46px] w-full rounded-lg border-[1.5px] border-[#E6E8EC] px-4 py-[9px] text-base font-medium outline-8 placeholder:text-grey focus-within:border-secondary  focus-within:outline-secondary`,
               insideText ? "pr-10" : "pr-4",
               icon && "pl-12",
               valid &&
@@ -155,7 +155,7 @@ export const PhoneNumberInput = React.forwardRef<
             ref={ref}
             value={val?.toString() ?? ""}
             className={twMerge(
-              `h-[46px] w-full rounded-lg border-[1.5px] border-secondary px-4 text-base font-medium placeholder:text-grey
+              `h-[46px] w-full rounded-lg border-[1.5px] border-[#E6E8EC] px-4 text-base font-medium placeholder:text-grey
               focus-within:ring-1 focus-within:ring-secondary`,
               valid &&
                 "border-primary bg-primary/5 focus-within:border-primary focus-within:ring-primary",
@@ -369,7 +369,7 @@ export const DateInput = React.forwardRef<
         <div className={"relative w-full"}>
           <div
             className={twMerge(
-              `flex h-[46px] w-full rounded-lg border-[1.5px] border-secondary bg-white px-4  text-sm
+              `flex h-[46px] w-full rounded-lg border-[1.5px] border-[#E6E8EC] bg-white px-4  text-sm
               font-medium opacity-80 placeholder:text-grey focus-within:ring-1 focus-within:ring-secondary`,
               valid &&
                 "border-primary bg-primary/5 focus-within:border-primary focus-within:ring-primary",
@@ -378,7 +378,15 @@ export const DateInput = React.forwardRef<
           >
             {arrFormat.map((m, i) => (
               <Fragment key={m}>
-                {i > 0 && <span className="pb-2">{separator}</span>}
+                {i > 0 && (
+                  <span className="mb-2 mt-auto pb-2">
+                    {separator === "." ? (
+                      <div className="h-1 w-1 rounded-full bg-grey" />
+                    ) : (
+                      separator
+                    )}
+                  </span>
+                )}
                 {m === "DD" ? (
                   <input
                     {...props}
