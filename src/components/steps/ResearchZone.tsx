@@ -45,7 +45,7 @@ const ResearchZone = () => {
           valid={lead.research.npa !== undefined}
         ></AutoComplete>
 
-        <div className="hidden h-[500px] overflow-hidden rounded-xl md:block">
+        <div className="hidden h-[300px] overflow-hidden rounded-xl md:block">
           <Map
             neightborhood={lead.research.npa}
             radius={lead.research.radius ?? 50}
