@@ -8,7 +8,7 @@ export const initialData: Data = {
   dob: "",
   research: {
     radius: 30,
-    budget: [100000, 1000000],
+    budget: [700000, 1300000],
   },
   bien_price: 80000,
   verified: false,
