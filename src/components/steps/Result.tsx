@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { useFormStore } from "~/stores/form";
 import { formatAmount } from "~/utils/money";
 import EmgLoader from "../icon/EmgLoader";
+import ResultModal from "../modal/resultModal";
 import { useHypoCalculateur } from "../provider/ResultProvider";
 import ResultCard, { Offre } from "./result/ResultCard";
 
@@ -203,11 +204,11 @@ const Result: React.FC = () => {
           </div>
         </div>
       </div>
-      {/* <ResultModal
+      <ResultModal
         open={!!openRecall}
         onClose={() => setOpenRecall(null)}
         offre={openRecall!}
-      /> */}
+      />
     </>
   );
 };
