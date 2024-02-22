@@ -43,10 +43,10 @@
         gap: 0.25rem;
         align-items: center;
         &.green {
-          color: #01c49a;
+          color: #8d79f6;
         }
         &.blue {
-          color: #009da2;
+          color: #4fbaf0;
         }
         .chart_legend_percent_value {
           font-weight: 500;
@@ -62,7 +62,7 @@
         }
       }
     }
-    svg {
+    svg.graph {
       position: relative;
       width: 190px;
       aspect-ratio: 1/1;
@@ -78,29 +78,26 @@
         fill: none;
         --width: 10px;
         stroke-width: 70px;
-        stroke: #000000;
         transform: translate(calc(var(--width) / 2), calc(var(--width) / 2));
         --stroke-dasharray: 565.5;
         stroke-dasharray: var(--stroke-dasharray);
         stroke-dashoffset: var(--stroke-dasharray);
         &:nth-child(1) {
-          stroke: #f3f3f3;
           stroke-dashoffset: 0;
+          stroke: #6bccfe22;
         }
         &:nth-child(2) {
-          stroke: #009da2;
           transition: stroke-dashoffset 0.5s ease-in-out;
           stroke-dashoffset: calc(
-            var(--stroke-dasharray) + (var(--stroke-dasharray) * var(--value)) /
-              100
+            var(--stroke-dasharray) +
+              (var(--stroke-dasharray) * (var(--value) / 2)) / 100
           );
         }
         &:nth-child(3) {
-          stroke: #01c49a;
           transition: stroke-dashoffset 0.5s ease-in-out;
           stroke-dashoffset: calc(
-            var(--stroke-dasharray) - (var(--stroke-dasharray) * var(--value)) /
-              100
+            var(--stroke-dasharray) -
+              (var(--stroke-dasharray) * (var(--value) / 2)) / 100
           );
         }
       }
