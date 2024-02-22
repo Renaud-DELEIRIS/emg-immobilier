@@ -84,7 +84,7 @@ const Revenue = () => {
                     label: t("revenue.other.optionType.autre"),
                   },
                 ]}
-                className="w-full shrink-0 md:w-[220px]"
+                wrapperClassName="w-full shrink-0 md:w-[220px]"
               />
               <Input
                 value={
@@ -192,7 +192,7 @@ const Revenue = () => {
                     label: t("revenue.charge.optionType.autre"),
                   },
                 ]}
-                className="w-full shrink-0 md:w-[220px]"
+                wrapperClassName="w-full shrink-0 md:w-[220px]"
               />
               <Input
                 value={

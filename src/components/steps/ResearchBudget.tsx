@@ -32,10 +32,19 @@ const ResearchBudget = () => {
             )
               return;
 
+            const nbMin = parseMoney(min) ?? 0;
+            const nbMax = parseMoney(max) ?? 0;
+            const moyen = (nbMin + nbMax) / 2;
+
             changeLead({
               research: {
                 ...lead.research,
                 budget: [parseMoney(min) ?? 0, parseMoney(max) ?? 0],
+              },
+              // 20 % of the moyen budget
+              fonds_propres: {
+                ...lead.fonds_propres,
+                fonds_propres: Math.round(moyen * 0.2),
               },
             });
           }}
@@ -48,6 +57,10 @@ const ResearchBudget = () => {
               research: {
                 ...lead.research,
                 budget: value,
+              },
+              fonds_propres: {
+                ...lead.fonds_propres,
+                fonds_propres: Math.round(((value[0]! + value[1]!) / 2) * 0.2),
               },
             });
           }}

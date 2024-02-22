@@ -1,5 +1,5 @@
 import { useTranslation } from "next-i18next";
-import { useState } from "react";
+import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useFormStore } from "~/stores/form";
 import { formatAmount } from "~/utils/money";
@@ -39,6 +39,7 @@ const Result: React.FC = () => {
           aria-hidden="true"
           className="fixed top-0 z-10 h-[107px] w-full bg-[var(--background-color)]"
         />
+
         <div className="sticky top-[106px] hidden h-fit w-[250px] shrink-0 flex-col gap-4 md:flex">
           <div className="flex flex-col gap-2.5 rounded-lg border border-[#E6E8EC] bg-white p-4">
             <span className="text-lg font-semibold">{t`result.recap.title`}</span>

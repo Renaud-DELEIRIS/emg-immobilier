@@ -25,7 +25,7 @@ const Verif = () => {
   const [verifCode, setVerifCode] = useState("");
   const { mutateAsync, isLoading } = api.sendSmsCode.useMutation();
   const { mutateAsync: createLead, isLoading: isCreating } =
-    api.createDigitaxeLead.useMutation();
+    api.createHypothequeLead.useMutation();
   const { params } = useGtmtrack();
   const gtmDispatch = useGTMDispatch();
 
@@ -58,17 +58,16 @@ const Verif = () => {
   };
 
   const onCompletion = async (code: string) => {
-    // if (code !== verifCode) throw new Error("Code is not valid");
-    // await createLead({
-    //   data: {
-    //     ...lead,
-    //     verified: true,
-    // },
-    //   idtracking: versionId === null ? undefined : versionId,
-    //   gtmparams: params,
-    //   idlead: lead.idlead,
-    // });
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    if (code !== verifCode) throw new Error("Code is not valid");
+    await createLead({
+      data: {
+        ...lead,
+        verified: true,
+      },
+      idtracking: versionId === null ? undefined : versionId,
+      gtmparams: params,
+      idlead: lead.idlead,
+    });
     setOpenCode(false);
     changeLead({ verified: true });
     nextStep("verif");

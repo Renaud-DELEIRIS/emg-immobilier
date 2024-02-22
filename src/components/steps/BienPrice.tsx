@@ -23,7 +23,10 @@ const BienPrice = () => {
           onChange={(value) => {
             changeLead({
               bien_price: parseMoney(value),
-              revenue: Math.round((parseMoney(value) ?? 0) * 0.2)
+              fonds_propres: {
+                ...lead.fonds_propres,
+                fonds_propres: Math.round((parseMoney(value) ?? 0) * 0.2),
+              },
             });
           }}
           insideText="CHF"
@@ -33,7 +36,10 @@ const BienPrice = () => {
           onValueChange={(value) => {
             changeLead({
               bien_price: value[0]!,
-              revenue: Math.round(value[0]! * 0.2)
+              fonds_propres: {
+                ...lead.fonds_propres,
+                fonds_propres: Math.round(value[0]! * 0.2),
+              },
             });
           }}
           min={50_000}

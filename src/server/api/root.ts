@@ -137,7 +137,7 @@ export const appRouter = createTRPCRouter({
       };
     }),
 
-  createDigitaxeLead: publicProcedure
+  createHypothequeLead: publicProcedure
     .input(
       z.object({
         gtmparams: z.record(z.string()),
@@ -147,7 +147,7 @@ export const appRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input: { data, ...input } }) => {
-      const url = env.NEXT_PUBLIC_APIV2_ROOT + "/digitaxe/createlead";
+      const url = env.NEXT_PUBLIC_APIV2_ROOT + "/hypotheque/createlead";
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -188,7 +188,7 @@ export const appRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const url =
         env.NEXT_PUBLIC_APIV2_ROOT +
-        "/digitaxe/becalled?telephone=" +
+        "/hypotheque/becalled?telephone=" +
         input.phone +
         (input.idlead ? "&idlead=" + input.idlead : "");
       console.log(url);

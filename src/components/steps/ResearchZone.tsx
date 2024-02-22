@@ -5,8 +5,7 @@ import localtion from "~/data/ch-locations.json";
 import { useFormStore } from "~/stores/form";
 import { Button } from "../button/Button";
 import { IconMagnify } from "../icon/IconMagnify";
-import { Slider } from "../inputs/Slider";
-import Input from "../inputs/input";
+import { SelectInput } from "../inputs/Select";
 import StepContainer from "./StepContainer";
 
 const Map = dynamic(() => import("../map/Map"), {
@@ -24,62 +23,59 @@ const ResearchZone = () => {
   return (
     <StepContainer stepId="research_zone">
       <div className="flex flex-col gap-4">
-        <AutoComplete
-          value={lead.research.npa}
-          icon={<IconMagnify />}
-          onChange={(value) => {
-            changeLead({
-              research: {
-                ...lead.research,
-                npa: value,
-              },
-            });
-          }}
-          placeholder={t("research_zone.placeholder")}
-          name="locality"
-          aria-label="Localité"
-          options={localtion.map((loc) => ({
-            value: loc.value,
-            label: `${loc.value}`,
-          }))}
-          valid={lead.research.npa !== undefined}
-        ></AutoComplete>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-[2fr,1fr]">
+          <AutoComplete
+            value={lead.research.npa}
+            icon={<IconMagnify />}
+            onChange={(value) => {
+              changeLead({
+                research: {
+                  ...lead.research,
+                  npa: value,
+                },
+              });
+            }}
+            placeholder={t("research_zone.placeholder")}
+            name="locality"
+            aria-label="Localité"
+            options={localtion.map((loc) => ({
+              value: loc.value,
+              label: `${loc.value}`,
+            }))}
+            valid={lead.research.npa !== undefined}
+          ></AutoComplete>
 
+          <SelectInput
+            value={lead.research.radius.toString()}
+            onChange={(value) => {
+              changeLead({
+                research: {
+                  ...lead.research,
+                  radius: isNaN(parseInt(value)) ? 0 : parseInt(value),
+                },
+              });
+            }}
+            className="h-[58px]"
+            placeholder={t("research_zone.distance")}
+            options={[
+              { value: "0", label: "0 Km" },
+              { value: "1", label: "1 Km" },
+              { value: "5", label: "5 Kms" },
+              { value: "10", label: "40 Kms" },
+              { value: "20", label: "50 Kms" },
+              { value: "30", label: "60 Kms" },
+              { value: "50", label: "70 Kms" },
+              { value: "100", label: "80 Kms" },
+              { value: "200", label: "90 Kms" },
+            ]}
+          ></SelectInput>
+        </div>
         <div className="hidden h-[300px] overflow-hidden rounded-xl md:block">
           <Map
             neightborhood={lead.research.npa}
             radius={lead.research.radius ?? 50}
           ></Map>
         </div>
-
-        <Input
-          value={lead.research.radius.toString()}
-          onChange={(value) => {
-            changeLead({
-              research: {
-                ...lead.research,
-                radius: isNaN(parseInt(value)) ? 0 : parseInt(value),
-              },
-            });
-          }}
-          label={t("research_zone.distance")}
-          insideText="KM"
-        ></Input>
-
-        <Slider
-          value={[lead.research.radius]}
-          onValueChange={(value) => {
-            changeLead({
-              research: {
-                ...lead.research,
-                radius: value[0]!,
-              },
-            });
-          }}
-          min={10}
-          max={100}
-          step={5}
-        ></Slider>
         {showValidate && (
           <Button
             onClick={() => {

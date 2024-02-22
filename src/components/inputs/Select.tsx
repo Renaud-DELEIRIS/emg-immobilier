@@ -158,6 +158,7 @@ interface SelectInputProps<T>
   label?: string;
   error?: string;
   placeholder?: string;
+  wrapperClassName?: string;
   className?: string;
 }
 
@@ -166,6 +167,7 @@ const SelectInputComp = <T extends string | undefined>(
     label,
     error,
     value,
+    wrapperClassName,
     className,
     onValueChange,
     onChange,
@@ -202,7 +204,7 @@ const SelectInputComp = <T extends string | undefined>(
   }, {});
 
   return (
-    <div className={twMerge("w-full", className)}>
+    <div className={twMerge("w-full", wrapperClassName)}>
       {label && (
         <label
           className="mb-[6px] block text-sm font-medium opacity-80"
@@ -224,7 +226,7 @@ const SelectInputComp = <T extends string | undefined>(
         <SelectTrigger
           ref={ref as React.ElementRef<typeof Select>}
           onClick={() => setOpen(!open)}
-          className="w-full text-left"
+          className={className}
         >
           <SelectValue className="text-left" placeholder={placeholder}>
             {value ? props.options.find((o) => o.value === value)?.label : null}
