@@ -8,13 +8,13 @@ export const initialData: Data = {
   dob: "",
   research: {
     radius: 30,
-    budget: [700000, 1300000],
+    budget: [700_000, 1_300_000],
   },
-  revenue: 130000,
-  bien_price: 80000,
+  revenue: 130_000,
+  bien_price: 700_000,
   verified: false,
   fonds_propres: {
-    fonds_propres: 80000,
+    fonds_propres: 80_000,
   },
   charge: [],
   revenue_other: [],

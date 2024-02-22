@@ -101,19 +101,19 @@ const Map: React.FC<{
           boundsOptions={{ padding: [1, 1] }}
           zoom={
             radius
-              ? radius <= 10
-                ? 12
-                : radius <= 20
-                ? 11
-                : radius <= 30
+              ? radius < 5
+                ? 13.5
+                : radius < 10
+                ? 11.0
+                : radius < 20
                 ? 10
-                : radius <= 60
+                : radius < 50
                 ? 9
-                : radius <= 80
+                : radius < 100
                 ? 8
-                : radius <= 100
-                ? 8
-                : 7
+                : radius < 200
+                ? 7
+                : 6
               : hasFoundCompleteAddress
               ? 16
               : 12

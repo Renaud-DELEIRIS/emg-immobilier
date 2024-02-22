@@ -61,12 +61,12 @@ const ResearchZone = () => {
               { value: "0", label: "0 Km" },
               { value: "1", label: "1 Km" },
               { value: "5", label: "5 Kms" },
-              { value: "10", label: "40 Kms" },
-              { value: "20", label: "50 Kms" },
-              { value: "30", label: "60 Kms" },
-              { value: "50", label: "70 Kms" },
-              { value: "100", label: "80 Kms" },
-              { value: "200", label: "90 Kms" },
+              { value: "10", label: "10 Kms" },
+              { value: "20", label: "20 Kms" },
+              { value: "30", label: "30 Kms" },
+              { value: "50", label: "50 Kms" },
+              { value: "100", label: "100 Kms" },
+              { value: "200", label: "200 Kms" },
             ]}
           ></SelectInput>
         </div>
