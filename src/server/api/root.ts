@@ -261,7 +261,7 @@ export const appRouter = createTRPCRouter({
         totalPret: z.number(),
       })
     )
-    .query(async ({ input }) => {
+    .query(({ input }) => {
       return "i";
       // const b64 = Buffer.from(JSON.stringify(input)).toString("base64");
       // const url = "https://scrapping.emgsa.ch/?domain=hypotheque&p=" + b64;
