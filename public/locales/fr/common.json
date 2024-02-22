@@ -30,5 +30,26 @@
   "weak": "Faible",
   "strong": "Élevé",
   "passable": "Passable",
-  "excellent": "Excellent"
+  "excellent": "Excellent",
+
+  "CALENDAR_MONTH_1": "Janvier",
+  "CALENDAR_MONTH_2": "Février",
+  "CALENDAR_MONTH_3": "Mars",
+  "CALENDAR_MONTH_4": "Avril",
+  "CALENDAR_MONTH_5": "Mai",
+  "CALENDAR_MONTH_6": "Juin",
+  "CALENDAR_MONTH_7": "Juillet",
+  "CALENDAR_MONTH_8": "Août",
+  "CALENDAR_MONTH_9": "Septembre",
+  "CALENDAR_MONTH_10": "Octobre",
+  "CALENDAR_MONTH_11": "Novembre",
+  "CALENDAR_MONTH_12": "Décembre",
+
+  "CALENDAR_DAY_1": "Lu",
+  "CALENDAR_DAY_2": "Ma",
+  "CALENDAR_DAY_3": "Me",
+  "CALENDAR_DAY_4": "Je",
+  "CALENDAR_DAY_5": "Ve",
+  "CALENDAR_DAY_6": "Sa",
+  "CALENDAR_DAY_7": "Di"
 }

@@ -140,7 +140,7 @@ export const appRouter = createTRPCRouter({
   createHypothequeLead: publicProcedure
     .input(
       z.object({
-        gtmparams: z.record(z.string()),
+        gtmparams: z.record(z.string().optional()).optional(),
         idlead: z.string().optional(),
         idtracking: z.string().optional(),
         data: schemaData,
@@ -167,6 +167,61 @@ export const appRouter = createTRPCRouter({
       return json;
     }),
 
+  updateLead: publicProcedure
+    .input(
+      z.object({
+        idlead: z.string(),
+        data: schemaData.partial(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const url = env.NEXT_PUBLIC_APIV2_ROOT + "/hypotheque/createlead";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          idlead: input.idlead,
+          ...input.data,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error updating lead");
+      }
+      return true;
+    }),
+
+  fixRdv: publicProcedure
+    .input(
+      z.object({
+        typeRdv: z.string(),
+        dateRdv: z.string(),
+        tz: z.string(),
+        company: z.string(),
+        telephone: z.string(),
+        email: z.string(),
+        name: z.string(),
+        firstname: z.string(),
+        idlead: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const url = env.NEXT_PUBLIC_APIV2_ROOT + "/hypotheque/fixrdv";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(input),
+      });
+      if (!response.ok) {
+        throw new Error("Error fixing rdv");
+      }
+      return true;
+    }),
+
   sendSmsCode: publicProcedure
     .input(z.object({ phone: z.string() }))
     .mutation(async ({ input }) => {
@@ -191,13 +246,32 @@ export const appRouter = createTRPCRouter({
         "/hypotheque/becalled?telephone=" +
         input.phone +
         (input.idlead ? "&idlead=" + input.idlead : "");
-      console.log(url);
       const response = await fetch(url);
-      console.log(response);
       if (!response.ok) {
         throw new Error("Error sending sms");
       }
       return true;
+    }),
+
+  getOffers: publicProcedure
+    .input(
+      z.object({
+        revenues: z.number(),
+        apport: z.number(),
+        totalPret: z.number(),
+      })
+    )
+    .query(async ({ input }) => {
+      return "i";
+      // const b64 = Buffer.from(JSON.stringify(input)).toString("base64");
+      // const url = "https://scrapping.emgsa.ch/?domain=hypotheque&p=" + b64;
+      // console.log(b64);
+      // const response = await fetch(url);
+      // if (!response.ok) {
+      //   throw new Error("Error getting offer");
+      // }
+      // const data = (await response.json()) as { offer: Offre };
+      // return data.offer;
     }),
 });
 

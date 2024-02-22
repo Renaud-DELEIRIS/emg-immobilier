@@ -6,6 +6,7 @@ import { IconAgent } from "~/components/icon/IconAgent";
 
 export interface Offre {
   img: string;
+  name: string;
   advantages: {
     title: string;
     active: boolean;

@@ -19,7 +19,7 @@ const FinancementActuelle = () => {
       <div className="flex flex-col gap-4">
         <Input
           value={formatAmount(lead.financement_actuel)}
-          placeholder={t("financement_actuelle.placeholder")}
+          placeholder={t("financement_actuel.placeholder")}
           onChange={(value) => {
             changeLead({
               financement_actuel: parseMoney(value),

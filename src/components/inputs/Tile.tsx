@@ -14,6 +14,7 @@ interface Props<T> {
   className?: string;
   multiple?: boolean;
   withoutDot?: boolean;
+  tileClassName?: string;
 }
 
 const TileInput = <T extends string | boolean | string[] | undefined>({
@@ -23,6 +24,7 @@ const TileInput = <T extends string | boolean | string[] | undefined>({
   className = "",
   withoutDot = false,
   multiple,
+  tileClassName,
 }: Props<T>) => {
   const handleChange = (newVal: T extends string[] ? string : T) => {
     if (newVal === undefined) return;
@@ -59,7 +61,8 @@ const TileInput = <T extends string | boolean | string[] | undefined>({
           key={option.value?.toString()}
           className={twMerge(
             `group flex min-h-[68px] w-full items-center gap-[10px] rounded-xl border-[1.5px] border-[#8888941A] bg-white px-[20px] py-[14px] text-left shadow-[0px_0px_20px_0px_rgba(8,38,35,0.05)] transition-[color] duration-200 ease-in-out hover:border-primary hover:shadow-[0px_0px_20px_0px_rgba(8,38,35,0.1)] focus:outline-primary focus-visible:outline-primary`,
-            isSelected(option.value) && "border-primary bg-primary/5"
+            isSelected(option.value) && "border-primary bg-primary/5",
+            tileClassName
           )}
           onClick={() => handleChange(option.value)}
         >
@@ -69,6 +72,7 @@ const TileInput = <T extends string | boolean | string[] | undefined>({
                 "h-6 w-6 shrink-0 rounded-full border-2 border-[#8888944D] bg-white transition-all duration-200 ease-in-out group-hover:border-primary",
                 isSelected(option.value) && "border-[8px] border-primary"
               )}
+              data-dot
             />
           )}
           <div className="flex flex-col">

@@ -2,6 +2,7 @@ import { useTranslation } from "next-i18next";
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useFormStore } from "~/stores/form";
+import { api } from "~/utils/api";
 import { formatAmount } from "~/utils/money";
 import EmgLoader from "../icon/EmgLoader";
 import ResultModal from "../modal/resultModal";
@@ -27,6 +28,25 @@ const Result: React.FC = () => {
   } = useHypoCalculateur();
   const [filter, setFilter] = useState("");
   const [openRecall, setOpenRecall] = useState<Offre | null>(null);
+  const { data: offres } = api.getOffers.useQuery(
+    {
+      apport:
+        (lead.fonds_propres.fonds_propres ?? 0) +
+        (lead.fonds_propres.lpp ?? 0) +
+        (lead.fonds_propres.pilier3 ?? 0),
+      revenues:
+        (lead.revenue ?? 0) +
+        (lead.revenue_other.reduce((acc, cur) => acc + (cur.montant ?? 0), 0) ??
+          0),
+      totalPret:
+        lead.which_step === "recherche bien"
+          ? lead.research.budget[1] ?? 0
+          : lead.bien_price,
+    },
+    {
+      staleTime: 1000 * 60 * 15,
+    }
+  );
 
   const onRecall = (offre: Offre) => {
     setOpenRecall(offre);
@@ -198,6 +218,7 @@ const Result: React.FC = () => {
                     ],
                     img: "/logo/allianz_grey.svg",
                     interest: 2.2,
+                    name: "Allianz",
                   }}
                 />
               </>

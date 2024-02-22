@@ -56,7 +56,7 @@
 
   "financement_actuel": {
     "title": "Quel est le financement actuel ?",
-    "placeholder": "Montant actuel"
+    "placeholder": "0"
   },
 
   "do_work": {
@@ -205,6 +205,24 @@
       "or": "ou",
       "rdv": "Prendre rendez-vous",
       "info": "Vos données personnelles seront utilisées afin de répondre à votre demande d'information"
+    },
+
+    "rdv": {
+      "title": "Prendre rendez-vous avec un conseiller",
+      "question": "Comment vous appelez-vous ?",
+      "question_type": "Quel type de rendez-vous souhaitez-vous ?",
+      "type_visio": "En visio",
+      "type_phone": "Par téléphone",
+      "send_to": "Le lien de rendez-vous sera envoyé à l’adresse",
+      "action_update": "Modifier",
+      "email_placeholder": "Adresse email",
+      "email_label": "Votre adresse email",
+      "action": "Prendre rendez-vous",
+      "back": "Retour",
+      "nom_placeholder": "Votre nom",
+      "prenom_placeholder": "Votre prénom",
+      "error": "Une erreur est survenue, veuillez réessayer plus tard.",
+      "success": "Votre rendez-vous a bien été enregistré, vous allez recevoir un email de confirmation."
     }
   }
 }
