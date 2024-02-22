@@ -193,35 +193,14 @@ const Result: React.FC = () => {
           </div>
 
           <div className="flex flex-col items-center gap-7">
-            {isLoading ? (
+            {isLoading || !offres ? (
               <div className="mt-4">
                 <EmgLoader />
               </div>
             ) : (
-              <>
-                <ResultCard
-                  openRecall={onRecall}
-                  offre={{
-                    advantages: [
-                      {
-                        active: true,
-                        title: "Remboursement anticipé sans pénalité",
-                      },
-                      {
-                        active: true,
-                        title: "Remboursement anticipé sans pénalité",
-                      },
-                      {
-                        active: false,
-                        title: "Remboursement anticipé sans pénalité",
-                      },
-                    ],
-                    img: "/logo/allianz_grey.svg",
-                    interest: 2.2,
-                    name: "Allianz",
-                  }}
-                />
-              </>
+              offres.map((offre, index) => (
+                <ResultCard key={index} offre={offre} openRecall={onRecall} />
+              ))
             )}
           </div>
         </div>

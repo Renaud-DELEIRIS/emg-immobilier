@@ -6,10 +6,12 @@ import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import mime from "mime-types";
 import { z } from "zod";
+import { Offre } from "~/components/steps/result/ResultCard";
 import { schemaData } from "~/constants/lead.constant";
 import { schemaStep } from "~/constants/step.constant";
 import { env } from "~/env.mjs";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { GetOffer } from "~/type/getoffer.type";
 import { getIpFromRequest } from "~/utils/server/getIpFromRequest";
 import {
   getSession,
@@ -261,17 +263,97 @@ export const appRouter = createTRPCRouter({
         totalPret: z.number(),
       })
     )
-    .query(({ input }) => {
-      return "i";
-      // const b64 = Buffer.from(JSON.stringify(input)).toString("base64");
-      // const url = "https://scrapping.emgsa.ch/?domain=hypotheque&p=" + b64;
-      // console.log(b64);
-      // const response = await fetch(url);
-      // if (!response.ok) {
-      //   throw new Error("Error getting offer");
-      // }
-      // const data = (await response.json()) as { offer: Offre };
-      // return data.offer;
+    .query(async ({ input }) => {
+      const b64 = Buffer.from(JSON.stringify(input)).toString("base64");
+      const url = "https://scrapping.emgsa.ch/?domain=hypotheque&p=" + b64;
+      console.log(b64);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Error getting offer");
+      }
+      const data = (await response.json()) as GetOffer;
+      const offers: Offre[] = [];
+
+      // BCBE
+      offers.push({
+        name: "Bcbe",
+        img: "/logo/bcbe.svg",
+        interest: isNaN(parseFloat(data.bcbe.interest_rate))
+          ? null
+          : parseFloat(data.bcbe.interest_rate),
+        // TODO ADD Advantages depends on data
+        advantages: [
+          {
+            title: "Avantage 1",
+            active: true,
+          },
+          {
+            title: "Avantage 2",
+            active: true,
+          },
+        ],
+      });
+
+      // migros
+      offers.push({
+        name: "Migros",
+        img: "/logo/migros.svg",
+        // NO Interest rate provided (TODO ?)
+        interest: null,
+        // TODO ADD Advantages depends on data
+        advantages: [
+          {
+            title: "Avantage 1",
+            active: true,
+          },
+          {
+            title: "Avantage 2",
+            active: true,
+          },
+        ],
+      });
+
+      // swisslife
+      offers.push({
+        name: "Swisslife",
+        img: "/logo/swisslife.svg",
+        interest: isNaN(parseFloat(data.swisslife.interest_rate))
+          ? null
+          : parseFloat(data.swisslife.interest_rate),
+        // TODO ADD Advantages depends on data
+        advantages: [
+          {
+            title: "Avantage 1",
+            active: true,
+          },
+          {
+            title: "Avantage 2",
+            active: true,
+          },
+        ],
+      });
+
+      // ubs
+      offers.push({
+        name: "UBS",
+        img: "/logo/ubs.svg",
+        interest: isNaN(parseFloat(data.ubs.interest_rate))
+          ? null
+          : parseFloat(data.ubs.interest_rate),
+        // TODO ADD Advantages depends on data
+        advantages: [
+          {
+            title: "Avantage 1",
+            active: true,
+          },
+          {
+            title: "Avantage 2",
+            active: true,
+          },
+        ],
+      });
+
+      return offers;
     }),
 });
 

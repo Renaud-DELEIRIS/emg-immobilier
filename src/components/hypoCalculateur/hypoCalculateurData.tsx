@@ -51,40 +51,6 @@ const HypoCalculateurData = () => {
               }
             />
             <defs>
-              <filter
-                id="filter0_d_1518_1876"
-                x="0.0533485"
-                y="0.535153"
-                width="115.969"
-                height="211.967"
-                filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
-              >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feColorMatrix
-                  in="SourceAlpha"
-                  type="matrix"
-                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                  result="hardAlpha"
-                />
-                <feOffset dy="-2.48862" />
-                <feGaussianBlur stdDeviation="4.97723" />
-                <feColorMatrix
-                  type="matrix"
-                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"
-                />
-                <feBlend
-                  mode="normal"
-                  in2="BackgroundImageFix"
-                  result="effect1_dropShadow_1518_1876"
-                />
-                <feBlend
-                  mode="normal"
-                  in="SourceGraphic"
-                  in2="effect1_dropShadow_1518_1876"
-                  result="shape"
-                />
-              </filter>
               <linearGradient id={id1} x1="0%" y1="100%" x2="0%" y2="0%">
                 <stop offset="0%" stopColor="#7AD3FF" />
                 <stop offset="100%" stopColor="#4FBAF0" />

@@ -11,7 +11,7 @@ export interface Offre {
     title: string;
     active: boolean;
   }[];
-  interest: number;
+  interest: number | null;
 }
 
 interface Props {
