@@ -133,18 +133,23 @@
   },
 
   "verif": {
+    "title": "A quel nom doit-on éditer l'offre ?",
     "alert": {
       "title": "Vos infos sont protégées !",
-      "message": "Ces informations servent à enregistrer vos recherches actuelles et futures. Toutes vos données sont 100% sécurisées."
+      "message": "Ces informations serviront à établir votre devis. Toutes vos données sont 100% sécurisées."
     },
-    "label": "Votre prénom et nom",
-    "placeholder_first": "Prénom (facultatif)",
+    "label_name": "Votre nom",
+    "label_first": "Votre prénom",
+    "placeholder_first": "Prénom",
     "placeholder_last": "Nom",
-    "label_contact": "Nous y sommes presque",
-    "contact_description": "11 optimisations fiscales ont été trouvées pour votre profil, indiquez votre numéro de téléphone afin d’authentifier votre demande.",
+    "label_contact": "Informations de contact",
+    "email_description": "11 optimisations fiscales ont été trouvées pour votre profil, indiquez votre numéro de téléphone afin d’authentifier votre demande.",
+    "email_description_action": "Voir un exemple d'attestation",
+    "email_description_fallback": "Nous n'avons pas pu ouvrir le PDF. Vous pouvez le télécharger en cliquant sur le boutton :",
+    "phone_description": "Le numéro de téléphone vous permettra de revenir sur votre simulation et de visualiser l'évolution des taux au fil du temps.",
     "placeholder_email": "Votre adresse email",
     "placeholder_phone": "Votre numéro de téléphone",
-    "action": "Valider mes informations",
+    "action": "Découvrir les résultats",
     "error": "Une erreur est survenue, veuillez réessayer plus tard.",
     "modal": {
       "title": "Vérifiéz votre numéro de téléphone",

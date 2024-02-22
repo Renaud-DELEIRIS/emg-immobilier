@@ -44,15 +44,18 @@ const StepContainer = ({
   stepId,
   id,
   withInfo = false,
+  forceNoBackButton = false,
+  noHeightForce = false,
 }: {
   stepId: StepId;
-  forceActive?: boolean;
   id?: string;
   className?: string;
   children: React.ReactNode;
   withInfo?: boolean;
   withTitle?: boolean;
   withDescription?: boolean;
+  forceNoBackButton?: boolean;
+  noHeightForce?: boolean;
 }) => {
   const currentVisibleStep = useFormStore((state) => state.currentVisibleStep);
   const currentStep = useFormStore((state) => state.currentStep);
@@ -73,13 +76,15 @@ const StepContainer = ({
       animate={{ opacity: 1, x: 0 }}
       className={twMerge(
         "flex w-full flex-col",
-        isMaxSize && "min-h-[calc(100dvh-190px)] md:min-h-[calc(100dvh-130px)]",
+        isMaxSize &&
+          !noHeightForce &&
+          "min-h-[calc(100dvh-190px)] md:min-h-[calc(100dvh-130px)]",
         className
       )}
       id={id ?? stepId}
       data-stepcontainer
     >
-      {withBackButton && (
+      {withBackButton && !forceNoBackButton && (
         <button
           className="mb-8 flex h-11 w-fit items-center gap-2.5 rounded-full border border-[#88889440] bg-[#8888941A] px-5 text-base font-semibold text-[#082623CC] transition-colors hover:bg-[#082623CC] hover:text-white md:mb-[40px]"
           onClick={() => backStep(stepId)}

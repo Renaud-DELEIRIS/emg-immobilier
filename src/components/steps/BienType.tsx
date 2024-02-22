@@ -1,6 +1,10 @@
 import { useTranslation } from "next-i18next";
 import TileInput from "~/components/inputs/Tile";
 import { useFormStore } from "~/stores/form";
+import { EmgAppartement } from "../icon/EmgAppartement";
+import { EmgConstructionPlan } from "../icon/EmgConstructionPlan";
+import { EmgHouse } from "../icon/EmgHouse";
+import { EmgImmeuble } from "../icon/EmgImmeuble";
 import StepContainer from "./StepContainer";
 
 const BienType = () => {
@@ -23,18 +27,22 @@ const BienType = () => {
           {
             value: "house",
             label: t("bien_type.house"),
+            icon: <EmgHouse />,
           },
           {
             value: "appartement",
             label: t("bien_type.appartement"),
+            icon: <EmgAppartement />,
           },
           {
             value: "building",
             label: t("bien_type.building"),
+            icon: <EmgImmeuble />,
           },
           {
             value: "construction",
             label: t("bien_type.construction"),
+            icon: <EmgConstructionPlan />,
           },
         ]}
       ></TileInput>

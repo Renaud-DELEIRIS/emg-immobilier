@@ -2,7 +2,6 @@ import { useGTMDispatch } from "@elgorditosalsero/react-gtm-hook";
 import { motion } from "framer-motion";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import { useTranslation } from "next-i18next";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useFormStore } from "~/stores/form";
@@ -12,8 +11,9 @@ import { Button } from "../button/Button";
 import { Alert, AlertTitle } from "../feedback/alert";
 import Input, { PhoneNumberInput } from "../inputs/input";
 import CodeModal from "../modal/codeModal";
+import { Dialog, DialogContent } from "../modal/dialog";
 import { useGtmtrack } from "../provider/GmtTrack";
-import { StepDescription, StepTitle } from "./StepContainer";
+import StepContainer, { StepTitle } from "./StepContainer";
 
 const Verif = () => {
   const { t } = useTranslation("step");
@@ -30,6 +30,7 @@ const Verif = () => {
   const gtmDispatch = useGTMDispatch();
 
   const [toShowContact, setToShowContact] = useState(false);
+  const [showExample, setShowExample] = useState(false);
 
   useEffect(() => {
     if (lead.nom && lead.nom.length > 3) {
@@ -75,52 +76,21 @@ const Verif = () => {
 
   const isAllValid =
     lead.nom.length > 0 &&
+    lead.prenom.length > 0 &&
     isValidPhoneNumber(lead.phone ?? "") &&
     isValidEmail(lead.email);
 
   return (
     <>
-      <motion.div
-        className="mx-auto flex w-full max-w-[350px] flex-1 flex-col pt-0 md:max-w-2xl md:pt-16"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        id="verif"
-      >
-        <Alert
-          variant={"info"}
-          noTitle
-          className="flex flex-row gap-2 md:pl-[160px]"
-        >
-          <Image
-            src="/victor.png"
-            width={146}
-            height={146}
-            alt="mascotte"
-            className="absolute bottom-0 left-[1rem] hidden shrink-0 md:block"
-          />
+      <StepContainer stepId="verif" forceNoBackButton noHeightForce>
+        <Alert variant={"info"} noTitle className="flex flex-row gap-2">
           <div className="flex flex-col gap-2">
             <AlertTitle>{t`verif.alert.title`}</AlertTitle>
             <span>{t`verif.alert.message`}</span>
           </div>
         </Alert>
-        <div className="my-10 flex flex-col gap-5">
-          <label htmlFor="name" className="text-[22px] font-semibold">
-            {t`verif.label`}
-          </label>
+        <div className="mb-8 mt-6 flex flex-col gap-5">
           <div className="grid grid-cols-1 gap-[18px] md:grid-cols-2">
-            <Input
-              id="name"
-              name="name"
-              type="text"
-              value={lead.prenom}
-              onChange={(e) =>
-                changeLead({
-                  prenom: e,
-                })
-              }
-              placeholder={t`verif.placeholder_first`}
-              valid={lead.prenom.length > 0}
-            />
             <Input
               id="lastname"
               name="lastname"
@@ -133,6 +103,21 @@ const Verif = () => {
               }
               placeholder={t`verif.placeholder_last`}
               valid={lead.nom.length > 0}
+              label={t`verif.label_name`}
+            />
+            <Input
+              id="name"
+              name="name"
+              type="text"
+              value={lead.prenom}
+              onChange={(e) =>
+                changeLead({
+                  prenom: e,
+                })
+              }
+              placeholder={t`verif.placeholder_first`}
+              valid={lead.prenom.length > 0}
+              label={t`verif.label_first`}
             />
           </div>
         </div>
@@ -146,34 +131,50 @@ const Verif = () => {
           >
             <div className="flex flex-col gap-2.5">
               <StepTitle>{t`verif.label_contact`}</StepTitle>
-              <StepDescription>{t`verif.contact_description`}</StepDescription>
             </div>
-            <div className="grid grid-cols-1 gap-[18px]">
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                value={lead.email}
-                onChange={(e) =>
-                  changeLead({
-                    email: e,
-                  })
-                }
-                placeholder={t`verif.placeholder_email`}
-                valid={isValidEmail(lead.email)}
-              />
-              <PhoneNumberInput
-                id="phone"
-                name="phone"
-                value={lead.phone}
-                onChange={(e) =>
-                  changeLead({
-                    phone: e,
-                  })
-                }
-                placeholder={t`verif.placeholder_phone`}
-                valid={isValidPhoneNumber(lead.phone ?? "")}
-              />
+            <div className="grid grid-cols-1 gap-[14px]">
+              <div className="flex flex-col gap-2.5">
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={lead.email}
+                  onChange={(e) =>
+                    changeLead({
+                      email: e,
+                    })
+                  }
+                  placeholder={t`verif.placeholder_email`}
+                  valid={isValidEmail(lead.email)}
+                />
+                <span className="text-sm leading-5">
+                  {t`verif.email_description`}{" "}
+                  <button
+                    className="hidden font-semibold text-primary hover:underline md:contents"
+                    onClick={() => setShowExample(true)}
+                  >
+                    {t`verif.email_description_action`}
+                  </button>
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-2.5">
+                <PhoneNumberInput
+                  id="phone"
+                  name="phone"
+                  value={lead.phone}
+                  onChange={(e) =>
+                    changeLead({
+                      phone: e,
+                    })
+                  }
+                  placeholder={t`verif.placeholder_phone`}
+                  valid={isValidPhoneNumber(lead.phone ?? "")}
+                />
+                <span className="text-sm leading-5">
+                  {t`verif.phone_description`}
+                </span>
+              </div>
             </div>
           </motion.div>
         )}
@@ -183,19 +184,38 @@ const Verif = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mt-10 flex justify-center"
+            className="mt-10 flex justify-end"
           >
             <Button onClick={() => void onOpenCode()} disabled={!isAllValid}>
               {t`verif.action`}
             </Button>
           </motion.div>
         )}
-      </motion.div>
+      </StepContainer>
       <CodeModal
         open={openCode}
         setOpen={setOpenCode}
         onVerify={onCompletion}
       />
+      <Dialog open={showExample} onOpenChange={setShowExample}>
+        <DialogContent className="p-0 md:p-0">
+          <object
+            data="/Hypo.pdf"
+            type="application/pdf"
+            width="100%"
+            height="500px"
+          >
+            <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
+              <span>{t`verif.email_description_fallback`}</span>
+              <Button asChild>
+                <a href="/Hypo.pdf" download>
+                  {t`verif.email_description_action`}
+                </a>
+              </Button>
+            </div>
+          </object>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
