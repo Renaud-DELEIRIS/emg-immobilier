@@ -2,12 +2,12 @@ import { useTranslation } from "next-i18next";
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useFormStore } from "~/stores/form";
-import { api } from "~/utils/api";
 import { formatAmount } from "~/utils/money";
 import EmgLoader from "../icon/EmgLoader";
 import ResultModal from "../modal/resultModal";
 import { useHypoCalculateur } from "../provider/ResultProvider";
 import ResultCard, { Offre } from "./result/ResultCard";
+import useResult from "./result/useResult";
 
 const Result: React.FC = () => {
   const { t } = useTranslation("step");
@@ -28,25 +28,7 @@ const Result: React.FC = () => {
   } = useHypoCalculateur();
   const [filter, setFilter] = useState("");
   const [openRecall, setOpenRecall] = useState<Offre | null>(null);
-  const { data: offres } = api.getOffers.useQuery(
-    {
-      apport:
-        (lead.fonds_propres.fonds_propres ?? 0) +
-        (lead.fonds_propres.lpp ?? 0) +
-        (lead.fonds_propres.pilier3 ?? 0),
-      revenues:
-        (lead.revenue ?? 0) +
-        (lead.revenue_other.reduce((acc, cur) => acc + (cur.montant ?? 0), 0) ??
-          0),
-      totalPret:
-        lead.which_step === "recherche bien"
-          ? lead.research.budget[1] ?? 0
-          : lead.bien_price,
-    },
-    {
-      staleTime: 1000 * 60 * 15,
-    }
-  );
+  const { data: offres } = useResult();
 
   const onRecall = (offre: Offre) => {
     setOpenRecall(offre);
@@ -171,7 +153,7 @@ const Result: React.FC = () => {
           <div className="sticky top-[106px] z-10 mb-3.5 flex flex-col gap-2 bg-[var(--background-color)] py-2">
             <p className=" text-[20px] font-bold">
               {t(`result.title`, {
-                nb: 24,
+                nb: offres?.length ?? 4,
               })}
             </p>
             <div className="flex flex-wrap items-center gap-2.5">

@@ -9,6 +9,7 @@ import { twMerge } from "tailwind-merge";
 import Footer from "~/components/navigation/Footer";
 import Header from "~/components/navigation/Header";
 import Sidebar from "~/components/navigation/Sidebar";
+import useResult from "~/components/steps/result/useResult";
 import { useFormStore } from "~/stores/form";
 import { useSessionStore } from "~/stores/session";
 import { StepComponent } from "~/stores/StepComponent";
@@ -38,6 +39,9 @@ const Home: NextPage = () => {
   const [loaded, setLoaded] = useState(false);
   const fetchSession = useSessionStore((state) => state.fetchSession);
   const setSessionId = useSessionStore((state) => state.setSessionId);
+
+  // This line is to preload the result data
+  useResult();
 
   useEffect(() => {
     initStep();

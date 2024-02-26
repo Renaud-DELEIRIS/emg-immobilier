@@ -59,7 +59,6 @@ const Verif = () => {
   };
 
   const onCompletion = async (code: string) => {
-    // TODO CHANGE THIS
     changeLead({ verified: true });
     nextStep("verif");
     if (code !== verifCode) throw new Error("Code is not valid");
