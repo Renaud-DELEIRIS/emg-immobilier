@@ -32,7 +32,6 @@ const Rdv: React.FC<Props> = ({ onClose, offer }) => {
   const { mutateAsync: fixRdv, isLoading } = api.fixRdv.useMutation();
 
   const onRdv = async () => {
-    // TODO: envoyé demande de rdv (rdv type 1 = viso 2 = téléphone)
     try {
       updateLead({
         idlead: data.idlead ?? "",

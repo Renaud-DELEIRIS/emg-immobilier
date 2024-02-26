@@ -8,7 +8,8 @@ export interface Offre {
   img: string;
   name: string;
   advantages: {
-    title: string;
+    key_title: string;
+    value: Record<string, string>;
     active: boolean;
   }[];
   interest: number | null;
@@ -40,7 +41,12 @@ const ResultCard: React.FC<Props> = ({ offre, openRecall }) => {
                     <IconX size={20} className="text-grey" />
                   )}
                 </div>
-                <p className="text-[14px]">{advantage.title}</p>
+                <p className="text-[14px]">
+                  {t(
+                    `result.advantages.${advantage.key_title}`,
+                    advantage.value
+                  )}
+                </p>
               </li>
             ))}
           </ul>

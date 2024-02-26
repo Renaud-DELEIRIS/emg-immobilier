@@ -1,8 +1,8 @@
 export interface GetOffer {
-  bcbe: Bcbe;
-  migros: Migros;
-  swisslife: Swisslife;
-  ubs: Ubs;
+  bcbe?: Bcbe;
+  migros?: Migros;
+  swisslife?: Swisslife;
+  ubs?: Ubs;
 }
 
 export interface Bcbe {

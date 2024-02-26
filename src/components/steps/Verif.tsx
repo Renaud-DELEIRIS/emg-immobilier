@@ -33,7 +33,7 @@ const Verif = () => {
   const [showExample, setShowExample] = useState(false);
 
   useEffect(() => {
-    if (lead.nom && lead.nom.length > 3) {
+    if (lead.nom && lead.prenom) {
       setToShowContact(true);
     }
   }, [lead]);
@@ -59,6 +59,9 @@ const Verif = () => {
   };
 
   const onCompletion = async (code: string) => {
+    // TODO CHANGE THIS
+    changeLead({ verified: true });
+    nextStep("verif");
     if (code !== verifCode) throw new Error("Code is not valid");
     await createLead({
       data: {
@@ -70,8 +73,6 @@ const Verif = () => {
       idlead: lead.idlead,
     });
     setOpenCode(false);
-    changeLead({ verified: true });
-    nextStep("verif");
   };
 
   const isAllValid =

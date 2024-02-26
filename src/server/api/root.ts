@@ -12,6 +12,7 @@ import { schemaStep } from "~/constants/step.constant";
 import { env } from "~/env.mjs";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { GetOffer } from "~/type/getoffer.type";
+import { formatAmount } from "~/utils/money";
 import { getIpFromRequest } from "~/utils/server/getIpFromRequest";
 import {
   getSession,
@@ -266,7 +267,6 @@ export const appRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const b64 = Buffer.from(JSON.stringify(input)).toString("base64");
       const url = "https://scrapping.emgsa.ch/?domain=hypotheque&p=" + b64;
-      console.log(b64);
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Error getting offer");
@@ -275,83 +275,151 @@ export const appRouter = createTRPCRouter({
       const offers: Offre[] = [];
 
       // BCBE
-      offers.push({
-        name: "Bcbe",
-        img: "/logo/bcbe.svg",
-        interest: isNaN(parseFloat(data.bcbe.interest_rate))
-          ? null
-          : parseFloat(data.bcbe.interest_rate),
-        // TODO ADD Advantages depends on data
-        advantages: [
-          {
-            title: "Avantage 1",
-            active: true,
-          },
-          {
-            title: "Avantage 2",
-            active: true,
-          },
-        ],
-      });
+      if (data.bcbe)
+        offers.push({
+          name: "Bcbe",
+          img: "/logo/bcbe.svg",
+          interest: isNaN(parseFloat(data.bcbe.interest_rate))
+            ? null
+            : parseFloat(data.bcbe.interest_rate),
+          advantages: [
+            {
+              key_title: "interest",
+              value: {
+                val: formatAmount(parseFloat(data.bcbe.interest), false),
+              },
+              active: true,
+            },
+            {
+              key_title: "mensual_payment",
+              value: {
+                val: formatAmount(parseFloat(data.bcbe.mensual_payment), false),
+              },
+              active: true,
+            },
+            {
+              key_title: "additional_cost",
+              value: {
+                val: formatAmount(parseFloat(data.bcbe.additional_cost), false),
+              },
+              active: true,
+            },
+          ],
+        });
 
       // migros
-      offers.push({
-        name: "Migros",
-        img: "/logo/migros.svg",
-        // NO Interest rate provided (TODO ?)
-        interest: null,
-        // TODO ADD Advantages depends on data
-        advantages: [
-          {
-            title: "Avantage 1",
-            active: true,
-          },
-          {
-            title: "Avantage 2",
-            active: true,
-          },
-        ],
-      });
+      if (data.migros)
+        offers.push({
+          name: "Migros",
+          img: "/logo/migros.svg",
+          // NO Interest rate provided (TODO ?)
+          interest: null,
+          advantages: [
+            {
+              key_title: "ammortissement",
+              value: {
+                val: formatAmount(parseFloat(data.migros.amortization), false),
+              },
+              active: true,
+            },
+            {
+              key_title: "interest_7years",
+              value: {
+                val: data.migros["7years_interest"] + "%",
+              },
+              active: true,
+            },
+            {
+              key_title: "interest_10years",
+              value: {
+                val: data.migros["10years_interest"] + "%",
+              },
+              active: true,
+            },
+            {
+              key_title: "mensual_payment",
+              value: {
+                val: formatAmount(
+                  parseFloat(data.migros.mensual_payment),
+                  false
+                ),
+              },
+              active: true,
+            },
+          ],
+        });
 
       // swisslife
-      offers.push({
-        name: "Swisslife",
-        img: "/logo/swisslife.svg",
-        interest: isNaN(parseFloat(data.swisslife.interest_rate))
-          ? null
-          : parseFloat(data.swisslife.interest_rate),
-        // TODO ADD Advantages depends on data
-        advantages: [
-          {
-            title: "Avantage 1",
-            active: true,
-          },
-          {
-            title: "Avantage 2",
-            active: true,
-          },
-        ],
-      });
+      if (data.swisslife)
+        offers.push({
+          name: "Swisslife",
+          img: "/logo/swisslife.svg",
+          interest: isNaN(parseFloat(data.swisslife.interest_rate))
+            ? null
+            : parseFloat(data.swisslife.interest_rate),
+          advantages: [
+            {
+              key_title: "interest",
+              value: {
+                val: formatAmount(parseFloat(data.swisslife.interest), false),
+              },
+              active: true,
+            },
+            {
+              key_title: "mensual_payment",
+              value: {
+                val: formatAmount(
+                  parseFloat(data.swisslife.mensual_payment),
+                  false
+                ),
+              },
+              active: true,
+            },
+            {
+              key_title: "additional_cost",
+              value: {
+                val: formatAmount(
+                  parseFloat(data.swisslife.additional_cost),
+                  false
+                ),
+              },
+              active: true,
+            },
+          ],
+        });
 
       // ubs
-      offers.push({
-        name: "UBS",
-        img: "/logo/ubs.svg",
-        interest: isNaN(parseFloat(data.ubs.interest_rate))
-          ? null
-          : parseFloat(data.ubs.interest_rate),
-        // TODO ADD Advantages depends on data
-        advantages: [
-          {
-            title: "Avantage 1",
-            active: true,
-          },
-          {
-            title: "Avantage 2",
-            active: true,
-          },
-        ],
-      });
+      if (data.ubs)
+        offers.push({
+          name: "UBS",
+          img: "/logo/ubs.svg",
+          interest: isNaN(parseFloat(data.ubs.interest_rate))
+            ? null
+            : parseFloat(data.ubs.interest_rate),
+          advantages: [
+            {
+              key_title: "interest",
+              value: {
+                val: formatAmount(parseFloat(data.ubs.interest), false),
+              },
+              active: true,
+            },
+            {
+              key_title: "mensual_payment",
+              value: {
+                val: formatAmount(parseFloat(data.ubs.mensual_payment), false),
+              },
+              active: true,
+            },
+            {
+              key_title: "additional_cost",
+              value: {
+                val: formatAmount(parseFloat(data.ubs.additional_cost), false),
+              },
+              active: true,
+            },
+          ],
+        });
 
       return offers;
     }),

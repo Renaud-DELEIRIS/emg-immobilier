@@ -154,7 +154,7 @@
     "modal": {
       "title": "Vérifiéz votre numéro de téléphone",
       "subtitle": "Nous vous avons envoyé un code de vérification par SMS au <b>{{phone}}</b>.",
-      "alert": " Ces <b>informations protégées</b> seront utilisées uniquement dans le cadre de votre dossier.",
+      "alert": "Ces <b>informations protégées</b> seront utilisées uniquement dans le cadre de votre dossier.",
       "action": "Vérifier mon numéro",
       "error": "Le code de vérification est incorrect",
       "modif": "Modifier mon numéro"
@@ -169,6 +169,15 @@
     "filter": {
       "bank": "Banque",
       "insurance": "Assurance"
+    },
+
+    "advantages": {
+      "ammortissement": "Avec un amortissement de {{val}}",
+      "interest": "Intérêts de {{val}}",
+      "interest_7years": "Intérêts sur 7 ans de {{val}}",
+      "interest_10years": "Intérêts sur 10 ans de {{val}}",
+      "mensual_payment": "Mensualité de {{val}}",
+      "additional_cost": "Frais annexes de {{val}}"
     },
 
     "recap": {

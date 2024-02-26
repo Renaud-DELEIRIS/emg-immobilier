@@ -6,15 +6,20 @@ export const parseMoney = (value: string) => {
   return parsed;
 };
 
-export const formatAmount = (amount: number | undefined) => {
+export const formatAmount = (
+  amount: number | undefined,
+  withReplace = true
+) => {
   if (amount === undefined) return "";
-  return new Intl.NumberFormat("de-CH", {
+  const formated = new Intl.NumberFormat("de-CH", {
     style: "currency",
     currency: "CHF",
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  })
-    .format(amount)
-    .replace("CHF ", "")
-    .replace("CHF", "");
+  }).format(amount);
+
+  if (withReplace) {
+    return formated.replace("CHF ", "").replace("CHF", "");
+  }
+  return formated;
 };
