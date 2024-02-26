@@ -94,8 +94,11 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Déclaration en ligne - Digitaxe</title>
-        <meta name="description" content="Déclaration en ligne - Digitaxe" />
+        <title>Comparateur hypothécaire - EMG SA</title>
+        <meta
+          name="description"
+          content="Comparez plus de 35 institutions en quelques clics pour votre hypothèque grâce au comparateur EMG SA. Votre rapport hypothécaire disponible en quelques minutes."
+        />
       </Head>
       {formLoaded && loaded && (
         <main
