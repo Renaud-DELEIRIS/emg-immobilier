@@ -8,14 +8,14 @@ import Logo from "../icon/Logo";
 import { StepTitle } from "./StepContainer";
 
 const partnaire = [
-  "/logo/allianz_grey.svg",
-  "/logo/baloise_grey.svg",
-  "/logo/helvetia_grey.svg",
-  "/logo/vaudoise_grey.svg",
-  "/logo/zurich_grey.svg",
+  "/logo/42.png",
+  "/logo/43.png",
+  "/logo/44.png",
+  "/logo/45.png",
+  "/logo/47.png",
 ];
 
-const appearAnimation = 400;
+const appearAnimation = 200;
 const processAnimationTime = 6800;
 const totalAnimationTime = appearAnimation + processAnimationTime;
 const Loading: FC = () => {
@@ -42,7 +42,7 @@ const Loading: FC = () => {
 
     const time = setTimeout(() => {
       nextStep("loader");
-    }, 6800);
+    }, totalAnimationTime);
     return () => {
       clearInterval(interval);
       clearTimeout(appear);

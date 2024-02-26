@@ -40,7 +40,7 @@ const HypoCalculateurProvider = ({
 
   const prixDachat =
     lead.which_step === "recherche bien"
-      ? lead.research.budget[0]!
+      ? lead.research.budget[1]!
       : lead.bien_price;
   type FondsPropres = keyof typeof lead.fonds_propres;
   const fondsPropres = Object.keys(lead.fonds_propres).reduce(

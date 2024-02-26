@@ -83,8 +83,8 @@ export const EmgPieceStack: React.FC<Props> = (props) => (
       strokeLinejoin="round"
     />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M8 7C10.7614 7 13 6.10457 13 5C13 3.89543 10.7614 3 8 3C5.23858 3 3 3.89543 3 5C3 6.10457 5.23858 7 8 7Z"
       stroke="#061C3D"
       strokeWidth="1.5"

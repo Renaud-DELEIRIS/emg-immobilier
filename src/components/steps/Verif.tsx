@@ -59,8 +59,6 @@ const Verif = () => {
   };
 
   const onCompletion = async (code: string) => {
-    changeLead({ verified: true });
-    nextStep("verif");
     if (code !== verifCode) throw new Error("Code is not valid");
     await createLead({
       data: {
@@ -72,6 +70,8 @@ const Verif = () => {
       idlead: lead.idlead,
     });
     setOpenCode(false);
+    changeLead({ verified: true });
+    nextStep("verif");
   };
 
   const isAllValid =

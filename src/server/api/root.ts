@@ -267,6 +267,7 @@ export const appRouter = createTRPCRouter({
     .query(async ({ input }) => {
       const b64 = Buffer.from(JSON.stringify(input)).toString("base64");
       const url = "https://scrapping.emgsa.ch/?domain=hypotheque&p=" + b64;
+      console.log(url);
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Error getting offer");
@@ -280,20 +281,14 @@ export const appRouter = createTRPCRouter({
           name: "Bcbe",
           img: "/logo/bcbe.svg",
           interest: isNaN(parseFloat(data.bcbe.interest_rate))
-            ? null
+            ? 5
             : parseFloat(data.bcbe.interest_rate),
+          mensual_payment: parseFloat(data.bcbe.mensual_payment),
           advantages: [
             {
               key_title: "interest",
               value: {
                 val: formatAmount(parseFloat(data.bcbe.interest), false),
-              },
-              active: true,
-            },
-            {
-              key_title: "mensual_payment",
-              value: {
-                val: formatAmount(parseFloat(data.bcbe.mensual_payment), false),
               },
               active: true,
             },
@@ -311,9 +306,9 @@ export const appRouter = createTRPCRouter({
       if (data.migros)
         offers.push({
           name: "Migros",
-          img: "/logo/migros.svg",
-          // NO Interest rate provided (TODO ?)
-          interest: null,
+          img: "/logo/migros.png",
+          interest: parseFloat(data.migros["7years_interest"]) || 5,
+          mensual_payment: parseFloat(data.migros.mensual_payment),
           advantages: [
             {
               key_title: "ammortissement",
@@ -336,42 +331,23 @@ export const appRouter = createTRPCRouter({
               },
               active: true,
             },
-            {
-              key_title: "mensual_payment",
-              value: {
-                val: formatAmount(
-                  parseFloat(data.migros.mensual_payment),
-                  false
-                ),
-              },
-              active: true,
-            },
           ],
         });
 
       // swisslife
-      if (data.swisslife)
+      if (data.swisslife && data.swisslife.interest_rate)
         offers.push({
           name: "Swisslife",
           img: "/logo/swisslife.svg",
           interest: isNaN(parseFloat(data.swisslife.interest_rate))
             ? null
             : parseFloat(data.swisslife.interest_rate),
+          mensual_payment: parseFloat(data.swisslife.mensual_payment),
           advantages: [
             {
               key_title: "interest",
               value: {
                 val: formatAmount(parseFloat(data.swisslife.interest), false),
-              },
-              active: true,
-            },
-            {
-              key_title: "mensual_payment",
-              value: {
-                val: formatAmount(
-                  parseFloat(data.swisslife.mensual_payment),
-                  false
-                ),
               },
               active: true,
             },
@@ -396,18 +372,12 @@ export const appRouter = createTRPCRouter({
           interest: isNaN(parseFloat(data.ubs.interest_rate))
             ? null
             : parseFloat(data.ubs.interest_rate),
+          mensual_payment: parseFloat(data.ubs.mensual_payment),
           advantages: [
             {
               key_title: "interest",
               value: {
                 val: formatAmount(parseFloat(data.ubs.interest), false),
-              },
-              active: true,
-            },
-            {
-              key_title: "mensual_payment",
-              value: {
-                val: formatAmount(parseFloat(data.ubs.mensual_payment), false),
               },
               active: true,
             },
@@ -422,6 +392,28 @@ export const appRouter = createTRPCRouter({
         });
 
       return offers;
+    }),
+
+  sendOffer: publicProcedure
+    .input(
+      z.object({
+        idlead: z.string(),
+        offre: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const url = env.NEXT_PUBLIC_APIV2_ROOT + "/hypotheque/sendoffer";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(input),
+      });
+      if (!response.ok) {
+        throw new Error("Error sending offer");
+      }
+      return true;
     }),
 });
 

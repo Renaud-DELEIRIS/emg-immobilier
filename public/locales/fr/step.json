@@ -165,10 +165,25 @@
     "title": "{{nb}} résultats",
     "interest": "Taux d'intérêt",
     "talk_conseiller": "Parler à un conseiller",
-    "contact": "Être rappelé",
+    "contact": "Demander une offre",
+    "mensual": "Frais mensuels",
+    "error_offer": "Une erreur est survenue, veuillez réessayer plus tard.",
+    "success": "Votre demande a bien été enregistrée, vous allez recevoir un email de confirmation.",
+    "success_desc": "Un conseiller vous contactera dans les plus brefs délais pour vous accompagner dans votre projet.",
     "filter": {
-      "bank": "Banque",
-      "insurance": "Assurance"
+      "title": "Filtres",
+      "frais_croissant": "Frais mensuels croissants",
+      "taux_croissant": "Taux d'intérêts croissants"
+    },
+
+    "alert_endetement": {
+      "title": "A noter :",
+      "content": "Afin de générer toutes les offres, votre taux d'endettement ne doit pas excéder 33%. De ce fait, il est possible que certaines offres ne soient pas affichées."
+    },
+
+    "alert_fond": {
+      "title": "A noter :",
+      "content": "Afin de générer toutes les offres, votre projet nécessite 20% de fonds propres. De ce fait, il est possible que certaines offres ne soient pas affichées."
     },
 
     "advantages": {
@@ -183,7 +198,7 @@
     "recap": {
       "title": "Récapitulatif des coûts",
       "price": "Frais mensuel",
-      "investment": "Investissement initiale",
+      "investment": "Investissement initial",
       "taux_interet": "Taux d'intérêt",
       "interet": "Intérêts",
       "ammortissement": "Amortissement",
@@ -197,7 +212,7 @@
         "recherche bien": "Recherche de bien",
         "bien trouvé": "Bien trouvé",
         "offre acceptée": "Offre acceptée",
-        "bientot signer": "Bientôt signer",
+        "bientot signer": "Signature en cours",
         "signer": "Signer chez le notaire"
       },
       "salaire": "Salaire annuel",

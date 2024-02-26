@@ -4,7 +4,7 @@ import { api } from "~/utils/api";
 
 const useResult = () => {
   const lead = useFormStore((state) => state.data);
-  const currentStep = useFormStore((state) => state.currentStep);
+  const currentStep = useFormStore((state) => state.currentVisibleStep);
   const res = api.getOffers.useQuery(
     {
       apport:
@@ -21,7 +21,8 @@ const useResult = () => {
           : lead.bien_price,
     },
     {
-      staleTime: 1000 * 60 * 15,
+      staleTime: 1000 * 60 * 30,
+      trpc: {},
       enabled:
         getStepInfo(currentStep, lead)[0] >=
         getStepInfo(getStepById("loader"), lead)[0],
